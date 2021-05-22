@@ -1,0 +1,62 @@
+<div class="page-header">
+  <%= link_to produtos_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_produto_path(@produto), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Localizacao estoque:</dt>
+  <dd><%= @produto.localizacao_estoque %></dd>
+  <dt>Situacao:</dt>
+  <dd><%= @produto.situacao %></dd>
+  <dt>Data inativo:</dt>
+  <dd><%= @produto.data_inativo %></dd>
+  <dt>Descricao:</dt>
+  <dd><%= @produto.descricao %></dd>
+  <dt>Descricao nfe:</dt>
+  <dd><%= @produto.descricao_nfe %></dd>
+  <dt>Codigo barras:</dt>
+  <dd><%= @produto.codigo_barras %></dd>
+  <dt>Ncm:</dt>
+  <dd><%= @produto.ncm %></dd>
+  <dt>Situacao tributaria:</dt>
+  <dd><%= @produto.situacao_tributaria %></dd>
+  <dt>Unidade:</dt>
+  <dd><%= @produto.unidade %></dd>
+  <dt>Embalagem:</dt>
+  <dd><%= @produto.embalagem %></dd>
+  <dt>Controlar estoque:</dt>
+  <dd><%= @produto.controlar_estoque %></dd>
+  <dt>Por lote:</dt>
+  <dd><%= @produto.por_lote %></dd>
+  <dt>Bloquear preco:</dt>
+  <dd><%= @produto.bloquear_preco %></dd>
+  <dt>Data ultima reposicao:</dt>
+  <dd><%= @produto.data_ultima_reposicao %></dd>
+  <dt>Data ultimo reajuste:</dt>
+  <dd><%= @produto.data_ultimo_reajuste %></dd>
+  <dt>Preco custo:</dt>
+  <dd><%= @produto.preco_custo %></dd>
+  <dt>Preco custo medio:</dt>
+  <dd><%= @produto.preco_custo_medio %></dd>
+  <dt>Margem lucro:</dt>
+  <dd><%= @produto.margem_lucro %></dd>
+  <dt>Preco venda:</dt>
+  <dd><%= @produto.preco_venda %></dd>
+  <dt>Preco oferta:</dt>
+  <dd><%= @produto.preco_oferta %></dd>
+  <dt>Margem lucro oferta:</dt>
+  <dd><%= @produto.margem_lucro_oferta %></dd>
+  <dt>Data inicial oferta:</dt>
+  <dd><%= @produto.data_inicial_oferta %></dd>
+  <dt>Data final oferta:</dt>
+  <dd><%= @produto.data_final_oferta %></dd>
+  <dt>Comissao pc:</dt>
+  <dd><%= @produto.comissao_pc %></dd>
+</dl>

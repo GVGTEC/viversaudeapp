@@ -1,0 +1,29 @@
+<div class="page-header">
+  <%= link_to new_localizacao_estoque_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo Localizacao estoque
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Nome</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @localizacao_estoques) do |localizacao_estoque| %>
+            <td><%= localizacao_estoque.nome %></td>
+            <td><%= link_to 'Mostrar', localizacao_estoque %></td>
+        <td><%= link_to 'Editar', edit_localizacao_estoque_path(localizacao_estoque) %></td>
+        <td><%= link_to 'Apagar', localizacao_estoque, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

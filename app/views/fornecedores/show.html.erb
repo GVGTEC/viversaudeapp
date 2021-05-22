@@ -1,0 +1,38 @@
+<div class="page-header">
+  <%= link_to fornecedores_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_fornecedor_path(@fornecedor), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nome:</dt>
+  <dd><%= @fornecedor.nome %></dd>
+  <dt>Pessoa:</dt>
+  <dd><%= @fornecedor.pessoa %></dd>
+  <dt>Cpf:</dt>
+  <dd><%= @fornecedor.cpf %></dd>
+  <dt>Rg:</dt>
+  <dd><%= @fornecedor.rg %></dd>
+  <dt>Cnpj:</dt>
+  <dd><%= @fornecedor.cnpj %></dd>
+  <dt>Ie:</dt>
+  <dd><%= @fornecedor.ie %></dd>
+  <dt>Endereco:</dt>
+  <dd><%= @fornecedor.endereco %></dd>
+  <dt>Bairro:</dt>
+  <dd><%= @fornecedor.bairro %></dd>
+  <dt>Cidade:</dt>
+  <dd><%= @fornecedor.cidade %></dd>
+  <dt>Cep:</dt>
+  <dd><%= @fornecedor.cep %></dd>
+  <dt>Uf:</dt>
+  <dd><%= @fornecedor.uf %></dd>
+  <dt>Email:</dt>
+  <dd><%= @fornecedor.email %></dd>
+</dl>

@@ -1,0 +1,16 @@
+<div class="page-header">
+  <%= link_to localizacao_estoques_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_localizacao_estoque_path(@localizacao_estoque), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nome:</dt>
+  <dd><%= @localizacao_estoque.nome %></dd>
+</dl>

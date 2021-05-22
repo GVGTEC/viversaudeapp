@@ -1,0 +1,53 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  localizacao_estoque: one
+  situacao: false
+  data_inativo: 2021-05-21 18:19:41
+  descricao: MyString
+  descricao_nfe: MyString
+  codigo_barras: MyString
+  ncm: MyString
+  situacao_tributaria: MyString
+  unidade: MyString
+  embalagem: 9.99
+  controlar_estoque: false
+  por_lote: false
+  bloquear_preco: false
+  data_ultima_reposicao: 2021-05-21 18:19:41
+  data_ultimo_reajuste: 2021-05-21 18:19:41
+  preco_custo: 9.99
+  preco_custo_medio: 9.99
+  margem_lucro: 9.99
+  preco_venda: 9.99
+  preco_oferta: 9.99
+  margem_lucro_oferta: 9.99
+  data_inicial_oferta: 2021-05-21 18:19:41
+  data_final_oferta: 2021-05-21 18:19:41
+  comissao_pc: 9.99
+
+two:
+  localizacao_estoque: two
+  situacao: false
+  data_inativo: 2021-05-21 18:19:41
+  descricao: MyString
+  descricao_nfe: MyString
+  codigo_barras: MyString
+  ncm: MyString
+  situacao_tributaria: MyString
+  unidade: MyString
+  embalagem: 9.99
+  controlar_estoque: false
+  por_lote: false
+  bloquear_preco: false
+  data_ultima_reposicao: 2021-05-21 18:19:41
+  data_ultimo_reajuste: 2021-05-21 18:19:41
+  preco_custo: 9.99
+  preco_custo_medio: 9.99
+  margem_lucro: 9.99
+  preco_venda: 9.99
+  preco_oferta: 9.99
+  margem_lucro_oferta: 9.99
+  data_inicial_oferta: 2021-05-21 18:19:41
+  data_final_oferta: 2021-05-21 18:19:41
+  comissao_pc: 9.99

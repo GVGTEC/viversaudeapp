@@ -1,0 +1,164 @@
+<%= form_for(@produto, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @produto.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@produto.errors.count, "error") %> prohibited this produto from being saved:</h4>
+
+      <ul>
+      <% @produto.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :localizacao_estoque, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :localizacao_estoque, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :situacao, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.check_box :situacao, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :data_inativo, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.datetime_select :data_inativo, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :descricao, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :descricao, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :descricao_nfe, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :descricao_nfe, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :codigo_barras, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :codigo_barras, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :ncm, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :ncm, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :situacao_tributaria, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :situacao_tributaria, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :unidade, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :unidade, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :embalagem, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :embalagem, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :controlar_estoque, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.check_box :controlar_estoque, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :por_lote, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.check_box :por_lote, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :bloquear_preco, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.check_box :bloquear_preco, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :data_ultima_reposicao, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.datetime_select :data_ultima_reposicao, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :data_ultimo_reajuste, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.datetime_select :data_ultimo_reajuste, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :preco_custo, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :preco_custo, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :preco_custo_medio, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :preco_custo_medio, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :margem_lucro, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :margem_lucro, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :preco_venda, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :preco_venda, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :preco_oferta, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :preco_oferta, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :margem_lucro_oferta, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :data_inicial_oferta, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.datetime_select :data_inicial_oferta, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :data_final_oferta, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.datetime_select :data_final_oferta, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :comissao_pc, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :comissao_pc, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
