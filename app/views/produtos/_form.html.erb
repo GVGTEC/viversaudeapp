@@ -12,152 +12,152 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :localizacao_estoque, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :localizacao_estoque, class: "form-control" %>
-    </div>
+  <div class="ibox-content">
+      <form role="form" class="form-inline">
+          <div class="row form-group">
+              <div class="col-md-4">
+                <%= f.label :situacao, 'Situação' %>
+                <%= f.check_box :situacao, class: "form-control" %>
+              </div>
+       
+              <div class="col-md-4">
+                <%= f.label :data_inativo, 'Data Inativo' %>
+                <%= f.datetime_field :data_inativo, class: "form-control" %>
+              </div>
+          </div>
+
+          <div class="row form-group">
+              <div class="col-md-12">
+                <%= f.label :descricao, 'Descrição' %>
+                <%= f.text_field :descricao, class: "form-control" %>
+              </div>
+          </div>        
+
+          <div class="row form-group">
+              <div class="col-md-12">
+                <%= f.label :descricao_nfe, 'Descrição NF-e' %>
+                <%= f.text_field :descricao_nfe, class: "form-control" %>
+              </div>
+          </div>
+    
+          <div class="row form-group">
+              <div class="col-md-4">
+                <%= f.label :codigo_barras, 'Código de Barras' %>
+                <%= f.text_field :codigo_barras, class: "form-control" %>
+              </div>
+
+              <div class="col-md-4">
+                <%= f.label :localizacao_estoque, 'Local Estoque' %>
+                <%= f.text_field :localizacao_estoque, class: "form-control" %>
+              </div>
+          </div>
+        
+          <div class="row form-group">
+              <div class="col-md-3">
+                <%= f.label :ncm, 'Código NCM' %>
+                <%= f.text_field :ncm, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :situacao_tributaria, 'Situação Tributária' %>
+                <%= f.text_field :situacao_tributaria, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :unidade, 'Unidade' %>
+                <%= f.text_field :unidade, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :embalagem, 'Qtde na Embalagem' %>
+                <%= f.text_field :embalagem, class: "form-control" %>
+              </div>             
+          </div>        
+        
+          <div class="row form-group">
+              <div class="col-md-4">
+                <%= f.label :controlar_estoque, 'Controlar o Estoque ?' %>
+                <%= f.text_field :controlar_estoque, class: "form-control" %>
+              </div>
+
+              <div class="col-md-4">
+                <%= f.label :por_lote, 'Controle por Lote ?' %>
+                <%= f.text_field :por_lote, class: "form-control" %>
+              </div>
+          </div>        
+        
+          <div class="row form-group">
+              <div class="col-md-4">
+                <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
+                <%= f.datetime_field :data_ultima_reposicao, class: "form-control" %>
+              </div>
+
+              <div class="col-md-4">
+                <%= f.label :data_ultimo_reajuste, 'Data Último Reajuste' %>
+                <%= f.datetime_field :data_ultimo_reajuste, class: "form-control" %>
+              </div>
+          </div>
+        
+          <div class="row form-group">
+              <div class="col-md-4">
+                <%= f.label :bloquear_preco, 'Bloquear o Preço no Pedido ?' %>
+                <%= f.check_box :bloquear_preco, class: "form-control" %>
+              </div>
+
+              <div class="col-md-4">
+                <%= f.label :preco_custo, 'Preço de Custo' %>
+                <%= f.text_field :preco_custo, class: "form-control" %>
+              </div>
+
+              <div class="col-md-4">
+                <%= f.label :preco_custo_medio, 'Preço de Custo Médio' %>
+                <%= f.text_field :preco_custo_medio, class: "form-control" %>
+              </div>             
+          </div>        
+       
+          <div class="row form-group">
+              <div class="col-md-3">
+                <%= f.label :margem_lucro, 'Margem de Lucro (%)' %>
+                <%= f.text_field :margem_lucro, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :preco_venda, 'Preço de Venda' %>
+                <%= f.text_field :preco_venda, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">              
+                <%= f.label :margem_lucro_oferta, 'Margem de Lucro Oferta' %>
+                <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">          
+                <%= f.label :preco_oferta, 'Preço de Venda Oferta' %>
+                <%= f.text_field :preco_oferta, class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-4">
+              <%= f.label :data_inicial_oferta, 'Data Inicial OFerta' %>
+              <%= f.datetime_field :data_inicial_oferta, class: "form-control" %>
+            </div>
+
+            <div class="col-md-4">
+              <%= f.label :data_final_oferta, 'Data Final Oferta' %>
+              <%= f.datetime_field :data_final_oferta, class: "form-control" %>
+            </div>
+
+            <div class="col-md-4">
+              <%= f.label :comissao_pc, 'Comissão (%)' %>
+              <%= f.text_field :comissao_pc, class: "form-control" %>
+            </div>             
+          </div>    
+      </form>
   </div>
+
   <div class="form-group">
-    <%= f.label :situacao, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.check_box :situacao, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_inativo, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_inativo, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :descricao, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :descricao, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :descricao_nfe, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :descricao_nfe, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :codigo_barras, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :codigo_barras, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :ncm, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :ncm, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :situacao_tributaria, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :situacao_tributaria, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :unidade, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :unidade, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :embalagem, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :embalagem, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :controlar_estoque, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.check_box :controlar_estoque, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :por_lote, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.check_box :por_lote, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :bloquear_preco, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.check_box :bloquear_preco, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_ultima_reposicao, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_ultima_reposicao, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_ultimo_reajuste, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_ultimo_reajuste, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :preco_custo, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :preco_custo, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :preco_custo_medio, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :preco_custo_medio, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :margem_lucro, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :margem_lucro, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :preco_venda, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :preco_venda, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :preco_oferta, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :preco_oferta, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :margem_lucro_oferta, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_inicial_oferta, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_inicial_oferta, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_final_oferta, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_final_oferta, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :comissao_pc, class: "col-sm-2 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :comissao_pc, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-offset-1 col-sm-2">
       <%= f.submit class: "btn btn-primary" %>
     </div>
   </div>

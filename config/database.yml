@@ -82,4 +82,4 @@ production:
   <<: *default
   database: viversaude_production
   username: viversaude
-  password: <%= ENV['VIVERSAUDE_DATABASE_PASSWORD'] %>
+  password: <%= ENV['viversaude_DATABASE_PASSWORD'] %>
