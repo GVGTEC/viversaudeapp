@@ -20,9 +20,9 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :pessoa, class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :pessoa, class: "form-control" %>
+    <%= f.label :pessoa, 'Pessoa', class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
+    <%= f.select(:pessoa, options_for_select([['FÍSICA', 1], ['JURÍDICA', 2]]), {}, {class: "form-control"}) %>
     </div>
 
   </div>
@@ -45,26 +45,26 @@
       <%= f.text_field :cnpj, class: "form-control" %>
     </div>
   
-    <%= f.label :ie, class: "col-sm-1 control-label" %>
+    <%= f.label :ie, 'IE', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
       <%= f.text_field :ie, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :endereco, class: "col-sm-1 control-label" %>
+    <%= f.label :endereco, 'Endereço', class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
       <%= f.text_field :endereco, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :bairro, class: "col-sm-1 control-label" %>
+    <%= f.label :bairro, 'Bairro', class: "col-sm-1 control-label" %>
     <div class="col-sm-4">
       <%= f.text_field :bairro, class: "form-control" %>
     </div>
   
-    <%= f.label :cidade, class: "col-sm-1 control-label" %>
+    <%= f.label :cidade, 'Cidade', class: "col-sm-1 control-label" %>
     <div class="col-sm-4">
       <%= f.text_field :cidade, class: "form-control" %>
     </div>
@@ -77,7 +77,7 @@
 
   <div class="form-group">
     <%= f.label :cep, 'CEP', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
+    <div class="col-sm-2">
       <%= f.text_field :cep, class: "form-control" %>
     </div>
   
@@ -88,7 +88,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :email, class: "col-sm-1 control-label" %>
+    <%= f.label :email, 'Email', class: "col-sm-1 control-label" %>
     <div class="col-sm-7">
       <%= f.text_field :email, class: "form-control" %>
     </div>

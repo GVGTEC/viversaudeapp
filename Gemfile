@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'bootstrap-generators', '~> 3.3.4'
 gem 'record_tag_helper', '~> 1.0'
-gem 'will_paginate'
+gem "will_paginate"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

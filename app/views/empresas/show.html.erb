@@ -1,0 +1,74 @@
+<div class="page-header">
+  <%= link_to empresas_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_empresa_path(@empresa), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nome:</dt>
+  <dd><%= @empresa.nome %></dd>
+  <dt>Nome fantasia:</dt>
+  <dd><%= @empresa.nome_fantasia %></dd>
+  <dt>Cnpj:</dt>
+  <dd><%= @empresa.cnpj %></dd>
+  <dt>Inscricao estadual:</dt>
+  <dd><%= @empresa.inscricao_estadual %></dd>
+  <dt>Inscricao municipal:</dt>
+  <dd><%= @empresa.inscricao_municipal %></dd>
+  <dt>Endereco:</dt>
+  <dd><%= @empresa.endereco %></dd>
+  <dt>Numero:</dt>
+  <dd><%= @empresa.numero %></dd>
+  <dt>Complemento:</dt>
+  <dd><%= @empresa.complemento %></dd>
+  <dt>Bairro:</dt>
+  <dd><%= @empresa.bairro %></dd>
+  <dt>Cidade:</dt>
+  <dd><%= @empresa.cidade %></dd>
+  <dt>Cep:</dt>
+  <dd><%= @empresa.cep %></dd>
+  <dt>Uf:</dt>
+  <dd><%= @empresa.uf %></dd>
+  <dt>Telefone:</dt>
+  <dd><%= @empresa.telefone %></dd>
+  <dt>Email:</dt>
+  <dd><%= @empresa.email %></dd>
+  <dt>Codigo uf emitente:</dt>
+  <dd><%= @empresa.codigo_uf_emitente %></dd>
+  <dt>Codcid ibge:</dt>
+  <dd><%= @empresa.codcid_ibge %></dd>
+  <dt>Aliquota pis:</dt>
+  <dd><%= @empresa.aliquota_pis %></dd>
+  <dt>Aliquota cofins:</dt>
+  <dd><%= @empresa.aliquota_cofins %></dd>
+  <dt>Serie-nfe:</dt>
+  <dd><%= @empresa.serie-nfe %></dd>
+  <dt>Cnae:</dt>
+  <dd><%= @empresa.cnae %></dd>
+  <dt>Ambiente:</dt>
+  <dd><%= @empresa.ambiente %></dd>
+  <dt>Versao layout:</dt>
+  <dd><%= @empresa.versao_layout %></dd>
+  <dt>Regime tributario:</dt>
+  <dd><%= @empresa.regime_tributario %></dd>
+  <dt>Emissor nfe:</dt>
+  <dd><%= @empresa.emissor_nfe %></dd>
+  <dt>Permite credito icms:</dt>
+  <dd><%= @empresa.permite_credito_icms %></dd>
+  <dt>Credito icms pc:</dt>
+  <dd><%= @empresa.credito_icms_pc %></dd>
+  <dt>Empresa uninfe:</dt>
+  <dd><%= @empresa.empresa_uninfe %></dd>
+  <dt>Pasta envio:</dt>
+  <dd><%= @empresa.pasta_envio %></dd>
+  <dt>Pasta retorno:</dt>
+  <dd><%= @empresa.pasta_retorno %></dd>
+  <dt>Senha:</dt>
+  <dd><%= @empresa.senha %></dd>
+</dl>

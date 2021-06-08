@@ -4,6 +4,12 @@ class ProdutosController < ApplicationController
   # GET /produtos or /produtos.json
   def index
     @produtos = Produto.all
+
+    @produtos = @produtos.where("lower(descricao) ilike '%#{params[:descricao]}%'")
+
+   # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 1} 
+    @produtos = @produtos.paginate(options)
   end
 
   # GET /produtos/1 or /produtos/1.json

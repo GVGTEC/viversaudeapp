@@ -3,7 +3,20 @@
     <span class="glyphicon glyphicon-plus"></span>
     Novo Cliente
   <% end %>
-  <h1>Lista</h1>
+  <h1>Lista Clientes</h1>
+</div>
+
+<div style="text-align: right;margin-top:10px">
+    <form action="/clientes" method="get">
+      <div class="row" style="width:300px;display: inline-block;">
+        <div style="float: left">
+          <input type="text" name="nome" value="<%=params[:nome] %>" class="form-control" placeholder="Busca..">
+       </div>
+       <div style="float: left;margin-left:5px">
+          <input type="submit" class="btn btn-primary" value="Buscar">
+       </div>
+      </div>
+    </form>
 </div>
 
 <div class="table-responsive">
@@ -50,4 +63,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div>
+        <% will_paginate @clientes, :container => false %>        
+  </div>
 </div>

@@ -1,0 +1,65 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  nome_fantasia: MyString
+  cnpj: MyString
+  inscricao_estadual: MyString
+  inscricao_municipal: MyString
+  endereco: MyString
+  numero: MyString
+  complemento: MyString
+  bairro: MyString
+  cidade: MyString
+  cep: MyString
+  uf: MyString
+  telefone: MyString
+  email: MyString
+  codigo_uf_emitente: MyString
+  codcid_ibge: MyString
+  aliquota_pis: MyString
+  aliquota_cofins: MyString
+  serie-nfe: MyString
+  cnae: MyString
+  ambiente: MyString
+  versao_layout: MyString
+  regime_tributario: MyString
+  emissor_nfe: MyString
+  permite_credito_icms: MyString
+  credito_icms_pc: MyString
+  empresa_uninfe: MyString
+  pasta_envio: MyString
+  pasta_retorno: MyString
+  senha: MyString
+
+two:
+  nome: MyString
+  nome_fantasia: MyString
+  cnpj: MyString
+  inscricao_estadual: MyString
+  inscricao_municipal: MyString
+  endereco: MyString
+  numero: MyString
+  complemento: MyString
+  bairro: MyString
+  cidade: MyString
+  cep: MyString
+  uf: MyString
+  telefone: MyString
+  email: MyString
+  codigo_uf_emitente: MyString
+  codcid_ibge: MyString
+  aliquota_pis: MyString
+  aliquota_cofins: MyString
+  serie-nfe: MyString
+  cnae: MyString
+  ambiente: MyString
+  versao_layout: MyString
+  regime_tributario: MyString
+  emissor_nfe: MyString
+  permite_credito_icms: MyString
+  credito_icms_pc: MyString
+  empresa_uninfe: MyString
+  pasta_envio: MyString
+  pasta_retorno: MyString
+  senha: MyString

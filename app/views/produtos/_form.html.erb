@@ -15,19 +15,17 @@
   <div class="ibox-content">
       <form role="form" class="form-inline">
           <div class="row form-group">
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <%= f.label :situacao, 'Situação' %>
-                <%= f.check_box :situacao, class: "form-control" %>
+                <%= f.select(:situacao, options_for_select([['ATIVO', 1], ['INATIVO', 2]]), {}, {class: "form-control"}) %>
               </div>
        
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <%= f.label :data_inativo, 'Data Inativo' %>
                 <%= f.datetime_field :data_inativo, class: "form-control" %>
               </div>
-          </div>
 
-          <div class="row form-group">
-              <div class="col-md-12">
+              <div class="col-md-8">
                 <%= f.label :descricao, 'Descrição' %>
                 <%= f.text_field :descricao, class: "form-control" %>
               </div>
@@ -42,7 +40,7 @@
     
           <div class="row form-group">
               <div class="col-md-4">
-                <%= f.label :codigo_barras, 'Código de Barras' %>
+                <%= f.label :codigo_barras, 'Código Barras' %>
                 <%= f.text_field :codigo_barras, class: "form-control" %>
               </div>
 
@@ -54,6 +52,16 @@
         
           <div class="row form-group">
               <div class="col-md-3">
+                <%= f.label :unidade, 'Unidade' %>
+                <%= f.text_field :unidade, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :embalagem, 'Quantidade Embalagem' %>
+                <%= f.text_field :embalagem, class: "form-control" %>
+              </div>             
+
+              <div class="col-md-3">
                 <%= f.label :ncm, 'Código NCM' %>
                 <%= f.text_field :ncm, class: "form-control" %>
               </div>
@@ -62,37 +70,25 @@
                 <%= f.label :situacao_tributaria, 'Situação Tributária' %>
                 <%= f.text_field :situacao_tributaria, class: "form-control" %>
               </div>
-
-              <div class="col-md-3">
-                <%= f.label :unidade, 'Unidade' %>
-                <%= f.text_field :unidade, class: "form-control" %>
-              </div>
-
-              <div class="col-md-3">
-                <%= f.label :embalagem, 'Qtde na Embalagem' %>
-                <%= f.text_field :embalagem, class: "form-control" %>
-              </div>             
           </div>        
         
           <div class="row form-group">
-              <div class="col-md-4">
-                <%= f.label :controlar_estoque, 'Controlar o Estoque ?' %>
-                <%= f.text_field :controlar_estoque, class: "form-control" %>
+              <div class="col-md-3">
+                <%= f.label :controlar_estoque, 'Controlar Estoque ?' %>               
+                <%= f.select(:controlar_estoque, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
               </div>
 
-              <div class="col-md-4">
-                <%= f.label :por_lote, 'Controle por Lote ?' %>
-                <%= f.text_field :por_lote, class: "form-control" %>
+              <div class="col-md-3">
+                <%= f.label :por_lote, 'Controlar Lote ?' %>
+                <%= f.select(:por_lote, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
               </div>
-          </div>        
-        
-          <div class="row form-group">
-              <div class="col-md-4">
+
+              <div class="col-md-3">
                 <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
                 <%= f.datetime_field :data_ultima_reposicao, class: "form-control" %>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <%= f.label :data_ultimo_reajuste, 'Data Último Reajuste' %>
                 <%= f.datetime_field :data_ultimo_reajuste, class: "form-control" %>
               </div>
@@ -100,39 +96,39 @@
         
           <div class="row form-group">
               <div class="col-md-4">
-                <%= f.label :bloquear_preco, 'Bloquear o Preço no Pedido ?' %>
-                <%= f.check_box :bloquear_preco, class: "form-control" %>
+                <%= f.label :bloquear_preco, 'Bloquear Preço no Pedido ?' %>
+                <%= f.select(:bloquear_preco, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
               </div>
 
               <div class="col-md-4">
-                <%= f.label :preco_custo, 'Preço de Custo' %>
+                <%= f.label :preco_custo, 'Preço Custo' %>
                 <%= f.text_field :preco_custo, class: "form-control" %>
               </div>
 
               <div class="col-md-4">
-                <%= f.label :preco_custo_medio, 'Preço de Custo Médio' %>
+                <%= f.label :preco_custo_medio, 'Preço Custo Médio' %>
                 <%= f.text_field :preco_custo_medio, class: "form-control" %>
               </div>             
           </div>        
        
           <div class="row form-group">
               <div class="col-md-3">
-                <%= f.label :margem_lucro, 'Margem de Lucro (%)' %>
+                <%= f.label :margem_lucro, 'Margem Lucro (%)' %>
                 <%= f.text_field :margem_lucro, class: "form-control" %>
               </div>
 
               <div class="col-md-3">
-                <%= f.label :preco_venda, 'Preço de Venda' %>
+                <%= f.label :preco_venda, 'Preço Venda' %>
                 <%= f.text_field :preco_venda, class: "form-control" %>
               </div>
 
               <div class="col-md-3">              
-                <%= f.label :margem_lucro_oferta, 'Margem de Lucro Oferta' %>
+                <%= f.label :margem_lucro_oferta, 'Margem Lucro Oferta (%)' %>
                 <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
               </div>
 
               <div class="col-md-3">          
-                <%= f.label :preco_oferta, 'Preço de Venda Oferta' %>
+                <%= f.label :preco_oferta, 'Preço Venda Oferta' %>
                 <%= f.text_field :preco_oferta, class: "form-control" %>
             </div>
           </div>

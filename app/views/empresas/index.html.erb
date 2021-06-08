@@ -1,0 +1,87 @@
+<div class="page-header">
+  <%= link_to new_empresa_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo Empresa
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Nome</th>
+            <th>Nome fantasia</th>
+            <th>Cnpj</th>
+            <th>Inscricao estadual</th>
+            <th>Inscricao municipal</th>
+            <th>Endereco</th>
+            <th>Numero</th>
+            <th>Complemento</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Cep</th>
+            <th>Uf</th>
+            <th>Telefone</th>
+            <th>Email</th>
+            <th>Codigo uf emitente</th>
+            <th>Codcid ibge</th>
+            <th>Aliquota pis</th>
+            <th>Aliquota cofins</th>
+            <th>Serie-nfe</th>
+            <th>Cnae</th>
+            <th>Ambiente</th>
+            <th>Versao layout</th>
+            <th>Regime tributario</th>
+            <th>Emissor nfe</th>
+            <th>Permite credito icms</th>
+            <th>Credito icms pc</th>
+            <th>Empresa uninfe</th>
+            <th>Pasta envio</th>
+            <th>Pasta retorno</th>
+            <th>Senha</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @empresas) do |empresa| %>
+            <td><%= empresa.nome %></td>
+            <td><%= empresa.nome_fantasia %></td>
+            <td><%= empresa.cnpj %></td>
+            <td><%= empresa.inscricao_estadual %></td>
+            <td><%= empresa.inscricao_municipal %></td>
+            <td><%= empresa.endereco %></td>
+            <td><%= empresa.numero %></td>
+            <td><%= empresa.complemento %></td>
+            <td><%= empresa.bairro %></td>
+            <td><%= empresa.cidade %></td>
+            <td><%= empresa.cep %></td>
+            <td><%= empresa.uf %></td>
+            <td><%= empresa.telefone %></td>
+            <td><%= empresa.email %></td>
+            <td><%= empresa.codigo_uf_emitente %></td>
+            <td><%= empresa.codcid_ibge %></td>
+            <td><%= empresa.aliquota_pis %></td>
+            <td><%= empresa.aliquota_cofins %></td>
+            <td><%= empresa.serie-nfe %></td>
+            <td><%= empresa.cnae %></td>
+            <td><%= empresa.ambiente %></td>
+            <td><%= empresa.versao_layout %></td>
+            <td><%= empresa.regime_tributario %></td>
+            <td><%= empresa.emissor_nfe %></td>
+            <td><%= empresa.permite_credito_icms %></td>
+            <td><%= empresa.credito_icms_pc %></td>
+            <td><%= empresa.empresa_uninfe %></td>
+            <td><%= empresa.pasta_envio %></td>
+            <td><%= empresa.pasta_retorno %></td>
+            <td><%= empresa.senha %></td>
+            <td><%= link_to 'Mostrar', empresa %></td>
+        <td><%= link_to 'Editar', edit_empresa_path(empresa) %></td>
+        <td><%= link_to 'Apagar', empresa, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

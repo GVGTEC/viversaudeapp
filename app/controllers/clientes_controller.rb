@@ -4,6 +4,12 @@ class ClientesController < ApplicationController
   # GET /clientes or /clientes.json
   def index
     @clientes = Cliente.all
+
+    @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'")
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 1} 
+    @clientes = @clientes.paginate(options)
   end
 
   # GET /clientes/1 or /clientes/1.json
