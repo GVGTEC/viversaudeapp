@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :transportadora_contatos
   resources :transportadoras
   resources :contas_pagar_parcelas
-  resources :contas_pagar
+  resources :contas_pag
   resources :plano_contas
   resources :empresas
   resources :produtos
