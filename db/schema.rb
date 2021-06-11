@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_21_000706) do
+ActiveRecord::Schema.define(version: 2021_06_10_011004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,78 @@ ActiveRecord::Schema.define(version: 2021_05_21_000706) do
     t.string "codcidade_ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "contas_pag", force: :cascade do |t|
+    t.bigint "fornecedores_id"
+    t.bigint "plano_contas_id"
+    t.string "documento"
+    t.string "historico"
+    t.datetime "data_emissao"
+    t.decimal "valor_total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fornecedores_id"], name: "index_contas_pag_on_fornecedores_id"
+    t.index ["plano_contas_id"], name: "index_contas_pag_on_plano_contas_id"
+  end
+
+  create_table "contas_pagar_parcelas", force: :cascade do |t|
+    t.bigint "contas_pag_id"
+    t.datetime "data_vencimento"
+    t.datetime "data_pagamento"
+    t.decimal "valor_parcela"
+    t.decimal "valor_juros_desconto"
+    t.string "documento"
+    t.string "descricao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contas_pag_id"], name: "index_contas_pagar_parcelas_on_contas_pag_id"
+  end
+
+  create_table "empresas", force: :cascade do |t|
+    t.string "nome"
+    t.string "nome_fantasia"
+    t.string "cnpj"
+    t.string "inscricao_estadual"
+    t.string "inscricao_municipal"
+    t.string "endereco"
+    t.string "numero"
+    t.string "complemento"
+    t.string "bairro"
+    t.string "cidade"
+    t.string "cep"
+    t.string "uf"
+    t.string "telefone"
+    t.string "email"
+    t.string "codigo_uf_emitente"
+    t.string "codcid_ibge"
+    t.string "aliquota_pis"
+    t.string "aliquota_cofins"
+    t.string "serie_nfe"
+    t.string "cnae"
+    t.string "ambiente"
+    t.string "versao_layout"
+    t.string "regime_tributario"
+    t.string "emissor_nfe"
+    t.string "permite_credito_icms"
+    t.string "credito_icms_pc"
+    t.string "empresa_uninfe"
+    t.string "pasta_envio"
+    t.string "pasta_retorno"
+    t.string "senha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "estoques", force: :cascade do |t|
+    t.bigint "produto_id"
+    t.string "lote"
+    t.decimal "estoque_atual"
+    t.decimal "estoque_minimo"
+    t.decimal "estoque_reservado"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["produto_id"], name: "index_estoques_on_produto_id"
   end
 
   create_table "fornecedor_contatos", force: :cascade do |t|
@@ -76,6 +148,14 @@ ActiveRecord::Schema.define(version: 2021_05_21_000706) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "plano_contas", force: :cascade do |t|
+    t.string "conta"
+    t.string "descricao"
+    t.string "grau"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "produtos", force: :cascade do |t|
     t.bigint "localizacao_estoque_id"
     t.boolean "situacao"
@@ -106,7 +186,53 @@ ActiveRecord::Schema.define(version: 2021_05_21_000706) do
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
   end
 
+  create_table "transportadora_contatos", force: :cascade do |t|
+    t.bigint "transportadora_id"
+    t.string "nome"
+    t.string "telefone"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["transportadora_id"], name: "index_transportadora_contatos_on_transportadora_id"
+  end
+
+  create_table "transportadoras", force: :cascade do |t|
+    t.string "nome"
+    t.string "cnpj"
+    t.string "ie"
+    t.string "endereco"
+    t.string "bairro"
+    t.string "cidade"
+    t.string "cep"
+    t.string "uf"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "vendedores", force: :cascade do |t|
+    t.string "nome"
+    t.string "pessoa"
+    t.string "cpf"
+    t.string "rg"
+    t.string "cnpj"
+    t.string "ie"
+    t.string "endereco"
+    t.string "bairro"
+    t.string "cidade"
+    t.string "cep"
+    t.string "uf"
+    t.string "telefone"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "cliente_contatos", "clientes"
+  add_foreign_key "contas_pag", "fornecedores", column: "fornecedores_id"
+  add_foreign_key "contas_pag", "plano_contas", column: "plano_contas_id"
+  add_foreign_key "contas_pagar_parcelas", "contas_pag"
+  add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
   add_foreign_key "produtos", "localizacao_estoques"
+  add_foreign_key "transportadora_contatos", "transportadoras"
 end

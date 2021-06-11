@@ -1,6 +1,6 @@
 class CreateContasPagar < ActiveRecord::Migration[5.2]
   def change
-    create_table :contas_pagar do |t|
+    create_table :contas_pag do |t|
       t.references :fornecedores, foreign_key: true
       t.references :plano_contas, foreign_key: true
       t.string :documento
