@@ -22,12 +22,12 @@
   <div class="form-group">
     <%= f.label :pessoa, 'Pessoa', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-    <%= f.select(:pessoa, options_for_select([['FÍSICA', 1], ['JURÍDICA', 2]]), {}, {class: "form-control"}) %>
+    <%= f.select(:pessoa, options_for_select([['FÍSICA', 1], ['JURÍDICA', 2]]), {}, {class: "form-control", onclick: "verificaPessoa()"}) %>
     </div>
 
   </div>
 
-  <div class="form-group">
+  <div class="form-group pessoa-fisica" style="display: none">
     <%= f.label :cpf, 'CPF', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
       <%= f.text_field :cpf, class: "form-control" %>
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group pessoa-juridica" style="display: none">
     <%= f.label :cnpj, 'CNPJ', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
       <%= f.text_field :cnpj, class: "form-control" %>
@@ -50,6 +50,14 @@
       <%= f.text_field :ie, class: "form-control" %>
     </div>
   </div>
+
+  <div class="form-group">
+    <%= f.label :cep, 'CEP', class: "col-sm-1 control-label" %>
+    <div class="col-sm-2">
+      <%= f.text_field :cep, class: "form-control" %>
+    </div>
+  </div>
+  
 
   <div class="form-group">
     <%= f.label :endereco, 'Endereço', class: "col-sm-1 control-label" %>
@@ -68,19 +76,14 @@
     <div class="col-sm-4">
       <%= f.text_field :cidade, class: "form-control" %>
     </div>
-
-    <%= f.label :codcidade_ibge, 'Cidade IBGE', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :codcidade_ibge, class: "form-control" %>
-    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :cep, 'CEP', class: "col-sm-1 control-label" %>
+    <%= f.label :codcidade_ibge, 'Cidade IBGE', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :cep, class: "form-control" %>
+      <%= f.text_field :codcidade_ibge, class: "form-control" %>
     </div>
-  
+
     <%= f.label :uf, 'UF', class: "col-sm-1 control-label" %>
     <div class="col-sm-1">
       <%= f.text_field :uf, class: "form-control" %>
@@ -100,3 +103,45 @@
     </div>
   </div>
 <% end %>
+
+<script>
+$(document).ready(function() {
+  verificaPessoa()
+});
+
+const verificaPessoa = () =>{
+  const selectElement = document.getElementById("cliente_pessoa")
+  var codigo_pessoa = selectElement.value
+
+  if(codigo_pessoa == "1"){
+    $('.pessoa-fisica').show()
+    $('.pessoa-juridica').hide()
+  }else{
+    $('.pessoa-fisica').hide()
+    $('.pessoa-juridica').show()
+  }
+}
+
+
+$("#cliente_endereco").focus(function(){
+  let cep = $('#cliente_cep').val()
+
+  $.ajax({
+    type: "GET",
+    url: "https://viacep.com.br/ws/" + cep + "/json/",
+    success: function(data){
+      if(data.logradouro){
+        $('#cliente_endereco').val(data.logradouro);
+        $('#cliente_bairro').val(data.bairro);
+        $('#cliente_cidade').val(data.localidade);
+        $('#cliente_uf').val(data.uf);
+        $('#cliente_codcidade_ibge').val(data.ibge);
+      }
+    }
+  })
+});
+
+
+    
+  
+</script>

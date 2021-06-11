@@ -1,9 +1,9 @@
-class ContasPagarController < ApplicationController
+class ContasPagController < ApplicationController
   before_action :set_contas_pagar, only: %i[ show edit update destroy ]
 
   # GET /contas_pagar or /contas_pagar.json
   def index
-    @contas_pagar = ContasPagar.all
+    @contas_pagar = ContasPag.all
   end
 
   # GET /contas_pagar/1 or /contas_pagar/1.json
@@ -12,7 +12,7 @@ class ContasPagarController < ApplicationController
 
   # GET /contas_pagar/new
   def new
-    @contas_pagar = ContasPagar.new
+    @contas_pagar = ContasPag.new
   end
 
   # GET /contas_pagar/1/edit
@@ -21,7 +21,7 @@ class ContasPagarController < ApplicationController
 
   # POST /contas_pagar or /contas_pagar.json
   def create
-    @contas_pagar = ContasPagar.new(contas_pagar_params)
+    @contas_pagar = ContasPag.new(contas_pagar_params)
 
     respond_to do |format|
       if @contas_pagar.save
@@ -59,7 +59,7 @@ class ContasPagarController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contas_pagar
-      @contas_pagar = ContasPagar.find(params[:id])
+      @contas_pagar = ContasPag.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
