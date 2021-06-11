@@ -1,0 +1,2 @@
+class PlanoConta < ApplicationRecord
+end

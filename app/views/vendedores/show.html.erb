@@ -1,0 +1,40 @@
+<div class="page-header">
+  <%= link_to vendedores_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_vendedor_path(@vendedor), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nome:</dt>
+  <dd><%= @vendedor.nome %></dd>
+  <dt>Pessoa:</dt>
+  <dd><%= @vendedor.pessoa %></dd>
+  <dt>Cpf:</dt>
+  <dd><%= @vendedor.cpf %></dd>
+  <dt>Rg:</dt>
+  <dd><%= @vendedor.rg %></dd>
+  <dt>Cnpj:</dt>
+  <dd><%= @vendedor.cnpj %></dd>
+  <dt>Ie:</dt>
+  <dd><%= @vendedor.ie %></dd>
+  <dt>Endereco:</dt>
+  <dd><%= @vendedor.endereco %></dd>
+  <dt>Bairro:</dt>
+  <dd><%= @vendedor.bairro %></dd>
+  <dt>Cidade:</dt>
+  <dd><%= @vendedor.cidade %></dd>
+  <dt>Cep:</dt>
+  <dd><%= @vendedor.cep %></dd>
+  <dt>Uf:</dt>
+  <dd><%= @vendedor.uf %></dd>
+  <dt>Telefone:</dt>
+  <dd><%= @vendedor.telefone %></dd>
+  <dt>Email:</dt>
+  <dd><%= @vendedor.email %></dd>
+</dl>

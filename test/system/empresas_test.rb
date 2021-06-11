@@ -40,7 +40,7 @@ class EmpresasTest < ApplicationSystemTestCase
     fill_in "Permite credito icms", with: @empresa.permite_credito_icms
     fill_in "Regime tributario", with: @empresa.regime_tributario
     fill_in "Senha", with: @empresa.senha
-    fill_in "Serie-nfe", with: @empresa.serie-nfe
+    fill_in "Serie nfe", with: @empresa.serie_nfe
     fill_in "Telefone", with: @empresa.telefone
     fill_in "Uf", with: @empresa.uf
     fill_in "Versao layout", with: @empresa.versao_layout
@@ -80,7 +80,7 @@ class EmpresasTest < ApplicationSystemTestCase
     fill_in "Permite credito icms", with: @empresa.permite_credito_icms
     fill_in "Regime tributario", with: @empresa.regime_tributario
     fill_in "Senha", with: @empresa.senha
-    fill_in "Serie-nfe", with: @empresa.serie-nfe
+    fill_in "Serie nfe", with: @empresa.serie_nfe
     fill_in "Telefone", with: @empresa.telefone
     fill_in "Uf", with: @empresa.uf
     fill_in "Versao layout", with: @empresa.versao_layout

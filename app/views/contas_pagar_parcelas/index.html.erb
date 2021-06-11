@@ -1,0 +1,41 @@
+<div class="page-header">
+  <%= link_to new_contas_pagar_parcela_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo Contas pagar parcela
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Contas pagar</th>
+            <th>Data vencimento</th>
+            <th>Data pagamento</th>
+            <th>Valor parcela</th>
+            <th>Valor juros desconto</th>
+            <th>Documento</th>
+            <th>Descricao</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @contas_pagar_parcelas) do |contas_pagar_parcela| %>
+            <td><%= contas_pagar_parcela.contas_pagar %></td>
+            <td><%= contas_pagar_parcela.data_vencimento %></td>
+            <td><%= contas_pagar_parcela.data_pagamento %></td>
+            <td><%= contas_pagar_parcela.valor_parcela %></td>
+            <td><%= contas_pagar_parcela.valor_juros_desconto %></td>
+            <td><%= contas_pagar_parcela.documento %></td>
+            <td><%= contas_pagar_parcela.descricao %></td>
+            <td><%= link_to 'Mostrar', contas_pagar_parcela %></td>
+        <td><%= link_to 'Editar', edit_contas_pagar_parcela_path(contas_pagar_parcela) %></td>
+        <td><%= link_to 'Apagar', contas_pagar_parcela, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

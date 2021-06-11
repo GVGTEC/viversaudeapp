@@ -1,0 +1,33 @@
+<div class="page-header">
+  <%= link_to new_plano_conta_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo Plano conta
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Conta</th>
+            <th>Descricao</th>
+            <th>Grau</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @plano_contas) do |plano_conta| %>
+            <td><%= plano_conta.conta %></td>
+            <td><%= plano_conta.descricao %></td>
+            <td><%= plano_conta.grau %></td>
+            <td><%= link_to 'Mostrar', plano_conta %></td>
+        <td><%= link_to 'Editar', edit_plano_conta_path(plano_conta) %></td>
+        <td><%= link_to 'Apagar', plano_conta, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

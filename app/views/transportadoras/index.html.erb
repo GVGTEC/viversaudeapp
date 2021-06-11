@@ -1,0 +1,43 @@
+<div class="page-header">
+  <%= link_to new_transportadora_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo Transportadora
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Nome</th>
+            <th>Cnpj</th>
+            <th>Ie</th>
+            <th>Endereco</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>Cep</th>
+            <th>Uf</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @transportadoras) do |transportadora| %>
+            <td><%= transportadora.nome %></td>
+            <td><%= transportadora.cnpj %></td>
+            <td><%= transportadora.ie %></td>
+            <td><%= transportadora.endereco %></td>
+            <td><%= transportadora.bairro %></td>
+            <td><%= transportadora.cidade %></td>
+            <td><%= transportadora.cep %></td>
+            <td><%= transportadora.uf %></td>
+            <td><%= link_to 'Mostrar', transportadora %></td>
+        <td><%= link_to 'Editar', edit_transportadora_path(transportadora) %></td>
+        <td><%= link_to 'Apagar', transportadora, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

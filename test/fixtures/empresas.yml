@@ -19,7 +19,7 @@ one:
   codcid_ibge: MyString
   aliquota_pis: MyString
   aliquota_cofins: MyString
-  serie-nfe: MyString
+  serie_nfe: MyString
   cnae: MyString
   ambiente: MyString
   versao_layout: MyString
@@ -51,7 +51,7 @@ two:
   codcid_ibge: MyString
   aliquota_pis: MyString
   aliquota_cofins: MyString
-  serie-nfe: MyString
+  serie_nfe: MyString
   cnae: MyString
   ambiente: MyString
   versao_layout: MyString

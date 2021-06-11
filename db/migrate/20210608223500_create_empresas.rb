@@ -19,7 +19,7 @@ class CreateEmpresas < ActiveRecord::Migration[5.2]
       t.string :codcid_ibge
       t.string :aliquota_pis
       t.string :aliquota_cofins
-      t.string :serie-nfe
+      t.string :serie_nfe
       t.string :cnae
       t.string :ambiente
       t.string :versao_layout

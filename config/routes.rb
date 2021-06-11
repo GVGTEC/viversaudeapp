@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :estoques
+  resources :vendedores
+  resources :transportadora_contatos
+  resources :transportadoras
+  resources :contas_pagar_parcelas
+  resources :contas_pagar
+  resources :plano_contas
   resources :empresas
   resources :produtos
   resources :localizacao_estoques
