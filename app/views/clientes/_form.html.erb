@@ -109,10 +109,6 @@
 <% end %>
 
 <script>
-$(document).ready(function() {
-  verificaPessoa()
-});
-
 const verificaPessoa = () =>{
   const selectElement = document.getElementById("cliente_pessoa")
   var codigo_pessoa = selectElement.value
@@ -125,7 +121,6 @@ const verificaPessoa = () =>{
     $('.pessoa-juridica').show()
   }
 }
-
 
 $("#cliente_endereco").focus(function(){
   let cep = $('#cliente_cep').val()
