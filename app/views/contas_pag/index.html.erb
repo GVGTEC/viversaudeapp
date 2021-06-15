@@ -10,8 +10,8 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-        <th>Fornecedores</th>
-        <th>Plano contas</th>
+        <th>Fornecedor</th>
+        <th>Plano conta</th>
         <th>Documento</th>
         <th>Historico</th>
         <th>Data emissao</th>
@@ -23,15 +23,15 @@
     </thead>
 
     <tbody>
-      <%= content_tag_for(:tr, @contas_pagar) do |contas_pagar| %>
-            <td><%= contas_pagar.fornecedores %></td>
-            <td><%= contas_pagar.plano_contas %></td>
+      <%= content_tag_for(:tr, @contas_pag) do |contas_pagar| %>
+            <td><%= contas_pagar.fornecedor.nome %></td>
+            <td><%= contas_pagar.plano_conta.conta %></td>
             <td><%= contas_pagar.documento %></td>
             <td><%= contas_pagar.historico %></td>
             <td><%= contas_pagar.data_emissao %></td>
             <td><%= contas_pagar.valor_total %></td>
             <td><%= link_to 'Mostrar', contas_pagar %></td>
-        <td><%= link_to 'Editar', edit_contas_pagar_path(contas_pagar) %></td>
+        <td><%= link_to 'Editar', edit_contas_pag_path(contas_pagar) %></td>
         <td><%= link_to 'Apagar', contas_pagar, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
     </tbody>

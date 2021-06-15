@@ -44,16 +44,16 @@ ActiveRecord::Schema.define(version: 2021_06_10_011004) do
   end
 
   create_table "contas_pag", force: :cascade do |t|
-    t.bigint "fornecedores_id"
-    t.bigint "plano_contas_id"
+    t.bigint "fornecedor_id"
+    t.bigint "plano_conta_id"
     t.string "documento"
     t.string "historico"
     t.datetime "data_emissao"
     t.decimal "valor_total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["fornecedores_id"], name: "index_contas_pag_on_fornecedores_id"
-    t.index ["plano_contas_id"], name: "index_contas_pag_on_plano_contas_id"
+    t.index ["fornecedor_id"], name: "index_contas_pag_on_fornecedor_id"
+    t.index ["plano_conta_id"], name: "index_contas_pag_on_plano_conta_id"
   end
 
   create_table "contas_pagar_parcelas", force: :cascade do |t|
@@ -228,8 +228,8 @@ ActiveRecord::Schema.define(version: 2021_06_10_011004) do
   end
 
   add_foreign_key "cliente_contatos", "clientes"
-  add_foreign_key "contas_pag", "fornecedores", column: "fornecedores_id"
-  add_foreign_key "contas_pag", "plano_contas", column: "plano_contas_id"
+  add_foreign_key "contas_pag", "fornecedores"
+  add_foreign_key "contas_pag", "plano_contas"
   add_foreign_key "contas_pagar_parcelas", "contas_pag"
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"

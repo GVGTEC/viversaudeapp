@@ -1,9 +1,9 @@
 <div class="page-header">
-  <%= link_to contas_pagar_index_path, class: 'btn btn-default' do %>
+  <%= link_to contas_pag_index_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
   <% end %>
-  <%= link_to edit_contas_pagar_path(@contas_pagar), class: 'btn btn-primary' do %>
+  <%= link_to edit_contas_pag_path(@contas_pag), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Editar
   <% end %>
@@ -12,15 +12,15 @@
 
 <dl class="dl-horizontal">
   <dt>Fornecedores:</dt>
-  <dd><%= @contas_pagar.fornecedores %></dd>
+  <dd><%= @contas_pag.fornecedor.nome %></dd>
   <dt>Plano contas:</dt>
-  <dd><%= @contas_pagar.plano_contas %></dd>
+  <dd><%= @contas_pag.plano_conta.conta %></dd>
   <dt>Documento:</dt>
-  <dd><%= @contas_pagar.documento %></dd>
+  <dd><%= @contas_pag.documento %></dd>
   <dt>Historico:</dt>
-  <dd><%= @contas_pagar.historico %></dd>
+  <dd><%= @contas_pag.historico %></dd>
   <dt>Data emissao:</dt>
-  <dd><%= @contas_pagar.data_emissao %></dd>
+  <dd><%= @contas_pag.data_emissao.strftime("%Y-%m-%d") %></dd>
   <dt>Valor total:</dt>
-  <dd><%= @contas_pagar.valor_total %></dd>
+  <dd><%= @contas_pag.valor_total %></dd>
 </dl>

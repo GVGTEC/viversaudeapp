@@ -1,3 +1,3 @@
 class ContasPagarParcela < ApplicationRecord
-  belongs_to :contas_pagar
+  belongs_to :contas_pag
 end
