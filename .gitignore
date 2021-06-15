@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 # Created by https://www.toptal.com/developers/gitignore/api/rails,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=rails,node
@@ -197,12 +196,3 @@ database.yml
 !/storage/.keep
 
 # End of https://www.toptal.com/developers/gitignore/api/rails,node
-=======
-tmp/*
-.DS_Store
-*.cache
-*.log
-log/development.log
-*.log
-database.yml
->>>>>>> e872d5db730662f773c56281f67ad2af97211b53
