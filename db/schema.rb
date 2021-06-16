@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_10_011004) do
+ActiveRecord::Schema.define(version: 2021_06_16_041348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(version: 2021_06_10_011004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contas_pag_id"], name: "index_contas_pagar_parcelas_on_contas_pag_id"
+  end
+
+  create_table "contatos", force: :cascade do |t|
+    t.string "nome"
+    t.string "email"
+    t.string "telefone"
+    t.string "natureza"
+    t.bigint "natureza_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "empresas", force: :cascade do |t|
