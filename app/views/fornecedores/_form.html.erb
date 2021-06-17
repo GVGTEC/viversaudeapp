@@ -89,9 +89,90 @@
     </div>
   </div>  
 
+  <br><br>
+
+  <h4>Contatos</h4>
+  <hr>
+  <div id="conteudoContainer">
+    <% if @fornecedor.present? %>
+      <% @fornecedor.contatos.each do |contato| %>
+        <div class="item" style="margin-bottom: 40px">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Nome</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" value="<%= contato.nome %>" name="fornecedor[contato][][nome]">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" value="<%= contato.email %>" name="fornecedor[contato][][email]">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Telefone</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" value="<%= contato.telefone %>" name="fornecedor[contato][][telefone]">
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="item" style="margin-bottom: 40px">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Nome</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="fornecedor[contato][][nome]">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="fornecedor[contato][][email]">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Telefone</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="fornecedor[contato][][telefone]">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group" style="text-align: right;">
+    <a href="javascript:;" onclick="app.contas_pag.mais();" class="btn btn-primary">Mais</a>
+  </div>
+
+  <hr>
+
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= f.submit class: "btn btn-primary" %>
+    <div class="col-sm-1">
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
+
+<div id="conteudoContainerTemplate" style="display: none">
+  <div class="item" style="margin-bottom: 40px">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Nome</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="fornecedor[contato][][nome]">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="fornecedor[contato][][email]">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Telefone</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="fornecedor[contato][][telefone]">
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,6 +30,7 @@ class FornecedoresController < ApplicationController
 
     respond_to do |format|
       if @fornecedor.save
+        salvar_contatos
         format.html { redirect_to @fornecedor, notice: "Fornecedor was successfully created." }
         format.json { render :show, status: :created, location: @fornecedor }
       else
@@ -43,6 +44,7 @@ class FornecedoresController < ApplicationController
   def update
     respond_to do |format|
       if @fornecedor.update(fornecedor_params)
+        salvar_contatos
         format.html { redirect_to @fornecedor, notice: "Fornecedor was successfully updated." }
         format.json { render :show, status: :ok, location: @fornecedor }
       else
@@ -65,6 +67,23 @@ class FornecedoresController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_fornecedor
       @fornecedor = Fornecedor.find(params[:id])
+    end
+
+    def salvar_contatos
+      if params[:fornecedor].present? && params[:fornecedor][:contato].present?
+        @fornecedor.contatos.destroy_all if @fornecedor.contatos != []
+        params[:fornecedor][:contato].each do |contato_fornecedor|
+          if contato_fornecedor[:nome].present? || contato_fornecedor[:telefone].present?
+            contato = Contato.new
+            contato.nome = contato_fornecedor[:nome]
+            contato.email = contato_fornecedor[:email]
+            contato.telefone = contato_fornecedor[:telefone]
+            contato.natureza = params[:controller]
+            contato.natureza_id = @fornecedor.id
+            contato.save!
+          end
+        end
+      end
     end
 
     # Only allow a list of trusted parameters through.
