@@ -25,6 +25,7 @@ class TransportadorasController < ApplicationController
 
     respond_to do |format|
       if @transportadora.save
+        salvar_contatos
         format.html { redirect_to @transportadora, notice: "Transportadora was successfully created." }
         format.json { render :show, status: :created, location: @transportadora }
       else
@@ -38,6 +39,7 @@ class TransportadorasController < ApplicationController
   def update
     respond_to do |format|
       if @transportadora.update(transportadora_params)
+        salvar_contatos
         format.html { redirect_to @transportadora, notice: "Transportadora was successfully updated." }
         format.json { render :show, status: :ok, location: @transportadora }
       else
@@ -50,6 +52,7 @@ class TransportadorasController < ApplicationController
   # DELETE /transportadoras/1 or /transportadoras/1.json
   def destroy
     @transportadora.destroy
+    salvar_contatos
     respond_to do |format|
       format.html { redirect_to transportadoras_url, notice: "Transportadora was successfully destroyed." }
       format.json { head :no_content }
@@ -60,6 +63,23 @@ class TransportadorasController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_transportadora
       @transportadora = Transportadora.find(params[:id])
+    end
+
+    def salvar_contatos
+      if params[:transportadora].present? && params[:transportadora][:contato].present?
+        @transportadora.contatos.destroy_all if @transportadora.contatos != []
+        params[:transportadora][:contato].each do |contato_transportadora|
+          if contato_transportadora[:nome].present? || contato_transportadora[:telefone].present?
+            contato = Contato.new
+            contato.nome = contato_transportadora[:nome]
+            contato.email = contato_transportadora[:email]
+            contato.telefone = contato_transportadora[:telefone]
+            contato.natureza = params[:controller]
+            contato.natureza_id = @transportadora.id
+            contato.save!
+          end
+        end
+      end
     end
 
     # Only allow a list of trusted parameters through.
