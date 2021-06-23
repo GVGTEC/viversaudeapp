@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "/estoque/ajuste", to: "estoques#ajuste"
   resources :vendedores
   resources :transportadoras
   resources :contas_pag
@@ -10,6 +9,7 @@ Rails.application.routes.draw do
   resources :clientes
   resources :fornecedores
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  
+  get "/estoques/ajuste", to: "estoques#ajuste"
   root to: "home#index"
 end
