@@ -1,7 +1,7 @@
 class EstoquesController < ApplicationController
 
   def ajuste
-    @estoque = Estoque.new
+    format.html { redirect_to "/estoques/_form_ajuste"}
   end
 
   def show

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :estoques
+  get "/estoque/ajuste", to: "estoques#ajuste"
   resources :vendedores
   resources :transportadoras
   resources :contas_pag
