@@ -10,6 +10,19 @@
   <h1>Ajuste de Estoque</h1>
 </div>
 
+<div style="text-align: right;margin-top:10px">
+    <form action="/produtos" method="get">
+      <div class="row" style="width:300px;display: inline-block;">
+        <div style="float: left">
+          <input type="text" name="descricao" value="<%=params[:descricao] %>" class="form-control" placeholder="Busca..">
+       </div>
+       <div style="float: left;margin-left:10px">
+          <input type="submit" class="btn btn-primary" value="Buscar">
+       </div>
+      </div>
+    </form>
+</div>
+
 <%= form_for(estoques_ajuste_path, html: { class: "form-horizontal", role: "form" }) do |f| %>
   <% if @estoque.errors.any? %>
     <div class="alert alert-danger alert-dismissable" role="alert">
@@ -25,35 +38,33 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :produto, class: "col-sm-1 control-label" %>
+    <%= f.label :produto, 'Produto', class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
       <%= f.text_field :produto, class: "form-control" %>
     </div>
   </div>
+
   <div class="form-group">
-    <%= f.label :lote, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
+    <%= f.label :lote, 'Lote Nº', class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
       <%= f.text_field :lote, class: "form-control" %>
     </div>
   </div>
+
   <div class="form-group">
-    <%= f.label :estoque_atual, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
+    <%= f.label :estoque_atual, "Estoque Atual", class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
       <%= f.text_field :estoque_atual, class: "form-control" %>
     </div>
   </div>
+
   <div class="form-group">
-    <%= f.label :estoque_minimo, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
+    <%= f.label :estoque_minimo , "Estoque Mínimo", class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
       <%= f.text_field :estoque_minimo, class: "form-control" %>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :estoque_reservado, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
-    </div>
-  </div>
+
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <%= f.submit "Salvar", class: "btn btn-primary" %>
