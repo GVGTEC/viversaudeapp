@@ -6,7 +6,7 @@
   <h1>Reposição de Estoque</h1>
 </div>
 
-<%= form_for(estoques_ajuste_path, html: { class: "form-horizontal", role: "form" }) do |f| %>
+<%= form_for(estoques_reposicao_path, html: { class: "form-horizontal", role: "form" }) do |f| %>
   <% if @estoque.errors.any? %>
     <div class="alert alert-danger alert-dismissable" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -21,31 +21,36 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :produto, 'Fornecedor', class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :produto, class: "form-control" %>
+    <%= f.label :fornecedor, 'Fornecedor', class: "col-sm-1 control-label" %>
+    <div class="col-sm-11">
+    <%= f.select :fornecedor_id ,
+          Fornecedor.all.collect{|fornecedor| [fornecedor.nome, fornecedor.id]} , 
+          {:selected => @estoque.fornecedor_id},
+          {:class =>'form-control'}%>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :produto, 'Documento', class: "col-sm-1 control-label" %>
+    <%= f.label :documento, 'Documento', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :produto, class: "form-control" %>
+      <%= f.text_field :documento, class: "form-control" %>
     </div>
 
-    <%= f.label :produto, 'Data Reposição', class: "col-sm-1 control-label" %>
+    <%= f.label :data_reposicao, 'Data Reposição', class: "col-sm-2 control-label" %>
     <div class="col-sm-2">
-      <%= f.datetime_field :produto, class: "form-control" %>
+      <%= f.date_field :data_reposicao, class: "form-control" %>
     </div>
   </div>
 
-  <br>
-  <br>
+  <br><br>
   
   <div class="form-group">
     <%= f.label :produto, 'Produto', class: "col-sm-1 control-label" %>
     <div class="col-sm-8">
-      <%= f.text_field :produto, class: "form-control" %>
+    <%= f.select :produto_id ,
+          Produto.all.collect{|produto| [produto.descricao, produto.id]} , 
+          {:selected => @estoque.produto_id},
+          {:class =>'form-control'}%>
     </div>
 
     <%= f.label :estoque_atual, 'Estoque Atual', class: "col-sm-1 control-label" %>
@@ -60,14 +65,14 @@
       <%= f.text_field :lote, class: "form-control" %>
     </div>
 
-    <%= f.label :produto, 'Data Validade', class: "col-sm-1 control-label" %>
+    <%= f.label :data_validade, 'Data Validade', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.datetime_field :produto, class: "form-control" %>
+      <%= f.date_field :data_validade, class: "form-control" %>
     </div>
 
-    <%= f.label :estoque_reservado, 'Quantidade', class: "col-sm-1 control-label" %>
+    <%= f.label :qtd, 'Quantidade', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
+      <%= f.text_field :qtd, class: "form-control" %>
     </div>
 
     <%= f.label :estoque_reservado, 'Estoque Final', class: "col-sm-1 control-label" %>
@@ -76,34 +81,41 @@
     </div>
   </div>
 
-  <br>
-  <br>
+  <br><br>
   
   <div class="form-group">
-    <%= f.label :estoque_reservado, 'Preço Custo Atual', class: "col-sm-1 control-label" %>
+    <label class="col-sm-1 control-label">Preço Custo Atual</label>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
+      <input class="form-control" type="text" id="estoques_reposicao_preco_custo_atual">
     </div>
 
-    <%= f.label :estoque_reservado, 'Preco Custo Reposição', class: "col-sm-1 control-label" %>
+    <label class="col-sm-1 control-label">Preco Custo Reposição</label>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
+      <input class="form-control" type="text" id="estoques_reposicao_preco_custo_reposicao">
     </div>
 
-    <%= f.label :estoque_reservado, 'Margem de Lucro (%)', class: "col-sm-1 control-label" %>
+    <label class="col-sm-1 control-label">Margem de Lucro (%)</label>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
+      <input class="form-control" type="text" id="estoques_reposicao_margem_lucro">
     </div>
 
-    <%= f.label :estoque_reservado, 'Preco de Venda', class: "col-sm-1 control-label" %>
+    <label class="col-sm-1 control-label">Preco de Venda</label>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
+      <input class="form-control" type="text" id="estoques_reposicao_preco_venda">
     </div>
   </div>
 
+  <br><br>
+
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-2 col-sm-10">
       <%= f.submit "Salvar", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
+
+<%# <script>
+$(document).ready(function() {
+  alert()
+});
+</script> %>

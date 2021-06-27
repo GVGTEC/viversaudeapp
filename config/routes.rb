@@ -2,8 +2,11 @@ Rails.application.routes.draw do
   get "/estoques/ajuste", to: "estoques#ajuste"
   get "/estoques/reposicao", to: "estoques#reposicao"
   get "/estoques/baixa", to: "estoques#baixa"
-  #get "/estoques", to: "estoques#index"
-  resources :estoques, only: :index
+  post "/estoques/ajuste", to: "estoques#ajuste"
+  post "/estoques/reposicao", to: "estoques#reposicao"
+  post "/estoques/baixa", to: "estoques#baixa"
+
+  resources :estoques, only: [:index, :show]
   resources :vendedores
   resources :transportadoras
   resources :contas_pag

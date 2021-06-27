@@ -116,12 +116,18 @@ ActiveRecord::Schema.define(version: 2021_06_16_041348) do
 
   create_table "estoques", force: :cascade do |t|
     t.bigint "produto_id"
+    t.bigint "fornecedor_id"
     t.string "lote"
+    t.string "documento"
+    t.integer "qtd"
+    t.date "data_reposicao"
+    t.date "data_validade"
     t.decimal "estoque_atual"
     t.decimal "estoque_minimo"
     t.decimal "estoque_reservado"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["fornecedor_id"], name: "index_estoques_on_fornecedor_id"
     t.index ["produto_id"], name: "index_estoques_on_produto_id"
   end
 
@@ -241,6 +247,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_041348) do
   add_foreign_key "contas_pag", "fornecedores"
   add_foreign_key "contas_pag", "plano_contas"
   add_foreign_key "contas_pagar_parcelas", "contas_pag"
+  add_foreign_key "estoques", "fornecedores"
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
   add_foreign_key "produtos", "localizacao_estoques"

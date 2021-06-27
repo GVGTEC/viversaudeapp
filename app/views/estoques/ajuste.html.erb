@@ -1,11 +1,7 @@
 <div class="page-header">
-  <%= link_to estoques_ajuste_path, class: 'btn btn-default' do %>
+  <%= link_to estoques_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
-  <% end %>
-  <%= link_to estoques_ajuste_path, class: 'btn btn-primary' do %>
-    <span class="glyphicon glyphicon-info-sign"></span>
-    Mostrar
   <% end %>
   <h1>Ajuste de Estoque</h1>
 </div>
@@ -39,15 +35,29 @@
 
   <div class="form-group">
     <%= f.label :produto, 'Produto', class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :produto, class: "form-control" %>
+    <div class="col-sm-8">
+    <%= f.select :produto_id ,
+          Produto.all.collect{|produto| [produto.descricao, produto.id]} , 
+          {:selected => @estoque.produto_id, :include_blank => true},
+          {:class =>'form-control', :onclick => "buscaLote()"}
+    %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :lote, 'Lote Nº', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.text_field :lote, class: "form-control" %>
+      <%= f.select :id , ["", ""], 
+          {:selected => @estoque.lote, :include_blank => true},
+          {:class =>'form-control', :onclick => "buscaEstoque()"}
+      %>  
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="estoque_inicial">Estoque Inicial</label>
+    <div class="col-sm-3">
+      <input class="form-control" type="text" id="estoque_inicial" disabled>
     </div>
   </div>
 
@@ -58,16 +68,55 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <%= f.label :estoque_minimo , "Estoque Mínimo", class: "col-sm-1 control-label" %>
+  <div class="form-group" style="display: none;">
+    <label class="col-sm-1 control-label" for="estoque_id">Id do Estoque</label>
     <div class="col-sm-3">
-      <%= f.text_field :estoque_minimo, class: "form-control" %>
+      <input class="form-control" type="text" name="id" id="id_estoque">
     </div>
   </div>
 
+  <br>
+
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-2 col-sm-10">
       <%= f.submit "Salvar", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
+
+<script>
+const buscaLote = () =>{
+  const selectElement = document.getElementById("_estoques_ajuste_produto_id")
+  var idProduto = selectElement.value
+
+  $.ajax({
+    type: "GET",
+    url: `/estoques.json?produto_id=${idProduto}.json`,
+    success: function(data){
+      $("#_estoques_ajuste_id").html("");
+      $("#_estoques_ajuste_id").append(`<option value=""></option>`)
+
+      data.forEach(estoque => {
+        $("#_estoques_ajuste_id").append(`
+          <option value="${estoque.id}">${estoque.lote}</option>
+        `)
+      });
+    }
+  })
+}
+
+const buscaEstoque = () =>{
+  const selectElement = document.getElementById("_estoques_ajuste_id")
+  var idEstoque = selectElement.value
+
+  $.ajax({
+    type: "GET",
+    url: `/estoques/${idEstoque}.json`,
+    success: function(data){
+      const estoque = data
+      $('#id_estoque').val(estoque.id);
+      $('#estoque_inicial').val(estoque.estoque_atual);
+    }
+  })
+}
+</script>

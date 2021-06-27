@@ -13,7 +13,6 @@
   <% end %>
 
   <div class="ibox-content">
-      <form role="form" class="form-inline">
           <div class="row form-group">
               <div class="col-md-2">
                 <%= f.label :situacao, 'Situação' %>
@@ -46,7 +45,7 @@
 
               <div class="col-md-4">
                 <%= f.label :localizacao_estoque, 'Local Estoque' %>
-                <%= f.text_field :localizacao_estoque, class: "form-control" %>
+                <%= f.text_field :localizacao_estoque_id, class: "form-control" %>
               </div>
           </div>
         
@@ -149,12 +148,11 @@
               <%= f.text_field :comissao_pc, class: "form-control" %>
             </div>             
           </div>    
-      </form>
   </div>
-
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-2">
       <%= f.submit class: "btn btn-primary" %>
     </div>
   </div>
+  
 <% end %>

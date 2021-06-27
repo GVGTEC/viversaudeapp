@@ -1,1 +1,20 @@
-<h1>ENTROU NO SHOW DE ESTOQUES</h1>
+<div class="page-header">
+  <%= link_to estoques_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Produto</dt>
+  <dd><%= @estoque.produto.descricao %></dd>
+  <dt>Lote:</dt>
+  <td><%= @estoque.lote %></td>
+  <dt>Estoque Atual:</dt>
+  <td><%= @estoque.estoque_atual %></td>
+  <dt>Estoque Minimo:</dt>
+  <td><%= @estoque.estoque_minimo %></td>
+  <dt>Estoque Reservado:</dt>
+  <td><%= @estoque.estoque_reservado %></td>
+</dl>

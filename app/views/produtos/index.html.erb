@@ -23,31 +23,31 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Localizacao estoque</th>
-            <th>Situacao</th>
-            <th>Data inativo</th>
-            <th>Descricao</th>
-            <th>Descricao nfe</th>
-            <th>Codigo barras</th>
-            <th>Ncm</th>
-            <th>Situacao tributaria</th>
-            <th>Unidade</th>
-            <th>Embalagem</th>
-            <th>Controlar estoque</th>
-            <th>Por lote</th>
-            <th>Bloquear preco</th>
-            <th>Data ultima reposicao</th>
-            <th>Data ultimo reajuste</th>
-            <th>Preco custo</th>
-            <th>Preco custo medio</th>
-            <th>Margem lucro</th>
-            <th>Preco venda</th>
-            <th>Preco oferta</th>
-            <th>Margem lucro oferta</th>
-            <th>Data inicial oferta</th>
-            <th>Data final oferta</th>
-            <th>Comissao pc</th>
-            <th></th>
+      <th>Localizacao estoque</th>
+      <th>Situacao</th>
+      <th>Data inativo</th>
+      <th>Descricao</th>
+      <th>Descricao nfe</th>
+      <th>Codigo barras</th>
+      <th>Ncm</th>
+      <th>Situacao tributaria</th>
+      <th>Unidade</th>
+      <th>Embalagem</th>
+      <th>Controlar estoque</th>
+      <th>Por lote</th>
+      <th>Bloquear preco</th>
+      <th>Data ultima reposicao</th>
+      <th>Data ultimo reajuste</th>
+      <th>Preco custo</th>
+      <th>Preco custo medio</th>
+      <th>Margem lucro</th>
+      <th>Preco venda</th>
+      <th>Preco oferta</th>
+      <th>Margem lucro oferta</th>
+      <th>Data inicial oferta</th>
+      <th>Data final oferta</th>
+      <th>Comissao pc</th>
+      <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -55,7 +55,7 @@
 
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
-            <td><%= produto.localizacao_estoque %></td>
+            <td><%= produto.localizacao_estoque.id %></td>
             <td><%= produto.situacao %></td>
             <td><%= produto.data_inativo %></td>
             <td><%= produto.descricao %></td>
