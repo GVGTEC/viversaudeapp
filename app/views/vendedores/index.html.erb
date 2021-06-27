@@ -3,27 +3,27 @@
     <span class="glyphicon glyphicon-plus"></span>
     Novo Vendedor
   <% end %>
-  <h1>Lista</h1>
+  <h1>Lista Vendedores</h1>
 </div>
 
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Nome</th>
-            <th>Pessoa</th>
-            <th>Cpf</th>
-            <th>Rg</th>
-            <th>Cnpj</th>
-            <th>Ie</th>
-            <th>Endereco</th>
-            <th>Bairro</th>
-            <th>Cidade</th>
-            <th>Cep</th>
-            <th>Uf</th>
-            <th>Telefone</th>
-            <th>Email</th>
-            <th></th>
+        <th>Nome</th>
+        <th>Pessoa</th>
+        <th>Cpf</th>
+        <th>Rg</th>
+        <th>Cnpj</th>
+        <th>Ie</th>
+        <th>Endereco</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th>Cep</th>
+        <th>Uf</th>
+        <th>Telefone</th>
+        <th>Email</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -31,20 +31,20 @@
 
     <tbody>
       <%= content_tag_for(:tr, @vendedores) do |vendedor| %>
-            <td><%= vendedor.nome %></td>
-            <td><%= vendedor.pessoa %></td>
-            <td><%= vendedor.cpf %></td>
-            <td><%= vendedor.rg %></td>
-            <td><%= vendedor.cnpj %></td>
-            <td><%= vendedor.ie %></td>
-            <td><%= vendedor.endereco %></td>
-            <td><%= vendedor.bairro %></td>
-            <td><%= vendedor.cidade %></td>
-            <td><%= vendedor.cep %></td>
-            <td><%= vendedor.uf %></td>
-            <td><%= vendedor.telefone %></td>
-            <td><%= vendedor.email %></td>
-            <td><%= link_to 'Mostrar', vendedor %></td>
+        <td><%= vendedor.nome %></td>
+        <td><%= vendedor.pessoa %></td>
+        <td><%= vendedor.cpf %></td>
+        <td><%= vendedor.rg %></td>
+        <td><%= vendedor.cnpj %></td>
+        <td><%= vendedor.ie %></td>
+        <td><%= vendedor.endereco %></td>
+        <td><%= vendedor.bairro %></td>
+        <td><%= vendedor.cidade %></td>
+        <td><%= vendedor.cep %></td>
+        <td><%= vendedor.uf %></td>
+        <td><%= vendedor.telefone %></td>
+        <td><%= vendedor.email %></td>
+        <td><%= link_to 'Mostrar', vendedor %></td>
         <td><%= link_to 'Editar', edit_vendedor_path(vendedor) %></td>
         <td><%= link_to 'Apagar', vendedor, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
