@@ -119,11 +119,9 @@ ActiveRecord::Schema.define(version: 2021_06_16_041348) do
     t.bigint "fornecedor_id"
     t.string "lote"
     t.string "documento"
-    t.integer "qtd"
     t.date "data_reposicao"
     t.date "data_validade"
-    t.decimal "estoque_atual"
-    t.decimal "estoque_minimo"
+    t.decimal "estoque_atual_lote"
     t.decimal "estoque_reservado"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -198,6 +196,8 @@ ActiveRecord::Schema.define(version: 2021_06_16_041348) do
     t.datetime "data_inicial_oferta"
     t.datetime "data_final_oferta"
     t.decimal "comissao_pc"
+    t.decimal "estoque_atual"
+    t.decimal "estoque_minimo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
