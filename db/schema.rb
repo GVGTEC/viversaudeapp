@@ -159,7 +159,8 @@ ActiveRecord::Schema.define(version: 2021_06_16_041348) do
   end
 
   create_table "localizacao_estoques", force: :cascade do |t|
-    t.string "nome"
+    t.string "local"
+    t.string "observacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -25,6 +25,8 @@ class CreateProdutos < ActiveRecord::Migration[5.2]
       t.datetime :data_inicial_oferta
       t.datetime :data_final_oferta
       t.decimal :comissao_pc
+      t.decimal :estoque_atual
+      t.decimal :estoque_minimo
 
       t.timestamps
     end

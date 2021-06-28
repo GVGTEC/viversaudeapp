@@ -64,6 +64,6 @@ class LocalizacaoEstoquesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def localizacao_estoque_params
-      params.require(:localizacao_estoque).permit(:nome)
+      params.require(:localizacao_estoque).permit(:local, :observacao)
     end
 end

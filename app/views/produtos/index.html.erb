@@ -55,7 +55,7 @@
 
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
-            <td><%= produto.localizacao_estoque.id %></td>
+            <td><%= produto.localizacao_estoque.id rescue "" %></td>
             <td><%= produto.situacao %></td>
             <td><%= produto.data_inativo %></td>
             <td><%= produto.descricao %></td>

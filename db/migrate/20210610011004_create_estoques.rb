@@ -5,11 +5,9 @@ class CreateEstoques < ActiveRecord::Migration[5.2]
       t.references :fornecedor, foreign_key: true
       t.string :lote
       t.string :documento
-      t.integer :qtd
       t.date :data_reposicao
       t.date :data_validade
-      t.decimal :estoque_atual
-      t.decimal :estoque_minimo
+      t.decimal :estoque_atual_lote
       t.decimal :estoque_reservado
 
       t.timestamps

@@ -56,7 +56,7 @@
               </div>
 
               <div class="col-md-3">
-                <%= f.label :embalagem, 'Quantidade Embalagem' %>
+                <%= f.label :embalagem, 'Quantidade na Embalagem' %>
                 <%= f.text_field :embalagem, class: "form-control" %>
               </div>             
 
@@ -72,22 +72,32 @@
           </div>        
         
           <div class="row form-group">
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <%= f.label :controlar_estoque, 'Controlar Estoque ?' %>               
                 <%= f.select(:controlar_estoque, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
+                <%= f.label :situacao_tributaria, 'Estoque Atual' %>
+                <%= f.text_field :situacao_tributaria, class: "form-control" %>
+              </div>
+
+              <div class="col-md-2">
+                <%= f.label :situacao_tributaria, 'Estoque Mínimo' %>
+                <%= f.text_field :situacao_tributaria, class: "form-control" %>
+              </div>
+              
+              <div class="col-md-2">
                 <%= f.label :por_lote, 'Controlar Lote ?' %>
                 <%= f.select(:por_lote, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
               </div>
-
-              <div class="col-md-3">
+              
+              <div class="col-md-2">
                 <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
                 <%= f.datetime_field :data_ultima_reposicao, class: "form-control" %>
               </div>
 
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <%= f.label :data_ultimo_reajuste, 'Data Último Reajuste' %>
                 <%= f.datetime_field :data_ultimo_reajuste, class: "form-control" %>
               </div>
