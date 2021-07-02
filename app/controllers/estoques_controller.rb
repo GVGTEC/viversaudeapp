@@ -22,12 +22,12 @@ class EstoquesController < ApplicationController
     @estoque = Estoque.new(estoque_params)
     respond_to do |format|
       if @estoque.save
+        atualizar_produto
         path_with_params = "#{@params}?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
-        format.html { redirect_to path_with_params, notice: "#{@params.split("/")[2].capitalize} em estoque feito com sucesso." }
-        format.json { render :show, status: :created, location: @estoque }
+        action = @params.split("/")[2].capitalize
+        format.html { redirect_to path_with_params, notice: "#{action} em estoque feito com sucesso." }
       else
         format.html { render estoques_reposicao_path, status: :unprocessable_entity }
-        format.json { render json: @estoque.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,15 +58,21 @@ class EstoquesController < ApplicationController
     def update
       respond_to do |format|
         if @estoque.update(estoque_params)
-          format.html { redirect_to estoques_path, notice: "#{@params.split("/")[2].capitalize} em estoque feito com sucesso." }
-          format.json { render :show, status: :ok, location: @estoque }
+          action = @params.split("/")[2].capitalize
+          format.html { redirect_to estoques_path, notice: "#{action} em estoque feito com sucesso." }
         else
           format.html { render estoques_path, status: :unprocessable_entity }
-          format.json { render json: @estoque.errors, status: :unprocessable_entity }
         end
       end
     end
 
+    def atualizar_produto
+      produto = @estoque.produto
+      produto.estoque_atual += @estoque.estoque_atual_lote if @params.include?("reposicao")
+      produto.preco_custo = params[:preco_custo_reposicao]
+      produto.preco_custo_medio = @estoque.estoque_atual_lote if @params.include?("reposicao")
+      produto.save
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_estoque
       @estoque = Estoque.find(params[:id])
