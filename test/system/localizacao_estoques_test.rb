@@ -12,7 +12,7 @@ class LocalizacaoEstoquesTest < ApplicationSystemTestCase
 
   test "creating a Localizacao estoque" do
     visit localizacao_estoques_url
-    click_on "New Localizacao Estoque"
+    click_on "Novo Localizacao Estoque"
 
     fill_in "Local", with: @localizacao_estoque.local
     fill_in "Observacao", with: @localizacao_estoque.observacao

@@ -80,6 +80,15 @@
 <% end %>
 
 <script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
 $(document).on('keyup', '[data-behavior~=qtd-estoque]', function(event) {
   const val = $("input[data-behavior='qtd-estoque']").val()
   const estoque_inicial = $('#estoque_inicial').val()

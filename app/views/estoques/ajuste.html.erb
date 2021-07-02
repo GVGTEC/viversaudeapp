@@ -39,7 +39,7 @@
     <%= f.select :produto_id ,
           Produto.all.collect{|produto| [produto.descricao, produto.id]} , 
           {:selected => @estoque.produto_id, :include_blank => true},
-          {:class =>'form-control', :onclick => "buscaLote()"}
+          {:class =>'form-control', :onclick => "buscaProduto()"}
     %>
     </div>
   </div>
@@ -85,7 +85,7 @@
 <% end %>
 
 <script>
-const buscaLote = () =>{
+const buscaProduto = () =>{
   const selectElement = document.getElementById("_estoques_ajuste_produto_id")
   var idProduto = selectElement.value
 

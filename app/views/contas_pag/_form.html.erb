@@ -13,38 +13,38 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :fornecedores, class: "col-sm-1 control-label" %>
+    <%= f.label :fornecedores, 'Fornecedor', class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
-      <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @contas_pag.fornecedor_id}, {:class=> 'form-control'} %>
+      <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @contas_pag.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :plano_contas, class: "col-sm-1 control-label" %>
+    <%= f.label :plano_contas, 'Plano de Contas', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.select :plano_conta_id, PlanoConta.all.reorder("conta asc").collect { |plano_conta| [plano_conta.conta, plano_conta.id] }, {:selected => @contas_pag.plano_conta_id}, {:class=> 'form-control'} %>
+      <%= f.select :plano_conta_id, PlanoConta.all.reorder("conta asc").collect { |plano_conta| [plano_conta.conta, plano_conta.id] }, {:selected => @contas_pag.plano_conta_id, :include_blank => true}, {:class=> 'form-control'} %>
     </div>
 
-    <%= f.label :documento, class: "col-sm-1 control-label" %>
+    <%= f.label :documento, 'Documento', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
       <%= f.text_field :documento, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :historico, class: "col-sm-1 control-label" %>
+    <%= f.label :historico, 'Histórico', class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
       <%= f.text_field :historico, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :data_emissao, class: "col-sm-1 control-label" %>
+    <%= f.label :data_emissao, 'Data de Emissão', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
       <%= f.datetime_field :data_emissao, class: "form-control" %>
     </div>
 
-    <%= f.label :valor_total, class: "col-sm-1 control-label" %>
+    <%= f.label :valor_total, 'Valor Total', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
       <%= f.text_field :valor_total, class: "form-control" %>
     </div>
@@ -58,12 +58,12 @@
     <% @contas_pag.contas_pagar_parcelas.each do |contas_pagar_parcela| %>
       <div class="item" style="margin-bottom: 40px">
         <div class="form-group">
-          <label class="col-sm-2 control-label">Data Vencimento</label>
+          <label class="col-sm-2 control-label">Data de Vencimento</label>
           <div class="col-sm-3">
             <input class="form-control" type="date" value="<%= contas_pagar_parcela.data_vencimento.strftime("%Y-%m-%d") %>" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
           </div>
 
-          <label class="col-sm-2 control-label">Data Pagamento</label>
+          <label class="col-sm-2 control-label">Data de Pagamento</label>
           <div class="col-sm-3">
             <input class="form-control" type="date" value="<%= contas_pagar_parcela.data_pagamento.strftime("%Y-%m-%d") %>" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
           </div>
@@ -99,12 +99,12 @@
 
     <div class="item" style="margin-bottom: 40px">
       <div class="form-group">
-        <label class="col-sm-2 control-label">Data Vencimento</label>
+        <label class="col-sm-2 control-label">Data de Vencimento</label>
         <div class="col-sm-3">
           <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
         </div>
 
-        <label class="col-sm-2 control-label">Data Pagamento</label>
+        <label class="col-sm-2 control-label">Data de Pagamento</label>
         <div class="col-sm-3">
           <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
         </div>
@@ -154,12 +154,12 @@
 <div id="conteudoContainerTemplate" style="display: none">
   <div class="item" style="margin-bottom: 40px">
       <div class="form-group">
-        <label class="col-sm-2 control-label">Data Vencimento</label>
+        <label class="col-sm-2 control-label">Data de Vencimento</label>
         <div class="col-sm-3">
           <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
         </div>
 
-        <label class="col-sm-2 control-label">Data Pagamento</label>
+        <label class="col-sm-2 control-label">Data de Pagamento</label>
         <div class="col-sm-3">
           <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
         </div>
