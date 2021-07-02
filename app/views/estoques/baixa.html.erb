@@ -52,14 +52,14 @@
   <div class="form-group">
     <label class="col-sm-1 control-label" for="qtd">Quantidade da Baixa</label>
     <div class="col-sm-3">
-      <input class="form-control" type="text" name="/estoques/baixa[qtd]" id="qtd" data-behavior="qtd-estoque">
+      <input class="form-control" type="text" id="qtd" data-behavior="qtd-estoque">
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :estoque_atual, "Estoque Atual", class: "col-sm-1 control-label" %>
+    <%= f.label :estoque_atual_lote, "Estoque Atual", class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.text_field :estoque_atual, class: "form-control", disabled: "disable" %>
+      <%= f.text_field :estoque_atual_lote, class: "form-control", disabled: "disable" %>
     </div>
   </div>
 
@@ -93,14 +93,14 @@ $(document).on('keyup', '[data-behavior~=qtd-estoque]', function(event) {
   const val = $("input[data-behavior='qtd-estoque']").val()
   const estoque_inicial = $('#estoque_inicial').val()
   const total = estoque_inicial - val
-
+  
   if(total < 0){
     $('#qtd').val("");
-    $('#_estoques_baixa_estoque_atual').val(estoque_inicial);
-  }else if(!total){
-    $('#_estoques_baixa_estoque_atual').val(estoque_inicial);
+    $('#_estoques_baixa_estoque_atual_lote').val(estoque_inicial);
+  }else if(!total && total != 0){
+    $('#_estoques_baixa_estoque_atual_lote').val(estoque_inicial);
   }else{
-    $('#_estoques_baixa_estoque_atual').val(total);
+    $('#_estoques_baixa_estoque_atual_lote').val(total);
   }
 });
 
@@ -134,8 +134,8 @@ const buscaEstoque = () =>{
     success: function(data){
       const estoque = data
       $('#id_estoque').val(estoque.id);
-      $('#estoque_inicial').val(estoque.estoque_atual);
-      $('#_estoques_baixa_estoque_atual').val(estoque.estoque_atual);
+      $('#estoque_inicial').val(estoque.estoque_atual_lote);
+      $('#_estoques_baixa_estoque_atual_lote').val(estoque.estoque_atual_lote);
     }
   })
 }

@@ -10,23 +10,23 @@ class CreateProdutos < ActiveRecord::Migration[5.2]
       t.string :ncm
       t.string :situacao_tributaria
       t.string :unidade
-      t.decimal :embalagem
+      t.decimal :embalagem, default: 0.0
       t.boolean :controlar_estoque
       t.boolean :por_lote
       t.boolean :bloquear_preco
       t.datetime :data_ultima_reposicao
       t.datetime :data_ultimo_reajuste
-      t.decimal :preco_custo
-      t.decimal :preco_custo_medio
-      t.decimal :margem_lucro
-      t.decimal :preco_venda
-      t.decimal :preco_oferta
-      t.decimal :margem_lucro_oferta
+      t.decimal :preco_custo, default: 0.0
+      t.decimal :preco_custo_medio, default: 0.0
+      t.decimal :margem_lucro, default: 0.0
+      t.decimal :preco_venda, default: 0.0
+      t.decimal :preco_oferta, default: 0.0
+      t.decimal :margem_lucro_oferta, default: 0.0
       t.datetime :data_inicial_oferta
       t.datetime :data_final_oferta
-      t.decimal :comissao_pc
-      t.decimal :estoque_atual
-      t.decimal :estoque_minimo
+      t.decimal :comissao_pc, default: 0.0
+      t.decimal :estoque_atual, default: 0.0
+      t.decimal :estoque_minimo, default: 0.0
 
       t.timestamps
     end

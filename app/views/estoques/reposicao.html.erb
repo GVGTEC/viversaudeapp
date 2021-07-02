@@ -25,7 +25,7 @@
     <div class="col-sm-11">
     <%= f.select :fornecedor_id ,
           Fornecedor.all.collect{|fornecedor| [fornecedor.nome, fornecedor.id]} , 
-          {:selected => @estoque.fornecedor_id},
+          {:selected => @estoque.fornecedor_id, :include_blank => true},
           {:class =>'form-control'}%>
     </div>
   </div>
@@ -33,12 +33,12 @@
   <div class="form-group">
     <%= f.label :documento, 'Documento', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :documento, class: "form-control" %>
+      <%= f.text_field :documento, value: "#{@estoque.documento}", class: "form-control" %>
     </div>
 
     <%= f.label :data_reposicao, 'Data Reposição', class: "col-sm-2 control-label" %>
     <div class="col-sm-2">
-      <%= f.date_field :data_reposicao, class: "form-control" %>
+      <%= f.date_field :data_reposicao, value: "#{@estoque.data_reposicao}", class: "form-control" %>
     </div>
   </div>
 
@@ -49,13 +49,13 @@
     <div class="col-sm-8">
     <%= f.select :produto_id ,
           Produto.all.collect{|produto| [produto.descricao, produto.id]} , 
-          {:selected => @estoque.produto_id},
-          {:class =>'form-control'}%>
+          {:selected => @estoque.produto_id, :include_blank => true},
+          {:class =>'form-control', :onclick => "dadosProduto()"}%>
     </div>
 
     <%= f.label :estoque_atual, 'Estoque Atual', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_atual, class: "form-control" %>
+      <%= f.text_field :estoque_atual, class: "form-control", disabled: "disable" %>
     </div>
   </div>
 
@@ -70,14 +70,14 @@
       <%= f.date_field :data_validade, class: "form-control" %>
     </div>
 
-    <%= f.label :qtd, 'Quantidade', class: "col-sm-1 control-label" %>
+    <%= f.label :estoque_atual_lote, 'Quantidade', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :qtd, class: "form-control" %>
+      <%= f.text_field :estoque_atual_lote, class: "form-control", data: {behavior: "qtd-estoque"} %>
     </div>
 
     <%= f.label :estoque_reservado, 'Estoque Final', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :estoque_reservado, class: "form-control" %>
+      <%= f.text_field :estoque_reservado, class: "form-control", disabled: "disable" %>
     </div>
   </div>
 
@@ -86,22 +86,22 @@
   <div class="form-group">
     <label class="col-sm-1 control-label">Preço Custo Atual</label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" id="estoques_reposicao_preco_custo_atual">
+      <input class="form-control" type="text" name="preco_custo_atual" id="estoques_reposicao_preco_custo_atual" disabled>
     </div>
 
     <label class="col-sm-1 control-label">Preco Custo Reposição</label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" id="estoques_reposicao_preco_custo_reposicao">
+      <input class="form-control" type="text" name="preco_custo_reposicao" id="estoques_reposicao_preco_custo_reposicao">
     </div>
 
     <label class="col-sm-1 control-label">Margem de Lucro (%)</label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" id="estoques_reposicao_margem_lucro">
+      <input class="form-control" type="text" name="margem_lucro" id="estoques_reposicao_margem_lucro" data-behavior="margem-lucro">
     </div>
 
     <label class="col-sm-1 control-label">Preco de Venda</label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" id="estoques_reposicao_preco_venda">
+      <input class="form-control" type="text" name="preco_venda" id="estoques_reposicao_preco_venda" disabled>
     </div>
   </div>
 
@@ -114,8 +114,45 @@
   </div>
 <% end %>
 
-<%# <script>
-$(document).ready(function() {
-  alert()
-});
-</script> %>
+<script>
+  const dadosProduto = () => {
+    let produto_id = $("#_estoques_reposicao_produto_id").val()
+
+    $.ajax({
+      type: "GET",
+      url: `/produtos/${produto_id}.json`,
+      success: function(produto){
+        if(produto){
+          $('#_estoques_reposicao_estoque_atual').val(produto.estoque_atual);
+          $('#estoques_reposicao_preco_custo_atual').val(produto.preco_venda);
+        }
+      }
+    })
+  }
+
+  $(document).on('keyup', '[data-behavior~=qtd-estoque]', function(event) {
+    const val = parseInt($("input[data-behavior='qtd-estoque']").val())
+    const estoque_atual = parseInt($('#_estoques_reposicao_estoque_atual').val())
+    const total = val + estoque_atual 
+    
+    if(total > 0){
+      $('#_estoques_reposicao_estoque_reservado').val("");
+      $('#_estoques_reposicao_estoque_reservado').val(total);
+    }else if(!total && total != 0){
+      $('#_estoques_reposicao_estoque_reservado').val(estoque_atual);
+    }
+  });
+
+  $(document).on('keyup', '[data-behavior~=margem-lucro]', function(event) {
+    const margem_lucro = parseInt($("input[data-behavior='margem-lucro']").val())
+    const preco_custo_reposicao = parseInt($('#estoques_reposicao_preco_custo_reposicao').val())
+    const total = preco_custo_reposicao + (preco_custo_reposicao * margem_lucro / 100)
+    
+    if(total > 0){
+      $('#estoques_reposicao_preco_venda').val("");
+      $('#estoques_reposicao_preco_venda').val(total);
+    }else if(!total && total != 0){
+      $('#estoques_reposicao_preco_venda').val(preco_custo_reposicao);
+    }
+  });
+</script>

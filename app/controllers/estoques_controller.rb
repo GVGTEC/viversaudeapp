@@ -10,11 +10,25 @@ class EstoquesController < ApplicationController
   end
 
   def reposicao
-    new
+    params[:data_reposicao] ||= Time.zone.now.strftime("%Y-%m-%dT%H:%M:%S")
+    @estoque = Estoque.new
+    @estoque.fornecedor_id = params[:fornecedor_id] if params[:fornecedor_id].present?
+    @estoque.documento = params[:documento] if params[:documento].present?
+    @estoque.data_reposicao = params[:data_reposicao]
+  end
+
+  def create_reposicao
     @params = "/estoques/reposicao"
-    if params[@params]
-      @estoque = Estoque.new(estoque_params)
-      create
+    @estoque = Estoque.new(estoque_params)
+    respond_to do |format|
+      if @estoque.save
+        atualizar_produto
+        path_with_params = "#{@params}?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
+        action = @params.split("/")[2].capitalize
+        format.html { redirect_to path_with_params, notice: "#{action} em estoque feito com sucesso." }
+      else
+        format.html { render estoques_reposicao_path, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -41,30 +55,24 @@ class EstoquesController < ApplicationController
       @estoque = Estoque.new
     end
 
-    def create
-      respond_to do |format|
-        if @estoque.save
-          format.html { redirect_to estoques_path, notice: "#{@params.split("/")[2].capitalize} em estoque feito com sucesso." }
-          format.json { render :show, status: :created, location: @estoque }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @estoque.errors, status: :unprocessable_entity }
-        end
-      end
-    end
-
     def update
       respond_to do |format|
         if @estoque.update(estoque_params)
-          format.html { redirect_to estoques_path, notice: "#{@params.split("/")[2].capitalize} em estoque feito com sucesso." }
-          format.json { render :show, status: :ok, location: @estoque }
+          action = @params.split("/")[2].capitalize
+          format.html { redirect_to estoques_path, notice: "#{action} em estoque feito com sucesso." }
         else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @estoque.errors, status: :unprocessable_entity }
+          format.html { render estoques_path, status: :unprocessable_entity }
         end
       end
     end
 
+    def atualizar_produto
+      produto = @estoque.produto
+      produto.estoque_atual += @estoque.estoque_atual_lote if @params.include?("reposicao")
+      produto.preco_custo = params[:preco_custo_reposicao]
+      produto.preco_custo_medio = @estoque.estoque_atual_lote if @params.include?("reposicao")
+      produto.save
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_estoque
       @estoque = Estoque.find(params[:id])
@@ -72,6 +80,6 @@ class EstoquesController < ApplicationController
 
 
     def estoque_params
-      params.require(@params).permit(:produto_id, :fornecedor_id, :lote, :documento, :qtd, :data_reposicao, :data_validade, :estoque_atual, :estoque_minimo, :estoque_reservado)
+      params.require(@params).permit(:produto_id, :fornecedor_id, :lote, :documento, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado)
     end
 end
