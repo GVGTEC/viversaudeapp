@@ -70,7 +70,7 @@ class EstoquesController < ApplicationController
       produto = @estoque.produto
       produto.estoque_atual += @estoque.estoque_atual_lote if @params.include?("reposicao")
       produto.preco_custo = params[:preco_custo_reposicao]
-      produto.preco_custo_medio = @estoque.estoque_atual_lote if @params.include?("reposicao")
+      produto.preco_custo_medio = params[:preco_custo_reposicao]
       produto.save
     end
     # Use callbacks to share common setup or constraints between actions.
