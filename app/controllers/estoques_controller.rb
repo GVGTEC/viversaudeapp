@@ -10,7 +10,14 @@ class EstoquesController < ApplicationController
   end
 
   def reposicao
-    new
+    params[:data_reposicao] ||= Time.zone.now.strftime("%Y-%m-%dT%H:%M:%S")
+    @estoque = Estoque.new
+    @estoque.fornecedor_id = params[:fornecedor_id] if params[:fornecedor_id].present?
+    @estoque.documento = params[:documento] if params[:documento].present?
+    @estoque.data_reposicao = params[:data_reposicao].present?
+  end
+
+  def create_reposicao
     @params = "/estoques/reposicao"
     if params[@params]
       @estoque = Estoque.new(estoque_params)
