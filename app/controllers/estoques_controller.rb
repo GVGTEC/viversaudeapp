@@ -14,7 +14,7 @@ class EstoquesController < ApplicationController
     @estoque = Estoque.new
     @estoque.fornecedor_id = params[:fornecedor_id] if params[:fornecedor_id].present?
     @estoque.documento = params[:documento] if params[:documento].present?
-    @estoque.data_reposicao = params[:data_reposicao]
+    @estoque.data_reposicao = params[:data_reposicao].present?
   end
 
   def create_reposicao
