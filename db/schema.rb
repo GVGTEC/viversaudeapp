@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_03_145239) do
+ActiveRecord::Schema.define(version: 2021_07_03_161225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,10 +129,12 @@ ActiveRecord::Schema.define(version: 2021_07_03_145239) do
     t.bigint "fornecedor_id"
     t.string "lote"
     t.string "documento"
+    t.string "ultima_alteracao"
     t.date "data_reposicao"
     t.date "data_validade"
     t.float "estoque_atual_lote"
     t.float "estoque_reservado"
+    t.float "preco_custo_reposicao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fornecedor_id"], name: "index_estoques_on_fornecedor_id"
@@ -172,6 +174,19 @@ ActiveRecord::Schema.define(version: 2021_07_03_145239) do
     t.string "observacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "movimento_estoques", force: :cascade do |t|
+    t.bigint "estoque_id"
+    t.string "origem"
+    t.date "data"
+    t.float "qtd"
+    t.float "estoque_inicial"
+    t.float "estoque_final"
+    t.float "preco_custo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"
   end
 
   create_table "plano_contas", force: :cascade do |t|
@@ -263,6 +278,7 @@ ActiveRecord::Schema.define(version: 2021_07_03_145239) do
   add_foreign_key "estoques", "fornecedores"
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
+  add_foreign_key "movimento_estoques", "estoques"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end

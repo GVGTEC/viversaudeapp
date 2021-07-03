@@ -1,5 +1,5 @@
 class EstoquesController < ApplicationController
-  before_action :set_estoque, only: %i[ show update destroy ]
+  before_action :set_estoque, only: %i[ show ]
 
   def index
     @estoques = Estoque.all
@@ -14,21 +14,21 @@ class EstoquesController < ApplicationController
     @estoque = Estoque.new
     @estoque.fornecedor_id = params[:fornecedor_id] if params[:fornecedor_id].present?
     @estoque.documento = params[:documento] if params[:documento].present?
-    @estoque.data_reposicao = params[:data_reposicao] if params[:data_reposicao].present?
+    @estoque.data_reposicao = params[:data_reposicao]
   end
 
   def create_reposicao
     @params = "/estoques/reposicao"
     @estoque = Estoque.new(estoque_params)
-    respond_to do |format|
-      if @estoque.save
-        atualizar_produto_reposto
-        path_with_params = "#{@params}?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
-        action = @params.split("/")[2].capitalize
-        format.html { redirect_to path_with_params, notice: "#{action} em estoque feito com sucesso." }
-      else
-        format.html { render estoques_reposicao_path, status: :unprocessable_entity }
-      end
+    @estoque.ultima_alteracao = "REP"
+
+    if @estoque.save
+      Produto.atualizar_produto_reposto(@estoque, params)
+      @estoque.movimentacao_em_estoque
+      path_with_params = "#{@params}?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
+      action = @params.split("/")[2].capitalize
+      flash[:notice] = "#{action} em estoque feito com sucesso."
+      redirect_to path_with_params 
     end
   end
 
@@ -37,7 +37,29 @@ class EstoquesController < ApplicationController
     @params = "/estoques/ajuste"
     if params[@params]
       set_estoque
-      update
+      qtd_estoque_final = (@estoque.produto.estoque_atual - @estoque.estoque_atual_lote) + estoque_params[:estoque_atual_lote].to_f
+      @estoque.estoque_atual_lote = estoque_params[:estoque_atual_lote]
+      @estoque.ultima_alteracao = "AJU"
+
+      if @estoque.save
+        movimento_estoque = MovimentoEstoque.new
+        movimento_estoque.estoque_id = @estoque.id
+        movimento_estoque.origem = @estoque.ultima_alteracao
+        movimento_estoque.data = @estoque.updated_at
+        movimento_estoque.qtd = @estoque.estoque_atual_lote
+        movimento_estoque.estoque_inicial = @estoque.produto.estoque_atual
+        movimento_estoque.estoque_final = qtd_estoque_final
+        movimento_estoque.preco_custo = @estoque.produto.preco_custo
+        movimento_estoque.save
+
+        produto = @estoque.produto
+        produto.estoque_atual = qtd_estoque_final
+        produto.save
+
+        action = @params.split("/")[2].capitalize
+        flash[:notice] = "#{action} em estoque feito com sucesso."
+        redirect_to estoques_path 
+      end
     end
   end
 
@@ -46,7 +68,28 @@ class EstoquesController < ApplicationController
     @params = "/estoques/baixa"
     if params[@params]
       set_estoque
-      update
+      @estoque.estoque_atual_lote = params[:estoque_atual_lote].to_f
+      @estoque.ultima_alteracao = "BAI"
+      
+      if @estoque.save
+        movimento_estoque = MovimentoEstoque.new
+        movimento_estoque.estoque_id = @estoque.id
+        movimento_estoque.origem = @estoque.ultima_alteracao
+        movimento_estoque.data = @estoque.updated_at
+        movimento_estoque.qtd = @estoque.estoque_atual_lote
+        movimento_estoque.estoque_inicial = @estoque.produto.estoque_atual
+        movimento_estoque.estoque_final = @estoque.produto.estoque_atual - @estoque.estoque_atual_lote.to_f
+        movimento_estoque.preco_custo = @estoque.produto.preco_custo
+        movimento_estoque.save
+
+        produto = @estoque.produto
+        produto.estoque_atual -= @estoque.estoque_atual_lote.to_f
+        produto.save
+
+        action = @params.split("/")[2].capitalize
+        flash[:notice] = "#{action} em estoque feito com sucesso."
+        redirect_to estoques_path 
+      end
     end
   end
 
@@ -55,45 +98,11 @@ class EstoquesController < ApplicationController
       @estoque = Estoque.new
     end
 
-    def update
-      respond_to do |format|
-        if @estoque.update(estoque_params)
-          action = @params.split("/")[2].capitalize
-          format.html { redirect_to estoques_path, notice: "#{action} em estoque feito com sucesso." }
-        else
-          format.html { render estoques_path, status: :unprocessable_entity }
-        end
-      end
-    end
-
-    def atualizar_produto_reposto
-      produto = @estoque.produto
-      produto.preco_custo_medio = calculo_preco_custo_medio(@estoque, @estoque.produto)
-      produto.estoque_atual += @estoque.estoque_atual_lote
-      produto.preco_custo = params[:preco_custo_reposicao].to_f
-      produto.preco_venda = params[:preco_venda]
-      produto.preco_venda = params[:preco_venda]
-      produto.save
-    end
-
-
-    def calculo_preco_custo_medio(estoque, produto)
-      relacao_estoque_atual =  produto.estoque_atual * produto.preco_custo rescue 0
-      relacao_estoque_reposicao =  estoque.estoque_atual_lote * params[:preco_custo_reposicao].to_i rescue 0
-      qtd_total_estoque = produto.estoque_atual + estoque.estoque_atual_lote
-      qtd_relacao = relacao_estoque_atual + relacao_estoque_reposicao
-      
-      preco_custo_medio = qtd_relacao / qtd_total_estoque rescue 0
-      return preco_custo_medio.ceil(2)
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_estoque
       @estoque = Estoque.find(params[:id])
     end
 
-
     def estoque_params
-      params.require(@params).permit(:produto_id, :fornecedor_id, :lote, :documento, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado)
+      params.require(@params).permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
     end
 end

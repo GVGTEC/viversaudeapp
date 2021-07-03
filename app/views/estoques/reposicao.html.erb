@@ -91,7 +91,7 @@
 
     <label class="col-sm-1 control-label">Preco Custo Reposição</label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" name="preco_custo_reposicao" id="estoques_reposicao_preco_custo_reposicao" data-behavior="preco_custo_reposicao">
+      <%= f.text_field :preco_custo_reposicao, data: {behavior: "preco_custo_reposicao"}, class: "form-control"%>
     </div>
 
     <label class="col-sm-1 control-label">Margem de Lucro (%)</label>
