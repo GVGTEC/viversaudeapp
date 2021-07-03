@@ -7,8 +7,8 @@ class CreateEstoques < ActiveRecord::Migration[5.2]
       t.string :documento
       t.date :data_reposicao
       t.date :data_validade
-      t.decimal :estoque_atual_lote
-      t.decimal :estoque_reservado
+      t.float :estoque_atual_lote
+      t.float :estoque_reservado
 
       t.timestamps
     end

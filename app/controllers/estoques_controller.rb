@@ -14,7 +14,7 @@ class EstoquesController < ApplicationController
     @estoque = Estoque.new
     @estoque.fornecedor_id = params[:fornecedor_id] if params[:fornecedor_id].present?
     @estoque.documento = params[:documento] if params[:documento].present?
-    @estoque.data_reposicao = params[:data_reposicao].present?
+    @estoque.data_reposicao = params[:data_reposicao] if params[:data_reposicao].present?
   end
 
   def create_reposicao
@@ -22,7 +22,7 @@ class EstoquesController < ApplicationController
     @estoque = Estoque.new(estoque_params)
     respond_to do |format|
       if @estoque.save
-        atualizar_produto
+        atualizar_produto_reposto
         path_with_params = "#{@params}?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
         action = @params.split("/")[2].capitalize
         format.html { redirect_to path_with_params, notice: "#{action} em estoque feito com sucesso." }
@@ -66,13 +66,27 @@ class EstoquesController < ApplicationController
       end
     end
 
-    def atualizar_produto
+    def atualizar_produto_reposto
       produto = @estoque.produto
-      produto.estoque_atual += @estoque.estoque_atual_lote if @params.include?("reposicao")
-      produto.preco_custo = params[:preco_custo_reposicao]
-      produto.preco_custo_medio = params[:preco_custo_reposicao]
+      produto.preco_custo_medio = calculo_preco_custo_medio(@estoque, @estoque.produto)
+      produto.estoque_atual += @estoque.estoque_atual_lote
+      produto.preco_custo = params[:preco_custo_reposicao].to_f
+      produto.preco_venda = params[:preco_venda]
+      produto.preco_venda = params[:preco_venda]
       produto.save
     end
+
+
+    def calculo_preco_custo_medio(estoque, produto)
+      relacao_estoque_atual =  produto.estoque_atual * produto.preco_custo rescue 0
+      relacao_estoque_reposicao =  estoque.estoque_atual_lote * params[:preco_custo_reposicao].to_i rescue 0
+      qtd_total_estoque = produto.estoque_atual + estoque.estoque_atual_lote
+      qtd_relacao = relacao_estoque_atual + relacao_estoque_reposicao
+      
+      preco_custo_medio = qtd_relacao / qtd_total_estoque rescue 0
+      return preco_custo_medio.ceil(2)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_estoque
       @estoque = Estoque.find(params[:id])
