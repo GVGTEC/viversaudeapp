@@ -14,6 +14,7 @@ class CreateCfop < ActiveRecord::Migration[5.2]
       t.string :cliente_fornecedor_cf
       t.string :calcular_impostos_sn
       t.string :faturamento_sn
+      t.string :arquivo_mensagem
       t.text :observacao
 
       t.timestamps
