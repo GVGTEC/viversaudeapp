@@ -26,7 +26,6 @@
         <th>Data da Reposição</th>
         <th>Data da Validade</th>
         <th>Estoque Atual do Lote</th>
-        <th></th>
       </tr>
     </thead>
 
@@ -36,10 +35,9 @@
         <td><%= estoque.produto.descricao %></td>
         <td><%= estoque.lote %></td>
         <td><%= estoque.documento %></td>
-        <td><%= estoque.data_reposicao %></td>
-        <td><%= estoque.data_validade %></td>
+        <td><%= estoque.data_reposicao.strftime("%d/%m/%Y")  %></td>
+        <td><%= estoque.data_validade.strftime("%d/%m/%Y")  %></td>
         <td><%= estoque.estoque_atual_lote %></td>
-        <td><%= link_to 'Movimento', estoque_movimento_estoques_path(estoque) %></td>
       <% end %>
     </tbody>
   </table>

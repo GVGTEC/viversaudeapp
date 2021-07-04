@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
   end
 
   create_table "movimento_estoques", force: :cascade do |t|
+    t.bigint "produto_id"
     t.bigint "estoque_id"
     t.string "origem"
     t.date "data"
@@ -207,6 +208,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"
+    t.index ["produto_id"], name: "index_movimento_estoques_on_produto_id"
   end
 
   create_table "plano_contas", force: :cascade do |t|
@@ -299,6 +301,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
   add_foreign_key "movimento_estoques", "estoques"
+  add_foreign_key "movimento_estoques", "produtos"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end

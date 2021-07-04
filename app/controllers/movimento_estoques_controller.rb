@@ -1,13 +1,13 @@
 class MovimentoEstoquesController < ApplicationController
-  before_action :set_estoque
+  before_action :set_produto
 
   # GET /movimento_estoques or /movimento_estoques.json
   def index
-    @movimento_estoques = MovimentoEstoque.where(estoque_id: @estoque.id)
+    @movimento_estoques = MovimentoEstoque.where(produto_id: @produto.id)
   end
 
   private
-    def set_estoque
-      @estoque = Estoque.find(params[:estoque_id])
+    def set_produto
+      @produto = Produto.find(params[:produto_id])
     end
 end

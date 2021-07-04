@@ -23,11 +23,26 @@ class EstoquesController < ApplicationController
     @estoque.ultima_alteracao = "REP"
 
     if @estoque.save
-      Produto.atualizar_produto_reposto(@estoque, params)
-      @estoque.movimentacao_em_estoque
+      produto = @estoque.produto
+      produto.preco_custo_medio = @estoque.calculo_preco_custo_medio
+      produto.estoque_atual += @estoque.estoque_atual_lote
+      produto.preco_custo = @estoque.preco_custo_reposicao
+      produto.margem_lucro = params[:margem_lucro]
+      produto.preco_venda = params[:preco_venda]
+      produto.save
+
+      movimento_estoque = MovimentoEstoque.new
+      movimento_estoque.estoque_id = @estoque.id
+      movimento_estoque.produto_id = @estoque.produto_id
+      movimento_estoque.origem = @estoque.ultima_alteracao
+      movimento_estoque.data = @estoque.updated_at
+      movimento_estoque.qtd = @estoque.estoque_atual_lote
+      movimento_estoque.estoque_inicial = @estoque.produto.estoque_atual - @estoque.estoque_atual_lote rescue 0
+      movimento_estoque.estoque_final = @estoque.produto.estoque_atual
+      movimento_estoque.preco_custo = @estoque.preco_custo_reposicao
+      movimento_estoque.save
+
       path_with_params = "#{@params}?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
-      action = @params.split("/")[2].capitalize
-      flash[:notice] = "#{action} em estoque feito com sucesso."
       redirect_to path_with_params 
     end
   end
@@ -44,6 +59,7 @@ class EstoquesController < ApplicationController
       if @estoque.save
         movimento_estoque = MovimentoEstoque.new
         movimento_estoque.estoque_id = @estoque.id
+        movimento_estoque.produto_id = @estoque.produto_id
         movimento_estoque.origem = @estoque.ultima_alteracao
         movimento_estoque.data = @estoque.updated_at
         movimento_estoque.qtd = @estoque.estoque_atual_lote
@@ -56,8 +72,6 @@ class EstoquesController < ApplicationController
         produto.estoque_atual = qtd_estoque_final
         produto.save
 
-        action = @params.split("/")[2].capitalize
-        flash[:notice] = "#{action} em estoque feito com sucesso."
         redirect_to estoques_path 
       end
     end
@@ -74,6 +88,7 @@ class EstoquesController < ApplicationController
       if @estoque.save
         movimento_estoque = MovimentoEstoque.new
         movimento_estoque.estoque_id = @estoque.id
+        movimento_estoque.produto_id = @estoque.produto_id
         movimento_estoque.origem = @estoque.ultima_alteracao
         movimento_estoque.data = @estoque.updated_at
         movimento_estoque.qtd = @estoque.estoque_atual_lote
@@ -86,8 +101,6 @@ class EstoquesController < ApplicationController
         produto.estoque_atual -= @estoque.estoque_atual_lote.to_f
         produto.save
 
-        action = @params.split("/")[2].capitalize
-        flash[:notice] = "#{action} em estoque feito com sucesso."
         redirect_to estoques_path 
       end
     end
