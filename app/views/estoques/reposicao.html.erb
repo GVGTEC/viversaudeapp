@@ -101,7 +101,7 @@
 
     <label class="col-sm-1 control-label">Preco de Venda</label>
     <div class="col-sm-2">
-      <input class="form-control" type="text" name="preco_venda" id="estoques_reposicao_preco_venda">
+      <input class="form-control" type="text" name="preco_venda" id="estoques_reposicao_preco_venda" data-behavior="preco-venda">
     </div>
   </div>
 
@@ -159,7 +159,7 @@
 
   $(document).on('keyup', '[data-behavior~=margem-lucro]', function(event) {
     const margem_lucro = parseInt($("input[data-behavior='margem-lucro']").val())
-    const preco_custo_reposicao = parseInt($('#estoques_reposicao_preco_custo_reposicao').val())
+    const preco_custo_reposicao = parseInt($('#_estoques_reposicao_preco_custo_reposicao').val())
     const total = preco_custo_reposicao + (preco_custo_reposicao * margem_lucro / 100)
     
     if(total > 0){
@@ -167,6 +167,19 @@
       $('#estoques_reposicao_preco_venda').val(total);
     }else if(!total && total != 0){
       $('#estoques_reposicao_preco_venda').val(preco_custo_reposicao);
+    }
+  });
+
+  $(document).on('keyup', '[data-behavior~=preco-venda]', function(event) {
+    const preco_venda = parseInt($("input[data-behavior='preco-venda']").val())
+    const preco_custo_reposicao = parseInt($('#_estoques_reposicao_preco_custo_reposicao').val())
+    const margem_lucro = (preco_venda - preco_custo_reposicao) * 100 / preco_custo_reposicao
+    
+    if(margem_lucro > 0){
+      $('#estoques_reposicao_margem_lucro').val("");
+      $('#estoques_reposicao_margem_lucro').val(margem_lucro.toFixed(2));
+    }else if(!margem_lucro && margem_lucro != 0){
+      $('#estoques_reposicao_margem_lucro').val(preco_venda);
     }
   });
 </script>

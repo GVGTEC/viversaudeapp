@@ -8,16 +8,15 @@ Rails.application.routes.draw do
   post "/estoques/reposicao", to: "estoques#create_reposicao"
   post "/estoques/baixa", to: "estoques#baixa"
 
-  resources :estoques, only: [:index, :show] do
-    resources :movimento_estoques, only: [:index] 
-  end
-
+  resources :estoques, only: [:index, :show]
   resources :vendedores
   resources :transportadoras
   resources :contas_pag
   resources :plano_contas
   resources :empresas
-  resources :produtos
+  resources :produtos do
+    resources :movimento_estoques, only: [:index] 
+  end
   resources :localizacao_estoques
   resources :clientes
   resources :fornecedores

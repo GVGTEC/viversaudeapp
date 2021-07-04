@@ -3,17 +3,19 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
   <% end %>
-  <h1>Lista de Movimentação em Estoque do Lote <%= @estoque.lote %></h1>
+  <h1>Lista de Movimentação em Estoque do Lote <%= @produto.descricao %></h1>
 </div>
 
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
+        <th>Lote</th>
+        <th>Fornecedor</th>
         <th>Origem</th>
         <th>Data</th>
-        <th>Qtd</th>
         <th>Estoque inicial</th>
+        <th>Qtd</th>
         <th>Estoque final</th>
         <th>Preco custo</th>
       </tr>
@@ -21,12 +23,14 @@
 
     <tbody>
       <%= content_tag_for(:tr, @movimento_estoques) do |movimento_estoque| %>
+        <td><%= movimento_estoque.estoque.lote %></td>
+        <td><%= movimento_estoque.estoque.fornecedor.nome %></td>
         <td><%= movimento_estoque.origem %></td>
-        <td><%= movimento_estoque.data %></td>
-        <td><%= movimento_estoque.qtd %></td>
+        <td><%= movimento_estoque.data.strftime("%d/%m/%Y") %></td>
         <td><%= movimento_estoque.estoque_inicial %></td>
+        <td><%= movimento_estoque.qtd %></td>
         <td><%= movimento_estoque.estoque_final %></td>
-        <td><%= movimento_estoque.preco_custo %></td>
+        <td><%= number_to_currency(movimento_estoque.preco_custo) %></td>
       <% end %>
     </tbody>
   </table>

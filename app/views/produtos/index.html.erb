@@ -31,6 +31,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
 
@@ -41,6 +42,7 @@
         <td><%= produto.codigo_barras %></td>
         <td><%= number_to_currency(produto.preco_venda) %></td>
         <td><%= produto.estoque_atual %></td>
+        <td><%= link_to 'Movimento', produto_movimento_estoques_path(produto) %></td>
         <td><%= link_to 'Mostrar', produto %></td>
         <td><%= link_to 'Editar', edit_produto_path(produto) %></td>
         <td><%= link_to 'Apagar', produto, method: :delete, data: { confirm: 'Confirma ?' } %></td>
