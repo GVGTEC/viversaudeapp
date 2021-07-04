@@ -37,8 +37,8 @@ class EstoquesController < ApplicationController
       movimento_estoque.origem = @estoque.ultima_alteracao
       movimento_estoque.data = @estoque.updated_at
       movimento_estoque.qtd = @estoque.estoque_atual_lote
-      movimento_estoque.estoque_inicial = @estoque.produto.estoque_atual - @estoque.estoque_atual_lote rescue 0
-      movimento_estoque.estoque_final = @estoque.produto.estoque_atual
+      movimento_estoque.estoque_inicial = 0
+      movimento_estoque.estoque_final = @estoque.estoque_atual_lote
       movimento_estoque.preco_custo = @estoque.preco_custo_reposicao
       movimento_estoque.save
 
@@ -52,6 +52,7 @@ class EstoquesController < ApplicationController
     @params = "/estoques/ajuste"
     if params[@params]
       set_estoque
+      estoque_atual_lote = @estoque.estoque_atual_lote
       qtd_estoque_final = (@estoque.produto.estoque_atual - @estoque.estoque_atual_lote) + estoque_params[:estoque_atual_lote].to_f
       @estoque.estoque_atual_lote = estoque_params[:estoque_atual_lote]
       @estoque.ultima_alteracao = "AJU"
@@ -62,9 +63,9 @@ class EstoquesController < ApplicationController
         movimento_estoque.produto_id = @estoque.produto_id
         movimento_estoque.origem = @estoque.ultima_alteracao
         movimento_estoque.data = @estoque.updated_at
-        movimento_estoque.qtd = @estoque.estoque_atual_lote
-        movimento_estoque.estoque_inicial = @estoque.produto.estoque_atual
-        movimento_estoque.estoque_final = qtd_estoque_final
+        movimento_estoque.qtd = 0
+        movimento_estoque.estoque_inicial = estoque_atual_lote
+        movimento_estoque.estoque_final = @estoque.estoque_atual_lote
         movimento_estoque.preco_custo = @estoque.produto.preco_custo
         movimento_estoque.save
 
@@ -82,7 +83,8 @@ class EstoquesController < ApplicationController
     @params = "/estoques/baixa"
     if params[@params]
       set_estoque
-      @estoque.estoque_atual_lote = params[:estoque_atual_lote].to_f
+      estoque_atual_lote = @estoque.estoque_atual_lote
+      @estoque.estoque_atual_lote = estoque_atual_lote - params[:estoque_atual_lote].to_f
       @estoque.ultima_alteracao = "BAI"
       
       if @estoque.save
@@ -91,14 +93,14 @@ class EstoquesController < ApplicationController
         movimento_estoque.produto_id = @estoque.produto_id
         movimento_estoque.origem = @estoque.ultima_alteracao
         movimento_estoque.data = @estoque.updated_at
-        movimento_estoque.qtd = @estoque.estoque_atual_lote
-        movimento_estoque.estoque_inicial = @estoque.produto.estoque_atual
-        movimento_estoque.estoque_final = @estoque.produto.estoque_atual - @estoque.estoque_atual_lote.to_f
+        movimento_estoque.estoque_inicial = estoque_atual_lote
+        movimento_estoque.qtd = params[:estoque_atual_lote].to_f
+        movimento_estoque.estoque_final = @estoque.estoque_atual_lote
         movimento_estoque.preco_custo = @estoque.produto.preco_custo
         movimento_estoque.save
 
         produto = @estoque.produto
-        produto.estoque_atual -= @estoque.estoque_atual_lote.to_f
+        produto.estoque_atual -= params[:estoque_atual_lote].to_f
         produto.save
 
         redirect_to estoques_path 
