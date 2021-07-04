@@ -26,7 +26,6 @@
         <th>Data da Reposição</th>
         <th>Data da Validade</th>
         <th>Estoque Atual do Lote</th>
-        <th>Estoque Reservado</th>
         <th></th>
       </tr>
     </thead>
@@ -40,8 +39,7 @@
         <td><%= estoque.data_reposicao %></td>
         <td><%= estoque.data_validade %></td>
         <td><%= estoque.estoque_atual_lote %></td>
-        <td><%= estoque.estoque_reservado %></td>
-        <td><%= link_to 'Editar', estoques_path %></td>
+        <td><%= link_to 'Movimento', estoque_movimento_estoques_path(estoque) %></td>
       <% end %>
     </tbody>
   </table>

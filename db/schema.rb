@@ -33,6 +33,16 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+  
+  create_table "administradores", force: :cascade do |t|
+    t.bigint "empresa_id"
+    t.string "nome"
+    t.string "email"
+    t.string "senha"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_administradores_on_empresa_id"
+  end
 
   create_table "cliente_contatos", force: :cascade do |t|
     t.bigint "cliente_id"
@@ -68,7 +78,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.string "documento"
     t.string "historico"
     t.datetime "data_emissao"
-    t.decimal "valor_total"
+    t.float "valor_total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fornecedor_id"], name: "index_contas_pag_on_fornecedor_id"
@@ -79,8 +89,8 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.bigint "contas_pag_id"
     t.datetime "data_vencimento"
     t.datetime "data_pagamento"
-    t.decimal "valor_parcela"
-    t.decimal "valor_juros_desconto"
+    t.float "valor_parcela"
+    t.float "valor_juros_desconto"
     t.string "documento"
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -138,10 +148,12 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.bigint "fornecedor_id"
     t.string "lote"
     t.string "documento"
+    t.string "ultima_alteracao"
     t.date "data_reposicao"
     t.date "data_validade"
-    t.decimal "estoque_atual_lote"
-    t.decimal "estoque_reservado"
+    t.float "estoque_atual_lote"
+    t.float "estoque_reservado"
+    t.float "preco_custo_reposicao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fornecedor_id"], name: "index_estoques_on_fornecedor_id"
@@ -183,6 +195,19 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "movimento_estoques", force: :cascade do |t|
+    t.bigint "estoque_id"
+    t.string "origem"
+    t.date "data"
+    t.float "qtd"
+    t.float "estoque_inicial"
+    t.float "estoque_final"
+    t.float "preco_custo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"
+  end
+
   create_table "plano_contas", force: :cascade do |t|
     t.string "conta"
     t.string "descricao"
@@ -201,23 +226,23 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.string "ncm"
     t.string "situacao_tributaria"
     t.string "unidade"
-    t.decimal "embalagem", default: "0.0"
+    t.float "embalagem", default: 0.0
     t.boolean "controlar_estoque"
     t.boolean "por_lote"
     t.boolean "bloquear_preco"
     t.datetime "data_ultima_reposicao"
     t.datetime "data_ultimo_reajuste"
-    t.decimal "preco_custo", default: "0.0"
-    t.decimal "preco_custo_medio", default: "0.0"
-    t.decimal "margem_lucro", default: "0.0"
-    t.decimal "preco_venda", default: "0.0"
-    t.decimal "preco_oferta", default: "0.0"
-    t.decimal "margem_lucro_oferta", default: "0.0"
+    t.float "preco_custo", default: 0.0
+    t.float "preco_custo_medio", default: 0.0
+    t.float "margem_lucro", default: 0.0
+    t.float "preco_venda", default: 0.0
+    t.float "preco_oferta", default: 0.0
+    t.float "margem_lucro_oferta", default: 0.0
     t.datetime "data_inicial_oferta"
     t.datetime "data_final_oferta"
-    t.decimal "comissao_pc", default: "0.0"
-    t.decimal "estoque_atual", default: "0.0"
-    t.decimal "estoque_minimo", default: "0.0"
+    t.float "comissao_pc", default: 0.0
+    t.float "estoque_atual", default: 0.0
+    t.float "estoque_minimo", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
@@ -264,6 +289,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "administradores", "empresas"
   add_foreign_key "cliente_contatos", "clientes"
   add_foreign_key "contas_pag", "fornecedores"
   add_foreign_key "contas_pag", "plano_contas"
@@ -271,6 +297,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
   add_foreign_key "estoques", "fornecedores"
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
+  add_foreign_key "movimento_estoques", "estoques"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end

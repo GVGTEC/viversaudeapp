@@ -23,7 +23,7 @@
 
   <div class="form-group">
     <%= f.label :produto, 'Produto', class: "col-sm-1 control-label" %>
-    <div class="col-sm-8">
+    <div class="col-sm-11">
     <%= f.select :produto_id ,
           Produto.all.collect{|produto| [produto.descricao, produto.id]} , 
           {:selected => @estoque.produto_id, :include_blank => true},
@@ -34,7 +34,7 @@
 
   <div class="form-group">
     <%= f.label :lote, 'Lote Nº', class: "col-sm-1 control-label" %>
-    <div class="col-sm-3">
+    <div class="col-sm-11">
       <%= f.select :id , ["", ""], 
           {:selected => @estoque.lote, :include_blank => true},
           {:class =>'form-control', :onclick => "buscaEstoque()"}
@@ -44,21 +44,21 @@
 
   <div class="form-group">
     <label class="col-sm-1 control-label" for="estoque_inicial">Estoque Inicial</label>
-    <div class="col-sm-3">
+    <div class="col-sm-11">
       <input class="form-control" type="text" id="estoque_inicial" disabled >
     </div>
   </div>
 
   <div class="form-group">
     <label class="col-sm-1 control-label" for="qtd">Quantidade da Baixa</label>
-    <div class="col-sm-3">
-      <input class="form-control" type="text" id="qtd" data-behavior="qtd-estoque">
+    <div class="col-sm-11">
+      <input class="form-control" type="text" name="estoque_atual_lote" id="qtd" data-behavior="qtd-estoque">
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :estoque_atual_lote, "Estoque Atual", class: "col-sm-1 control-label" %>
-    <div class="col-sm-3">
+    <div class="col-sm-11">
       <%= f.text_field :estoque_atual_lote, class: "form-control", disabled: "disable" %>
     </div>
   </div>
@@ -139,12 +139,4 @@ const buscaEstoque = () =>{
     }
   })
 }
-
-// $("#_estoques_baixa_estoque_atual").focus(() => {
-//   const estoque_inicial = $('#estoque_inicial').val()
-//   const qtd = $('#qtd').val()
-//   const total = estoque_inicial - qtd
-
-//   $('#_estoques_baixa_estoque_atual').val(total);
-// });
 </script>

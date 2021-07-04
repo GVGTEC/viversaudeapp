@@ -4,8 +4,8 @@ class CreateContasPagarParcelas < ActiveRecord::Migration[5.2]
       t.references :contas_pag, foreign_key: true
       t.datetime :data_vencimento
       t.datetime :data_pagamento
-      t.decimal :valor_parcela
-      t.decimal :valor_juros_desconto
+      t.float :valor_parcela
+      t.float :valor_juros_desconto
       t.string :documento
       t.string :descricao
 

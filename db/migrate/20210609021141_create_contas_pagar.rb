@@ -6,7 +6,7 @@ class CreateContasPagar < ActiveRecord::Migration[5.2]
       t.string :documento
       t.string :historico
       t.datetime :data_emissao
-      t.decimal :valor_total
+      t.float :valor_total
 
       t.timestamps
     end

@@ -44,11 +44,11 @@
               </div>
 
               <div class="col-md-4">
-                <%= f.label :localizacao_estoque, 'Local Estoque' %>
-                    <%= f.select :localizacao_estoque_id,
-                    LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
-                    {:selected => @produto.localizacao_estoque_id},
-                    {:class=> 'form-control'} %>          
+                <%= f.label :localizacao_estoque, 'Local Estoque'%>
+                <%= f.select :localizacao_estoque_id,
+                LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
+                {:selected => @produto.localizacao_estoque_id},
+                {:class=> 'form-control'} %>          
               </div>
           </div>
 
