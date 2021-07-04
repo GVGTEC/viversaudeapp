@@ -35,8 +35,8 @@
         <td><%= estoque.produto.descricao %></td>
         <td><%= estoque.lote %></td>
         <td><%= estoque.documento %></td>
-        <td><%= estoque.data_reposicao.strftime("%d/%m/%Y")  %></td>
-        <td><%= estoque.data_validade.strftime("%d/%m/%Y")  %></td>
+        <td><%= estoque.data_reposicao.strftime("%d/%m/%Y") rescue ""  %></td>
+        <td><%= estoque.data_validade.strftime("%d/%m/%Y")  rescue "" %></td>
         <td><%= estoque.estoque_atual_lote %></td>
       <% end %>
     </tbody>

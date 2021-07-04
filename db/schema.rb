@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_04_004002) do
+ActiveRecord::Schema.define(version: 2021_07_04_233351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,6 +211,37 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
     t.index ["produto_id"], name: "index_movimento_estoques_on_produto_id"
   end
 
+  create_table "nota_fiscais", force: :cascade do |t|
+    t.integer "numero_nota"
+    t.integer "numero_pedido"
+    t.bigint "cfop_id"
+    t.string "entsai"
+    t.bigint "cliente_id"
+    t.bigint "fornecedor_id"
+    t.bigint "vendedor_id"
+    t.datetime "data_emissao"
+    t.datetime "data_saida"
+    t.string "hora_saida"
+    t.float "valor_desconto"
+    t.float "valor_produtos"
+    t.float "valor_total_nota"
+    t.float "valor_frete"
+    t.float "valor_outras_despesas"
+    t.string "numero_pedido_compra"
+    t.string "tipo_pagamento"
+    t.integer "meio_pagamento"
+    t.integer "numero_parcelas_pagamento"
+    t.text "observacao"
+    t.string "chave_acesso_nfe"
+    t.string "nota_cancelada_sn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
+    t.index ["cliente_id"], name: "index_nota_fiscais_on_cliente_id"
+    t.index ["fornecedor_id"], name: "index_nota_fiscais_on_fornecedor_id"
+    t.index ["vendedor_id"], name: "index_nota_fiscais_on_vendedor_id"
+  end
+
   create_table "plano_contas", force: :cascade do |t|
     t.string "conta"
     t.string "descricao"
@@ -302,6 +333,10 @@ ActiveRecord::Schema.define(version: 2021_07_04_004002) do
   add_foreign_key "fornecedor_contatos", "fornecedores"
   add_foreign_key "movimento_estoques", "estoques"
   add_foreign_key "movimento_estoques", "produtos"
+  add_foreign_key "nota_fiscais", "cfop"
+  add_foreign_key "nota_fiscais", "clientes"
+  add_foreign_key "nota_fiscais", "fornecedores"
+  add_foreign_key "nota_fiscais", "vendedores"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end

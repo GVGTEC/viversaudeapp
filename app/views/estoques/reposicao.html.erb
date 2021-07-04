@@ -82,6 +82,12 @@
   </div>
 
   <br><br>
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Preco de Venda Atual</label>
+    <div class="col-sm-2">
+      <input class="form-control" type="text" name="preco_venda_atual" id="estoques_reposicao_preco_venda_atual" disabled>
+    </div>
+  </div>
   
   <div class="form-group">
     <label class="col-sm-1 control-label">Preço Custo Atual</label>
@@ -126,6 +132,7 @@
           $('#_estoques_reposicao_estoque_atual').val(produto.estoque_atual);
           $('#estoques_reposicao_preco_custo_atual').val(produto.preco_custo);
           $('#estoques_reposicao_margem_lucro').val(produto.margem_lucro);
+          $('#estoques_reposicao_preco_venda_atual').val(produto.preco_venda);
         }
       }
     })

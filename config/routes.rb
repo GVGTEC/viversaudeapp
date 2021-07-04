@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :nota_fiscais
   resources :cfop
   resources :administradores
   get "/estoques/ajuste", to: "estoques#ajuste"

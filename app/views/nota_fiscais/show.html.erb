@@ -1,0 +1,58 @@
+<div class="page-header">
+  <%= link_to nota_fiscais_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_nota_fiscal_path(@nota_fiscal), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Numero nota:</dt>
+  <dd><%= @nota_fiscal.numero_nota %></dd>
+  <dt>Numero pedido:</dt>
+  <dd><%= @nota_fiscal.numero_pedido %></dd>
+  <dt>Cfop:</dt>
+  <dd><%= @nota_fiscal.cfop %></dd>
+  <dt>Entsai:</dt>
+  <dd><%= @nota_fiscal.entsai %></dd>
+  <dt>Cliente:</dt>
+  <dd><%= @nota_fiscal.cliente %></dd>
+  <dt>Fornecedor:</dt>
+  <dd><%= @nota_fiscal.fornecedor %></dd>
+  <dt>Vendedor:</dt>
+  <dd><%= @nota_fiscal.vendedor %></dd>
+  <dt>Data emissao:</dt>
+  <dd><%= @nota_fiscal.data_emissao %></dd>
+  <dt>Data saida:</dt>
+  <dd><%= @nota_fiscal.data_saida %></dd>
+  <dt>Hora saida:</dt>
+  <dd><%= @nota_fiscal.hora_saida %></dd>
+  <dt>Valor desconto:</dt>
+  <dd><%= @nota_fiscal.valor_desconto %></dd>
+  <dt>Valor produtos:</dt>
+  <dd><%= @nota_fiscal.valor_produtos %></dd>
+  <dt>Valor total nota:</dt>
+  <dd><%= @nota_fiscal.valor_total_nota %></dd>
+  <dt>Valor frete:</dt>
+  <dd><%= @nota_fiscal.valor_frete %></dd>
+  <dt>Valor outras despesas:</dt>
+  <dd><%= @nota_fiscal.valor_outras_despesas %></dd>
+  <dt>Numero pedido compra:</dt>
+  <dd><%= @nota_fiscal.numero_pedido_compra %></dd>
+  <dt>Tipo pagamento:</dt>
+  <dd><%= @nota_fiscal.tipo_pagamento %></dd>
+  <dt>Meio pagamento:</dt>
+  <dd><%= @nota_fiscal.meio_pagamento %></dd>
+  <dt>Numero parcelas pagamento:</dt>
+  <dd><%= @nota_fiscal.numero_parcelas_pagamento %></dd>
+  <dt>Observacao:</dt>
+  <dd><%= @nota_fiscal.observacao %></dd>
+  <dt>Chave acesso nfe:</dt>
+  <dd><%= @nota_fiscal.chave_acesso_nfe %></dd>
+  <dt>Nota cancelada sn:</dt>
+  <dd><%= @nota_fiscal.nota_cancelada_sn %></dd>
+</dl>
