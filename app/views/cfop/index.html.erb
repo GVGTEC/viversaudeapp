@@ -1,0 +1,55 @@
+<div class="page-header">
+  <%= link_to new_cfop_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo Cfop
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Cfop de</th>
+            <th>Cfop st de</th>
+            <th>Cfop fe</th>
+            <th>Cfop st fe</th>
+            <th>Descricao</th>
+            <th>Natureza operacao</th>
+            <th>Natureza operacao st</th>
+            <th>Operacao</th>
+            <th>Nota complementar impostos sn</th>
+            <th>Entrada saida es</th>
+            <th>Cliente fornecedor cf</th>
+            <th>Calcular impostos sn</th>
+            <th>Faturamento sn</th>
+            <th>Observacao</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @cfop) do |cfop| %>
+            <td><%= cfop.cfop_de %></td>
+            <td><%= cfop.cfop_st_de %></td>
+            <td><%= cfop.cfop_fe %></td>
+            <td><%= cfop.cfop_st_fe %></td>
+            <td><%= cfop.descricao %></td>
+            <td><%= cfop.natureza_operacao %></td>
+            <td><%= cfop.natureza_operacao_st %></td>
+            <td><%= cfop.operacao %></td>
+            <td><%= cfop.nota_complementar_impostos_sn %></td>
+            <td><%= cfop.entrada_saida_es %></td>
+            <td><%= cfop.cliente_fornecedor_cf %></td>
+            <td><%= cfop.calcular_impostos_sn %></td>
+            <td><%= cfop.faturamento_sn %></td>
+            <td><%= cfop.observacao %></td>
+            <td><%= link_to 'Mostrar', cfop %></td>
+        <td><%= link_to 'Editar', edit_cfop_path(cfop) %></td>
+        <td><%= link_to 'Apagar', cfop, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

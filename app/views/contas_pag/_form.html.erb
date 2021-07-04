@@ -41,7 +41,7 @@
   <div class="form-group">
     <%= f.label :data_emissao, 'Data de Emissão', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.datetime_field :data_emissao, class: "form-control" %>
+      <%= f.date_field :data_emissao, class: "form-control" %>
     </div>
 
     <%= f.label :valor_total, 'Valor Total', class: "col-sm-1 control-label" %>
@@ -192,3 +192,16 @@
       <hr>
     </div>
 </div>
+
+<script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>

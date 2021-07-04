@@ -24,17 +24,9 @@
     <thead>
       <tr>
             <th>Nome</th>
-            <th>Pessoa</th>
-            <th>Cpf</th>
-            <th>Rg</th>
-            <th>Cnpj</th>
-            <th>Ie</th>
             <th>Endereco</th>
             <th>Bairro</th>
             <th>Cidade</th>
-            <th>Cep</th>
-            <th>Uf</th>
-            <th>Email</th>
             <th></th>
         <th></th>
         <th></th>
@@ -44,17 +36,9 @@
     <tbody>
       <%= content_tag_for(:tr, @fornecedores) do |fornecedor| %>
             <td><%= fornecedor.nome %></td>
-            <td><%= fornecedor.pessoa %></td>
-            <td><%= fornecedor.cpf %></td>
-            <td><%= fornecedor.rg %></td>
-            <td><%= fornecedor.cnpj %></td>
-            <td><%= fornecedor.ie %></td>
             <td><%= fornecedor.endereco %></td>
             <td><%= fornecedor.bairro %></td>
             <td><%= fornecedor.cidade %></td>
-            <td><%= fornecedor.cep %></td>
-            <td><%= fornecedor.uf %></td>
-            <td><%= fornecedor.email %></td>
             <td><%= link_to 'Mostrar', fornecedor %></td>
         <td><%= link_to 'Editar', edit_fornecedor_path(fornecedor) %></td>
         <td><%= link_to 'Apagar', fornecedor, method: :delete, data: { confirm: 'Confirma ?' } %></td>

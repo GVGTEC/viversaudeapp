@@ -24,18 +24,9 @@
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Pessoa</th>
-        <th>CPF</th>
-        <th>RG</th>
-        <th>CNPJ</th>
-        <th>IE</th>
         <th>Endereco</th>
         <th>Bairro</th>
         <th>Cidade</th>
-        <th>Cep</th>
-        <th>UF</th>
-        <th>Email</th>
-        <th>Codcidade ibge</th>
         <th></th>
         <th></th>
         <th></th>
@@ -45,18 +36,9 @@
     <tbody>
       <%= content_tag_for(:tr, @clientes) do |cliente| %>
             <td><%= cliente.nome %></td>
-            <td><%= cliente.pessoa %></td>
-            <td><%= cliente.cpf %></td>
-            <td><%= cliente.rg %></td>
-            <td><%= cliente.cnpj %></td>
-            <td><%= cliente.ie %></td>
             <td><%= cliente.endereco %></td>
             <td><%= cliente.bairro %></td>
             <td><%= cliente.cidade %></td>
-            <td><%= cliente.cep %></td>
-            <td><%= cliente.uf %></td>
-            <td><%= cliente.email %></td>
-            <td><%= cliente.codcidade_ibge %></td>
             <td><%= link_to 'Mostrar', cliente %></td>
         <td><%= link_to 'Editar', edit_cliente_path(cliente) %></td>
         <td><%= link_to 'Apagar', cliente, method: :delete, data: { confirm: 'Confirma ?' } %></td>

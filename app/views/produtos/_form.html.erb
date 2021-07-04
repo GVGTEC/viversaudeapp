@@ -21,7 +21,7 @@
        
               <div class="col-md-2">
                 <%= f.label :data_inativo, 'Data Inativo' %>
-                <%= f.datetime_field :data_inativo, class: "form-control" %>
+                <%= f.date_field :data_inativo, class: "form-control" %>
               </div>
 
               <div class="col-md-8">
@@ -44,13 +44,11 @@
               </div>
 
               <div class="col-md-4">
-                <%= f.label :localizacao_estoque, 'Local Estoque', class: "col-sm-1 control-label" %>
-                <div class="col-sm-11">
+                <%= f.label :localizacao_estoque, 'Local Estoque' %>
                     <%= f.select :localizacao_estoque_id,
                     LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
                     {:selected => @produto.localizacao_estoque_id},
                     {:class=> 'form-control'} %>          
-                </div>
               </div>
           </div>
 
@@ -83,8 +81,8 @@
               </div>
 
               <div class="col-md-2">
-                <%= f.label :situacao_tributaria, 'Estoque Atual' %>
-                <%= f.text_field :situacao_tributaria, class: "form-control" %>
+                <%= f.label :estoque_atual, 'Estoque Atual' %>
+                <%= f.text_field :estoque_atual, class: "form-control" %>
               </div>
 
               <div class="col-md-2">
@@ -99,12 +97,12 @@
               
               <div class="col-md-2">
                 <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
-                <%= f.datetime_field :data_ultima_reposicao, class: "form-control" %>
+                <%= f.date_field :data_ultima_reposicao, class: "form-control" %>
               </div>
 
               <div class="col-md-2">
                 <%= f.label :data_ultimo_reajuste, 'Data Último Reajuste' %>
-                <%= f.datetime_field :data_ultimo_reajuste, class: "form-control" %>
+                <%= f.date_field :data_ultimo_reajuste, class: "form-control" %>
               </div>
           </div>
         
@@ -150,12 +148,12 @@
           <div class="row form-group">
             <div class="col-md-4">
               <%= f.label :data_inicial_oferta, 'Data Inicial OFerta' %>
-              <%= f.datetime_field :data_inicial_oferta, class: "form-control" %>
+              <%= f.date_field :data_inicial_oferta, class: "form-control" %>
             </div>
 
             <div class="col-md-4">
               <%= f.label :data_final_oferta, 'Data Final Oferta' %>
-              <%= f.datetime_field :data_final_oferta, class: "form-control" %>
+              <%= f.date_field :data_final_oferta, class: "form-control" %>
             </div>
 
             <div class="col-md-4">
@@ -171,3 +169,16 @@
   </div>
   
 <% end %>
+
+<script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>

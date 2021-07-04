@@ -194,5 +194,5 @@ database.yml
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
-
+reset_banco.sh
 # End of https://www.toptal.com/developers/gitignore/api/rails,node

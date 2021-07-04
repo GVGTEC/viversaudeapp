@@ -1,0 +1,42 @@
+<div class="page-header">
+  <%= link_to cfop_index_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_cfop_path(@cfop), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Cfop de:</dt>
+  <dd><%= @cfop.cfop_de %></dd>
+  <dt>Cfop st de:</dt>
+  <dd><%= @cfop.cfop_st_de %></dd>
+  <dt>Cfop fe:</dt>
+  <dd><%= @cfop.cfop_fe %></dd>
+  <dt>Cfop st fe:</dt>
+  <dd><%= @cfop.cfop_st_fe %></dd>
+  <dt>Descricao:</dt>
+  <dd><%= @cfop.descricao %></dd>
+  <dt>Natureza operacao:</dt>
+  <dd><%= @cfop.natureza_operacao %></dd>
+  <dt>Natureza operacao st:</dt>
+  <dd><%= @cfop.natureza_operacao_st %></dd>
+  <dt>Operacao:</dt>
+  <dd><%= @cfop.operacao %></dd>
+  <dt>Nota complementar impostos sn:</dt>
+  <dd><%= @cfop.nota_complementar_impostos_sn %></dd>
+  <dt>Entrada saida es:</dt>
+  <dd><%= @cfop.entrada_saida_es %></dd>
+  <dt>Cliente fornecedor cf:</dt>
+  <dd><%= @cfop.cliente_fornecedor_cf %></dd>
+  <dt>Calcular impostos sn:</dt>
+  <dd><%= @cfop.calcular_impostos_sn %></dd>
+  <dt>Faturamento sn:</dt>
+  <dd><%= @cfop.faturamento_sn %></dd>
+  <dt>Observacao:</dt>
+  <dd><%= @cfop.observacao %></dd>
+</dl>

@@ -13,6 +13,7 @@ class CreateFornecedores < ActiveRecord::Migration[5.2]
       t.string :cep
       t.string :uf
       t.string :email
+      t.string :codcidade_ibge
 
       t.timestamps
     end

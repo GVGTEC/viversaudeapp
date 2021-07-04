@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_041348) do
+ActiveRecord::Schema.define(version: 2021_07_04_004002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "cfop", force: :cascade do |t|
+    t.string "cfop_de"
+    t.string "cfop_st_de"
+    t.string "cfop_fe"
+    t.string "cfop_st_fe"
+    t.string "descricao"
+    t.string "natureza_operacao"
+    t.string "natureza_operacao_st"
+    t.string "operacao"
+    t.string "nota_complementar_impostos_sn"
+    t.string "entrada_saida_es"
+    t.string "cliente_fornecedor_cf"
+    t.string "calcular_impostos_sn"
+    t.string "faturamento_sn"
+    t.text "observacao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "cliente_contatos", force: :cascade do |t|
     t.bigint "cliente_id"
@@ -152,6 +171,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_041348) do
     t.string "cep"
     t.string "uf"
     t.string "email"
+    t.string "codcidade_ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

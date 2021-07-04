@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cfop
   get "/estoques/ajuste", to: "estoques#ajuste"
   get "/estoques/reposicao", to: "estoques#reposicao"
   get "/estoques/baixa", to: "estoques#baixa"
