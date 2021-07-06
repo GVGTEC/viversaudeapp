@@ -1,0 +1,42 @@
+# Auto generated files with errors to ignore.
+# Remove from this list as you refactor files.
+---
+ignore:
+- Gemfile
+- Rakefile
+- app/controllers/administradores_controller.rb
+- app/controllers/cfop_controller.rb
+- app/controllers/clientes_controller.rb
+- app/controllers/contas_pag_controller.rb
+- app/controllers/empresas_controller.rb
+- app/controllers/fornecedores_controller.rb
+- app/controllers/home_controller.rb
+- app/controllers/localizacao_estoques_controller.rb
+- app/controllers/movimento_estoques_controller.rb
+- app/controllers/plano_contas_controller.rb
+- app/controllers/produtos_controller.rb
+- app/controllers/transportadoras_controller.rb
+- app/controllers/vendedores_controller.rb
+- app/mailers/application_mailer.rb
+- app/models/cliente.rb
+- app/models/contas_pag.rb
+- app/models/empresa.rb
+- app/models/estoque.rb
+- app/models/fornecedor.rb
+- app/models/produto.rb
+- app/models/transportadora.rb
+- app/views/estoques/_estoque.json.jbuilder
+- app/views/estoques/show.json.jbuilder
+- config.ru
+- config/application.rb
+- config/boot.rb
+- config/environment.rb
+- config/environments/development.rb
+- config/environments/production.rb
+- config/environments/test.rb
+- config/initializers/assets.rb
+- config/initializers/inflections.rb
+- config/puma.rb
+- config/routes.rb
+- test/controllers/cfop_controller_test.rb
+- test/models/cfop_test.rb

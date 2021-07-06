@@ -1,5 +1,6 @@
 class ClientesController < ApplicationController
   before_action :set_cliente, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token, :only => [:importar]
 
   # GET /clientes or /clientes.json
   def index
@@ -9,6 +10,73 @@ class ClientesController < ApplicationController
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 10} 
     @clientes = @clientes.paginate(options)
+  end
+
+
+  def importar
+    begin
+      if params[:arquivo].blank?
+        flash[:error] = "Selecione um arquivo"
+        redirect_to "/clientes"
+        return
+      end
+  
+      if File.basename(params[:arquivo].tempfile).include?(".CSV")
+        importar_csv
+      else
+        flash[:error] = "Formato de arquivo não suportado, por favor seleciona arquivos com a extenção csv"
+        redirect_to "/clientes"
+        return
+      end
+  
+      flash[:sucesso] = "Dados importados com sucesso"
+      redirect_to "/clientes"
+    rescue => exception
+      flash[:error] = "Formato de arquivo não está de acordo com o padrão do sistema"
+      redirect_to "/clientes"
+      return
+    end
+  end
+
+  def importar_csv
+    File.foreach(params[:arquivo].tempfile) do |line|
+      d = CharlockHolmes::EncodingDetector.detect(line)
+      line = line.to_s.encode("UTF-8", d[:encoding], invalid: :replace, replace: "")
+      if line.present?
+        importar_linha(line.split(";"))
+      end
+    end
+  end
+
+  def importar_linha(linha)
+    debugger
+    id = 0
+    pessoa = 1
+    nome = 2
+    rg = 3
+    cpf = 4
+    ie = 5
+    cnpj = 6
+    endereco = 7
+    bairro = 8
+    cidade = 9
+    estado = 10
+    cep = 11
+    telefone = 12
+    telefone_alternativo = 13
+    codcidade_ibge = 14
+    telefone_nf = 15
+    email = 16
+    id_vendedor = 17
+    id_terceiro = 18
+    empresa_governo = 19
+
+    begin
+      Cliente.create(nome: linha[nome])
+    rescue Exception => err
+      raise err
+      Rails.logger.error err.message
+    end
   end
 
   # GET /clientes/1 or /clientes/1.json

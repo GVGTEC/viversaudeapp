@@ -1,4 +1,13 @@
 <div class="page-header">
+  <form action="/clientes/importar" enctype='multipart/form-data' method="post">
+    <div style="clear:both">
+      <dt>Importar Clientes (CSV):</dt>
+      <dd><input type="file" class="form-control" name="arquivo" style="clear:both"/></dd>
+      <br>
+      <input type="submit" value="Importar" class="btn btn-primary">
+    </div>
+  </form>
+
   <%= link_to "javascript:window.location.assign('/clientes/new')", class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     Novo Cliente
@@ -46,7 +55,7 @@
     </tbody>
   </table>
 
-  <div>
-        <% will_paginate @clientes, :container => false %>        
-  </div>
+  <div class="apple_pagination">
+    <%= will_paginate @clientes, :container => false %>
+  </div>  
 </div>
