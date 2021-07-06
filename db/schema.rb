@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_04_233351) do
+ActiveRecord::Schema.define(version: 2021_07_05_010710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
   end
 
   create_table "clientes", force: :cascade do |t|
+    t.bigint "vendedor_id"
+    t.bigint "terceiro_id"
     t.string "nome"
     t.string "pessoa"
     t.string "cpf"
@@ -67,10 +69,14 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
     t.string "cidade"
     t.string "cep"
     t.string "uf"
+    t.string "telefone"
     t.string "email"
     t.string "codcidade_ibge"
+    t.boolean "empresa_governo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["terceiro_id"], name: "index_clientes_on_terceiro_id"
+    t.index ["vendedor_id"], name: "index_clientes_on_vendedor_id"
   end
 
   create_table "contas_pag", force: :cascade do |t|
@@ -183,6 +189,7 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
     t.string "cidade"
     t.string "cep"
     t.string "uf"
+    t.string "telefone"
     t.string "email"
     t.string "codcidade_ibge"
     t.datetime "created_at", null: false
@@ -242,6 +249,43 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
     t.index ["vendedor_id"], name: "index_nota_fiscais_on_vendedor_id"
   end
 
+  create_table "nota_fiscal_impostos", force: :cascade do |t|
+    t.bigint "nota_fiscal_id"
+    t.float "valor_bc_icms"
+    t.float "valor_icms"
+    t.float "valor_bc_icms_st"
+    t.float "valor_icms_st"
+    t.float "valor_pis"
+    t.float "valor_cofins"
+    t.float "valor_ipi"
+    t.float "valor_difal"
+    t.float "valor_fcp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nota_fiscal_id"], name: "index_nota_fiscal_impostos_on_nota_fiscal_id"
+  end
+
+  create_table "nota_fiscal_transportas", force: :cascade do |t|
+    t.bigint "nota_fiscal_id"
+    t.bigint "transportadora_id"
+    t.integer "paga_frete"
+    t.string "numero_coleta"
+    t.datetime "data_coleta"
+    t.string "hora_coleta"
+    t.string "quantidade"
+    t.string "especie"
+    t.string "marca"
+    t.string "numero"
+    t.string "peso_liquido"
+    t.string "peso_bruto"
+    t.string "placa_veiculo"
+    t.string "estado_veiculo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nota_fiscal_id"], name: "index_nota_fiscal_transportas_on_nota_fiscal_id"
+    t.index ["transportadora_id"], name: "index_nota_fiscal_transportas_on_transportadora_id"
+  end
+
   create_table "plano_contas", force: :cascade do |t|
     t.string "conta"
     t.string "descricao"
@@ -280,6 +324,24 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
+  end
+
+  create_table "terceiros", force: :cascade do |t|
+    t.string "nome"
+    t.string "pessoa"
+    t.string "cpf"
+    t.string "rg"
+    t.string "cnpj"
+    t.string "ie"
+    t.string "endereco"
+    t.string "bairro"
+    t.string "cidade"
+    t.string "cep"
+    t.string "uf"
+    t.string "telefone"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transportadora_contatos", force: :cascade do |t|
@@ -325,6 +387,8 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
 
   add_foreign_key "administradores", "empresas"
   add_foreign_key "cliente_contatos", "clientes"
+  add_foreign_key "clientes", "terceiros"
+  add_foreign_key "clientes", "vendedores"
   add_foreign_key "contas_pag", "fornecedores"
   add_foreign_key "contas_pag", "plano_contas"
   add_foreign_key "contas_pagar_parcelas", "contas_pag"
@@ -337,6 +401,9 @@ ActiveRecord::Schema.define(version: 2021_07_04_233351) do
   add_foreign_key "nota_fiscais", "clientes"
   add_foreign_key "nota_fiscais", "fornecedores"
   add_foreign_key "nota_fiscais", "vendedores"
+  add_foreign_key "nota_fiscal_impostos", "nota_fiscais"
+  add_foreign_key "nota_fiscal_transportas", "nota_fiscais"
+  add_foreign_key "nota_fiscal_transportas", "transportadoras"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end

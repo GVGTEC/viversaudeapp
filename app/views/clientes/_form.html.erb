@@ -93,11 +93,30 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :telefone, 'Telefone', class: "col-sm-1 control-label" %>
+    <div class="col-sm-7">
+      <%= f.text_field :telefone, class: "form-control" %>
+    </div>
+  </div>  
+
+  <div class="form-group">
     <%= f.label :email, 'Email', class: "col-sm-1 control-label" %>
     <div class="col-sm-7">
       <%= f.text_field :email, class: "form-control" %>
     </div>
   </div> 
+
+  <div class="form-group">
+    <%= f.label :vendedor, 'Vendedor', class: "col-sm-1 control-label" %>
+    <div class="col-sm-5">
+      <%= f.select :vendedor_id, Vendedor.all.reorder("nome asc").collect { |vendedor| [vendedor.nome, vendedor.id] }, {:selected => @cliente.vendedor_id, :include_blank => true}, {:class=> 'form-control'} %>
+    </div>
+
+    <%= f.label :terceiro, 'Terceiro', class: "col-sm-1 control-label" %>
+    <div class="col-sm-5">
+      <%= f.select :terceiro_id, Terceiro.all.reorder("nome asc").collect { |terceiro| [terceiro.nome, terceiro.id] }, {:selected => @cliente.terceiro_id, :include_blank => true}, {:class=> 'form-control'} %>
+    </div>
+  </div>   
 
   <br><br>
 

@@ -13,6 +13,9 @@ class NotaFiscaisController < ApplicationController
   # GET /nota_fiscais/new
   def new
     @nota_fiscal = NotaFiscal.new
+
+    params[:data_emissao] ||= Time.zone.now.strftime("%Y-%m-%d")
+    @nota_fiscal.data_emissao = params[:data_emissao]
   end
 
   # GET /nota_fiscais/1/edit

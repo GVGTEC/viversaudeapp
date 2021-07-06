@@ -12,141 +12,135 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :numero_nota, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.number_field :numero_nota, class: "form-control" %>
+  <div class="ibox-content">
+    <div class="row form-group">
+        <div class="col-md-2">
+        <%= f.label :numero_nota, 'Número Nota' %>
+          <%= f.text_field :numero_nota, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :numero_pedido, 'Número Pedido' %>
+          <%= f.text_field :numero_pedido, class: "form-control" %>
+        </div>
     </div>
+
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :cfop, 'CFOP' %>
+          <%= f.text_field :cfop, class: "form-control" %>
+        </div>
+
+        <div class="col-md-10">
+        <%= f.label :vendedor, 'Natureza Operação' %>
+          <%= f.text_field :vendedor, class: "form-control" %>
+        </div>        
+    </div>        
+  
+    <div class="row form-group">
+        <div class="col-md-12">
+          <%= f.label :cliente, 'Cliente' %>
+          <%= f.select :cliente_id, Cliente.all.reorder("nome asc").collect { |cliente| [cliente.nome, cliente.id] }, {:selected => @nota_fiscal.cliente_id, :include_blank => true}, {:class=> 'form-control'} %>
+        </div>
+    </div>   
+
+    <div class="row form-group">
+        <div class="col-md-12">
+          <%= f.label :fornecedor, 'Fornecedor' %>
+          <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
+        </div>
+    </div>   
+
+    <div class="row form-group">
+        <div class="col-md-12">
+          <%= f.label :vendedor, 'Vendedor' %>
+          <%= f.text_field :vendedor, class: "form-control" %>
+        </div>
+    </div>   
+
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :data_emissao, 'Data Emissão' %>
+          <%= f.date_field :data_emissao, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :data_saida, 'Data Saída' %>
+          <%= f.date_field :data_saida, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :hora_saida, 'Hora Saída' %>
+          <%= f.text_field :hora_saida, class: "form-control" %>
+        </div>
+    </div>   
+
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :valor_desconto, 'Quantidade' %>
+          <%= f.text_field :valor_desconto, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :valor_frete, 'Marca' %>
+          <%= f.text_field :valor_frete, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :hora_saida, 'Espécie' %>
+          <%= f.text_field :hora_saida, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :valor_frete, 'Peso Líquido' %>
+          <%= f.text_field :valor_frete, class: "form-control" %>
+        </div>
+
+        <div class="col-md-2">
+          <%= f.label :valor_frete, 'Peso Bruto' %>
+          <%= f.text_field :valor_frete, class: "form-control" %>
+        </div>
+    </div>    
+
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :valor_desconto, 'Valor Desconto' %>
+          <%= f.text_field :valor_desconto, class: "form-control" %>
+        </div>
+
+        <div class="col-sm-2">
+          <%= f.label :valor_frete, 'Valor Frete' %>
+          <%= f.text_field :valor_frete, class: "form-control" %>
+        </div>
+
+        <div class="col-sm-2">
+          <%= f.label :valor_outras_despesas, 'Valor Outras Despesas' %>
+          <%= f.text_field :valor_outras_despesas, class: "form-control" %>
+        </div>
+
+        <div class="col-sm-2">        
+          <%= f.label :numero_pedido_compra, 'Número Pedido Compra' %>
+          <%= f.text_field :numero_pedido_compra, class: "form-control" %>
+        </div>
+      </div>           
   </div>
+  
   <div class="form-group">
-    <%= f.label :numero_pedido, class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
-      <%= f.number_field :numero_pedido, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :cfop, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :cfop, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :entsai, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :entsai, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :cliente, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :cliente, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :fornecedor, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :fornecedor, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :vendedor, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :vendedor, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_emissao, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_emissao, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :data_saida, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.datetime_select :data_saida, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :hora_saida, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :hora_saida, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :valor_desconto, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :valor_desconto, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :valor_produtos, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :valor_produtos, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :valor_total_nota, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :valor_total_nota, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :valor_frete, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :valor_frete, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :valor_outras_despesas, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :valor_outras_despesas, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :numero_pedido_compra, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :numero_pedido_compra, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :tipo_pagamento, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :tipo_pagamento, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :meio_pagamento, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.number_field :meio_pagamento, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :numero_parcelas_pagamento, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.number_field :numero_parcelas_pagamento, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :observacao, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_area :observacao, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :chave_acesso_nfe, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :chave_acesso_nfe, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :nota_cancelada_sn, class: "col-sm-1 control-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :nota_cancelada_sn, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
       <%= f.submit "Salvar", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
+
+<script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>

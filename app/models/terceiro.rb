@@ -1,0 +1,2 @@
+class Terceiro < ApplicationRecord
+end

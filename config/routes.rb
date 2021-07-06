@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :terceiros
   resources :nota_fiscais
   resources :cfop
   resources :administradores
