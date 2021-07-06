@@ -49,7 +49,6 @@ class ClientesController < ApplicationController
   end
 
   def importar_linha(linha)
-    debugger
     id = 0
     pessoa = 1
     nome = 2
@@ -60,7 +59,7 @@ class ClientesController < ApplicationController
     endereco = 7
     bairro = 8
     cidade = 9
-    estado = 10
+    uf = 10
     cep = 11
     telefone = 12
     telefone_alternativo = 13
@@ -70,9 +69,30 @@ class ClientesController < ApplicationController
     id_vendedor = 17
     id_terceiro = 18
     empresa_governo = 19
-
+    
     begin
-      Cliente.create(nome: linha[nome])
+      cliente = Cliente.new
+      cliente.id = linha[id].to_i
+      cliente.vendedor_id = 1 
+      cliente.terceiro_id = 1
+      cliente.nome = linha[nome]
+      cliente.pessoa = linha[pessoa]
+      cliente.cpf = linha[cpf] if linha[cpf].to_i != 0
+      cliente.rg = linha[rg] if linha[rg].to_i != 0
+      cliente.cnpj = linha[cnpj] if linha[cnpj].to_i != 0
+      cliente.ie = linha[ie] if linha[ie].to_i != 0
+      cliente.endereco = linha[endereco] 
+      cliente.bairro = linha[bairro] 
+      cliente.cidade = linha[cidade] 
+      cliente.cep = linha[cep] 
+      cliente.uf = linha[uf] 
+      cliente.telefone = linha[telefone] 
+      cliente.telefone_alternativo = linha[telefone_alternativo] 
+      cliente.telefone_nf = linha[telefone_nf] 
+      cliente.email = linha[email] 
+      cliente.codcidade_ibge = linha[codcidade_ibge] 
+      cliente.empresa_governo = true if linha[empresa_governo].include?("S")
+      cliente.save
     rescue Exception => err
       raise err
       Rails.logger.error err.message

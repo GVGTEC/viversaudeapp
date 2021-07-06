@@ -15,9 +15,11 @@ class CreateClientes < ActiveRecord::Migration[5.2]
       t.string :cep
       t.string :uf
       t.string :telefone
+      t.string :telefone_alternativo
+      t.string :telefone_nf
       t.string :email
       t.string :codcidade_ibge
-      t.boolean :empresa_governo
+      t.boolean :empresa_governo, default: false
 
       t.timestamps
     end

@@ -10,7 +10,12 @@
   <form action="" method="GET">
     <div class="row" style="width:300px;display: inline-block;">
       <div style="float: left">
-        <input type="text" name="lote_id" value="<%=params[:lote_id] %>" class="form-control" placeholder="Busca..">
+        <select class="form-control" name="estoque_id">
+          <option value="">Buscar Lote</option>
+          <% Estoque.where(produto_id: @produto.id).each do |estoque| %>
+            <option <% if estoque.id == params[:estoque_id] %>selected="selected"<% end %> value="<%= estoque.id %>"><%= estoque.lote %></option>
+          <% end %>
+        </select>
       </div>
       <div style="float: left;margin-left:5px">
         <input type="submit" class="btn btn-primary" value="Buscar">

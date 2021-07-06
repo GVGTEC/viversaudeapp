@@ -70,9 +70,11 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
     t.string "cep"
     t.string "uf"
     t.string "telefone"
+    t.string "telefone_alternativo"
+    t.string "telefone_nf"
     t.string "email"
     t.string "codcidade_ibge"
-    t.boolean "empresa_governo"
+    t.boolean "empresa_governo", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["terceiro_id"], name: "index_clientes_on_terceiro_id"
