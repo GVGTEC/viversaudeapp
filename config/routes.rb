@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post "/estoques/ajuste", to: "estoques#ajuste"
   post "/estoques/reposicao", to: "estoques#create_reposicao"
   post "/estoques/baixa", to: "estoques#baixa"
-
+  
   resources :estoques, only: [:index, :show]
   resources :vendedores
   resources :transportadoras
@@ -18,8 +18,9 @@ Rails.application.routes.draw do
     resources :movimento_estoques, only: [:index] 
   end
   resources :localizacao_estoques
-  resources :clientes
   resources :fornecedores
+  post "/clientes/importar", to: "clientes#importar"
+  resources :clientes
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root to: "home#index"
