@@ -73,8 +73,7 @@ class ClientesController < ApplicationController
     begin
       cliente = Cliente.new
       cliente.id = linha[id].to_i
-      cliente.vendedor_id = 1 
-      cliente.terceiro_id = 1
+
       cliente.nome = linha[nome]
       cliente.pessoa = linha[pessoa]
       cliente.cpf = linha[cpf] if linha[cpf].to_i != 0
