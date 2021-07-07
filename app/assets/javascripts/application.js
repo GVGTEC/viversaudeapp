@@ -16,10 +16,3 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
-
-const app = {}
-
-app.contas_pag = {}
-app.contas_pag.mais = function(){
-  $("#conteudoContainer").append($("#conteudoContainerTemplate").html());
-}
