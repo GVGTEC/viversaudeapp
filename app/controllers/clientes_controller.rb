@@ -32,7 +32,7 @@ class ClientesController < ApplicationController
       flash[:sucesso] = "Dados importados com sucesso"
       redirect_to "/clientes"
     rescue => exception
-      flash[:error] = "Formato de arquivo não está de acordo com o padrão do sistema"
+      flash[:error] = exception
       redirect_to "/clientes"
       return
     end
