@@ -1,5 +1,6 @@
 class ProdutosController < ApplicationController
   before_action :set_produto, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token, :only => [:importar]
 
   # GET /produtos or /produtos.json
   def index
@@ -10,6 +11,53 @@ class ProdutosController < ApplicationController
    # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 10} 
     @produtos = @produtos.paginate(options)
+  end
+
+  def importar
+    begin
+      if params[:arquivo].blank?
+        flash[:error] = "Selecione um arquivo"
+        redirect_to "/produtos"
+        return
+      end
+  
+      if File.basename(params[:arquivo].tempfile).include?(".CSV")
+        importar_csv
+      else
+        flash[:error] = "Formato de arquivo não suportado, por favor seleciona arquivos com a extenção csv"
+        redirect_to "/produtos"
+        return
+      end
+  
+      flash[:sucesso] = "Dados importados com sucesso"
+      redirect_to "/produtos"
+    rescue => exception
+      flash[:error] = exception
+      redirect_to "/produtos"
+      return
+    end
+  end
+
+  def importar_csv
+    File.foreach(params[:arquivo].tempfile) do |line|
+      d = CharlockHolmes::EncodingDetector.detect(line)
+      line = line.to_s.encode("UTF-8", d[:encoding], invalid: :replace, replace: "")
+      if line.present?
+        importar_linha(line.split(";"))
+      end
+    end
+  end
+
+  def importar_linha(linha)
+    id = 0
+      debugger    
+    begin
+      produto = Produto.new
+      produto.save
+    rescue Exception => err
+      raise err
+      Rails.logger.error err.message
+    end
   end
 
   # GET /produtos/1 or /produtos/1.json
