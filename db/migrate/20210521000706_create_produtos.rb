@@ -2,6 +2,7 @@ class CreateProdutos < ActiveRecord::Migration[5.2]
   def change
     create_table :produtos do |t|
       t.references :localizacao_estoque, foreign_key: true
+      t.references :fornecedor, foreign_key: true
       t.boolean :situacao
       t.datetime :data_inativo
       t.string :descricao
@@ -10,6 +11,7 @@ class CreateProdutos < ActiveRecord::Migration[5.2]
       t.string :ncm
       t.string :situacao_tributaria
       t.string :unidade
+      t.string :cod_fabricante
       t.float :embalagem, default: 0
       t.boolean :controlar_estoque
       t.boolean :por_lote

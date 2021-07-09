@@ -37,11 +37,11 @@
 
     <tbody>
       <%= content_tag_for(:tr, @fornecedores) do |fornecedor| %>
-            <td><%= fornecedor.nome %></td>
-            <td><%= fornecedor.endereco %></td>
-            <td><%= fornecedor.bairro %></td>
-            <td><%= fornecedor.cidade %></td>
-            <td><%= link_to 'Mostrar', fornecedor %></td>
+        <td><%= fornecedor.nome %></td>
+        <td><%= fornecedor.endereco %></td>
+        <td><%= fornecedor.bairro %></td>
+        <td><%= fornecedor.cidade %></td>
+        <td><%= link_to 'Mostrar', fornecedor %></td>
         <td><%= link_to 'Editar', edit_fornecedor_path(fornecedor) %></td>
         <td><%= link_to 'Apagar', fornecedor, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
