@@ -1,5 +1,6 @@
 class Produto < ApplicationRecord
   belongs_to :localizacao_estoque, optional: true
+  belongs_to :fornecedor, optional: true
 
 
   def self.atualizar_produto_reposto(estoque, params)

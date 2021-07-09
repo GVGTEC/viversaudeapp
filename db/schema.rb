@@ -298,6 +298,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
 
   create_table "produtos", force: :cascade do |t|
     t.bigint "localizacao_estoque_id"
+    t.bigint "fornecedor_id"
     t.boolean "situacao"
     t.datetime "data_inativo"
     t.string "descricao"
@@ -306,6 +307,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
     t.string "ncm"
     t.string "situacao_tributaria"
     t.string "unidade"
+    t.string "cod_fabricante"
     t.float "embalagem", default: 0.0
     t.boolean "controlar_estoque"
     t.boolean "por_lote"
@@ -325,6 +327,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
     t.float "estoque_minimo", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["fornecedor_id"], name: "index_produtos_on_fornecedor_id"
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
   end
 
@@ -406,6 +409,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
   add_foreign_key "nota_fiscal_impostos", "nota_fiscais"
   add_foreign_key "nota_fiscal_transportas", "nota_fiscais"
   add_foreign_key "nota_fiscal_transportas", "transportadoras"
+  add_foreign_key "produtos", "fornecedores"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end
