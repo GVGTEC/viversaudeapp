@@ -85,10 +85,22 @@ class ProdutosController < ApplicationController
       produto.descricao = linha[descricao]
       produto.descricao_nfe = linha[descricao_nfe]
 
-      begin
-        produto.fornecedor_id = Fornecedor.find(linha[fornecedor_id].to_i).id
-      rescue 
-        produto.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
+      fornecedor = linha[fornecedor_id].to_i
+      if fornecedor != 0
+        begin
+          produto.fornecedor_id = Fornecedor.find(fornecedor).id
+        rescue 
+          produto.fornecedor_id = Fornecedor.create(id: fornecedor, nome: "Fornecedor #{fornecedor}").id
+        end
+      end
+
+      localizacao_estoque = linha[localizacao_estoque_id].to_i
+      if localizacao_estoque != 0
+        begin
+          produto.localizacao_estoque_id = LocalizacaoEstoque.find(localizacao_estoque).id
+        rescue 
+          produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: localizacao_estoque, local: "Rua #{localizacao_estoque}").id
+        end
       end
 
       produto.situacao_tributaria = linha[situacao_tributaria]
@@ -107,13 +119,6 @@ class ProdutosController < ApplicationController
       produto.data_ultimo_reajuste = linha[data_ultimo_reajuste]
       produto.comissao_pc = linha[comissao_pc]
       produto.bloquear_preco = linha[bloquear_preco]
-
-      begin
-        produto.localizacao_estoque_id = LocalizacaoEstoque.find(linha[localizacao_estoque_id].to_i).id
-      rescue 
-        produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: linha[localizacao_estoque_id].to_i).id
-      end
-
       produto.save
     rescue Exception => err
       raise err
