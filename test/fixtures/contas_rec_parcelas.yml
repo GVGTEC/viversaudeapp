@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  contas_rec: one
+  data_vencimento: 2021-07-08 22:35:57
+  data_recebimento: 2021-07-08 22:35:57
+  valor_parcela: 1.5
+  valor_juros_desconto: 1.5
+  documento: MyString
+  descricao: MyString
+
+two:
+  contas_rec: two
+  data_vencimento: 2021-07-08 22:35:57
+  data_recebimento: 2021-07-08 22:35:57
+  valor_parcela: 1.5
+  valor_juros_desconto: 1.5
+  documento: MyString
+  descricao: MyString

@@ -7,7 +7,7 @@ class FornecedoresController < ApplicationController
     @fornecedores = @fornecedores.where("lower(nome) ilike '%#{params[:nome]}%'")
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 1} 
+    options = {page: params[:page] || 1, per_page: 10} 
     @fornecedores = @fornecedores.paginate(options)
   end
 

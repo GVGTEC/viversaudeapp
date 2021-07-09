@@ -13,9 +13,9 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :nome, 'Nome', class: "col-sm-1 control-label" %>
+    <%= f.label :nome, 'Nome/Razão Social', class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
-      <%= f.text_field :nome, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :nome, class: "form-control" %>
     </div>
   </div>
 
@@ -26,69 +26,69 @@
        ['', 0], 
        ['FÍSICA', 'F'], 
        ['JURÍDICA', 'J']
-      ]), {}, {class: "form-control", onkeypress: "doNothing()", onclick: "verificaPessoa()"}) %>
+      ]), {}, {class: "form-control", onclick: "verificaPessoa()"}) %>
     </div>
   </div>
 
   <div class="form-group pessoa-fisica" style="display: none">
     <%= f.label :cpf, 'CPF', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.text_field :cpf, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :cpf, class: "form-control" %>
     </div>
   
     <%= f.label :rg, 'RG', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.text_field :rg, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :rg, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group pessoa-juridica" style="display: none">
     <%= f.label :cnpj, 'CNPJ', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.text_field :cnpj, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :cnpj, class: "form-control" %>
     </div>
   
-    <%= f.label :ie, 'IE', class: "col-sm-1 control-label" %>
+    <%= f.label :ie, 'Inscrição Estadual', class: "col-sm-1 control-label" %>
     <div class="col-sm-3">
-      <%= f.text_field :ie, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :ie, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :cep, 'CEP', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
-      <%= f.text_field :cep, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :cep, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :endereco, 'Endereço', class: "col-sm-1 control-label" %>
     <div class="col-sm-10">
-      <%= f.text_field :endereco, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :endereco, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :bairro, 'Bairro', class: "col-sm-1 control-label" %>
     <div class="col-sm-4">
-      <%= f.text_field :bairro, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :bairro, class: "form-control" %>
     </div>
   
     <%= f.label :cidade, 'Cidade', class: "col-sm-1 control-label" %>
     <div class="col-sm-4">
-      <%= f.text_field :cidade, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :cidade, class: "form-control" %>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :codcidade_ibge, 'Cidade IBGE', class: "col-sm-1 control-label" %>  
     <div class="col-sm-2">
-      <%= f.text_field :codcidade_ibge, class: "form-control", disabled: "disable", onkeypress: "doNothing()" %>
+      <%= f.text_field :codcidade_ibge, class: "form-control", disabled: "disable" %>
     </div>
 
     <%= f.label :uf, 'UF', class: "col-sm-1 control-label" %>
     <div class="col-sm-1">
-      <%= f.text_field :uf, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :uf, class: "form-control" %>
     </div>
   </div>
 
@@ -102,7 +102,7 @@
   <div class="form-group">
     <%= f.label :email, 'Email', class: "col-sm-1 control-label" %>
     <div class="col-sm-7">
-      <%= f.text_field :email, class: "form-control", onkeypress: "doNothing()" %>
+      <%= f.text_field :email, class: "form-control" %>
     </div>
   </div> 
 
@@ -195,6 +195,16 @@
 </div>
 
 <script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
 const verificaPessoa = () =>{
   const selectElement = document.getElementById("fornecedor_pessoa")
   var codigo_pessoa = selectElement.value
@@ -207,21 +217,6 @@ const verificaPessoa = () =>{
     $('.pessoa-juridica').show()
   }
 }
-
-function doNothing(){  
-  var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
-  if( keyCode == 13 ){
-    if(!e) var e = window.event;
-
-    e.cancelBubble = true;
-    e.returnValue = false;
-
-    if (e.stopPropagation) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-  }
-} 
 
 $("#fornecedor_endereco").focus(function(){
   let cep = $('#fornecedor_cep').val()

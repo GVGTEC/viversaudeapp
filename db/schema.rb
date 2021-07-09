@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_010710) do
+ActiveRecord::Schema.define(version: 2021_07_09_013557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -105,6 +105,32 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contas_pag_id"], name: "index_contas_pagar_parcelas_on_contas_pag_id"
+  end
+
+  create_table "contas_rec", force: :cascade do |t|
+    t.bigint "cliente_id"
+    t.bigint "plano_conta_id"
+    t.string "documento"
+    t.string "historico"
+    t.datetime "data_emissao"
+    t.float "valor_total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_contas_rec_on_cliente_id"
+    t.index ["plano_conta_id"], name: "index_contas_rec_on_plano_conta_id"
+  end
+
+  create_table "contas_rec_parcelas", force: :cascade do |t|
+    t.bigint "contas_rec_id"
+    t.datetime "data_vencimento"
+    t.datetime "data_recebimento"
+    t.float "valor_parcela"
+    t.float "valor_juros_desconto"
+    t.string "documento"
+    t.string "descricao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contas_rec_id"], name: "index_contas_rec_parcelas_on_contas_rec_id"
   end
 
   create_table "contatos", force: :cascade do |t|
@@ -394,6 +420,9 @@ ActiveRecord::Schema.define(version: 2021_07_05_010710) do
   add_foreign_key "contas_pag", "fornecedores"
   add_foreign_key "contas_pag", "plano_contas"
   add_foreign_key "contas_pagar_parcelas", "contas_pag"
+  add_foreign_key "contas_rec", "clientes"
+  add_foreign_key "contas_rec", "plano_contas"
+  add_foreign_key "contas_rec_parcelas", "contas_rec"
   add_foreign_key "estoques", "fornecedores"
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"

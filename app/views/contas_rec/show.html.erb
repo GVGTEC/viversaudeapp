@@ -1,0 +1,28 @@
+<h1>Contas a Receber</h1>
+
+<div class="page-header">
+  <%= link_to contas_rec_index_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_contas_rec_path(@contas_rec), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h2>Mostrar</h2>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Cliente:</dt>
+  <dd><%= @contas_rec.cliente %></dd>
+  <dt>Plano conta:</dt>
+  <dd><%= @contas_rec.plano_conta %></dd>
+  <dt>Documento:</dt>
+  <dd><%= @contas_rec.documento %></dd>
+  <dt>Historico:</dt>
+  <dd><%= @contas_rec.historico %></dd>
+  <dt>Data emissao:</dt>
+  <dd><%= @contas_rec.data_emissao %></dd>
+  <dt>Valor total:</dt>
+  <dd><%= @contas_rec.valor_total %></dd>
+</dl>
