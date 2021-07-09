@@ -1,3 +1,5 @@
+<h1>Fornecedores</h1>
+
 <div class="page-header">
   <%= link_to fornecedores_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
@@ -7,11 +9,11 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Editar
   <% end %>
-  <h1>Mostrar</h1>
+  <h2>Mostrar</h2>
 </div>
 
 <dl class="dl-horizontal">
-  <dt>Nome:</dt>
+  <dt>Nome/Razão Social:</dt>
   <dd><%= @fornecedor.nome %></dd>
   <dt>Pessoa:</dt>
   <dd><%= @fornecedor.pessoa %></dd>

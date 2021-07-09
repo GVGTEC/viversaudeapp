@@ -1,9 +1,11 @@
+<h1>Vendedores</h1>
+
 <div class="page-header">
   <%= link_to new_vendedor_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
-    Novo Vendedor
+    Novo
   <% end %>
-  <h1>Lista Vendedores</h1>
+  <h2>Lista</h2>
 </div>
 
 <div class="table-responsive">
@@ -11,16 +13,6 @@
     <thead>
       <tr>
         <th>Nome</th>
-        <th>Pessoa</th>
-        <th>Cpf</th>
-        <th>Rg</th>
-        <th>Cnpj</th>
-        <th>Ie</th>
-        <th>Endereco</th>
-        <th>Bairro</th>
-        <th>Cidade</th>
-        <th>Cep</th>
-        <th>Uf</th>
         <th>Telefone</th>
         <th>Email</th>
         <th></th>
@@ -32,16 +24,6 @@
     <tbody>
       <%= content_tag_for(:tr, @vendedores) do |vendedor| %>
         <td><%= vendedor.nome %></td>
-        <td><%= vendedor.pessoa %></td>
-        <td><%= vendedor.cpf %></td>
-        <td><%= vendedor.rg %></td>
-        <td><%= vendedor.cnpj %></td>
-        <td><%= vendedor.ie %></td>
-        <td><%= vendedor.endereco %></td>
-        <td><%= vendedor.bairro %></td>
-        <td><%= vendedor.cidade %></td>
-        <td><%= vendedor.cep %></td>
-        <td><%= vendedor.uf %></td>
         <td><%= vendedor.telefone %></td>
         <td><%= vendedor.email %></td>
         <td><%= link_to 'Mostrar', vendedor %></td>

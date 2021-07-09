@@ -1,0 +1,207 @@
+<%= form_for(@contas_rec, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @contas_rec.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4>Confira os campos abaixo:</h4>
+
+      <ul>
+      <% @contas_rec.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :clientes, 'Cliente', class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.select :cliente_id, Cliente.all.reorder("nome asc").collect { |cliente| ["#{cliente.nome} - #{cliente.bairro}", cliente.id] }, {:selected => @contas_rec.cliente_id, :include_blank => true}, {:class=> 'form-control'} %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :plano_contas, 'Plano de Contas', class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
+      <%= f.select :plano_conta_id, PlanoConta.all.reorder("conta asc").collect { |plano_conta| [plano_conta.conta, plano_conta.id] }, {:selected => @contas_rec.plano_conta_id, :include_blank => true}, {:class=> 'form-control'} %>
+    </div>
+
+    <%= f.label :documento, 'Documento', class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_field :documento, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :historico, 'Histórico', class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :historico, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :data_emissao, 'Data de Emissão', class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
+      <%= f.date_field :data_emissao, class: "form-control" %>
+    </div>
+
+    <%= f.label :valor_total, 'Valor Total', class: "col-sm-1 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_field :valor_total, class: "form-control" %>
+    </div>
+  </div>
+ 
+ <br><br>
+
+  <h3>Parcelas</h3>
+  <hr>
+  <div id="conteudoContainer">
+    <% @contas_rec.contas_rec_parcelas.each do |contas_rec_parcela| %>
+      <div class="item" style="margin-bottom: 40px">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Data de Vencimento</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="date" value="<%= contas_pagar_parcela.data_vencimento.strftime("%Y-%m-%d") %>" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
+          </div>
+
+          <label class="col-sm-2 control-label">Data de Pagamento</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="date" value="<%= contas_pagar_parcela.data_pagamento.strftime("%Y-%m-%d") %>" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Valor</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" value="<%= contas_pagar_parcela.valor_parcela %>" name="contas_pag[contas_pagar_parcela][][valor_parcela]">
+          </div>
+
+          <label class="col-sm-2 control-label">Valor Acréscimo/Desconto</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" value="<%= contas_pagar_parcela.valor_juros_desconto %>" name="contas_pag[contas_pagar_parcela][][valor_juros_desconto]">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Documento</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" value="<%= contas_pagar_parcela.documento %>" name="contas_pag[contas_pagar_parcela][][documento]">
+          </div>
+
+          <label class="col-sm-2 control-label">Descrição</label>
+          <div class="col-sm-3">
+            <input class="form-control" type="text" value="<%= contas_pagar_parcela.descricao %>" name="contas_pag[contas_pagar_parcela][][descricao]">
+          </div>
+        </div>
+
+        <hr>
+      </div>
+    <% end %>
+
+    <div class="item" style="margin-bottom: 40px">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Data de Vencimento</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
+        </div>
+
+        <label class="col-sm-2 control-label">Data de Pagamento</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Valor</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_parcela]">
+        </div>
+
+        <label class="col-sm-2 control-label">Valor Acréscimo/Desconto</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_juros_desconto]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Documento</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][documento]">
+        </div>
+
+        <label class="col-sm-2 control-label">Descrição</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][descricao]">
+        </div>
+      </div>
+
+      <hr>
+    </div>
+  </div>
+
+  <div class="form-group" style="text-align: right;">
+    <a href="javascript:;" onclick="app.contas_pag.mais();" class="btn btn-primary">Mais</a>
+  </div>
+
+  <hr>
+
+  <div class="form-group">
+    <div class="col-sm-1">
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<div id="conteudoContainerTemplate" style="display: none">
+  <div class="item" style="margin-bottom: 40px">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Data de Vencimento</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
+        </div>
+
+        <label class="col-sm-2 control-label">Data de Pagamento</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Valor</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_parcela]">
+        </div>
+
+        <label class="col-sm-2 control-label">Valor Acréscimo/Desconto</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_juros_desconto]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Documento</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][documento]">
+        </div>
+
+        <label class="col-sm-2 control-label">Descrição</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][descricao]">
+        </div>
+      </div>
+
+      <hr>
+    </div>
+</div>
+
+<script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>

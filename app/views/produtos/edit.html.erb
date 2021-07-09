@@ -1,3 +1,5 @@
+<h1>Produtos</h1>
+
 <div class="page-header">
   <%= link_to produtos_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
@@ -5,9 +7,9 @@
   <% end %>
   <%= link_to @produto, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-info-sign"></span>
-    Show
+    Mostrar
   <% end %>
-  <h1>Alteração Produto</h1>
+  <h2>Alteração</h2>
 </div>
 
 <%= render 'form' %>

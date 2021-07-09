@@ -1,0 +1,39 @@
+<div class="page-header">
+  <%= link_to new_contas_rec_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo
+  <% end %>
+  <h1>Lista</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Cliente</th>
+            <th>Plano conta</th>
+            <th>Documento</th>
+            <th>Historico</th>
+            <th>Data emissao</th>
+            <th>Valor total</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @contas_rec) do |contas_rec| %>
+            <td><%= contas_rec.cliente %></td>
+            <td><%= contas_rec.plano_conta %></td>
+            <td><%= contas_rec.documento %></td>
+            <td><%= contas_rec.historico %></td>
+            <td><%= contas_rec.data_emissao %></td>
+            <td><%= contas_rec.valor_total %></td>
+            <td><%= link_to 'Mostrar', contas_rec %></td>
+        <td><%= link_to 'Editar', edit_contas_rec_path(contas_rec) %></td>
+        <td><%= link_to 'Apagar', contas_rec, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
