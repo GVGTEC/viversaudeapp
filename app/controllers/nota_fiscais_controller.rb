@@ -16,6 +16,9 @@ class NotaFiscaisController < ApplicationController
 
     params[:data_emissao] ||= Time.zone.now.strftime("%Y-%m-%d")
     @nota_fiscal.data_emissao = params[:data_emissao]
+    
+    @transportadora = Transportadora.all
+    @cfop = Cfop.all
   end
 
   # GET /nota_fiscais/1/edit

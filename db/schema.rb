@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_013557) do
+ActiveRecord::Schema.define(version: 2021_07_10_195953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,14 @@ ActiveRecord::Schema.define(version: 2021_07_09_013557) do
     t.index ["vendedor_id"], name: "index_nota_fiscais_on_vendedor_id"
   end
 
+  create_table "nota_fiscal_chave_acessos", force: :cascade do |t|
+    t.bigint "nota_fiscal_id"
+    t.string "chave_acesso"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nota_fiscal_id"], name: "index_nota_fiscal_chave_acessos_on_nota_fiscal_id"
+  end
+
   create_table "nota_fiscal_impostos", force: :cascade do |t|
     t.bigint "nota_fiscal_id"
     t.float "valor_bc_icms"
@@ -291,6 +299,57 @@ ActiveRecord::Schema.define(version: 2021_07_09_013557) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["nota_fiscal_id"], name: "index_nota_fiscal_impostos_on_nota_fiscal_id"
+  end
+
+  create_table "nota_fiscal_item_lotes", force: :cascade do |t|
+    t.bigint "nota_fiscal_item_id"
+    t.string "lote"
+    t.float "estoque_inicial"
+    t.float "estoque_final"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nota_fiscal_item_id"], name: "index_nota_fiscal_item_lotes_on_nota_fiscal_item_id"
+  end
+
+  create_table "nota_fiscal_itens", force: :cascade do |t|
+    t.bigint "nota_fiscal_id"
+    t.bigint "produto_id"
+    t.text "descricao"
+    t.string "cfop"
+    t.string "st"
+    t.string "ncm"
+    t.string "cst"
+    t.string "unidade"
+    t.float "quantidade"
+    t.float "preco_unitario"
+    t.float "preco_total"
+    t.float "aliquota_icms"
+    t.float "valor_bc_icms"
+    t.float "valor_icms"
+    t.float "aliquota_icms_st"
+    t.float "valor_bc_icms_st"
+    t.float "valor_icms_st"
+    t.float "aliquota_ipi"
+    t.float "valor_ipi"
+    t.float "aliquota_pis"
+    t.float "valor_pis"
+    t.float "aliquota_cofins"
+    t.float "valor_cofins"
+    t.float "aliquota_difal"
+    t.float "valor_difal"
+    t.float "valor_fcp"
+    t.float "aliquota_fcp"
+    t.string "local_estoque"
+    t.boolean "baixou_estoque"
+    t.string "pagar_comissao_sn"
+    t.float "comissao_ven_pc"
+    t.float "comissao_ven_vr"
+    t.float "comissao_ter_pc"
+    t.float "comissao_ter_vr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nota_fiscal_id"], name: "index_nota_fiscal_itens_on_nota_fiscal_id"
+    t.index ["produto_id"], name: "index_nota_fiscal_itens_on_produto_id"
   end
 
   create_table "nota_fiscal_transportas", force: :cascade do |t|
@@ -324,7 +383,6 @@ ActiveRecord::Schema.define(version: 2021_07_09_013557) do
 
   create_table "produtos", force: :cascade do |t|
     t.bigint "localizacao_estoque_id"
-    t.bigint "fornecedor_id"
     t.boolean "situacao"
     t.datetime "data_inativo"
     t.string "descricao"
@@ -333,7 +391,6 @@ ActiveRecord::Schema.define(version: 2021_07_09_013557) do
     t.string "ncm"
     t.string "situacao_tributaria"
     t.string "unidade"
-    t.string "cod_fabricante"
     t.float "embalagem", default: 0.0
     t.boolean "controlar_estoque"
     t.boolean "por_lote"
@@ -353,7 +410,6 @@ ActiveRecord::Schema.define(version: 2021_07_09_013557) do
     t.float "estoque_minimo", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["fornecedor_id"], name: "index_produtos_on_fornecedor_id"
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
   end
 
@@ -435,10 +491,13 @@ ActiveRecord::Schema.define(version: 2021_07_09_013557) do
   add_foreign_key "nota_fiscais", "clientes"
   add_foreign_key "nota_fiscais", "fornecedores"
   add_foreign_key "nota_fiscais", "vendedores"
+  add_foreign_key "nota_fiscal_chave_acessos", "nota_fiscais"
   add_foreign_key "nota_fiscal_impostos", "nota_fiscais"
+  add_foreign_key "nota_fiscal_item_lotes", "nota_fiscal_itens"
+  add_foreign_key "nota_fiscal_itens", "nota_fiscais"
+  add_foreign_key "nota_fiscal_itens", "produtos"
   add_foreign_key "nota_fiscal_transportas", "nota_fiscais"
   add_foreign_key "nota_fiscal_transportas", "transportadoras"
-  add_foreign_key "produtos", "fornecedores"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"
 end
