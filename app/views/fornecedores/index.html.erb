@@ -26,7 +26,7 @@
     <thead>
       <tr>
             <th>Nome/Razão Social</th>
-            <th>Endereco</th>
+            <th>Endereço</th>
             <th>Bairro</th>
             <th>Cidade</th>
             <th></th>
@@ -48,7 +48,7 @@
     </tbody>
   </table>
 
-  <div>
-        <% will_paginate @fornecedores, :container => false %>        
-  </div>
+  <div class="apple_pagination">
+    <%= will_paginate @fornecedores, :container => false %>
+  </div>    
 </div>

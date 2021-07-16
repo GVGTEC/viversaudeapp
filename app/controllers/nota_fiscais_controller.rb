@@ -4,6 +4,10 @@ class NotaFiscaisController < ApplicationController
   # GET /nota_fiscais or /nota_fiscais.json
   def index
     @nota_fiscais = NotaFiscal.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @nota_fiscais = @nota_fiscais.paginate(options)    
   end
 
   # GET /nota_fiscais/1 or /nota_fiscais/1.json
@@ -16,6 +20,9 @@ class NotaFiscaisController < ApplicationController
 
     params[:data_emissao] ||= Time.zone.now.strftime("%Y-%m-%d")
     @nota_fiscal.data_emissao = params[:data_emissao]
+    
+    @transportadora = Transportadora.all
+    @cfop = Cfop.all
   end
 
   # GET /nota_fiscais/1/edit
@@ -28,6 +35,7 @@ class NotaFiscaisController < ApplicationController
 
     respond_to do |format|
       if @nota_fiscal.save
+                                  # "nota_fiscal/@nota_fiscal.id/itens/new"
         format.html { redirect_to @nota_fiscal, notice: "Nota fiscal was successfully created." }
         format.json { render :show, status: :created, location: @nota_fiscal }
       else

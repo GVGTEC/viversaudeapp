@@ -1,9 +1,11 @@
+<h1>Contas a Receber</h1>
+
 <div class="page-header">
   <%= link_to new_contas_rec_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     Novo
   <% end %>
-  <h1>Lista</h1>
+  <h2>Lista</h2>
 </div>
 
 <div class="table-responsive">
@@ -13,7 +15,7 @@
         <th>Cliente</th>
         <th>Plano conta</th>
         <th>Documento</th>
-        <th>Historico</th>
+        <th>Histórico</th>
         <th>Data emissao</th>
         <th>Valor total</th>
         <th></th>
@@ -36,4 +38,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="apple_pagination">
+    <%= will_paginate @contas_rec, :container => false %>
+  </div>    
 </div>

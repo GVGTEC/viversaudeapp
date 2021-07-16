@@ -1,4 +1,4 @@
-<h1>Nota Fiscal</h1>
+<h1>Notas Fiscais</h1>
 
 <div class="page-header">
   <%= link_to new_nota_fiscal_path, class: 'btn btn-primary' do %>
@@ -12,14 +12,14 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Numero nota</th>
-            <th>Numero pedido</th>
-            <th>Cliente</th>
-            <th>Fornecedor</th>
-            <th>Data Emissão</th>
-            <th>Valor Total</th>
-            <th>Chave Acesso</th>
-            <th></th>
+        <th>Número Nota</th>
+        <th>Número Pedido</th>
+        <th>Cliente</th>
+        <th>Fornecedor</th>
+        <th>Data Emissão</th>
+        <th>Valor Total</th>
+        <th>Chave Acesso</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -40,4 +40,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="apple_pagination">
+    <%= will_paginate @nota_fiscais, :container => false %>
+  </div>    
 </div>

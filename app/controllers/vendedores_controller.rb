@@ -4,6 +4,10 @@ class VendedoresController < ApplicationController
   # GET /vendedores or /vendedores.json
   def index
     @vendedores = Vendedor.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @vendedores = @vendedores.paginate(options)    
   end
 
   # GET /vendedores/1 or /vendedores/1.json

@@ -4,6 +4,10 @@ class LocalizacaoEstoquesController < ApplicationController
   # GET /localizacao_estoques or /localizacao_estoques.json
   def index
     @localizacao_estoques = LocalizacaoEstoque.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @localizacao_estoques = @localizacao_estoques.paginate(options)    
   end
 
   # GET /localizacao_estoques/1 or /localizacao_estoques/1.json

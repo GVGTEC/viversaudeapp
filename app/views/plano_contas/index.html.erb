@@ -13,7 +13,7 @@
     <thead>
       <tr>
             <th>Conta</th>
-            <th>Descricao</th>
+            <th>Descrição</th>
             <th>Grau</th>
             <th></th>
         <th></th>
@@ -32,4 +32,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="apple_pagination">
+    <%= will_paginate @plano_contas, :container => false %>
+  </div>    
 </div>

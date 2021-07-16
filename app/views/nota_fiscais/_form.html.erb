@@ -15,36 +15,41 @@
   <div class="ibox-content">
     <div class="row form-group">
         <div class="col-md-2">
-        <%= f.label :numero_nota, 'Número Nota' %>
+        <%= f.label :numero_nota, 'Número Nota Fiscal' %>
           <%= f.text_field :numero_nota, class: "form-control" %>
         </div>
 
         <div class="col-md-2">
-          <%= f.label :numero_pedido, 'Número Pedido' %>
+          <%= f.label :numero_pedido, 'Número Pedido Venda' %>
           <%= f.text_field :numero_pedido, class: "form-control" %>
         </div>
     </div>
 
     <div class="row form-group">
-        <div class="col-md-2">
+        <div class="col-md-12">
           <%= f.label :cfop, 'CFOP' %>
-          <%= f.text_field :cfop, class: "form-control" %>
+          <%= f.select :cfop_id, 
+              Cfop.all.collect{|cfop| [cfop.cfop_de, cfop.id]},
+              {:selected => @nota_fiscal.cfop_id, :include_blank =>true},
+              {class: "form-control", onclick: "buscaCfop()"} %>
         </div>
+    </div>
 
-        <div class="col-md-10">
-        <%= f.label :vendedor, 'Natureza Operação' %>
-          <%= f.text_field :vendedor, class: "form-control" %>
-        </div>        
-    </div>        
-  
     <div class="row form-group">
+      <div class="col-md-12">
+        <label>Natureza de Operação</label>
+        <input class="form-control" type="text" id="natureza_operacao" disabled>
+      </div>
+    </div>
+    
+    <div class="row form-group input-cliente" style="display:none;">
         <div class="col-md-12">
           <%= f.label :cliente, 'Cliente' %>
           <%= f.select :cliente_id, Cliente.all.reorder("nome asc").collect { |cliente| [cliente.nome, cliente.id] }, {:selected => @nota_fiscal.cliente_id, :include_blank => true}, {:class=> 'form-control'} %>
         </div>
-    </div>   
+    </div>       
 
-    <div class="row form-group">
+    <div class="row form-group input-fornecedor" style="display:none;">
         <div class="col-md-12">
           <%= f.label :fornecedor, 'Fornecedor' %>
           <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
@@ -53,11 +58,11 @@
 
     <div class="row form-group">
         <div class="col-md-12">
-          <%= f.label :vendedor, 'Vendedor' %>
-          <%= f.text_field :vendedor, class: "form-control" %>
+          <%= f.label :fornecedor, 'Transportadora' %>
+          <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
         </div>
     </div>   
-
+    
     <div class="row form-group">
         <div class="col-md-2">
           <%= f.label :data_emissao, 'Data Emissão' %>
@@ -65,12 +70,12 @@
         </div>
 
         <div class="col-md-2">
-          <%= f.label :data_saida, 'Data Saída' %>
+          <%= f.label :data_saída, 'Data Saída' %>
           <%= f.date_field :data_saida, class: "form-control" %>
         </div>
 
         <div class="col-md-2">
-          <%= f.label :hora_saida, 'Hora Saída' %>
+          <%= f.label :hora_saída, 'Hora Saída' %>
           <%= f.text_field :hora_saida, class: "form-control" %>
         </div>
     </div>   
@@ -142,5 +147,26 @@ $(document).ready(function() {
     }
   });
 });
+
+const buscaCfop = () => {
+  let cfop_id = $("#nota_fiscal_cfop_id").val() 
+
+  $.ajax({
+    type: "GET",
+    url: `/cfop/${cfop_id}.json`,
+    success: function(cfop){
+      if(cfop){       
+        $('#natureza_operacao').val(cfop.natureza_operacao);
+        if(cfop.cliente_fornecedor_cf == "C"){
+          $(".input-cliente").show()
+          $(".input-fornecedor").hide()
+        }else{
+          $(".input-cliente").hide()
+          $(".input-fornecedor").show()
+        }
+      }
+    }
+  })
+}
 
 </script>

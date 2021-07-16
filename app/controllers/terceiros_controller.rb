@@ -4,6 +4,10 @@ class TerceirosController < ApplicationController
   # GET /terceiros or /terceiros.json
   def index
     @terceiros = Terceiro.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @terceiros = @terceiros.paginate(options)    
   end
 
   # GET /terceiros/1 or /terceiros/1.json

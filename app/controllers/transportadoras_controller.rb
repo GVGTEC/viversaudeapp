@@ -4,6 +4,10 @@ class TransportadorasController < ApplicationController
   # GET /transportadoras or /transportadoras.json
   def index
     @transportadoras = Transportadora.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @transportadoras = @transportadoras.paginate(options)    
   end
 
   # GET /transportadoras/1 or /transportadoras/1.json

@@ -4,6 +4,10 @@ class EmpresasController < ApplicationController
   # GET /empresas or /empresas.json
   def index
     @empresas = Empresa.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @empresas = @empresas.paginate(options)    
   end
 
   # GET /empresas/1 or /empresas/1.json

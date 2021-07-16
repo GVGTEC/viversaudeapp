@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :nota_fiscal_itens
   resources :contas_rec
   resources :terceiros
   resources :nota_fiscais

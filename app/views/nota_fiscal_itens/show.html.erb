@@ -1,0 +1,82 @@
+<div class="page-header">
+  <%= link_to nota_fiscal_itens_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_nota_fiscal_item_path(@nota_fiscal_item), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Nota fiscal:</dt>
+  <dd><%= @nota_fiscal_item.nota_fiscal %></dd>
+  <dt>Produto:</dt>
+  <dd><%= @nota_fiscal_item.produto %></dd>
+  <dt>Descricao:</dt>
+  <dd><%= @nota_fiscal_item.descricao %></dd>
+  <dt>Cfop:</dt>
+  <dd><%= @nota_fiscal_item.cfop %></dd>
+  <dt>St:</dt>
+  <dd><%= @nota_fiscal_item.st %></dd>
+  <dt>Ncm:</dt>
+  <dd><%= @nota_fiscal_item.ncm %></dd>
+  <dt>Cst:</dt>
+  <dd><%= @nota_fiscal_item.cst %></dd>
+  <dt>Unidade:</dt>
+  <dd><%= @nota_fiscal_item.unidade %></dd>
+  <dt>Quantidade:</dt>
+  <dd><%= @nota_fiscal_item.quantidade %></dd>
+  <dt>Preco unitario:</dt>
+  <dd><%= @nota_fiscal_item.preco_unitario %></dd>
+  <dt>Preco total:</dt>
+  <dd><%= @nota_fiscal_item.preco_total %></dd>
+  <dt>Aliquota icms:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_icms %></dd>
+  <dt>Valor bc icms:</dt>
+  <dd><%= @nota_fiscal_item.valor_bc_icms %></dd>
+  <dt>Valor icms:</dt>
+  <dd><%= @nota_fiscal_item.valor_icms %></dd>
+  <dt>Aliquota icms st:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_icms_st %></dd>
+  <dt>Valor bc icms st:</dt>
+  <dd><%= @nota_fiscal_item.valor_bc_icms_st %></dd>
+  <dt>Valor icms st:</dt>
+  <dd><%= @nota_fiscal_item.valor_icms_st %></dd>
+  <dt>Aliquota ipi:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_ipi %></dd>
+  <dt>Valor ipi:</dt>
+  <dd><%= @nota_fiscal_item.valor_ipi %></dd>
+  <dt>Aliquota pis:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_pis %></dd>
+  <dt>Valor pis:</dt>
+  <dd><%= @nota_fiscal_item.valor_pis %></dd>
+  <dt>Aliquota cofins:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_cofins %></dd>
+  <dt>Valor cofins:</dt>
+  <dd><%= @nota_fiscal_item.valor_cofins %></dd>
+  <dt>Aliquota difal:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_difal %></dd>
+  <dt>Valor difal:</dt>
+  <dd><%= @nota_fiscal_item.valor_difal %></dd>
+  <dt>Valor fcp:</dt>
+  <dd><%= @nota_fiscal_item.valor_fcp %></dd>
+  <dt>Aliquota fcp:</dt>
+  <dd><%= @nota_fiscal_item.aliquota_fcp %></dd>
+  <dt>Local estoque:</dt>
+  <dd><%= @nota_fiscal_item.local_estoque %></dd>
+  <dt>Baixou estoque:</dt>
+  <dd><%= @nota_fiscal_item.baixou_estoque %></dd>
+  <dt>Pagar comissao sn:</dt>
+  <dd><%= @nota_fiscal_item.pagar_comissao_sn %></dd>
+  <dt>Comissao ven pc:</dt>
+  <dd><%= @nota_fiscal_item.comissao_ven_pc %></dd>
+  <dt>Comissao ven vr:</dt>
+  <dd><%= @nota_fiscal_item.comissao_ven_vr %></dd>
+  <dt>Comissao ter pc:</dt>
+  <dd><%= @nota_fiscal_item.comissao_ter_pc %></dd>
+  <dt>Comissao ter vr:</dt>
+  <dd><%= @nota_fiscal_item.comissao_ter_vr %></dd>
+</dl>

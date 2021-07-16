@@ -4,6 +4,10 @@ class PlanoContasController < ApplicationController
   # GET /plano_contas or /plano_contas.json
   def index
     @plano_contas = PlanoConta.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @plano_contas = @plano_contas.paginate(options)    
   end
 
   # GET /plano_contas/1 or /plano_contas/1.json

@@ -32,10 +32,10 @@
         <th>Fornecedor</th>
         <th>Origem</th>
         <th>Data</th>
-        <th>Estoque inicial</th>
+        <th>Estoque Inicial</th>
         <th>Qtd</th>
-        <th>Estoque final</th>
-        <th>Preco custo</th>
+        <th>Estoque Final</th>
+        <th>Preço Custo</th>
       </tr>
     </thead>
 
@@ -52,4 +52,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="apple_pagination">
+    <%= will_paginate @movimento_estoques, :container => false %>
+  </div>    
 </div>
