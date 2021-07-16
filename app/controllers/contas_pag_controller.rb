@@ -4,6 +4,10 @@ class ContasPagController < ApplicationController
   # GET /contas_pagar or /contas_pagar.json
   def index
     @contas_pag = ContasPag.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @contas_pag = @contas_pag.paginate(options)    
   end
 
   # GET /contas_pagar/1 or /contas_pagar/1.json

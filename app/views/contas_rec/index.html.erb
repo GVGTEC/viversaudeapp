@@ -15,7 +15,7 @@
             <th>Cliente</th>
             <th>Plano conta</th>
             <th>Documento</th>
-            <th>Historico</th>
+            <th>Histórico</th>
             <th>Data emissao</th>
             <th>Valor total</th>
             <th></th>
@@ -38,4 +38,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="apple_pagination">
+    <%= will_paginate @contas_rec, :container => false %>
+  </div>    
 </div>

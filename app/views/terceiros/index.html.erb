@@ -13,16 +13,6 @@
     <thead>
       <tr>
             <th>Nome</th>
-            <th>Pessoa</th>
-            <th>Cpf</th>
-            <th>Rg</th>
-            <th>Cnpj</th>
-            <th>Ie</th>
-            <th>Endereco</th>
-            <th>Bairro</th>
-            <th>Cidade</th>
-            <th>Cep</th>
-            <th>Uf</th>
             <th>Telefone</th>
             <th>Email</th>
             <th></th>
@@ -34,16 +24,6 @@
     <tbody>
       <%= content_tag_for(:tr, @terceiros) do |terceiro| %>
             <td><%= terceiro.nome %></td>
-            <td><%= terceiro.pessoa %></td>
-            <td><%= terceiro.cpf %></td>
-            <td><%= terceiro.rg %></td>
-            <td><%= terceiro.cnpj %></td>
-            <td><%= terceiro.ie %></td>
-            <td><%= terceiro.endereco %></td>
-            <td><%= terceiro.bairro %></td>
-            <td><%= terceiro.cidade %></td>
-            <td><%= terceiro.cep %></td>
-            <td><%= terceiro.uf %></td>
             <td><%= terceiro.telefone %></td>
             <td><%= terceiro.email %></td>
             <td><%= link_to 'Mostrar', terceiro %></td>

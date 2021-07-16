@@ -8,7 +8,7 @@ class ClientesController < ApplicationController
     @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 10} 
+    options = {page: params[:page] || 1, per_page: 50} 
     @clientes = @clientes.paginate(options)
   end
 

@@ -13,7 +13,7 @@
     <thead>
       <tr>
             <th>Nome</th>
-            <th>Endereco</th>
+            <th>Endereço</th>
             <th>Bairro</th>
             <th>Cidade</th>
             <th></th>
@@ -34,4 +34,8 @@
       <% end %>
     </tbody>
   </table>
+
+  <div class="apple_pagination">
+    <%= will_paginate @transportadoras, :container => false %>
+  </div>    
 </div>

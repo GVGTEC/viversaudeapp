@@ -4,6 +4,10 @@ class CfopController < ApplicationController
   # GET /cfop or /cfop.json
   def index
     @cfop = Cfop.all
+
+    # paginação na view index (lista)
+    options = {page: params[:page] || 1, per_page: 50} 
+    @cfop = @cfop.paginate(options)    
   end
 
   # GET /cfop/1 or /cfop/1.json

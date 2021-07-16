@@ -1,0 +1,224 @@
+<%= form_for(@nota_fiscal_item, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @nota_fiscal_item.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4>Confira os campos abaixo:</h4>
+
+      <ul>
+      <% @nota_fiscal_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :nota_fiscal, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :nota_fiscal, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :produto, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :produto, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :descricao, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_area :descricao, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cfop, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :cfop, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :st, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :st, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :ncm, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :ncm, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cst, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :cst, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :unidade, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :unidade, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :quantidade, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :quantidade, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :preco_unitario, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :preco_unitario, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :preco_total, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :preco_total, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_icms, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_icms, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_bc_icms, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_bc_icms, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_icms, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_icms, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_icms_st, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_icms_st, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_bc_icms_st, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_bc_icms_st, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_icms_st, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_icms_st, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_ipi, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_ipi, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_ipi, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_ipi, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_pis, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_pis, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_pis, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_pis, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_cofins, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_cofins, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_cofins, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_cofins, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_difal, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_difal, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_difal, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_difal, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :valor_fcp, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :valor_fcp, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :aliquota_fcp, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :aliquota_fcp, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :local_estoque, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :local_estoque, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :baixou_estoque, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.check_box :baixou_estoque, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :pagar_comissao_sn, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :pagar_comissao_sn, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :comissao_ven_pc, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :comissao_ven_pc, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :comissao_ven_vr, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :comissao_ven_vr, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :comissao_ter_pc, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :comissao_ter_pc, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :comissao_ter_vr, class: "col-sm-1 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :comissao_ter_vr, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
