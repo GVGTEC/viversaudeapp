@@ -1,6 +1,9 @@
 class NotaFiscal < ApplicationRecord
-  belongs_to :cfop
-  belongs_to :cliente
-  belongs_to :fornecedor
-  belongs_to :vendedor
+  belongs_to :cfop, optional: true
+  belongs_to :cliente, optional: true
+  belongs_to :fornecedor, optional: true
+  belongs_to :vendedor, optional: true
+  belongs_to :transportadora, optional: true
+
+  has_many :nota_fiscal_itens, :dependent => :delete_all
 end

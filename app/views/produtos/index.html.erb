@@ -38,7 +38,7 @@
       <tr>
         <th>Id</th>
         <th>Descrição</th>
-        <th>Código Barras</th>
+        <th>NCM</th>
         <th>Preço Venda</th>
         <th>Estoque Atual</th>
         <th></th>
@@ -51,8 +51,8 @@
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
         <td><%= produto.id %></td>
-        <td><%= produto.descricao %></td>
-        <td><%= produto.codigo_barras %></td>
+        <td><%= produto.descricao_nfe %></td>
+        <td><%= produto.ncm %></td>
         <td><%= number_to_currency(produto.preco_venda) %></td>
         <td><%= produto.estoque_atual %></td>
         <td><%= link_to 'Movimento', produto_movimento_estoques_path(produto) %></td>

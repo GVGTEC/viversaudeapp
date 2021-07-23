@@ -18,19 +18,19 @@
   <dt>Numero pedido:</dt>
   <dd><%= @nota_fiscal.numero_pedido %></dd>
   <dt>Cfop:</dt>
-  <dd><%= @nota_fiscal.cfop %></dd>
+  <dd><%= @nota_fiscal.cfop.descricao %></dd>
   <dt>Entsai:</dt>
   <dd><%= @nota_fiscal.entsai %></dd>
   <dt>Cliente:</dt>
-  <dd><%= @nota_fiscal.cliente %></dd>
+  <dd><%= @nota_fiscal.cliente.nome rescue "" %></dd>
   <dt>Fornecedor:</dt>
-  <dd><%= @nota_fiscal.fornecedor %></dd>
+  <dd><%= @nota_fiscal.fornecedor.nome rescue "" %></dd>
   <dt>Vendedor:</dt>
-  <dd><%= @nota_fiscal.vendedor %></dd>
+  <dd><%= @nota_fiscal.vendedor.nome rescue ""  %></dd>
   <dt>Data emissao:</dt>
-  <dd><%= @nota_fiscal.data_emissao %></dd>
+  <dd><%= @nota_fiscal.data_emissao.strftime("%d/%m/%Y") %></dd>
   <dt>Data saida:</dt>
-  <dd><%= @nota_fiscal.data_saida %></dd>
+  <dd><%= @nota_fiscal.data_saida.strftime("%d/%m/%Y") %></dd>
   <dt>Hora saida:</dt>
   <dd><%= @nota_fiscal.hora_saida %></dd>
   <dt>Valor desconto:</dt>

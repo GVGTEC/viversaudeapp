@@ -1,94 +1,42 @@
-<div class="page-header">
-  <%= link_to new_nota_fiscal_item_path, class: 'btn btn-primary' do %>
+<div class="page-header"> 
+  <a class="btn btn-primary" href="javascript:window.location.assign('/nota_fiscais/<%= @nota_fiscal.id %>/nota_fiscal_itens/new')">
     <span class="glyphicon glyphicon-plus"></span>
-    Novo
+    Atualizar
+  </a>
+  <%= link_to nota_fiscais_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
   <% end %>
-  <h1>Lista</h1>
+  <h1>Lista de Itens</h1>
 </div>
 
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Nota fiscal</th>
-            <th>Produto</th>
-            <th>Descricao</th>
-            <th>Cfop</th>
-            <th>St</th>
-            <th>Ncm</th>
-            <th>Cst</th>
-            <th>Unidade</th>
-            <th>Quantidade</th>
-            <th>Preco unitario</th>
-            <th>Preco total</th>
-            <th>Aliquota icms</th>
-            <th>Valor bc icms</th>
-            <th>Valor icms</th>
-            <th>Aliquota icms st</th>
-            <th>Valor bc icms st</th>
-            <th>Valor icms st</th>
-            <th>Aliquota ipi</th>
-            <th>Valor ipi</th>
-            <th>Aliquota pis</th>
-            <th>Valor pis</th>
-            <th>Aliquota cofins</th>
-            <th>Valor cofins</th>
-            <th>Aliquota difal</th>
-            <th>Valor difal</th>
-            <th>Valor fcp</th>
-            <th>Aliquota fcp</th>
-            <th>Local estoque</th>
-            <th>Baixou estoque</th>
-            <th>Pagar comissao sn</th>
-            <th>Comissao ven pc</th>
-            <th>Comissao ven vr</th>
-            <th>Comissao ter pc</th>
-            <th>Comissao ter vr</th>
-            <th></th>
-        <th></th>
-        <th></th>
+        <th>Nota fiscal</th>
+        <th>Cod. Produto</th>
+        <th>Descricao</th>
+        <th>CFOP</th>
+        <th>NCM</th>
+        <th>Unidade</th>
+        <th>Quantidade</th>
+        <th>Preco unitario</th>
+        <th>Preco total</th>
       </tr>
     </thead>
 
     <tbody>
       <%= content_tag_for(:tr, @nota_fiscal_itens) do |nota_fiscal_item| %>
-            <td><%= nota_fiscal_item.nota_fiscal %></td>
-            <td><%= nota_fiscal_item.produto %></td>
-            <td><%= nota_fiscal_item.descricao %></td>
-            <td><%= nota_fiscal_item.cfop %></td>
-            <td><%= nota_fiscal_item.st %></td>
-            <td><%= nota_fiscal_item.ncm %></td>
-            <td><%= nota_fiscal_item.cst %></td>
-            <td><%= nota_fiscal_item.unidade %></td>
-            <td><%= nota_fiscal_item.quantidade %></td>
-            <td><%= nota_fiscal_item.preco_unitario %></td>
-            <td><%= nota_fiscal_item.preco_total %></td>
-            <td><%= nota_fiscal_item.aliquota_icms %></td>
-            <td><%= nota_fiscal_item.valor_bc_icms %></td>
-            <td><%= nota_fiscal_item.valor_icms %></td>
-            <td><%= nota_fiscal_item.aliquota_icms_st %></td>
-            <td><%= nota_fiscal_item.valor_bc_icms_st %></td>
-            <td><%= nota_fiscal_item.valor_icms_st %></td>
-            <td><%= nota_fiscal_item.aliquota_ipi %></td>
-            <td><%= nota_fiscal_item.valor_ipi %></td>
-            <td><%= nota_fiscal_item.aliquota_pis %></td>
-            <td><%= nota_fiscal_item.valor_pis %></td>
-            <td><%= nota_fiscal_item.aliquota_cofins %></td>
-            <td><%= nota_fiscal_item.valor_cofins %></td>
-            <td><%= nota_fiscal_item.aliquota_difal %></td>
-            <td><%= nota_fiscal_item.valor_difal %></td>
-            <td><%= nota_fiscal_item.valor_fcp %></td>
-            <td><%= nota_fiscal_item.aliquota_fcp %></td>
-            <td><%= nota_fiscal_item.local_estoque %></td>
-            <td><%= nota_fiscal_item.baixou_estoque %></td>
-            <td><%= nota_fiscal_item.pagar_comissao_sn %></td>
-            <td><%= nota_fiscal_item.comissao_ven_pc %></td>
-            <td><%= nota_fiscal_item.comissao_ven_vr %></td>
-            <td><%= nota_fiscal_item.comissao_ter_pc %></td>
-            <td><%= nota_fiscal_item.comissao_ter_vr %></td>
-            <td><%= link_to 'Mostrar', nota_fiscal_item %></td>
-        <td><%= link_to 'Editar', edit_nota_fiscal_item_path(nota_fiscal_item) %></td>
-        <td><%= link_to 'Apagar', nota_fiscal_item, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+        <td><%= nota_fiscal_item.nota_fiscal.numero_nota %></td>
+        <td><%= nota_fiscal_item.produto.id %></td>
+        <td><%= nota_fiscal_item.descricao %></td>
+        <td><%= nota_fiscal_item.cfop %></td>
+        <td><%= nota_fiscal_item.ncm %></td>
+        <td><%= nota_fiscal_item.unidade %></td>
+        <td><%= nota_fiscal_item.quantidade %></td>
+        <td>R$ <%= nota_fiscal_item.preco_unitario %>0</td>
+        <td>R$ <%= nota_fiscal_item.preco_total %>0</td>
       <% end %>
     </tbody>
   </table>

@@ -1,9 +1,9 @@
 <div class="page-header">
-  <%= link_to nota_fiscal_itens_path, class: 'btn btn-default' do %>
+  <%= link_to nota_fiscal_nota_fiscal_itens_path(@nota_fiscal), class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
   <% end %>
-  <%= link_to @nota_fiscal_item, class: 'btn btn-primary' do %>
+  <%= link_to nota_fiscal_nota_fiscal_item_path(@nota_fiscal, @nota_fiscal_item), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-info-sign"></span>
     Mostrar
   <% end %>

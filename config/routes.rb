@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
-  resources :nota_fiscal_itens
   resources :contas_rec
   resources :terceiros
-  resources :nota_fiscais
   resources :cfop
   resources :administradores
   resources :vendedores
@@ -12,6 +10,10 @@ Rails.application.routes.draw do
   resources :empresas
   resources :localizacao_estoques
   resources :fornecedores
+
+  resources :nota_fiscais do
+    resources :nota_fiscal_itens
+  end
 
   get "/estoques/ajuste", to: "estoques#ajuste"
   get "/estoques/reposicao", to: "estoques#reposicao"

@@ -12,12 +12,12 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Cfop de</th>
-            <th>Cfop st de</th>
-            <th>Cfop fe</th>
-            <th>Cfop st fe</th>
-            <th>Descricao</th>
-            <th></th>
+        <th>Código</th>
+        <th>Informativo</th>
+        <th>Descrição</th>
+        <th>Natureza Operacao</th>
+        <th>Operacao</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -25,12 +25,12 @@
 
     <tbody>
       <%= content_tag_for(:tr, @cfop) do |cfop| %>
-            <td><%= cfop.cfop_de %></td>
-            <td><%= cfop.cfop_st_de %></td>
-            <td><%= cfop.cfop_fe %></td>
-            <td><%= cfop.cfop_st_fe %></td>
-            <td><%= cfop.descricao %></td>
-            <td><%= link_to 'Mostrar', cfop %></td>
+        <td><%= cfop.codigo %></td>
+        <td><%= cfop.informativo %></td>
+        <td><%= cfop.descricao %></td>
+        <td><%= cfop.natureza_operacao %></td>
+        <td><%= cfop.operacao %></td>
+        <td><%= link_to 'Mostrar', cfop %></td>
         <td><%= link_to 'Editar', edit_cfop_path(cfop) %></td>
         <td><%= link_to 'Apagar', cfop, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>

@@ -5,12 +5,15 @@ class ProdutosController < ApplicationController
   # GET /produtos or /produtos.json
   def index
     @produtos = Produto.all
-    
-    @produtos = @produtos.where("lower(descricao) ilike '%#{params[:descricao]}%'")
+    @produtos = @produtos.order("descricao_nfe asc")
+    @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
 
    # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 15} 
-    @produtos = @produtos.paginate(options)
+    if params[:format] != "json"
+      options = {page: params[:page] || 1, per_page: 15} 
+      @produtos = @produtos.paginate(options)
+    end
+
   end
 
   def importar

@@ -13,81 +13,93 @@
   <% end %>
 
   <div class="ibox-content">
-      <div class="row form-group">
-          <div class="col-md-2">
-            <%= f.label :cfop_de, 'CFOP' %>
-            <%= f.text_field :cfop_de, class: "form-control" %>
-          </div>
+    <div class="row form-group">
+      <% unless @cfop.id %>
+        <div class="col-md-2">
+          <label class="control-label">cfop de</label>
+          <input class="form-control" type="text" name="codigo[cfop_de]">
+        </div>
 
-          <div class="col-md-2">
-            <%= f.label :cfop_de_st, 'CFOP ST' %>
-            <%= f.text_field :cfop_st_de, class: "form-control" %>
-          </div>
+        <div class="col-md-2">
+          <label class="control-label">cfop st de</label>
+          <input class="form-control" type="text" name="codigo[cfop_st_de]">
+        </div>
 
-          <div class="col-md-2">
-            <%= f.label :cfop_fe, 'CFOP FE' %>
-            <%= f.text_field :cfop_fe, class: "form-control" %>
-          </div>
+        <div class="col-md-2">
+          <label class="control-label">cfop fe</label>
+          <input class="form-control" type="text" name="codigo[cfop_fe]">
+        </div>
 
-          <div class="col-md-2">
-            <%= f.label :cfop_fe_st, 'CFOP ST FE' %>
-            <%= f.text_field :cfop_st_fe, class: "form-control" %>
-          </div>        
-      </div>        
+        <div class="col-md-2">
+          <label class="control-label">cfop fe st</label>
+          <input class="form-control" type="text" name="codigo[cfop_fe_st]">
+        </div>
+      <% else %>
+        <div class="col-md-2">
+          <%= f.label :codigo, 'Código' %>
+          <%= f.text_field :codigo, class: "form-control" %>
+        </div>
 
-      <div class="row form-group">
-          <div class="col-md-12">
-            <%= f.label :descricao, 'Descrição' %>
-            <%= f.text_field :descricao, class: "form-control" %>
-          </div>
-      </div>   
+        <div class="col-md-2">
+          <%= f.label :informativo, 'Informativo' %>
+          <%= f.text_field :informativo, class: "form-control" %>
+        </div>    
+      <% end %>   
+    </div>        
 
-      <div class="row form-group">
-          <div class="col-md-11">
-            <%= f.label :natureza_operacao, 'Natureza Operação' %>
-            <%= f.text_field :natureza_operacao, class: "form-control" %>
-          </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+          <%= f.label :descricao, 'Descrição' %>
+          <%= f.text_field :descricao, class: "form-control" %>
+        </div>
+    </div>   
 
-          <div class="col-md-1">
-            <%= f.label :operacao, 'Operação' %>
-            <%= f.text_field :operacao, class: "form-control" %>
-          </div>
-      </div>
+    <div class="row form-group">
+        <div class="col-md-11">
+          <%= f.label :natureza_operacao, 'Natureza Operação' %>
+          <%= f.text_field :natureza_operacao, class: "form-control" %>
+        </div>
 
-      <div class="row form-group">
-          <div class="col-md-2">
-            <%= f.label :nota_complementar_impostos_sn, 'Cpl Impostos ?' %>
-            <%= f.select(:nota_complementar_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
-          </div>         
+        <div class="col-md-1">
+          <%= f.label :operacao, 'Operação' %>
+          <%= f.text_field :operacao, class: "form-control" %>
+        </div>
+    </div>
 
-          <div class="col-md-2">
-            <%= f.label :entrada_saida_es, 'Entrada/Saída' %>
-            <%= f.select(:entrada_saida_es, options_for_select([['Saída', 'N'], ['Entrada', 'E']]), {}, {class: "form-control"}) %>
-          </div>
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :nota_complementar_impostos_sn, 'Cpl Impostos ?' %>
+          <%= f.select(:nota_complementar_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
+        </div>         
 
-          <div class="col-md-2">
-            <%= f.label :cliente_fornecedor_cf, 'Cliente/Fornecedor' %>
-            <%= f.select(:cliente_fornecedor_cf, options_for_select([['Cliente', 'C'], ['Fornecedor', 'F']]), {}, {class: "form-control"}) %>
-          </div>
+        <div class="col-md-2">
+          <%= f.label :entrada_saida_es, 'Entrada/Saída' %>
+          <%= f.select(:entrada_saida_es, options_for_select([['Saída', 'N'], ['Entrada', 'E']]), {}, {class: "form-control"}) %>
+        </div>
 
-          <div class="col-md-2">
-            <%= f.label :calcular_impostos_sn, 'Calcular Impostos' %>
-            <%= f.select(:calcular_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
-          </div>
+        <div class="col-md-2">
+          <%= f.label :cliente_fornecedor_cf, 'Cliente/Fornecedor' %>
+          <%= f.select(:cliente_fornecedor_cf, options_for_select([['Cliente', 'C'], ['Fornecedor', 'F']]), {}, {class: "form-control"}) %>
+        </div>
 
-          <div class="col-md-2">
-            <%= f.label :faturamento_sn, 'Faturamento' %>
-            <%= f.select(:faturamento_sn, options_for_select([['SIM', 'S'], ['NÃO', 'N']]), {}, {class: "form-control"}) %>
-          </div>         
-      </div>        
+        <div class="col-md-2">
+          <%= f.label :calcular_impostos_sn, 'Calcular Impostos' %>
+          <%= f.select(:calcular_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
+        </div>
 
-      <div class="row form-group">
-          <div class="col-md-12">
-            <%= f.label :observacao, 'Observação' %>
-            <%= f.text_area :observacao, class: "form-control" %>
-          </div>
-      </div>
-</div>
+        <div class="col-md-2">
+          <%= f.label :faturamento_sn, 'Faturamento' %>
+          <%= f.select(:faturamento_sn, options_for_select([['SIM', 'S'], ['NÃO', 'N']]), {}, {class: "form-control"}) %>
+        </div>         
+    </div>        
+
+    <div class="row form-group">
+        <div class="col-md-12">
+          <%= f.label :observacao, 'Observação' %>
+          <%= f.text_area :observacao, class: "form-control" %>
+        </div>
+    </div>
+  </div>
 
 <div class="form-group">
   <div class="form-group">

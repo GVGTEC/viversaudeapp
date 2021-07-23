@@ -35,8 +35,7 @@ class NotaFiscaisController < ApplicationController
 
     respond_to do |format|
       if @nota_fiscal.save
-                                  # "nota_fiscal/@nota_fiscal.id/itens/new"
-        format.html { redirect_to @nota_fiscal, notice: "Nota fiscal was successfully created." }
+        format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota fiscal was successfully created." }
         format.json { render :show, status: :created, location: @nota_fiscal }
       else
         format.html { render :new, status: :unprocessable_entity }
