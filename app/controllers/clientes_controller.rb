@@ -16,7 +16,7 @@ class ClientesController < ApplicationController
   def importar
     begin
       if params[:arquivo].blank?
-        flash[:error] = "Selecione um arquivo"
+        flash[:error] = "Selecione um arquivo .CSV"
         redirect_to "/clientes"
         return
       end
@@ -24,12 +24,12 @@ class ClientesController < ApplicationController
       if File.basename(params[:arquivo].tempfile).include?(".CSV")
         importar_csv
       else
-        flash[:error] = "Formato de arquivo não suportado, por favor seleciona arquivos com a extenção csv"
+        flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extenção .CSV"
         redirect_to "/clientes"
         return
       end
   
-      flash[:sucesso] = "Dados importados com sucesso"
+      flash[:sucesso] = "Clientes importados com sucesso"
       redirect_to "/clientes"
     rescue => exception
       flash[:error] = exception

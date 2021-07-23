@@ -30,11 +30,8 @@ Rails.application.routes.draw do
   post "/clientes/importar", to: "clientes#importar"
   resources :clientes
 
-  get "/importar_cliente/importar", to: "importar_clientes#importar"
-  post "/importar_cliente/importar_arquivo", to: "importar_clientes#importar_arquivo"
-
-  get "/importar_produto/importar", to: "importar_produtos#importar"
-  post "/importar_produto/importar_arquivo", to: "importar_produtos#importar_arquivo"
+  get "/importar_produto", to: "importar_produtos#importar"
+  get "/importar_produto/importar", to: "importar_produtos#importar_arquivo"
 
   root to: "home#index"
 end

@@ -49,7 +49,7 @@ class ProdutosController < ApplicationController
   end
 
   def importar_linha(linha)
-    codprd_sac = 0
+    id = 0
     situacao = 1 #se branco ele esta ativo
     codigo_fabricante = 2
     codigo_barras = 3
@@ -75,11 +75,12 @@ class ProdutosController < ApplicationController
     bloquear_preco = 32
     localizacao_estoque_id = 33
 
+        
     begin
       produto = Produto.new
-      produto.codprd_sac = linha[codprd_sac]
+      produto.id = linha[id].to_i
       produto.situacao = linha[situacao].present?? false : true
-      produto.codigo_fabricante = linha[codigo_fabricante]
+      produto.codigo_fabricante = linha[cod_fabricante]
       produto.codigo_barras = linha[codigo_barras]
       produto.descricao = linha[descricao]
       produto.descricao_nfe = linha[descricao_nfe]
