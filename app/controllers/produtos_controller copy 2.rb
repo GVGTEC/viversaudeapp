@@ -5,15 +5,12 @@ class ProdutosController < ApplicationController
   # GET /produtos or /produtos.json
   def index
     @produtos = Produto.all
-    @produtos = @produtos.order("descricao_nfe asc")
-    @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
+    
+    @produtos = @produtos.where("lower(descricao) ilike '%#{params[:descricao]}%'")
 
    # paginação na view index (lista)
-    if params[:format] != "json"
-      options = {page: params[:page] || 1, per_page: 15} 
-      @produtos = @produtos.paginate(options)
-    end
-
+    options = {page: params[:page] || 1, per_page: 50} 
+    @produtos = @produtos.paginate(options)
   end
 
   def importar
@@ -52,7 +49,7 @@ class ProdutosController < ApplicationController
   end
 
   def importar_linha(linha)
-    codprd_sac = 0
+    id = 0
     situacao = 1 #se branco ele esta ativo
     codigo_fabricante = 2
     codigo_barras = 3
@@ -78,31 +75,20 @@ class ProdutosController < ApplicationController
     bloquear_preco = 32
     localizacao_estoque_id = 33
 
+        
     begin
       produto = Produto.new
-      produto.codprd_sac = linha[codprd_sac]
+      produto.id = linha[id].to_i
       produto.situacao = linha[situacao].present?? false : true
-      produto.codigo_fabricante = linha[codigo_fabricante]
+      produto.codigo_fabricante = linha[cod_fabricante]
       produto.codigo_barras = linha[codigo_barras]
       produto.descricao = linha[descricao]
       produto.descricao_nfe = linha[descricao_nfe]
 
-      fornecedor = linha[fornecedor_id].to_i
-      if fornecedor != 0
-        begin
-          produto.fornecedor_id = Fornecedor.find(fornecedor).id
-        rescue 
-          produto.fornecedor_id = Fornecedor.create(id: fornecedor, nome: "Fornecedor #{fornecedor}").id
-        end
-      end
-
-      localizacao_estoque = linha[localizacao_estoque_id].to_i
-      if localizacao_estoque != 0
-        begin
-          produto.localizacao_estoque_id = LocalizacaoEstoque.find(localizacao_estoque).id
-        rescue 
-          produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: localizacao_estoque, local: "Rua #{localizacao_estoque}").id
-        end
+      begin
+        produto.fornecedor_id = Fornecedor.find(linha[fornecedor_id].to_i).id
+      rescue 
+        produto.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
       end
 
       produto.situacao_tributaria = linha[situacao_tributaria]
@@ -121,6 +107,13 @@ class ProdutosController < ApplicationController
       produto.data_ultimo_reajuste = linha[data_ultimo_reajuste]
       produto.comissao_pc = linha[comissao_pc]
       produto.bloquear_preco = linha[bloquear_preco]
+
+      begin
+        produto.localizacao_estoque_id = LocalizacaoEstoque.find(linha[localizacao_estoque_id].to_i).id
+      rescue 
+        produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: linha[localizacao_estoque_id].to_i).id
+      end
+
       produto.save
     rescue Exception => err
       raise err

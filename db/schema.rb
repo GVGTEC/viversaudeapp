@@ -384,10 +384,12 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
   create_table "produtos", force: :cascade do |t|
     t.bigint "localizacao_estoque_id"
     t.bigint "fornecedor_id"
+    t.string "codprd_sac"
     t.boolean "situacao"
     t.datetime "data_inativo"
     t.string "descricao"
     t.string "descricao_nfe"
+    t.string "codigo_fabricante"
     t.string "codigo_barras"
     t.string "ncm"
     t.string "situacao_tributaria"

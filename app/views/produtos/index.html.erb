@@ -37,8 +37,10 @@
     <thead>
       <tr>
         <th>Id</th>
+        <th>CodprdSAC</th>
         <th>Descrição</th>
         <th>NCM</th>
+        <th>codprd_sac</th>
         <th>Preço Venda</th>
         <th>Estoque Atual</th>
         <th></th>
@@ -53,6 +55,7 @@
         <td><%= produto.id %></td>
         <td><%= produto.descricao_nfe %></td>
         <td><%= produto.ncm %></td>
+        <td><%= produto.codprd_sac %></td>
         <td><%= number_to_currency(produto.preco_venda) %></td>
         <td><%= produto.estoque_atual %></td>
         <td><%= link_to 'Movimento', produto_movimento_estoques_path(produto) %></td>
