@@ -44,7 +44,7 @@
             <td><input class='form-control' id='<%= index+1 %>-un' type='text' value='<%= nota_fiscal_item.unidade %>' style='width: 50px;' name='nota_fiscal[nota_fiscal_item][][un]'></td></td>
             <td><input class='form-control' id='<%= index+1 %>-qtd' type='text' value='<%= nota_fiscal_item.quantidade %>' style='width: 55px;' data-behavior='qtd' name='nota_fiscal[nota_fiscal_item][][qtd]'></td></td>
             <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='R$ <%= nota_fiscal_item.preco_unitario %>0' style='70px;' name='nota_fiscal[nota_fiscal_item][][preco_unitario]'></td></td>
-            <td><input class='form-control' id='<%= index+1 %>-preco_total' type='text' value='R$ <%= nota_fiscal_item.preco_total %>0' style="width: 90px;" name='nota_fiscal[nota_fiscal_item][][preco_total]'></td></td>
+            <td><input class='form-control' id='<%= index+1 %>-preco_total' type='text' value='R$ <%= nota_fiscal_item.preco_total %>0' data-behavior='preco_total' style="width: 90px;" name='nota_fiscal[nota_fiscal_item][][preco_total]'></td></td>
             <td><button type='button' id='<%= index+1 %>-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td></td>
           </tr>
         <% end %>
@@ -52,11 +52,13 @@
     </table>
   </div>
 
-  <br><br>
+  <br>
 
   <div class="form-group">
-    <div class="col-sm-6">
-     <p><b>VALOR TOTAL:<b> <span></span></p>
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6" style="text-align:end">
+     <p><b>VALOR TOTAL:<b></p>
+     <p class="valor-total" style="font-size: 30px"></p>
     </div>
   </div>
 
@@ -113,6 +115,8 @@
     if(total){
       $(`#${number_tr}-preco_total`).val(`R$ ${total.toFixed(2)}`)
     }
+
+    calculoValorTotal()
   });
 
   $(document).on('keyup', '[data-behavior~=delete]', function(event) {
@@ -149,7 +153,7 @@
           "<td><input class='form-control' id='"+nextId+"-un' type='text' style='width: 50px;' name='nota_fiscal[nota_fiscal_item][][un]'></td>" +
           "<td><input class='form-control' id='"+nextId+"-qtd' type='text' style='width: 55px;' data-behavior='qtd' name='nota_fiscal[nota_fiscal_item][][qtd]'></td>" +
           "<td><input class='form-control' id='"+nextId+"-preco_unitario' style='70px;' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]'></td>" +
-          "<td><input class='form-control' id='"+nextId+"-preco_total' type='text' style='width: 90px;' name='nota_fiscal[nota_fiscal_item][][preco_total]'></td>" +
+          "<td><input class='form-control' id='"+nextId+"-preco_total' type='text' data-behavior='preco_total' style='width: 90px;' name='nota_fiscal[nota_fiscal_item][][preco_total]'></td>" +
           "<td><button type='button' id='"+nextId+"-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td>" +
         "</tr>"
         )
@@ -164,10 +168,29 @@
               $(`#${nextId}-descricao`).append(`<option value="${produto.id}">${produto.descricao}</option>`);
             });
           }
+
+          $("#"+nextId+"-cod_produto").parent().find(".tabledit-edit-button").trigger("click");
+          calculoValorTotal()
         }
       })
 
-      $("#"+nextId+"-cod_produto").parent().find(".tabledit-edit-button").trigger("click");
     }, 100);
+  }
+
+  const calculoValorTotal = () =>{
+    let valorTotal = 0
+    $("input[data-behavior~=preco_total]").each(function(){
+      try {
+        var input = $(this);
+        var valor = input.val().match(/\d+/)[0]
+        if(valor){
+          valorTotal += parseInt(valor)
+        }
+      } catch (error) {
+        console.log('error :>> ', error);
+      }
+    });
+
+    $(`.valor-total`).html(`R$ ${valorTotal}.00`);
   }
 </script>

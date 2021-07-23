@@ -394,7 +394,6 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
     t.string "ncm"
     t.string "situacao_tributaria"
     t.string "unidade"
-    t.string "cod_fabricante"
     t.float "embalagem", default: 0.0
     t.boolean "controlar_estoque"
     t.boolean "por_lote"

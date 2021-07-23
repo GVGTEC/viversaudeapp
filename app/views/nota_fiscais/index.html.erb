@@ -14,8 +14,7 @@
       <tr>
         <th>Número Nota</th>
         <th>Número Pedido</th>
-        <th>Cliente</th>
-        <th>Fornecedor</th>
+        <th>Cliente / Fornecedor</th>
         <th>Data Emissão</th>
         <th style="width: 85px;">Valor Total</th>
         <th></th>
@@ -29,8 +28,7 @@
       <%= content_tag_for(:tr, @nota_fiscais) do |nota_fiscal| %>
         <td><%= nota_fiscal.numero_nota %></td>
         <td><%= nota_fiscal.numero_pedido %></td>
-        <td><%= nota_fiscal.cliente.nome rescue "" %></td>
-        <td><%= nota_fiscal.fornecedor.nome rescue "" %></td>
+        <td><%= nota_fiscal.cliente.nome rescue "" %><%= nota_fiscal.fornecedor.nome rescue "" %></td>
         <td><%= nota_fiscal.data_emissao.strftime("%d/%m/%Y") %></td>
         <td>R$ <%= nota_fiscal.valor_total_nota %>0</td>
         <td><%= link_to 'Itens', nota_fiscal_nota_fiscal_itens_path(nota_fiscal) %></td>
