@@ -3,6 +3,7 @@ class CreateClientes < ActiveRecord::Migration[5.2]
     create_table :clientes do |t|
       t.references :vendedor, foreign_key: true
       t.references :terceiro, foreign_key: true
+      t.integer :codcli_sac
       t.string :nome
       t.string :pessoa
       t.string :cpf

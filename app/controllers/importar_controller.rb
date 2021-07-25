@@ -1,7 +1,16 @@
 class ImportarController < ApplicationController
-    def index
+    def clientes
     end
 
+    def produtos
+    end
+
+    def fornecedors
+    end
+
+    def estoques
+    end
+    
     def importar
         begin
           if params[:arquivo].blank?

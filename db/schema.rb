@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_16_022248) do
+ActiveRecord::Schema.define(version: 2021_07_25_050626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
   create_table "clientes", force: :cascade do |t|
     t.bigint "vendedor_id"
     t.bigint "terceiro_id"
+    t.integer "codcli_sac"
     t.string "nome"
     t.string "pessoa"
     t.string "cpf"
@@ -204,6 +205,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
   end
 
   create_table "fornecedores", force: :cascade do |t|
+    t.integer "codfor_sac"
     t.string "nome"
     t.string "pessoa"
     t.string "cpf"
@@ -245,6 +247,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
   end
 
   create_table "nota_fiscais", force: :cascade do |t|
+    t.integer "codnot_sac"
     t.integer "numero_nota"
     t.integer "numero_pedido"
     t.bigint "cfop_id"
@@ -283,6 +286,17 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["nota_fiscal_id"], name: "index_nota_fiscal_chave_acessos_on_nota_fiscal_id"
+  end
+
+  create_table "nota_fiscal_faturamento_parcelas", force: :cascade do |t|
+    t.bigint "nota_fiscal_id"
+    t.string "duplicata"
+    t.integer "prazo_pagamento"
+    t.datetime "data_vencimento"
+    t.float "valor_parcela"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["nota_fiscal_id"], name: "index_nota_fiscal_faturamento_parcelas_on_nota_fiscal_id"
   end
 
   create_table "nota_fiscal_impostos", force: :cascade do |t|
@@ -497,6 +511,7 @@ ActiveRecord::Schema.define(version: 2021_07_16_022248) do
   add_foreign_key "nota_fiscais", "transportadoras"
   add_foreign_key "nota_fiscais", "vendedores"
   add_foreign_key "nota_fiscal_chave_acessos", "nota_fiscais"
+  add_foreign_key "nota_fiscal_faturamento_parcelas", "nota_fiscais"
   add_foreign_key "nota_fiscal_impostos", "nota_fiscais"
   add_foreign_key "nota_fiscal_item_lotes", "nota_fiscal_itens"
   add_foreign_key "nota_fiscal_itens", "nota_fiscais"

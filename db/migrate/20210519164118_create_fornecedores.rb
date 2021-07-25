@@ -1,6 +1,7 @@
 class CreateFornecedores < ActiveRecord::Migration[5.2]
   def change
     create_table :fornecedores do |t|
+      t.integer :codfor_sac
       t.string :nome
       t.string :pessoa
       t.string :cpf

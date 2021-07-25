@@ -1,6 +1,7 @@
 class CreateNotaFiscais < ActiveRecord::Migration[5.2]
   def change
     create_table :nota_fiscais do |t|
+      t.integer :codnot_sac
       t.integer :numero_nota
       t.integer :numero_pedido
       t.references :cfop, foreign_key: true
