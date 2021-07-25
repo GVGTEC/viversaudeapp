@@ -34,7 +34,7 @@ class CfopController < ApplicationController
           @cfop.save
         end
 
-        format.html { redirect_to cfop_path, notice: "Cfop was successfully created." }
+        format.html { redirect_to cfop_index_path, notice: "Cfop was successfully created." }
         format.json { render :show, status: :created, location: @cfop }
       rescue => exception
         format.html { render :new, status: :unprocessable_entity }
@@ -46,8 +46,10 @@ class CfopController < ApplicationController
   # PATCH/PUT /cfop/1 or /cfop/1.json
   def update
     respond_to do |format|
+      @natureza = @cfop.natureza_operacao
       if @cfop.update(cfop_params)
-        format.html { redirect_to @cfop, notice: "Cfop was successfully updated." }
+        atualiza_cfops_com_mesma_natureza
+        format.html { redirect_to cfop_index_path, notice: "Cfop was successfully updated." }
         format.json { render :show, status: :ok, location: @cfop }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -71,7 +73,14 @@ class CfopController < ApplicationController
       @cfop = Cfop.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    def atualiza_cfops_com_mesma_natureza
+      cfops = Cfop.where(natureza_operacao: @natureza)
+      cfops.each do |cfop|
+        cfop.update(cfop_params)
+      end
+    end
+
+    # Only allow a licfopsst of trusted parameters through.
     def cfop_params
       params.require(:cfop).permit(:descricao, :natureza_operacao, :natureza_operacao_st, :operacao, :nota_complementar_impostos_sn, :entrada_saida_es, :cliente_fornecedor_cf, :calcular_impostos_sn, :faturamento_sn, :observacao)
     end
