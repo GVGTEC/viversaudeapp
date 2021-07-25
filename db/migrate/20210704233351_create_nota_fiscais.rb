@@ -8,6 +8,7 @@ class CreateNotaFiscais < ActiveRecord::Migration[5.2]
       t.references :cliente, foreign_key: true
       t.references :fornecedor, foreign_key: true
       t.references :vendedor, foreign_key: true
+      t.references :transportadora, foreign_key: true
       t.datetime :data_emissao
       t.datetime :data_saida
       t.string :hora_saida

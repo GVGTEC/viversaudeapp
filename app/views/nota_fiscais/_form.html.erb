@@ -29,8 +29,8 @@
         <div class="col-md-12">
           <%= f.label :cfop, 'CFOP' %>
           <%= f.select :cfop_id, 
-              Cfop.all.collect{|cfop| [cfop.cfop_de, cfop.id]},
-              {:selected => @nota_fiscal.cfop_id, :include_blank =>true},
+              Cfop.all.collect{|cfop| [cfop.codigo, cfop.id]},
+              {:selected => @nota_fiscal.cfop_id, :include_blank => true},
               {class: "form-control", onclick: "buscaCfop()"} %>
         </div>
     </div>
@@ -58,8 +58,8 @@
 
     <div class="row form-group">
         <div class="col-md-12">
-          <%= f.label :fornecedor, 'Transportadora' %>
-          <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
+          <%= f.label :transportadora, 'Transportadora' %>
+          <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
         </div>
     </div>   
     

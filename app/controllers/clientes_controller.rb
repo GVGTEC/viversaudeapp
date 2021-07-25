@@ -73,8 +73,25 @@ class ClientesController < ApplicationController
     begin
       cliente = Cliente.new
       cliente.id = linha[id].to_i
-      cliente.vendedor_id = 1 
-      cliente.terceiro_id = 1
+
+      vendedor = linha[id_vendedor].to_i
+      if vendedor != 0
+        begin
+          cliente.vendedor_id = Vendedor.find(vendedor).id
+        rescue 
+          cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}").id
+        end
+      end
+
+      terceiro = linha[id_terceiro].to_i
+      if terceiro != 0
+        begin
+          cliente.terceiro_id = Terceiro.find(terceiro).id
+        rescue 
+          cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}").id
+        end
+      end
+
       cliente.nome = linha[nome]
       cliente.pessoa = linha[pessoa]
       cliente.cpf = linha[cpf] if linha[cpf].to_i != 0

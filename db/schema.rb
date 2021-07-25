@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_10_195953) do
+ActiveRecord::Schema.define(version: 2021_07_16_022248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,8 @@ ActiveRecord::Schema.define(version: 2021_07_10_195953) do
   end
 
   create_table "cfop", force: :cascade do |t|
-    t.string "cfop_de"
-    t.string "cfop_st_de"
-    t.string "cfop_fe"
-    t.string "cfop_st_fe"
+    t.string "codigo"
+    t.string "informativo"
     t.string "descricao"
     t.string "natureza_operacao"
     t.string "natureza_operacao_st"
@@ -254,6 +252,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_195953) do
     t.bigint "cliente_id"
     t.bigint "fornecedor_id"
     t.bigint "vendedor_id"
+    t.bigint "transportadora_id"
     t.datetime "data_emissao"
     t.datetime "data_saida"
     t.string "hora_saida"
@@ -274,6 +273,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_195953) do
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
     t.index ["cliente_id"], name: "index_nota_fiscais_on_cliente_id"
     t.index ["fornecedor_id"], name: "index_nota_fiscais_on_fornecedor_id"
+    t.index ["transportadora_id"], name: "index_nota_fiscais_on_transportadora_id"
     t.index ["vendedor_id"], name: "index_nota_fiscais_on_vendedor_id"
   end
 
@@ -494,6 +494,7 @@ ActiveRecord::Schema.define(version: 2021_07_10_195953) do
   add_foreign_key "nota_fiscais", "cfop"
   add_foreign_key "nota_fiscais", "clientes"
   add_foreign_key "nota_fiscais", "fornecedores"
+  add_foreign_key "nota_fiscais", "transportadoras"
   add_foreign_key "nota_fiscais", "vendedores"
   add_foreign_key "nota_fiscal_chave_acessos", "nota_fiscais"
   add_foreign_key "nota_fiscal_impostos", "nota_fiscais"

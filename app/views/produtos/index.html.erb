@@ -9,8 +9,8 @@
       <input type="submit" value="Importar" class="btn btn-primary">
     </div>
   </form>
-
-  <hr>
+  
+  <br>
 
   <%= link_to new_produto_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
@@ -19,17 +19,17 @@
   <h2>Lista</h2>
 </div>
 
-<div style="text-align: right;margin-top:10px">
-    <form action="/produtos" method="get">
-      <div class="row" style="width:300px;display: inline-block;">
-        <div style="float: left">
-          <input type="text" name="descricao" value="<%=params[:descricao] %>" class="form-control" placeholder="Busca..">
-       </div>
-       <div style="float: left;margin-left:10px">
-          <input type="submit" class="btn btn-primary" value="Buscar">
-       </div>
+<div style="text-align: right; margin-top:10px; margin-bottom: 15px;">
+  <form action="/produtos" method="get">
+    <div class="row" style="width:300px;display: inline-block;">
+      <div style="float: left">
+        <input type="text" name="descricao" value="<%=params[:descricao] %>" class="form-control" placeholder="Busca..">
       </div>
-    </form>
+      <div style="float: left;margin-left:5px">
+        <input type="submit" class="btn btn-primary" value="Buscar">
+      </div>
+    </div>
+  </form>
 </div>
 
 <div class="table-responsive">
@@ -37,9 +37,9 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>CodprdSAC</th>
         <th>Descrição</th>
-        <th>Código Barras</th>
+        <th>NCM</th>
+        <th>CodprdSAC</th>
         <th>Preço Venda</th>
         <th>Estoque Atual</th>
         <th></th>
@@ -52,9 +52,9 @@
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
         <td><%= produto.id %></td>
+        <td><%= produto.descricao_nfe %></td>
+        <td><%= produto.ncm %></td>
         <td><%= produto.codprd_sac %></td>
-        <td><%= produto.descricao %></td>        
-        <td><%= produto.codigo_barras %></td>
         <td><%= number_to_currency(produto.preco_venda) %></td>
         <td><%= produto.estoque_atual %></td>
         <td><%= link_to 'Movimento', produto_movimento_estoques_path(produto) %></td>

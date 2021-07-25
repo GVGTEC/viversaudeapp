@@ -25,13 +25,18 @@ class CfopController < ApplicationController
 
   # POST /cfop or /cfop.json
   def create
-    @cfop = Cfop.new(cfop_params)
-
     respond_to do |format|
-      if @cfop.save
-        format.html { redirect_to @cfop, notice: "Cfop was successfully created." }
+      begin
+        params[:codigo].each do |key, value|
+          @cfop = Cfop.new(cfop_params)
+          @cfop.codigo = value
+          @cfop.informativo = key
+          @cfop.save
+        end
+
+        format.html { redirect_to cfop_path, notice: "Cfop was successfully created." }
         format.json { render :show, status: :created, location: @cfop }
-      else
+      rescue => exception
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @cfop.errors, status: :unprocessable_entity }
       end
@@ -68,6 +73,6 @@ class CfopController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def cfop_params
-      params.require(:cfop).permit(:cfop_de, :cfop_st_de, :cfop_fe, :cfop_st_fe, :descricao, :natureza_operacao, :natureza_operacao_st, :operacao, :nota_complementar_impostos_sn, :entrada_saida_es, :cliente_fornecedor_cf, :calcular_impostos_sn, :faturamento_sn, :observacao)
+      params.require(:cfop).permit(:descricao, :natureza_operacao, :natureza_operacao_st, :operacao, :nota_complementar_impostos_sn, :entrada_saida_es, :cliente_fornecedor_cf, :calcular_impostos_sn, :faturamento_sn, :observacao)
     end
 end

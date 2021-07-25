@@ -12,14 +12,13 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Número Nota</th>
-            <th>Número Pedido</th>
-            <th>Cliente</th>
-            <th>Fornecedor</th>
-            <th>Data Emissão</th>
-            <th>Valor Total</th>
-            <th>Chave Acesso</th>
-            <th></th>
+        <th>Número Nota</th>
+        <th>Número Pedido</th>
+        <th>Cliente / Fornecedor</th>
+        <th>Data Emissão</th>
+        <th style="width: 85px;">Valor Total</th>
+        <th></th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -27,14 +26,13 @@
 
     <tbody>
       <%= content_tag_for(:tr, @nota_fiscais) do |nota_fiscal| %>
-            <td><%= nota_fiscal.numero_nota %></td>
-            <td><%= nota_fiscal.numero_pedido %></td>
-            <td><%= nota_fiscal.cliente %></td>
-            <td><%= nota_fiscal.fornecedor %></td>
-            <td><%= nota_fiscal.data_emissao %></td>
-            <td><%= nota_fiscal.valor_total_nota %></td>
-            <td><%= nota_fiscal.chave_acesso_nfe %></td>
-            <td><%= link_to 'Mostrar', nota_fiscal %></td>
+        <td><%= nota_fiscal.numero_nota %></td>
+        <td><%= nota_fiscal.numero_pedido %></td>
+        <td><%= nota_fiscal.cliente.nome rescue "" %><%= nota_fiscal.fornecedor.nome rescue "" %></td>
+        <td><%= nota_fiscal.data_emissao.strftime("%d/%m/%Y") %></td>
+        <td>R$ <%= nota_fiscal.valor_total_nota %>0</td>
+        <td><%= link_to 'Itens', nota_fiscal_nota_fiscal_itens_path(nota_fiscal) %></td>
+        <td><%= link_to 'Mostrar', nota_fiscal %></td>
         <td><%= link_to 'Editar', edit_nota_fiscal_path(nota_fiscal) %></td>
         <td><%= link_to 'Apagar', nota_fiscal, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
