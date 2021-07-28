@@ -1,0 +1,140 @@
+<form class="form-horizontal" id="new_nota_fiscal_nota_fiscal_duplicata" role="form" action="/nota_fiscais/<%= @nota_fiscal.id %>/nota_fiscal_duplicatas" accept-charset="UTF-8" method="post">
+
+  <div class="ibox-content">
+    <div class="row form-group">
+      <div class="col-md-4">
+        <label for="nota_fiscal_valor_total_nota">Valor da Nota Fiscal</label>
+        <input class="form-control" type="text" value="<%= @nota_fiscal.valor_total_nota %>0" name="nota_fiscal[valor_total_nota]" id="nota_fiscal_valor_total_nota">
+      </div>
+
+      <div class="col-md-4">
+        <label for="nota_fiscal_meio_pagamento">Meio de Pagamento</label>
+        <select class="form-control" name="nota_fiscal[meio_pagamento]" id="nota_fiscal_meio_pagamento_id">
+          <option <%if @nota_fiscal.meio_pagamento == 0 %> selected <%end%> value=""></option>
+          <option <%if @nota_fiscal.meio_pagamento == 1 %> selected <%end%> value="01">Dinheiro</option>
+          <option <%if @nota_fiscal.meio_pagamento == 2 %> selected <%end%> value="02">Cheque</option>
+          <option <%if @nota_fiscal.meio_pagamento == 3 %> selected <%end%> value="03">Cartão de Crédito</option>
+          <option <%if @nota_fiscal.meio_pagamento == 4 %> selected <%end%> value="04">Cartão de Débito</option>
+          <option <%if @nota_fiscal.meio_pagamento == 5 %> selected <%end%> value="05">Crédito Loja</option>
+          <option <%if @nota_fiscal.meio_pagamento == 10 %> selected <%end%> value="10">Vale Alimentação</option>
+          <option <%if @nota_fiscal.meio_pagamento == 11 %> selected <%end%> value="11">Vale Refeição</option>
+          <option <%if @nota_fiscal.meio_pagamento == 12 %> selected <%end%> value="12">Vale Presente</option>
+          <option <%if @nota_fiscal.meio_pagamento == 13 %> selected <%end%> value="13">Vale Combustivel</option>
+          <option <%if @nota_fiscal.meio_pagamento == 15 %> selected <%end%> value="15">Boleto Bancario</option>
+          <option <%if @nota_fiscal.meio_pagamento == 90 %> selected <%end%> value="90">Sem Pagamento</option>
+          <option <%if @nota_fiscal.meio_pagamento == 99 %> selected <%end%> value="99">Outros<option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label for="nota_fiscal_tipo_pagamento">Forma de Pagamento</label>
+        <select class="form-control" name="nota_fiscal[tipo_pagamento]" id="nota_fiscal_tipo_pagamento">
+          <option <%if @nota_fiscal.tipo_pagamento == "" %> selected <%end%> value=""></option>
+          <option <%if @nota_fiscal.tipo_pagamento == "V" %> selected <%end%> value="V">A Vista</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "P" %> selected <%end%> value="P">A Prazo</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "N" %> selected <%end%> value="N">Nenhum</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="nota_fiscal_numero_parcelas_pagamento">Número de Parcelas</label>
+        <input class="form-control" type="number" value="<%= @nota_fiscal.numero_parcelas_pagamento %>" data-behavior="np_pagamento" name="nota_fiscal[numero_parcelas_pagamento]" id="nota_fiscal_numero_parcelas_pagamento">
+      </div>
+
+      <div class="col-md-6">
+        <label for="nota_fiscal_quanto_tempo">Em quanto tempo?</label>
+        <input class="form-control" type="number" value="<%= @nota_fiscal.distancia_parcelas %>" data-behavior="quanto_tempo" name="nota_fiscal[distancia_parcelas]" id="nota_fiscal_quanto_tempo">
+      </div>
+
+      <div class="col-md-12">
+        <label for="nota_fiscal_prazo_pagamento">Prazos para Pagamento</label>
+        <div id="nota_fiscal_numero_prazo_pagamento" style="display: flex;">
+          <% @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, index| %>
+            <input class="form-control" type="text" value="<%= faturamento_parcela.prazo_pagamento %>" style="width: 5%; margin-right: 10px;">
+            <span style="margin-right: 10px; font-size: 3rem;">/</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_nota_fiscal_id_<%= @nota_fiscal.id  %>">
+      <thead>
+        <tr>
+          <th>PC</th>
+          <th>Vencimento</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody_nota_fiscal_faturamento_parcelas">
+        <% @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, index| %>
+          <tr class="operacao">
+            <td>
+              <input class='form-control' type='integer' style='width: 20%;' value='<%= index %>'>
+              <input class='form-control' type='integer' style='display:none;' value='<%= faturamento_parcela.prazo_pagamento %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]'>
+            </td>
+            <td><input class='form-control' type='date' style='width: 50%;' value='<%= faturamento_parcela.data_vencimento.to_date %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'></td>
+            <td><input class='form-control' type='text' style='width: 25%;' value='<%= faturamento_parcela.valor_parcela %>'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  
+    <div class="form-group">
+      <div class="col-sm-10">
+        <input type="submit" name="commit" value="Salvar" class="btn btn-primary" data-disable-with="Salvar">
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  $(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+  });
+
+  $(document).on('keyup', '[data-behavior~=quanto_tempo]', function(event) {
+    const qtd_parcelas = parseInt($(`#nota_fiscal_numero_parcelas_pagamento`).val())
+    const valor_total_nota = <%= @nota_fiscal.valor_total_nota %>
+    const quanto_tempo = parseInt($(`#nota_fiscal_quanto_tempo`).val())
+
+    if(qtd_parcelas && quanto_tempo){
+      $("#nota_fiscal_numero_prazo_pagamento").html("");
+      $("#tableBody_nota_fiscal_faturamento_parcelas").html("");
+
+      for (let index = 0; index < qtd_parcelas; index++) {
+        const prazo_pagamento = quanto_tempo * index
+        var data = new Date();
+        let dataVencimento = ""
+        data.setDate(data.getDate() + prazo_pagamento);
+      
+        if((data.getMonth() + 1) > 9 &&  data.getDate() > 9){
+          dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-" + data.getDate()
+        }else if((data.getMonth() + 1) <= 9 &&  data.getDate() > 9){
+          dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-" + data.getDate()
+        }else if((data.getMonth() + 1) > 9 &&  data.getDate() <= 9){
+          dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-0" + data.getDate()
+        }else{
+          dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-0" + data.getDate()
+        }
+
+        $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='" + prazo_pagamento + "' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
+        $("#tableBody_nota_fiscal_faturamento_parcelas").append(
+          $(
+            "<tr class='operacao'>"+
+              "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ index +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]'></td>"+
+              "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'></td>"+
+              "<td><input class='form-control' type='text' value='"+ (valor_total_nota / qtd_parcelas).toFixed(2) +"' style='width: 25%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>"+
+            "</tr>" 
+          )
+        );
+      }
+    }
+  });
+</script>

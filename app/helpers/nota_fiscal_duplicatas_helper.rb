@@ -1,0 +1,2 @@
+module NotaFiscalDuplicatasHelper
+end

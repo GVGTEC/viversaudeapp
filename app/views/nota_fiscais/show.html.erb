@@ -28,9 +28,9 @@
   <dt>Vendedor:</dt>
   <dd><%= @nota_fiscal.vendedor.nome rescue ""  %></dd>
   <dt>Data emissao:</dt>
-  <dd><%= @nota_fiscal.data_emissao.strftime("%d/%m/%Y") %></dd>
+  <dd><%= @nota_fiscal.data_emissao.strftime("%d/%m/%Y") rescue "" %></dd>
   <dt>Data saida:</dt>
-  <dd><%= @nota_fiscal.data_saida.strftime("%d/%m/%Y") %></dd>
+  <dd><%= @nota_fiscal.data_saida.strftime("%d/%m/%Y") rescue "" %></dd>
   <dt>Hora saida:</dt>
   <dd><%= @nota_fiscal.hora_saida %></dd>
   <dt>Valor desconto:</dt>

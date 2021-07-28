@@ -4,6 +4,7 @@ class FornecedoresController < ApplicationController
   # GET /fornecedores or /fornecedores.json
   def index
     @fornecedores = Fornecedor.all
+    @fornecedores = @fornecedores.order("nome asc")
     @fornecedores = @fornecedores.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
     # paginação na view index (lista)

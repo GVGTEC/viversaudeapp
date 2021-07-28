@@ -271,6 +271,7 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
     t.text "observacao"
     t.string "chave_acesso_nfe"
     t.string "nota_cancelada_sn"
+    t.string "distancia_parcelas"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"

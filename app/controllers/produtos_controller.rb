@@ -5,7 +5,7 @@ class ProdutosController < ApplicationController
   # GET /produtos or /produtos.json
   def index
     @produtos = Produto.all
-    @produtos = @produtos.order("descricao_nfe asc")
+    @produtos = @produtos.order("descricao asc")
     @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
 
    # paginação na view index (lista)

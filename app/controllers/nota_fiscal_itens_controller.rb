@@ -26,24 +26,26 @@ class NotaFiscalItensController < ApplicationController
       NotaFiscalItem.where(nota_fiscal: @nota_fiscal.id).destroy_all
       preco_total = 0
       params[:nota_fiscal][:nota_fiscal_item].each do |nota_fiscal_item|
-        begin
-          @nota_fiscal_item = NotaFiscalItem.new
-          @nota_fiscal_item.nota_fiscal = @nota_fiscal
-          @nota_fiscal_item.produto = Produto.find(nota_fiscal_item[:cod_produto])
-          @nota_fiscal_item.descricao = @nota_fiscal_item.produto.descricao
-          @nota_fiscal_item.cfop = nota_fiscal_item[:cfop]
-          @nota_fiscal_item.ncm = nota_fiscal_item[:ncm]
-          @nota_fiscal_item.unidade = nota_fiscal_item[:un]
-          @nota_fiscal_item.quantidade = nota_fiscal_item[:qtd]
-          @nota_fiscal_item.preco_unitario = nota_fiscal_item[:preco_unitario].match(/\d+/)[0]
-          @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].match(/\d+/)[0]
-          @nota_fiscal_item.save
+        if nota_fiscal_item[:cod_produto].present?
+          begin
+            @nota_fiscal_item = NotaFiscalItem.new
+            @nota_fiscal_item.nota_fiscal = @nota_fiscal
+            @nota_fiscal_item.produto = Produto.find(nota_fiscal_item[:cod_produto])
+            @nota_fiscal_item.descricao = @nota_fiscal_item.produto.descricao
+            @nota_fiscal_item.cfop = nota_fiscal_item[:cfop]
+            @nota_fiscal_item.ncm = nota_fiscal_item[:ncm]
+            @nota_fiscal_item.unidade = nota_fiscal_item[:un]
+            @nota_fiscal_item.quantidade = nota_fiscal_item[:qtd]
+            @nota_fiscal_item.preco_unitario = nota_fiscal_item[:preco_unitario].match(/\d+/)[0]
+            @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].match(/\d+/)[0]
+            @nota_fiscal_item.save
 
-          preco_total += nota_fiscal_item[:preco_total].match(/\d+/)[0].to_i
-        rescue => exception
-          flash[:error] = "Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente."
-          redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
-          return
+            preco_total += nota_fiscal_item[:preco_total].match(/\d+/)[0].to_i
+          rescue => exception
+            flash[:error] = "Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente."
+            redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
+            return
+          end
         end
       end
 
@@ -52,7 +54,7 @@ class NotaFiscalItensController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to nota_fiscal_nota_fiscal_itens_path(@nota_fiscal), notice: "Nota fiscal item was successfully created." }
+      format.html { redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: "Nota fiscal item was successfully created." }
     end
   end
 

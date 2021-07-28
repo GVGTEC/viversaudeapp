@@ -5,7 +5,7 @@ class ImportarController < ApplicationController
     def produtos
     end
 
-    def fornecedors
+    def fornecedores
     end
 
     def estoques

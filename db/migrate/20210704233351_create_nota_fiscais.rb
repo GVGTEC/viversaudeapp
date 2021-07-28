@@ -25,6 +25,7 @@ class CreateNotaFiscais < ActiveRecord::Migration[5.2]
       t.text :observacao
       t.string :chave_acesso_nfe
       t.string :nota_cancelada_sn
+      t.string :distancia_parcelas
 
       t.timestamps
     end

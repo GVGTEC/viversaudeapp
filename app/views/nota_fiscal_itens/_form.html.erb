@@ -164,6 +164,7 @@
         url: `/produtos.json`,
         success: function(produtos){
           if(produtos){
+            $(`#${nextId}-descricao`).append(`<option value=""></option>`);
             produtos.forEach(produto => {
               $(`#${nextId}-descricao`).append(`<option value="${produto.id}">${produto.descricao}</option>`);
             });

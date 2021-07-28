@@ -29,11 +29,11 @@
         <td><%= nota_fiscal.numero_nota %></td>
         <td><%= nota_fiscal.numero_pedido %></td>
         <td><%= nota_fiscal.cliente.nome rescue "" %><%= nota_fiscal.fornecedor.nome rescue "" %></td>
-        <td><%= nota_fiscal.data_emissao.strftime("%d/%m/%Y") %></td>
+        <td><%= nota_fiscal.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
         <td>R$ <%= nota_fiscal.valor_total_nota %>0</td>
         <td><%= link_to 'Itens', nota_fiscal_nota_fiscal_itens_path(nota_fiscal) %></td>
         <td><%= link_to 'Mostrar', nota_fiscal %></td>
-        <td><%= link_to 'Editar', edit_nota_fiscal_path(nota_fiscal) %></td>
+        <td><a href="javascript:window.location.assign('/nota_fiscais/<%=nota_fiscal.id%>/edit')">Editar</a></td>
         <td><%= link_to 'Apagar', nota_fiscal, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
     </tbody>

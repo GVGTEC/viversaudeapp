@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :nota_fiscais do
     resources :nota_fiscal_itens
+    resources :nota_fiscal_duplicatas, only: [:new, :create]
   end
 
   get "/estoques/ajuste", to: "estoques#ajuste"
