@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :localizacao_estoques
   resources :fornecedores
 
+  get "/nota_fiscais/download_txt", to: "nota_fiscais#download_txt"
   resources :nota_fiscais do
     resources :nota_fiscal_itens
     resources :nota_fiscal_duplicatas, only: [:new, :create]

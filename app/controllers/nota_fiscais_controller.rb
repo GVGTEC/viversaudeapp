@@ -1,13 +1,27 @@
 class NotaFiscaisController < ApplicationController
-  before_action :set_nota_fiscal, only: %i[ show edit update destroy ]
+  before_action :set_nota_fiscal, only: %i[show edit update destroy]
 
   # GET /nota_fiscais or /nota_fiscais.json
   def index
     @nota_fiscais = NotaFiscal.all
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @nota_fiscais = @nota_fiscais.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @nota_fiscais = @nota_fiscais.paginate(options)
+  end
+
+  def download_txt
+    require "fileutils"
+    path_tmp_nota = "tmp/nota.txt"
+    
+    out_file = File.new(path_tmp_nota, "w")
+    out_file.puts("write your stuff here")
+    out_file.close
+
+    send_file path_tmp_nota
+
+    #FileUtils.rm_rf(path_tmp_nota) 
+    #redirect_to nota_fiscais_path
   end
 
   # GET /nota_fiscais/1 or /nota_fiscais/1.json
@@ -20,7 +34,7 @@ class NotaFiscaisController < ApplicationController
 
     params[:data_emissao] ||= Time.zone.now.strftime("%Y-%m-%d")
     @nota_fiscal.data_emissao = params[:data_emissao]
-    
+
     @transportadora = Transportadora.all
     @cfop = Cfop.all
   end
@@ -67,13 +81,14 @@ class NotaFiscaisController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_nota_fiscal
-      @nota_fiscal = NotaFiscal.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def nota_fiscal_params
-      params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_nota_fiscal
+    @nota_fiscal = NotaFiscal.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def nota_fiscal_params
+    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn)
+  end
 end

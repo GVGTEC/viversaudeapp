@@ -20,13 +20,13 @@ Rails.application.routes.draw do
   post "/estoques/reposicao", to: "estoques#create_reposicao"
   post "/estoques/baixa", to: "estoques#baixa"
   resources :estoques, only: [:index, :show]
-  
+
   post "/produtos/importar", to: "produtos#importar"
 
   resources :produtos do
-    resources :movimento_estoques, only: [:index] 
+    resources :movimento_estoques, only: [:index]
   end
-  
+
   post "/clientes/importar", to: "clientes#importar"
   resources :clientes
 

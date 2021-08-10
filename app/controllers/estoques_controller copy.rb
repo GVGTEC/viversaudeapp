@@ -6,8 +6,8 @@ class EstoquesController < ApplicationController
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @estoques = @estoques.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @estoques = @estoques.paginate(options)
   end
 
   def show

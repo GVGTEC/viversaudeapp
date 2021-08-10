@@ -1,13 +1,13 @@
 class ContasRecController < ApplicationController
-  before_action :set_contas_rec, only: %i[ show edit update destroy ]
+  before_action :set_contas_rec, only: %i[show edit update destroy]
 
   # GET /contas_rec or /contas_rec.json
   def index
     @contas_rec = ContasRec.all
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @contas_rec = @contas_rec.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @contas_rec = @contas_rec.paginate(options)
   end
 
   # GET /contas_rec/1 or /contas_rec/1.json
@@ -61,13 +61,14 @@ class ContasRecController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contas_rec
-      @contas_rec = ContasRec.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def contas_rec_params
-      params.require(:contas_rec).permit(:cliente_id, :plano_contas_id, :documento, :historico, :data_emissao, :valor_total)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contas_rec
+    @contas_rec = ContasRec.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def contas_rec_params
+    params.require(:contas_rec).permit(:cliente_id, :plano_contas_id, :documento, :historico, :data_emissao, :valor_total)
+  end
 end
