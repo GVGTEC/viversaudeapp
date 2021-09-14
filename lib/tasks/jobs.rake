@@ -9,4 +9,14 @@ namespace :jobs do
 
     #send_file "/tmp/nota.txt"
   end
+
+  desc "Deletar Todos"
+  task deletar_todos: :environment do
+    Fornecedor.delete_all
+    LocalizacaoEstoque.delete_all
+    Vendedor.delete_all
+    Terceiro.delete_all
+    Produto.delete_all
+    Cliente.delete_all
+  end
 end

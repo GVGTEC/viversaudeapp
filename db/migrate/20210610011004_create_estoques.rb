@@ -1,6 +1,7 @@
 class CreateEstoques < ActiveRecord::Migration[5.2]
   def change
     create_table :estoques do |t|
+      t.references :empresa, foreign_key: true
       t.references :produto, foreign_key: true
       t.references :fornecedor, foreign_key: true
       t.string :lote

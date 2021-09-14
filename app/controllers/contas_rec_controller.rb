@@ -3,7 +3,7 @@ class ContasRecController < ApplicationController
 
   # GET /contas_rec or /contas_rec.json
   def index
-    @contas_rec = ContasRec.all
+    @contas_rec = ContasRec.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50}
@@ -26,6 +26,7 @@ class ContasRecController < ApplicationController
   # POST /contas_rec or /contas_rec.json
   def create
     @contas_rec = ContasRec.new(contas_rec_params)
+    @contas_rec.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @contas_rec.save

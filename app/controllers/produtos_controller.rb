@@ -4,7 +4,7 @@ class ProdutosController < ApplicationController
 
   # GET /produtos or /produtos.json
   def index
-    @produtos = Produto.all
+    @produtos = Produto.where(empresa_id: @adm.empresa.id)
     @produtos = @produtos.order("descricao asc")
     @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
 
@@ -79,7 +79,13 @@ class ProdutosController < ApplicationController
     localizacao_estoque_id = 33
 
     begin
-      produto = Produto.new
+      produto = Produto.where(codprd_sac: linha[codprd_sac])
+      if produto.count > 0
+        produto = produto.first
+      else
+        produto = Produto.new
+      end
+
       produto.codprd_sac = linha[codprd_sac]
       produto.situacao = linha[situacao].present?? false : true
       produto.codigo_fabricante = linha[codigo_fabricante]
@@ -92,7 +98,7 @@ class ProdutosController < ApplicationController
         begin
           produto.fornecedor_id = Fornecedor.find(fornecedor).id
         rescue 
-          produto.fornecedor_id = Fornecedor.create(id: fornecedor, nome: "Fornecedor #{fornecedor}").id
+          produto.fornecedor_id = Fornecedor.create(id: fornecedor, nome: "Fornecedor #{fornecedor}",  empresa_id: @adm.empresa.id).id
         end
       end
 
@@ -101,7 +107,7 @@ class ProdutosController < ApplicationController
         begin
           produto.localizacao_estoque_id = LocalizacaoEstoque.find(localizacao_estoque).id
         rescue 
-          produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: localizacao_estoque, local: "Rua #{localizacao_estoque}").id
+          produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: localizacao_estoque, local: "Rua #{localizacao_estoque}",  empresa_id: @adm.empresa.id).id
         end
       end
 
@@ -121,6 +127,7 @@ class ProdutosController < ApplicationController
       produto.data_ultimo_reajuste = linha[data_ultimo_reajuste]
       produto.comissao_pc = linha[comissao_pc]
       produto.bloquear_preco = linha[bloquear_preco]
+      produto.empresa_id = @adm.empresa.id
       produto.save
     rescue Exception => err
       raise err

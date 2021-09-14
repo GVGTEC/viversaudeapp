@@ -3,7 +3,7 @@ class TerceirosController < ApplicationController
 
   # GET /terceiros or /terceiros.json
   def index
-    @terceiros = Terceiro.all
+    @terceiros = Terceiro.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50}
@@ -26,6 +26,7 @@ class TerceirosController < ApplicationController
   # POST /terceiros or /terceiros.json
   def create
     @terceiro = Terceiro.new(terceiro_params)
+    @terceiro.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @terceiro.save

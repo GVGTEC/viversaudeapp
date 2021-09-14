@@ -1,6 +1,7 @@
 class Estoque < ApplicationRecord
   belongs_to :produto
   belongs_to :fornecedor
+  belongs_to :empresa
 
   def movimentacao_em_estoque
     movimento_estoque = MovimentoEstoque.new

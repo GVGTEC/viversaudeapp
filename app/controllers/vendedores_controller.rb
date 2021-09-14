@@ -3,7 +3,7 @@ class VendedoresController < ApplicationController
 
   # GET /vendedores or /vendedores.json
   def index
-    @vendedores = Vendedor.all
+    @vendedores = Vendedor.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50} 
@@ -26,6 +26,7 @@ class VendedoresController < ApplicationController
   # POST /vendedores or /vendedores.json
   def create
     @vendedor = Vendedor.new(vendedor_params)
+    @vendedor.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @vendedor.save

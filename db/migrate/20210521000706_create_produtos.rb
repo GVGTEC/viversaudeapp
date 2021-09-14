@@ -1,6 +1,7 @@
 class CreateProdutos < ActiveRecord::Migration[5.2]
   def change
     create_table :produtos do |t|
+      t.references :empresa, foreign_key: true
       t.references :localizacao_estoque, foreign_key: true
       t.references :fornecedor, foreign_key: true
       t.string :codprd_sac

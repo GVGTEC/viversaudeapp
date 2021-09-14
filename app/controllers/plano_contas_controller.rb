@@ -3,7 +3,7 @@ class PlanoContasController < ApplicationController
 
   # GET /plano_contas or /plano_contas.json
   def index
-    @plano_contas = PlanoConta.all
+    @plano_contas = PlanoConta.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50} 
@@ -26,6 +26,7 @@ class PlanoContasController < ApplicationController
   # POST /plano_contas or /plano_contas.json
   def create
     @plano_conta = PlanoConta.new(plano_conta_params)
+    @plano_conta.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @plano_conta.save

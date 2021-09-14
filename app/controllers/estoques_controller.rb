@@ -2,7 +2,7 @@ class EstoquesController < ApplicationController
   before_action :set_estoque, only: %i[show]
 
   def index
-    @estoques = Estoque.all
+    @estoques = Estoque.where(empresa_id: @adm.empresa.id)
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
 
     # paginação na view index (lista)
@@ -23,6 +23,7 @@ class EstoquesController < ApplicationController
 
   def create_reposicao
     @estoque = Estoque.new(estoque_reposicao_params.merge(ultima_alteracao: "REP"))
+    @estoque.empresa_id = @adm.empresa.id
 
     if @estoque.save
       update_produto_reposicao

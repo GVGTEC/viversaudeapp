@@ -35,8 +35,8 @@
         <td><%= nota_fiscal_item.ncm %></td>
         <td><%= nota_fiscal_item.unidade %></td>
         <td><%= nota_fiscal_item.quantidade %></td>
-        <td>R$ <%= nota_fiscal_item.preco_unitario %>0</td>
-        <td>R$ <%= nota_fiscal_item.preco_total %>0</td>
+        <td><%= number_to_currency(nota_fiscal_item.preco_unitario) %></td>
+        <td><%= number_to_currency(nota_fiscal_item.preco_total) %></td>
       <% end %>
     </tbody>
   </table>

@@ -36,7 +36,7 @@
               <%= f.select :descricao,
                 Produto.all.reorder("descricao asc").collect { |produto| [produto.descricao, produto.id] },
                 {:selected => nota_fiscal_item.produto.id },
-                {:class=> 'form-control', name: 'nota_fiscal[nota_fiscal_item][][descricao]', id: "#{index+1}-descricao"} 
+                {:class=> 'form-control', name: 'nota_fiscal[nota_fiscal_item][][descricao]', onclick: "atualizaProduto()", id: "#{index+1}-descricao"} 
               %> 
             </td>
             <td><input class='form-control' id='<%= index+1 %>-cfop' type='text' style='width: 65px;' data-behavior='cfop' value='<%= nota_fiscal_item.cfop %>' name='nota_fiscal[nota_fiscal_item][][cfop]'></td>
@@ -70,6 +70,12 @@
 <% end %>
 
 <script type="text/javascript">
+  $('body').on('click', '.delete', function() {
+    var $tr = $(this).closest('tr');
+    $tr.remove();
+    calculoValorTotal()
+  });
+
   $(document).ready(function() {
     $(window).keydown(function(event){
       if(event.keyCode == 13) {
@@ -86,24 +92,6 @@
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const val = parseInt($(`#${number_tr}-cod_produto`).val())
     $(`#${number_tr}-descricao`).val(`${val}`)
-  });
-
-  $(document).on('keyup', '[data-behavior~=cfop]', function(event) {
-    const number_tr = parseInt(event.target.id.match(/\d+/)[0])
-    const val = $(`#${number_tr}-descricao`).val()
-    $(`#${number_tr}-cod_produto`).val(`${val}`)
-
-    $.ajax({
-      type: "GET",
-      url: `/produtos/${val}.json`,
-      success: function(produto){
-        if(produto){
-          $(`#${number_tr}-ncm`).val(produto.ncm);
-          $(`#${number_tr}-un`).val(produto.unidade);
-          $(`#${number_tr}-preco_unitario`).val("R$ "+produto.preco_custo + ".00");
-        }
-      }
-    })
   });
 
   $(document).on('keyup', '[data-behavior~=qtd]', function(event) {
@@ -131,10 +119,11 @@
     }
   });
 
-  $('body').on('click', '.delete', function() {
-    var $tr = $(this).closest('tr');
-    $tr.remove();
+  $(document).on('keyup', '[data-behavior~=cfop]', function(event) {
+    atualizaProduto()
   });
+
+  
 
   const addProduto = () =>{
     var clica = setInterval(function(){
@@ -147,7 +136,7 @@
         "<tr id='"+nextId+"' class='operacao' >"+ 
           "<td>"+nextId+"</td>"+
           "<td><input class='form-control' id='"+nextId+"-cod_produto' data-behavior='cod_produto' type='text' style='width: 55px;' name='nota_fiscal[nota_fiscal_item][][cod_produto]'></td>" +
-          "<td><select class='form-control' id='"+nextId+"-descricao' style='margin: 0px; height: 36px; width: 415px;' name='nota_fiscal_item[descricao]' id='nota_fiscal_item_descricao'></select></td>" +
+          "<td><select class='form-control' id='"+nextId+"-descricao' style='margin: 0px; height: 36px; width: 415px;' onclick='atualizaProduto()' name='nota_fiscal_item[descricao]' id='nota_fiscal_item_descricao'></select></td>" +
           "<td><input class='form-control' id='"+nextId+"-cfop' type='text' style='width: 65px;' data-behavior='cfop' value='<%= @nota_fiscal.cfop.codigo %>' name='nota_fiscal[nota_fiscal_item][][cfop]'></td>" +
           "<td><input class='form-control' id='"+nextId+"-ncm' type='text' name='nota_fiscal[nota_fiscal_item][][ncm]'></td>" +
           "<td><input class='form-control' id='"+nextId+"-un' type='text' style='width: 50px;' name='nota_fiscal[nota_fiscal_item][][un]'></td>" +
@@ -194,4 +183,28 @@
 
     $(`.valor-total`).html(`R$ ${valorTotal}.00`);
   }
+
+  const atualizaProduto = () =>{
+    const number_tr = parseInt(event.target.id.match(/\d+/)[0])
+    const val = $(`#${number_tr}-descricao`).val()
+    $(`#${number_tr}-cod_produto`).val(`${val}`)
+
+    $.ajax({
+      type: "GET",
+      url: `/produtos/${val}.json`,
+      success: function(produto){
+        if(produto){
+          $(`#${number_tr}-ncm`).val(produto.ncm);
+          $(`#${number_tr}-un`).val(produto.unidade);
+          $(`#${number_tr}-qtd`).val("1.0");
+          $(`#${number_tr}-preco_unitario`).val("R$ "+produto.preco_custo + ".00");
+          $(`#${number_tr}-preco_total`).val("R$ "+produto.preco_custo + ".00");
+
+          calculoValorTotal()
+        }
+      }
+    })
+  }
+
+  
 </script>
