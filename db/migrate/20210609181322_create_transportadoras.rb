@@ -1,6 +1,7 @@
 class CreateTransportadoras < ActiveRecord::Migration[5.2]
   def change
     create_table :transportadoras do |t|
+      t.references :empresa, foreign_key: true
       t.string :nome
       t.string :cnpj
       t.string :ie

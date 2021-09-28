@@ -1,6 +1,7 @@
 class CreateFornecedores < ActiveRecord::Migration[5.2]
   def change
     create_table :fornecedores do |t|
+      t.references :empresa, foreign_key: true
       t.integer :codfor_sac
       t.string :nome
       t.string :pessoa
@@ -17,7 +18,7 @@ class CreateFornecedores < ActiveRecord::Migration[5.2]
       t.string :telefone_alternativo 
       t.string :telefone_nf          
       t.string :email
-      t.string :codcidade_ibge
+      t.string :codcidade_ibgezz
 
       t.timestamps
     end

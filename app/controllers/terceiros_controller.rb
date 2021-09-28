@@ -1,13 +1,13 @@
 class TerceirosController < ApplicationController
-  before_action :set_terceiro, only: %i[ show edit update destroy ]
+  before_action :set_terceiro, only: %i[show edit update destroy]
 
   # GET /terceiros or /terceiros.json
   def index
-    @terceiros = Terceiro.all
+    @terceiros = Terceiro.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @terceiros = @terceiros.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @terceiros = @terceiros.paginate(options)
   end
 
   # GET /terceiros/1 or /terceiros/1.json
@@ -26,6 +26,7 @@ class TerceirosController < ApplicationController
   # POST /terceiros or /terceiros.json
   def create
     @terceiro = Terceiro.new(terceiro_params)
+    @terceiro.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @terceiro.save
@@ -61,13 +62,14 @@ class TerceirosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_terceiro
-      @terceiro = Terceiro.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def terceiro_params
-      params.require(:terceiro).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_terceiro
+    @terceiro = Terceiro.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def terceiro_params
+    params.require(:terceiro).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email)
+  end
 end

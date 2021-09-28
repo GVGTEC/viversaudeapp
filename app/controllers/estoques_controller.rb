@@ -3,12 +3,12 @@ class EstoquesController < ApplicationController
   skip_before_action :verify_authenticity_token, :only => [:importar]
 
   def index
-    @estoques = Estoque.all
+    @estoques = Estoque.where(empresa_id: @adm.empresa.id)
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @estoques = @estoques.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @estoques = @estoques.paginate(options)
   end
 
   def importar
@@ -97,6 +97,7 @@ class EstoquesController < ApplicationController
 
   def create_reposicao
     @estoque = Estoque.new(estoque_reposicao_params.merge(ultima_alteracao: "REP"))
+    @estoque.empresa_id = @adm.empresa.id
 
     if @estoque.save
       update_produto_reposicao

@@ -1,6 +1,7 @@
 <h1>Estoques</h1>
 
 <div class="page-header">
+<<<<<<< HEAD
   <form action="/estoques/importar" enctype='multipart/form-data' method="post">
       <div style="clear:both">
         <dt>Importar Estoques (CSV):</dt>
@@ -10,20 +11,22 @@
       </div>
   </form>
 
+=======
+>>>>>>> 8f4050440f764d6c3d9d2ce87de10cef0530d076
   <h2>Lista</h2>  
 </div>
 
-<div style="text-align: right;margin-top:10px">
-    <form action="/produtos" method="get">
-      <div class="row" style="width:300px;display: inline-block;">
-        <div style="float: left">
-          <input type="text" name="descricao" value="<%=params[:descricao] %>" class="form-control" placeholder="Busca..">
-       </div>
-       <div style="float: left;margin-left:10px">
-          <input type="submit" class="btn btn-primary" value="Buscar">
-       </div>
+<div style="text-align: right;margin-top:10px;margin-bottom:10px">
+  <form action="/produtos" method="get">
+    <div class="row" style="width:300px;display: inline-block;">
+      <div style="float: left">
+        <input type="text" name="descricao" value="<%=params[:descricao] %>" class="form-control" placeholder="Busca..">
       </div>
-    </form>
+      <div style="float: left;margin-left: 10px">
+        <input type="submit" class="btn btn-primary" value="Buscar">
+      </div>
+    </div>
+  </form>
 </div>
 
 <div class="table-responsive">

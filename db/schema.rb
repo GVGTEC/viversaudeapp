@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "cfop", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.string "codigo"
     t.string "informativo"
     t.string "descricao"
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.text "observacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_cfop_on_empresa_id"
   end
 
   create_table "cliente_contatos", force: :cascade do |t|
@@ -56,6 +58,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "clientes", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.bigint "vendedor_id"
     t.bigint "terceiro_id"
     t.integer "codcli_sac"
@@ -78,11 +81,13 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.boolean "empresa_governo", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_clientes_on_empresa_id"
     t.index ["terceiro_id"], name: "index_clientes_on_terceiro_id"
     t.index ["vendedor_id"], name: "index_clientes_on_vendedor_id"
   end
 
   create_table "contas_pag", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.bigint "fornecedor_id"
     t.bigint "plano_conta_id"
     t.string "documento"
@@ -91,6 +96,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.float "valor_total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_contas_pag_on_empresa_id"
     t.index ["fornecedor_id"], name: "index_contas_pag_on_fornecedor_id"
     t.index ["plano_conta_id"], name: "index_contas_pag_on_plano_conta_id"
   end
@@ -109,6 +115,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "contas_rec", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.bigint "cliente_id"
     t.bigint "plano_conta_id"
     t.string "documento"
@@ -118,6 +125,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cliente_id"], name: "index_contas_rec_on_cliente_id"
+    t.index ["empresa_id"], name: "index_contas_rec_on_empresa_id"
     t.index ["plano_conta_id"], name: "index_contas_rec_on_plano_conta_id"
   end
 
@@ -180,6 +188,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "estoques", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.bigint "produto_id"
     t.bigint "fornecedor_id"
     t.string "codprd_sac"
@@ -193,6 +202,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.float "preco_custo_reposicao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_estoques_on_empresa_id"
     t.index ["fornecedor_id"], name: "index_estoques_on_fornecedor_id"
     t.index ["produto_id"], name: "index_estoques_on_produto_id"
   end
@@ -208,6 +218,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "fornecedores", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.integer "codfor_sac"
     t.string "nome"
     t.string "pessoa"
@@ -224,16 +235,19 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.string "telefone_alternativo"
     t.string "telefone_nf"
     t.string "email"
-    t.string "codcidade_ibge"
+    t.string "codcidade_ibgezz"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
   end
 
   create_table "localizacao_estoques", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.string "local"
     t.string "observacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_localizacao_estoques_on_empresa_id"
   end
 
   create_table "movimento_estoques", force: :cascade do |t|
@@ -253,6 +267,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "nota_fiscais", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.integer "codnot_sac"
     t.integer "numero_nota"
     t.integer "numero_pedido"
@@ -282,6 +297,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.datetime "updated_at", null: false
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
     t.index ["cliente_id"], name: "index_nota_fiscais_on_cliente_id"
+    t.index ["empresa_id"], name: "index_nota_fiscais_on_empresa_id"
     t.index ["fornecedor_id"], name: "index_nota_fiscais_on_fornecedor_id"
     t.index ["transportadora_id"], name: "index_nota_fiscais_on_transportadora_id"
     t.index ["vendedor_id"], name: "index_nota_fiscais_on_vendedor_id"
@@ -420,14 +436,17 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "plano_contas", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.string "conta"
     t.string "descricao"
     t.string "grau"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_plano_contas_on_empresa_id"
   end
 
   create_table "produtos", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.bigint "localizacao_estoque_id"
     t.bigint "fornecedor_id"
     t.string "codprd_sac"
@@ -459,11 +478,13 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.float "estoque_minimo", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_produtos_on_empresa_id"
     t.index ["fornecedor_id"], name: "index_produtos_on_fornecedor_id"
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
   end
 
   create_table "terceiros", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.string "nome"
     t.string "pessoa"
     t.string "cpf"
@@ -479,6 +500,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_terceiros_on_empresa_id"
   end
 
   create_table "transportadora_contatos", force: :cascade do |t|
@@ -492,6 +514,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "transportadoras", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.string "nome"
     t.string "cnpj"
     t.string "ie"
@@ -502,9 +525,11 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.string "uf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_transportadoras_on_empresa_id"
   end
 
   create_table "vendedores", force: :cascade do |t|
+    t.bigint "empresa_id"
     t.string "nome"
     t.string "pessoa"
     t.string "cpf"
@@ -520,25 +545,34 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_vendedores_on_empresa_id"
   end
 
   add_foreign_key "administradores", "empresas"
+  add_foreign_key "cfop", "empresas"
   add_foreign_key "cliente_contatos", "clientes"
+  add_foreign_key "clientes", "empresas"
   add_foreign_key "clientes", "terceiros"
   add_foreign_key "clientes", "vendedores"
+  add_foreign_key "contas_pag", "empresas"
   add_foreign_key "contas_pag", "fornecedores"
   add_foreign_key "contas_pag", "plano_contas"
   add_foreign_key "contas_pagar_parcelas", "contas_pag"
   add_foreign_key "contas_rec", "clientes"
+  add_foreign_key "contas_rec", "empresas"
   add_foreign_key "contas_rec", "plano_contas"
   add_foreign_key "contas_rec_parcelas", "contas_rec"
+  add_foreign_key "estoques", "empresas"
   add_foreign_key "estoques", "fornecedores"
   add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
+  add_foreign_key "fornecedores", "empresas"
+  add_foreign_key "localizacao_estoques", "empresas"
   add_foreign_key "movimento_estoques", "estoques"
   add_foreign_key "movimento_estoques", "produtos"
   add_foreign_key "nota_fiscais", "cfop"
   add_foreign_key "nota_fiscais", "clientes"
+  add_foreign_key "nota_fiscais", "empresas"
   add_foreign_key "nota_fiscais", "fornecedores"
   add_foreign_key "nota_fiscais", "transportadoras"
   add_foreign_key "nota_fiscais", "vendedores"
@@ -554,7 +588,12 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   add_foreign_key "orcamento_itens", "produtos"
   add_foreign_key "orcamentos", "clientes"
   add_foreign_key "orcamentos", "vendedores"
+  add_foreign_key "plano_contas", "empresas"
+  add_foreign_key "produtos", "empresas"
   add_foreign_key "produtos", "fornecedores"
   add_foreign_key "produtos", "localizacao_estoques"
+  add_foreign_key "terceiros", "empresas"
   add_foreign_key "transportadora_contatos", "transportadoras"
+  add_foreign_key "transportadoras", "empresas"
+  add_foreign_key "vendedores", "empresas"
 end

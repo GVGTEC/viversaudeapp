@@ -3,7 +3,7 @@ class TransportadorasController < ApplicationController
 
   # GET /transportadoras or /transportadoras.json
   def index
-    @transportadoras = Transportadora.all
+    @transportadoras = Transportadora.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50} 
@@ -26,6 +26,7 @@ class TransportadorasController < ApplicationController
   # POST /transportadoras or /transportadoras.json
   def create
     @transportadora = Transportadora.new(transportadora_params)
+    @transportadora.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @transportadora.save

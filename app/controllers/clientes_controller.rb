@@ -4,11 +4,11 @@ class ClientesController < ApplicationController
 
   # GET /clientes or /clientes.json
   def index
-    @clientes = Cliente.all
+    @clientes = Cliente.where(empresa_id: @adm.empresa.id)
     @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
+    options = {page: params[:page] || 1, per_page: 25} 
     @clientes = @clientes.paginate(options)
   end
 
@@ -78,7 +78,7 @@ class ClientesController < ApplicationController
         begin
           cliente.vendedor_id = Vendedor.find(vendedor).id
         rescue 
-          cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}").id
+          cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}",  empresa_id: @adm.empresa.id).id
         end
       end
 
@@ -87,7 +87,7 @@ class ClientesController < ApplicationController
         begin
           cliente.terceiro_id = Terceiro.find(terceiro).id
         rescue 
-          cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}").id
+          cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}", empresa_id: @adm.empresa.id).id
         end
       end
 
@@ -108,6 +108,7 @@ class ClientesController < ApplicationController
       cliente.email = linha[email] 
       cliente.codcidade_ibge = linha[codcidade_ibge] 
       cliente.empresa_governo = true if linha[empresa_governo].include?("S")
+      cliente.empresa_id = @adm.empresa.id
       cliente.save
     rescue Exception => err
       raise err
@@ -131,7 +132,8 @@ class ClientesController < ApplicationController
   # POST /clientes or /clientes.json
   def create
     @cliente = Cliente.new(cliente_params)
-
+    @cliente.empresa_id = @adm.empresa.id
+    
     respond_to do |format|
       if @cliente.save
         salvar_contatos

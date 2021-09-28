@@ -1,6 +1,7 @@
 class CreateVendedores < ActiveRecord::Migration[5.2]
   def change
     create_table :vendedores do |t|
+      t.references :empresa, foreign_key: true
       t.string :nome
       t.string :pessoa
       t.string :cpf

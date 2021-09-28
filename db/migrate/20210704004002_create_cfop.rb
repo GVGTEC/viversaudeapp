@@ -1,10 +1,7 @@
 class CreateCfop < ActiveRecord::Migration[5.2]
   def change
     create_table :cfop do |t|
-      # t.string :cfop_de
-      # t.string :cfop_st_de
-      # t.string :cfop_fe
-      # t.string :cfop_st_fe
+      t.references :empresa, foreign_key: true
       t.string :codigo
       t.string :informativo
       t.string :descricao

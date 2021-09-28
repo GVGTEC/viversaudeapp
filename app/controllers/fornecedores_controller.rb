@@ -4,7 +4,7 @@ class FornecedoresController < ApplicationController
 
   # GET /fornecedores or /fornecedores.json
   def index
-    @fornecedores = Fornecedor.all
+    @fornecedores = Fornecedor.where(empresa_id: @adm.empresa.id)
     @fornecedores = @fornecedores.order("nome asc")
     @fornecedores = @fornecedores.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
@@ -113,6 +113,7 @@ class FornecedoresController < ApplicationController
   # POST /fornecedores or /fornecedores.json
   def create
     @fornecedor = Fornecedor.new(fornecedor_params)
+    @fornecedor.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @fornecedor.save

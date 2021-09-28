@@ -3,7 +3,7 @@ class LocalizacaoEstoquesController < ApplicationController
 
   # GET /localizacao_estoques or /localizacao_estoques.json
   def index
-    @localizacao_estoques = LocalizacaoEstoque.all
+    @localizacao_estoques = LocalizacaoEstoque.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50} 
@@ -26,6 +26,7 @@ class LocalizacaoEstoquesController < ApplicationController
   # POST /localizacao_estoques or /localizacao_estoques.json
   def create
     @localizacao_estoque = LocalizacaoEstoque.new(localizacao_estoque_params)
+    @localizacao_estoque.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @localizacao_estoque.save
