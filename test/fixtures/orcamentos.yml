@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cliente: one
+  vendedor: one
+  data_emissao: 2021-08-11 21:38:55
+  valor_total: 1.5
+  observacao: MyText
+  flag: MyString
+
+two:
+  cliente: two
+  vendedor: two
+  data_emissao: 2021-08-11 21:38:55
+  valor_total: 1.5
+  observacao: MyText
+  flag: MyString

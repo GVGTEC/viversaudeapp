@@ -1,5 +1,6 @@
 class EstoquesController < ApplicationController
   before_action :set_estoque, only: %i[show]
+  skip_before_action :verify_authenticity_token, :only => [:importar]
 
   def index
     @estoques = Estoque.all

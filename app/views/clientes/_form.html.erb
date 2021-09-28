@@ -81,7 +81,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :codcidade_ibge, 'Cidade IBGE', class: "col-sm-1 control-label" %>
+    <%= f.label :codcidade_ibge, 'Código IBGE', class: "col-sm-1 control-label" %>
     <div class="col-sm-2">
       <%= f.text_field :codcidade_ibge, class: "form-control", disabled: "disable" %>
     </div>
@@ -132,18 +132,33 @@
               <input class="form-control" type="text" value="<%= contato.nome %>" name="cliente[contato][][nome]">
             </div>
           </div>
+
           <div class="form-group">
             <label class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
               <input class="form-control" type="text" value="<%= contato.email %>" name="cliente[contato][][email]">
             </div>
           </div>
+          
           <div class="form-group">
             <label class="col-sm-2 control-label">Telefone</label>
             <div class="col-sm-10">
               <input class="form-control" type="text" value="<%= contato.telefone %>" name="cliente[contato][][telefone]">
             </div>
           </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Cargo</label>
+            <div class="col-sm-4">
+              <input class="form-control" type="text" value="<%= contato.cargo %>" name="cliente[contato][][cargo]">
+            </div>
+
+            <label class="col-sm-2 control-label">Departamento</label>
+            <div class="col-sm-4">
+              <input class="form-control" type="text" value="<%= contato.departamento %>" name="cliente[contato][][departamento]">
+            </div>
+          </div>
+
         </div>
       <% end %>
     <% end %>
@@ -169,6 +184,19 @@
           <input class="form-control" type="text" name="cliente[contato][][telefone]">
         </div>
       </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Cargo</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="cliente[contato][][cargo]">
+        </div>
+
+        <label class="col-sm-2 control-label">Departamento</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="cliente[contato][][departamento]">
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -193,18 +221,33 @@
         <input class="form-control" type="text" name="cliente[contato][][nome]">
       </div>
     </div>
+
     <div class="form-group">
       <label class="col-sm-2 control-label">Email</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="cliente[contato][][email]">
       </div>
     </div>
+
     <div class="form-group">
       <label class="col-sm-2 control-label">Telefone</label>
       <div class="col-sm-10">
         <input class="form-control" type="text" name="cliente[contato][][telefone]">
       </div>
     </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Cargo</label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="cliente[contato][][cargo]">
+      </div>
+
+      <label class="col-sm-2 control-label">Departamento</label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="cliente[contato][][departamento]">
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -249,5 +292,22 @@ $("#cliente_endereco").focus(function(){
     }
   })
 });
+
+function formatarCampo(campoTexto) {
+    if (campoTexto.value.length <= 11) {
+        campoTexto.value = mascaraCpf(campoTexto.value);
+    } else {
+        campoTexto.value = mascaraCnpj(campoTexto.value);
+    }
+}
+function retirarFormatacao(campoTexto) {
+    campoTexto.value = campoTexto.value.replace(/(\.|\/|\-)/g,"");
+}
+function mascaraCpf(valor) {
+    return valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g,"\$1.\$2.\$3\-\$4");
+}
+function mascaraCnpj(valor) {
+    return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
+}
   
 </script>

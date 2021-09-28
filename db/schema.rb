@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_25_050626) do
+ActiveRecord::Schema.define(version: 2021_08_12_004024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
     t.string "nome"
     t.string "telefone"
     t.string "email"
+    t.string "cargo"
+    t.string "departamento"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cliente_id"], name: "index_cliente_contatos_on_cliente_id"
@@ -180,6 +182,7 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
   create_table "estoques", force: :cascade do |t|
     t.bigint "produto_id"
     t.bigint "fornecedor_id"
+    t.string "codprd_sac"
     t.string "lote"
     t.string "documento"
     t.string "ultima_alteracao"
@@ -218,6 +221,8 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
     t.string "cep"
     t.string "uf"
     t.string "telefone"
+    t.string "telefone_alternativo"
+    t.string "telefone_nf"
     t.string "email"
     t.string "codcidade_ibge"
     t.datetime "created_at", null: false
@@ -240,6 +245,7 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
     t.float "estoque_inicial"
     t.float "estoque_final"
     t.float "preco_custo"
+    t.string "motivo_operacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"
@@ -388,6 +394,31 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
     t.index ["transportadora_id"], name: "index_nota_fiscal_transportas_on_transportadora_id"
   end
 
+  create_table "orcamento_itens", force: :cascade do |t|
+    t.bigint "orcamento_id"
+    t.bigint "produto_id"
+    t.float "quantidade"
+    t.float "preco_unitario"
+    t.float "preco_total"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["orcamento_id"], name: "index_orcamento_itens_on_orcamento_id"
+    t.index ["produto_id"], name: "index_orcamento_itens_on_produto_id"
+  end
+
+  create_table "orcamentos", force: :cascade do |t|
+    t.bigint "cliente_id"
+    t.bigint "vendedor_id"
+    t.datetime "data_emissao"
+    t.float "valor_total"
+    t.text "observacao"
+    t.string "flag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cliente_id"], name: "index_orcamentos_on_cliente_id"
+    t.index ["vendedor_id"], name: "index_orcamentos_on_vendedor_id"
+  end
+
   create_table "plano_contas", force: :cascade do |t|
     t.string "conta"
     t.string "descricao"
@@ -519,6 +550,10 @@ ActiveRecord::Schema.define(version: 2021_07_25_050626) do
   add_foreign_key "nota_fiscal_itens", "produtos"
   add_foreign_key "nota_fiscal_transportas", "nota_fiscais"
   add_foreign_key "nota_fiscal_transportas", "transportadoras"
+  add_foreign_key "orcamento_itens", "orcamentos"
+  add_foreign_key "orcamento_itens", "produtos"
+  add_foreign_key "orcamentos", "clientes"
+  add_foreign_key "orcamentos", "vendedores"
   add_foreign_key "produtos", "fornecedores"
   add_foreign_key "produtos", "localizacao_estoques"
   add_foreign_key "transportadora_contatos", "transportadoras"

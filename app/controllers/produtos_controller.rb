@@ -27,7 +27,7 @@ class ProdutosController < ApplicationController
       if File.basename(params[:arquivo].tempfile).include?(".CSV")
         importar_csv
       else
-        flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extenção .CSV"
+        flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
         redirect_to "/produtos"
         return
       end

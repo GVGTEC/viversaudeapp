@@ -1,0 +1,194 @@
+<%= form_for(@empresa, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @empresa.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4>Confira os campos abaixo:</h4>
+
+      <ul>
+      <% @empresa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="ibox-content">
+            <div class="row form-group">
+              <div class="col-md-12">
+                <%= f.label :nome, 'Razão Social' %>
+                <%= f.text_field :nome, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-12">
+                <%= f.label :nome_fantasia, 'Nome Fantasia' %>
+                <%= f.text_field :nome_fantasia, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-3">
+                <%= f.label :cnpj, 'CNPJ' %>
+                <%= f.text_field :cnpj, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :inscricao_estadual, 'Inscrição Estadual' %>
+                <%= f.text_field :inscricao_estadual, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :inscricao_municipal, 'Inscrição Municipal' %>
+                <%= f.text_field :inscricao_municipal, class: "form-control" %>
+              </div>              
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-10">
+                <%= f.label :endereco, 'Endereço' %>
+                <%= f.text_field :endereco, class: "form-control" %>
+              </div>
+
+              <div class="col-md-1">
+                <%= f.label :numero, 'Nº' %>
+                <%= f.text_field :numero, class: "form-control" %>
+              </div>
+            </div>
+
+           <div class="row form-group">
+              <div class="col-md-3">
+                <%= f.label :bairro, 'Bairro' %>
+                <%= f.text_field :bairro, class: "form-control" %>
+              </div>
+
+              <div class="col-md-3">
+                <%= f.label :cidade, 'Cidade' %>
+                <%= f.text_field :cidade, class: "form-control" %>
+              </div>
+
+              <div class="col-md-1">
+                <%= f.label :uf, 'UF' %>
+                <%= f.text_field :uf, class: "form-control" %>
+              </div>
+
+              <div class="col-md-1">
+                <%= f.label :cep, 'CEP' %>
+                <%= f.text_field :cep, class: "form-control" %>
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-md-2">
+                <%= f.label :codcid_ibge, 'Código IBGE' %>
+                <%= f.text_field :codcid_ibge, class: "form-control" %>
+              </div>
+
+              <div class="col-md-2">
+                <%= f.label :codigo_uf_emitente, 'Código UF Emitente' %>
+                <%= f.text_field :codigo_uf_emitente, class: "form-control" %>
+              </div>
+
+              <div class="col-md-2">
+                <%= f.label :telefone, 'DDD+Telefone' %>
+                <%= f.text_field :telefone, class: "form-control" %>
+              </div>
+             
+              <div class="col-md-6">
+                <%= f.label :email, 'Email' %>
+                <%= f.text_field :email, class: "form-control" %>
+              </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :aliquota_pis, 'PIS (%)', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :aliquota_pis, class: "form-control" %>
+    </div>
+
+    <%= f.label :aliquota_cofins, 'COFINS (%)', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :aliquota_cofins, class: "form-control" %>
+    </div>
+
+    <%= f.label :serie_nfe, 'Série NF', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :serie_nfe, class: "form-control" %>
+    </div>
+
+    <%= f.label :cnae, 'CNAE', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :cnae, class: "form-control" %>
+    </div>
+
+    <%= f.label :ambiente, 'Ambiente', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :ambiente, class: "form-control" %>
+    </div>
+
+    <%= f.label :versao_layout, 'Versão Layout', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :versao_layout, class: "form-control" %>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :regime_tributario, 'Regime Tributário', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :regime_tributario, class: "form-control" %>
+    </div>
+
+    <%= f.label :emissor_nfe, 'Tipo Emissor', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :emissor_nfe, class: "form-control" %>
+    </div>
+
+    <%= f.label :permite_credito_icms, 'Permite Crédito ICMS ?', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :permite_credito_icms, class: "form-control" %>
+    </div>
+
+    <%= f.label :credito_icms_pc, 'Crédito ICMS (%)', class: "col-sm-1 control-label" %>
+    <div class="col-sm-1">
+      <%= f.text_field :credito_icms_pc, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="ibox-content">
+        <div class="row form-group">
+              <div class="col-md-5">
+                <%= f.label :pasta_envio, 'Caminho Pasta Envio' %>
+                <%= f.text_field :pasta_envio, class: "form-control" %>
+              </div>
+
+              <div class="col-md-5">
+                <%= f.label :pasta_retorno, 'Caminho Pasta Retorno' %>
+                <%= f.text_field :pasta_retorno, class: "form-control" %>
+              </div>              
+
+              <div class="col-md-2">
+                <%= f.label :senha, 'Senha' %>
+                <%= f.text_field :senha, class: "form-control" %>
+              </div>
+        </div>                            
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-1">
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
+    </div>
+  </div>  
+<% end %>
+
+<script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
+</script>

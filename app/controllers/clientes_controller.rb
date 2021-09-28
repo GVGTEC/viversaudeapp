@@ -12,7 +12,6 @@ class ClientesController < ApplicationController
     @clientes = @clientes.paginate(options)
   end
 
-
   def importar
     begin
       if params[:arquivo].blank?
@@ -24,7 +23,7 @@ class ClientesController < ApplicationController
       if File.basename(params[:arquivo].tempfile).include?(".CSV")
         importar_csv
       else
-        flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extenção .CSV"
+        flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
         redirect_to "/clientes"
         return
       end
@@ -184,6 +183,8 @@ class ClientesController < ApplicationController
             contato.nome = contato_cliente[:nome]
             contato.email = contato_cliente[:email]
             contato.telefone = contato_cliente[:telefone]
+            contato.cargo = contato_cliente[:cargo]
+            contato.departamento = contato_cliente[:departamento]
             contato.natureza = params[:controller]
             contato.natureza_id = @cliente.id
             contato.save!

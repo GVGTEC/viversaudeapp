@@ -15,7 +15,7 @@ class ImportarEstoquesController < ApplicationController
         if File.basename(params[:arquivo].tempfile).include?(".CSV")
           importar_csv
         else
-          flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extenção .CSV"
+          flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
           redirect_to "/importar_estoque/importar"
           return
         end
@@ -43,16 +43,16 @@ class ImportarEstoquesController < ApplicationController
       codprd_sac = 0
       lote = 1 #se branco ele esta ativo
       fornecedor_id = 2 
-      quantidade = 3  # duas casas decimais
-      estoque_atual = 4 # duas casas decimais
-      saidas = 5 # duas casas decimais
-      preco_custo = 6 # duas casas decimais
+      #quantidade = 3  # duas casas decimais //NÃO IREMOS USAR
+      estoque_atual_lote = 4 # duas casas decimais
+      #saidas = 5 # duas casas decimais      //NÃO IREMOS USAR
+      preco_custo_reposicao = 6 # duas casas decimais
       documento = 7
-      data = 8
+      data_reposicao = 8
       data_validade = 9
   
       begin
-        estoque = estoque.new
+        estoque = Estoque.new
         estoque.codprd_sac = linha[codprd_sac]
         estoque.lote = linha[lote]
 
@@ -62,12 +62,12 @@ class ImportarEstoquesController < ApplicationController
           estoque.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
         end
 
-        estoque.quantidade = linha[quantidade]
-        estoque.estoque_atual = linha[estoque_atual]
-        estoque.saidas = linha[saidas]
+       # estoque.quantidade = linha[quantidade]
+        estoque.estoque_atual_lote = linha[estoque_atual_lote]
+       # estoque.saidas = linha[saidas]
   
-        estoque.preco_custo = separate_comma(linha[preco_custo].to_i)
-        estoque.data = linha[data]
+        estoque.preco_custo_reposicao = separate_comma(linha[preco_custo_reposicao].to_i)
+        estoque.data_reposicao = linha[data_reposicao]
         estoque.data_validade = linha[data_validade]
   
         estoque.save

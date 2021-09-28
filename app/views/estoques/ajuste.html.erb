@@ -33,7 +33,7 @@
 
   <div class="form-group">
     <%= f.label :lote, 'Lote Nº', class: "col-sm-1 control-label" %>
-    <div class="col-sm-11">
+    <div class="col-sm-2">
       <%= f.select :id , ["", ""], 
           {:selected => @estoque.lote, :include_blank => true},
           {:class =>'form-control', :onclick => "buscaEstoque()"}
@@ -43,14 +43,14 @@
 
   <div class="form-group">
     <label class="col-sm-1 control-label" for="estoque_inicial">Estoque Inicial</label>
-    <div class="col-sm-11">
+    <div class="col-sm-2">
       <input class="form-control" type="text" id="estoque_inicial" disabled>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :estoque_atual_lote, "Estoque Atual", class: "col-sm-1 control-label" %>
-    <div class="col-sm-11">
+    <div class="col-sm-2">
       <%= f.text_field :estoque_atual_lote, class: "form-control" %>
     </div>
   </div>
@@ -72,6 +72,16 @@
 <% end %>
 
 <script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+
 const buscaProduto = () =>{
   const selectElement = document.getElementById("_estoques_ajuste_produto_id")
   var idProduto = selectElement.value

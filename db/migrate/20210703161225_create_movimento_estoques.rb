@@ -9,6 +9,7 @@ class CreateMovimentoEstoques < ActiveRecord::Migration[5.2]
       t.float :estoque_inicial
       t.float :estoque_final
       t.float :preco_custo
+      t.string :motivo_operacao
 
       t.timestamps
     end
