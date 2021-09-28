@@ -6,7 +6,6 @@ namespace :jobs do
     out_file.puts("write your stuff here")
     #...
     out_file.close
-
     #send_file "/tmp/nota.txt"
   end
 
