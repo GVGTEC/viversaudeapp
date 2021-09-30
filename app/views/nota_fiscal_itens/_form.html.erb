@@ -2,7 +2,7 @@
   <div class="form-group">
     <div class="col-sm-12">
       <label class="control-label">Nº Nota Fiscal: </label>
-      <%= @nota_fiscal.id %>
+      <h3><%= @nota_fiscal.id %></h3>
       <br>
       <label class="control-label">CFOP: </label>
       <%= @nota_fiscal.cfop.codigo%>
@@ -12,22 +12,23 @@
   <br>
 
   <div class="table-responsive">
-    <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_nota_fiscal_id_<%= @nota_fiscal.id  %>">
+    <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_nota_fiscal_id_<%= @nota_fiscal.id %>">
       <thead>
         <tr>
           <th></th>
-          <th>COD. Produto</th>
-          <th>Descricao</th>
+          <th>Código</th>
+          <th>Descrição</th>
           <th>CFOP</th>
           <th>NCM</th>
-          <th>Un.</th>
-          <th>Qtd.</th>
-          <th>Preço Unitario</th>
+          <th>Un</th>
+          <th>Qtd</th>
+          <th>Preço Unitário</th>
           <th>Preço Total</th>
           <th></th>
         </tr>
       </thead>
-      <tbody id="tableBody_nota_fiscal_id_<%= @nota_fiscal.id  %>">
+
+      <tbody id="tableBody_nota_fiscal_id_<%= @nota_fiscal.id %>">
         <% @nota_fiscal.nota_fiscal_itens.each_with_index do |nota_fiscal_item, index| %>
           <tr id="<%= index+1 %>" class="operacao">
             <td><%= index+1 %></td>
@@ -57,7 +58,7 @@
   <div class="form-group">
     <div class="col-sm-6"></div>
     <div class="col-sm-6" style="text-align:end">
-     <p><b>VALOR TOTAL:<b></p>
+     <p><b>Valor Total:<b></p>
      <p class="valor-total" style="font-size: 30px"></p>
     </div>
   </div>

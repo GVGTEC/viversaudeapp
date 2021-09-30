@@ -5,7 +5,9 @@ class CreateClienteContatos < ActiveRecord::Migration[5.2]
       t.string :nome
       t.string :telefone
       t.string :email
-
+      t.string :cargo
+      t.string :departamento
+      
       t.timestamps
     end
   end

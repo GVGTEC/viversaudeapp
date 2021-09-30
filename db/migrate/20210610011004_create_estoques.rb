@@ -4,6 +4,7 @@ class CreateEstoques < ActiveRecord::Migration[5.2]
       t.references :empresa, foreign_key: true
       t.references :produto, foreign_key: true
       t.references :fornecedor, foreign_key: true
+      t.string :codprd_sac
       t.string :lote
       t.string :documento
       t.string :ultima_alteracao

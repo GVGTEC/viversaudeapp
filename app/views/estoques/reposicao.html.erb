@@ -121,6 +121,15 @@
 <% end %>
 
 <script>
+//Bloqueia a tecla Enter no campo de Input
+$(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
   const dadosProduto = () => {
     let produto_id = $("#_estoques_reposicao_produto_id").val()
 

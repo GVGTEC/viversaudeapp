@@ -1,0 +1,15 @@
+<h1>Orçamentos</h1>
+
+<div class="page-header">
+  <%= link_to orcamentos_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to @orcamento, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Mostrar
+  <% end %>
+  <h2>Alteração</h2>
+</div>
+
+<%= render 'form' %>
