@@ -31,7 +31,7 @@ class ContasPagController < ApplicationController
     respond_to do |format|
       if @contas_pag.save
         save_contas_pagar_parcelas
-        format.html { redirect_to @contas_pag, notice: "Contas pagar was successfully created." }
+        format.html { redirect_to @contas_pag, notice: "Contas pagar criado com sucesso." }
         format.json { render :show, status: :created, location: @contas_pagar }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class ContasPagController < ApplicationController
     respond_to do |format|
       if @contas_pag.update(contas_pagar_params)
         save_contas_pagar_parcelas
-        format.html { redirect_to @contas_pag, notice: "Contas pagar was successfully updated." }
+        format.html { redirect_to @contas_pag, notice: "Contas pagar atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @contas_pagar }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +58,7 @@ class ContasPagController < ApplicationController
   def destroy
     @contas_pag.destroy
     respond_to do |format|
-      format.html { redirect_to contas_pagar_index_url, notice: "Contas pagar was successfully destroyed." }
+      format.html { redirect_to contas_pagar_index_url, notice: "Contas pagar excluído com sucesso.." }
       format.json { head :no_content }
     end
   end

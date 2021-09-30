@@ -30,7 +30,7 @@ class VendedoresController < ApplicationController
 
     respond_to do |format|
       if @vendedor.save
-        format.html { redirect_to @vendedor, notice: "Vendedor was successfully created." }
+        format.html { redirect_to @vendedor, notice: "Vendedor criado com sucesso." }
         format.json { render :show, status: :created, location: @vendedor }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class VendedoresController < ApplicationController
   def update
     respond_to do |format|
       if @vendedor.update(vendedor_params)
-        format.html { redirect_to @vendedor, notice: "Vendedor was successfully updated." }
+        format.html { redirect_to @vendedor, notice: "Vendedor atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @vendedor }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class VendedoresController < ApplicationController
   def destroy
     @vendedor.destroy
     respond_to do |format|
-      format.html { redirect_to vendedores_url, notice: "Vendedor was successfully destroyed." }
+      format.html { redirect_to vendedores_url, notice: "Vendedor excluído com sucesso.." }
       format.json { head :no_content }
     end
   end

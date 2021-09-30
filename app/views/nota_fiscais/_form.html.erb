@@ -59,7 +59,7 @@
     <div class="row form-group">
         <div class="col-md-12">
           <%= f.label :transportadora, 'Transportadora' %>
-          <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
+          <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.transportadora_id, :include_blank => true}, {:class=> 'form-control'} %>
         </div>
     </div>   
     
@@ -81,30 +81,30 @@
     </div>   
 
     <div class="row form-group">
-        <div class="col-md-2">
-          <%= f.label :valor_desconto, 'Quantidade' %>
-          <%= f.text_field :valor_desconto, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= f.label :qtd_volume, 'Quantidade' %>
+        <%= f.text_field :qtd_volume, class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :valor_frete, 'Marca' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= f.label :especie, 'Espécie' %>
+        <%= f.text_field :especie, class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :hora_saida, 'Espécie' %>
-          <%= f.text_field :hora_saida, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= f.label :marca, 'Marca' %>
+        <%= f.text_field :marca, class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :valor_frete, 'Peso Líquido' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= f.label :peso_liquido, 'Peso Líquido' %>
+        <%= f.text_field :peso_liquido, class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :valor_frete, 'Peso Bruto' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= f.label :peso_bruto, 'Peso Bruto' %>
+        <%= f.text_field :peso_bruto, class: "form-control" %>
+      </div>
     </div>    
 
     <div class="row form-group">

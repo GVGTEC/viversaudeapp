@@ -30,7 +30,7 @@ class LocalizacaoEstoquesController < ApplicationController
 
     respond_to do |format|
       if @localizacao_estoque.save
-        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque was successfully created." }
+        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque criado com sucesso." }
         format.json { render :show, status: :created, location: @localizacao_estoque }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class LocalizacaoEstoquesController < ApplicationController
   def update
     respond_to do |format|
       if @localizacao_estoque.update(localizacao_estoque_params)
-        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque was successfully updated." }
+        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @localizacao_estoque }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class LocalizacaoEstoquesController < ApplicationController
   def destroy
     @localizacao_estoque.destroy
     respond_to do |format|
-      format.html { redirect_to localizacao_estoques_url, notice: "Localizacao estoque was successfully destroyed." }
+      format.html { redirect_to localizacao_estoques_url, notice: "Localizacao estoque excluído com sucesso.." }
       format.json { head :no_content }
     end
   end

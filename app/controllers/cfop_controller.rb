@@ -35,7 +35,7 @@ class CfopController < ApplicationController
           @cfop.save
         end
 
-        format.html { redirect_to cfop_index_path, notice: "Cfop was successfully created." }
+        format.html { redirect_to cfop_index_path, notice: "Cfop criado com sucesso." }
         format.json { render :show, status: :created, location: @cfop }
       rescue => exception
         format.html { render :new, status: :unprocessable_entity }
@@ -50,7 +50,7 @@ class CfopController < ApplicationController
       @natureza = @cfop.natureza_operacao
       if @cfop.update(cfop_params)
         atualiza_cfops_com_mesma_natureza
-        format.html { redirect_to cfop_index_path, notice: "Cfop was successfully updated." }
+        format.html { redirect_to cfop_index_path, notice: "Cfop atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @cfop }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -63,7 +63,7 @@ class CfopController < ApplicationController
   def destroy
     @cfop.destroy
     respond_to do |format|
-      format.html { redirect_to cfop_index_url, notice: "Cfop was successfully destroyed." }
+      format.html { redirect_to cfop_index_url, notice: "Cfop excluído com sucesso.." }
       format.json { head :no_content }
     end
   end

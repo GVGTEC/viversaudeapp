@@ -29,7 +29,7 @@ class EmpresasController < ApplicationController
 
     respond_to do |format|
       if @empresa.save
-        format.html { redirect_to @empresa, notice: "Empresa was successfully created." }
+        format.html { redirect_to @empresa, notice: "Empresa criado com sucesso." }
         format.json { render :show, status: :created, location: @empresa }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class EmpresasController < ApplicationController
   def update
     respond_to do |format|
       if @empresa.update(empresa_params)
-        format.html { redirect_to @empresa, notice: "Empresa was successfully updated." }
+        format.html { redirect_to @empresa, notice: "Empresa atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @empresa }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class EmpresasController < ApplicationController
   def destroy
     @empresa.destroy
     respond_to do |format|
-      format.html { redirect_to empresas_url, notice: "Empresa was successfully destroyed." }
+      format.html { redirect_to empresas_url, notice: "Empresa excluído com sucesso.." }
       format.json { head :no_content }
     end
   end
