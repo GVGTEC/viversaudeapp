@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     if cookies[:admin_viver_saude].blank?
       redirect_to "/login"
     else
+      ApplicationRecord.administrador_record=(administrador)
       administrador
     end
   end

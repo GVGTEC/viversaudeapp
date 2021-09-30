@@ -254,11 +254,10 @@ class NotaFiscaisController < ApplicationController
   # POST /nota_fiscais or /nota_fiscais.json
   def create
     @nota_fiscal = NotaFiscal.new(nota_fiscal_params)
-    @nota_fiscal.empresa_id = @adm.empresa.id
-
+    
     respond_to do |format|
       if @nota_fiscal.save
-        salvar_nota_fiscal_transporta
+        salvar_nota_fiscal_transportadora
         format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota fiscal criado com sucesso." }
         format.json { render :show, status: :created, location: @nota_fiscal }
       else
@@ -272,6 +271,7 @@ class NotaFiscaisController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
+        salvar_nota_fiscal_transportadora
         format.html { redirect_to @nota_fiscal, notice: "Nota fiscal atualizado com sucesso." }
         format.json { render :show, status: :ok, location: @nota_fiscal }
       else
@@ -297,12 +297,23 @@ class NotaFiscaisController < ApplicationController
     @nota_fiscal = NotaFiscal.find(params[:id] || params[:nota_fiscal_id])
   end
   
-  def salvar_nota_fiscal_transporta
-    
+  def salvar_nota_fiscal_transportadora
+    NotaFiscalTransporta.where(nota_fiscal: @nota_fiscal.id).destroy_all
+    if params[:nota_fiscal].has_key?(:transportadora_id)
+      nota_fiscal_transporta = NotaFiscalTransporta.new
+      nota_fiscal_transporta.nota_fiscal_id = @nota_fiscal.id
+      nota_fiscal_transporta.transportadora_id = params[:nota_fiscal][:transportadora_id]
+      nota_fiscal_transporta.quantidade = params[:quantidade]
+      nota_fiscal_transporta.especie = params[:especie]
+      nota_fiscal_transporta.marca = params[:marca]
+      nota_fiscal_transporta.peso_liquido = params[:peso_liquido]
+      nota_fiscal_transporta.peso_bruto = params[:peso_bruto]
+      nota_fiscal_transporta.save
+    end
   end
 
   # Only allow a list of trusted parameters through.
   def nota_fiscal_params
-    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :qtd_volume, :especie, :marca, :peso_liquido, :peso_bruto)
+    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn)
   end
 end
