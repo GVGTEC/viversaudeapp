@@ -1,11 +1,9 @@
 <%= form_for([@nota_fiscal, @nota_fiscal_item], html: { class: "form-horizontal", role: "form" }) do |f| %>
   <div class="form-group">
     <div class="col-sm-12">
-      <label class="control-label">Nº Nota Fiscal: </label>
-      <h3><%= @nota_fiscal.id %></h3>
+      <label class="control-label">Nº Nota Fiscal: <span style="font-size:2rem"><%= @nota_fiscal.numero_nota %></span></label>
       <br>
-      <label class="control-label">CFOP: </label>
-      <%= @nota_fiscal.cfop.codigo%>
+      <label class="control-label">CFOP: <span style="font-size:2rem"><%= @nota_fiscal.cfop.codigo %></span></label>
     </div>
   </div>
 

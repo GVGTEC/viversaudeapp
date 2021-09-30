@@ -4,4 +4,4 @@ git add .
 git commit -am "$commit_message"
 git pull
 git push
-#git push heroku master
+git push heroku master
