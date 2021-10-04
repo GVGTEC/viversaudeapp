@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :vendedores
   resources :contas_rec
   resources :plano_contas
-  resources :fornecedores
+ 
   resources :administradores
   resources :transportadoras
   resources :localizacao_estoques
@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   post "/estoques/ajuste", to: "estoques#ajuste"
   post "/estoques/reposicao", to: "estoques#create_reposicao"
   post "/estoques/baixa", to: "estoques#baixa"
+  post "/estoques/importar", to: "estoques#importar"
   resources :estoques, only: [:index, :show]
   
   post "/produtos/importar", to: "produtos#importar"
@@ -36,6 +37,9 @@ Rails.application.routes.draw do
   
   post "/clientes/importar", to: "clientes#importar"
   resources :clientes
+
+  post "/fornecedores/importar", to: "fornecedores#importar"
+  resources :fornecedores
 
   get "/importar_clientes", to: "importar#clientes"
   get "/importar_fornecedores", to: "importar#fornecedores"

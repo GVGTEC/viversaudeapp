@@ -27,12 +27,7 @@ class CreateNotaFiscais < ActiveRecord::Migration[5.2]
       t.string :chave_acesso_nfe
       t.string :nota_cancelada_sn
       t.string :distancia_parcelas
-      # t.float :qtd_volume
-      # t.string :especie
-      # t.string :marca
-      # t.float :peso_liquido
-      # t.float :peso_bruto
-
+      t.string :pagar_frete
 
       t.timestamps
     end
