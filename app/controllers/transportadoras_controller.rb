@@ -31,7 +31,7 @@ class TransportadorasController < ApplicationController
     respond_to do |format|
       if @transportadora.save
         salvar_contatos
-        format.html { redirect_to @transportadora, notice: "Transportadora was successfully created." }
+        format.html { redirect_to @transportadora, notice: "Transportadora Cadastrada" }
         format.json { render :show, status: :created, location: @transportadora }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class TransportadorasController < ApplicationController
     respond_to do |format|
       if @transportadora.update(transportadora_params)
         salvar_contatos
-        format.html { redirect_to @transportadora, notice: "Transportadora was successfully updated." }
+        format.html { redirect_to @transportadora, notice: "Transportadora Alterada" }
         format.json { render :show, status: :ok, location: @transportadora }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +59,7 @@ class TransportadorasController < ApplicationController
     @transportadora.destroy
     salvar_contatos
     respond_to do |format|
-      format.html { redirect_to transportadoras_url, notice: "Transportadora was successfully destroyed." }
+      format.html { redirect_to transportadoras_url, notice: "Transportadora Excluída" }
       format.json { head :no_content }
     end
   end

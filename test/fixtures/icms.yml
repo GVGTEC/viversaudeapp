@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  estado: MyString
+  aliquota_icms: 1.5
+  aliquota_icms_st: 1.5
+  mva_icms_st: 1.5
+  fcp_sn: MyString
+  fcp_pc: 1.5
+
+two:
+  estado: MyString
+  aliquota_icms: 1.5
+  aliquota_icms_st: 1.5
+  mva_icms_st: 1.5
+  fcp_sn: MyString
+  fcp_pc: 1.5

@@ -35,7 +35,7 @@ class OrcamentosController < ApplicationController
 
     respond_to do |format|
       if @orcamento.save
-        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: "Nota fiscal was successfully created." }
+        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: "Nota fiscal Cadastrado" }
         format.json { render :show, status: :created, location: @orcamento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -48,7 +48,7 @@ class OrcamentosController < ApplicationController
   def update
     respond_to do |format|
       if @orcamento.update(orcamento_params)
-        format.html { redirect_to @orcamento, notice: "Nota fiscal was successfully updated." }
+        format.html { redirect_to @orcamento, notice: "Nota fiscal Alterado" }
         format.json { render :show, status: :ok, location: @orcamento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,7 +61,7 @@ class OrcamentosController < ApplicationController
   def destroy
     @orcamento.destroy
     respond_to do |format|
-      format.html { redirect_to nota_fiscais_url, notice: "Nota fiscal was successfully destroyed." }
+      format.html { redirect_to nota_fiscais_url, notice: "Nota fiscal Excluído" }
       format.json { head :no_content }
     end
   end

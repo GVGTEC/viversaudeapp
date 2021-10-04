@@ -30,7 +30,7 @@ class TerceirosController < ApplicationController
 
     respond_to do |format|
       if @terceiro.save
-        format.html { redirect_to @terceiro, notice: "Terceiro was successfully created." }
+        format.html { redirect_to @terceiro, notice: "Terceiro Cadastrado" }
         format.json { render :show, status: :created, location: @terceiro }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class TerceirosController < ApplicationController
   def update
     respond_to do |format|
       if @terceiro.update(terceiro_params)
-        format.html { redirect_to @terceiro, notice: "Terceiro was successfully updated." }
+        format.html { redirect_to @terceiro, notice: "Terceiro Alterado" }
         format.json { render :show, status: :ok, location: @terceiro }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class TerceirosController < ApplicationController
   def destroy
     @terceiro.destroy
     respond_to do |format|
-      format.html { redirect_to terceiros_url, notice: "Terceiro was successfully destroyed." }
+      format.html { redirect_to terceiros_url, notice: "Terceiro Excluído" }
       format.json { head :no_content }
     end
   end

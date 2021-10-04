@@ -259,7 +259,7 @@ class NotaFiscaisController < ApplicationController
 
     respond_to do |format|
       if @nota_fiscal.save
-        format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota fiscal was successfully created." }
+        format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota Fiscal Cadastrada" }
         format.json { render :show, status: :created, location: @nota_fiscal }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -272,7 +272,7 @@ class NotaFiscaisController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
-        format.html { redirect_to @nota_fiscal, notice: "Nota fiscal was successfully updated." }
+        format.html { redirect_to @nota_fiscal, notice: "Nota Fiscal Alterada" }
         format.json { render :show, status: :ok, location: @nota_fiscal }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -285,7 +285,7 @@ class NotaFiscaisController < ApplicationController
   def destroy
     @nota_fiscal.destroy
     respond_to do |format|
-      format.html { redirect_to nota_fiscais_url, notice: "Nota fiscal was successfully destroyed." }
+      format.html { redirect_to nota_fiscais_url, notice: "Nota Fiscal Excluída" }
       format.json { head :no_content }
     end
   end

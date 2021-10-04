@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_12_004024) do
+ActiveRecord::Schema.define(version: 2021_10_02_231523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,6 +212,8 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.string "nome"
     t.string "telefone"
     t.string "email"
+    t.string "cargo"
+    t.string "departamento"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["fornecedor_id"], name: "index_fornecedor_contatos_on_fornecedor_id"
@@ -239,6 +241,17 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
+  end
+
+  create_table "icms", force: :cascade do |t|
+    t.string "estado"
+    t.float "aliquota_icms"
+    t.float "aliquota_icms_st"
+    t.float "mva_icms_st"
+    t.string "fcp_sn"
+    t.float "fcp_pc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "localizacao_estoques", force: :cascade do |t|
@@ -411,6 +424,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "orcamento_itens", force: :cascade do |t|
+    #t.bigint "empresa_id"
     t.bigint "orcamento_id"
     t.bigint "produto_id"
     t.float "quantidade"
@@ -423,6 +437,7 @@ ActiveRecord::Schema.define(version: 2021_08_12_004024) do
   end
 
   create_table "orcamentos", force: :cascade do |t|
+    #t.bigint "empresa_id"
     t.bigint "cliente_id"
     t.bigint "vendedor_id"
     t.datetime "data_emissao"

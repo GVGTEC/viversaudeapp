@@ -42,7 +42,7 @@ class NotaFiscalDuplicatasController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to nota_fiscais_path, notice: "Nota fiscal item was successfully created." }
+      format.html { redirect_to nota_fiscais_path, notice: "Nota fiscal item Cadastrado" }
     end
   end
 

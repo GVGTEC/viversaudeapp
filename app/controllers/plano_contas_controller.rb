@@ -30,7 +30,7 @@ class PlanoContasController < ApplicationController
 
     respond_to do |format|
       if @plano_conta.save
-        format.html { redirect_to @plano_conta, notice: "Plano conta was successfully created." }
+        format.html { redirect_to @plano_conta, notice: "Plano conta Cadastrado" }
         format.json { render :show, status: :created, location: @plano_conta }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class PlanoContasController < ApplicationController
   def update
     respond_to do |format|
       if @plano_conta.update(plano_conta_params)
-        format.html { redirect_to @plano_conta, notice: "Plano conta was successfully updated." }
+        format.html { redirect_to @plano_conta, notice: "Plano conta Alterado" }
         format.json { render :show, status: :ok, location: @plano_conta }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +56,7 @@ class PlanoContasController < ApplicationController
   def destroy
     @plano_conta.destroy
     respond_to do |format|
-      format.html { redirect_to plano_contas_url, notice: "Plano conta was successfully destroyed." }
+      format.html { redirect_to plano_contas_url, notice: "Plano conta Excluído" }
       format.json { head :no_content }
     end
   end

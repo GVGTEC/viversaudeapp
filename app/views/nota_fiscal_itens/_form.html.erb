@@ -87,7 +87,6 @@
 
     addProduto()
   });
-
   
   $(document).on('keyup', '[data-behavior~=cod_produto]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
@@ -123,8 +122,6 @@
   $(document).on('keyup', '[data-behavior~=cfop]', function(event) {
     atualizaProduto()
   });
-
-  
 
   const addProduto = () =>{
     var clica = setInterval(function(){
@@ -206,6 +203,5 @@
       }
     })
   }
-
   
 </script>

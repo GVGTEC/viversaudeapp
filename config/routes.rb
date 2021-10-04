@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :icms
   resources :cfop
   resources :empresas
   resources :terceiros

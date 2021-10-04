@@ -1,0 +1,2 @@
+class Icms < ApplicationRecord
+end

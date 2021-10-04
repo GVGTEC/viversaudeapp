@@ -54,7 +54,7 @@ class NotaFiscalItensController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: "Nota fiscal item was successfully created." }
+      format.html { redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: "Nota fiscal item Cadastrado" }
     end
   end
 
@@ -62,7 +62,7 @@ class NotaFiscalItensController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal_item.update(nota_fiscal_item_params)
-        format.html { redirect_to @nota_fiscal_item, notice: "Nota fiscal item was successfully updated." }
+        format.html { redirect_to @nota_fiscal_item, notice: "Nota fiscal item Alterado" }
         format.json { render :show, status: :ok, location: @nota_fiscal_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -75,7 +75,7 @@ class NotaFiscalItensController < ApplicationController
   def destroy
     @nota_fiscal_item.destroy
     respond_to do |format|
-      format.html { redirect_to nota_fiscal_itens_url, notice: "Nota fiscal item was successfully destroyed." }
+      format.html { redirect_to nota_fiscal_itens_url, notice: "Nota fiscal item Excluído" }
       format.json { head :no_content }
     end
   end

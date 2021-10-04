@@ -25,7 +25,7 @@ class OrcamentosController < ApplicationController
 
     respond_to do |format|
       if @orcamento.save
-        format.html { redirect_to @orcamento, notice: "Orcamento was successfully created." }
+        format.html { redirect_to @orcamento, notice: "Orcamento Cadastrado" }
         format.json { render :show, status: :created, location: @orcamento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class OrcamentosController < ApplicationController
   def update
     respond_to do |format|
       if @orcamento.update(orcamento_params)
-        format.html { redirect_to @orcamento, notice: "Orcamento was successfully updated." }
+        format.html { redirect_to @orcamento, notice: "Orcamento Alterado" }
         format.json { render :show, status: :ok, location: @orcamento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,7 +51,7 @@ class OrcamentosController < ApplicationController
   def destroy
     @orcamento.destroy
     respond_to do |format|
-      format.html { redirect_to orcamentos_url, notice: "Orcamento was successfully destroyed." }
+      format.html { redirect_to orcamentos_url, notice: "Orcamento Excluído" }
       format.json { head :no_content }
     end
   end
