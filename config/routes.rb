@@ -27,7 +27,6 @@ Rails.application.routes.draw do
   post "/estoques/ajuste", to: "estoques#ajuste"
   post "/estoques/reposicao", to: "estoques#create_reposicao"
   post "/estoques/baixa", to: "estoques#baixa"
-
   resources :estoques, only: [:index, :show]
   
   post "/produtos/importar", to: "produtos#importar"
