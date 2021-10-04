@@ -118,7 +118,11 @@ class FornecedoresController < ApplicationController
     respond_to do |format|
       if @fornecedor.save
         salvar_contatos
+<<<<<<< HEAD
         format.html { redirect_to @fornecedor, notice: "Fornecedor Cadastrado" }
+=======
+        format.html { redirect_to @fornecedor, notice: "Fornecedor criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @fornecedor }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -132,7 +136,11 @@ class FornecedoresController < ApplicationController
     respond_to do |format|
       if @fornecedor.update(fornecedor_params)
         salvar_contatos
+<<<<<<< HEAD
         format.html { redirect_to @fornecedor, notice: "Fornecedor Alterado" }
+=======
+        format.html { redirect_to @fornecedor, notice: "Fornecedor atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @fornecedor }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -145,7 +153,11 @@ class FornecedoresController < ApplicationController
   def destroy
     @fornecedor.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to fornecedores_url, notice: "Fornecedor Excluído" }
+=======
+      format.html { redirect_to fornecedores_url, notice: "Fornecedor excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

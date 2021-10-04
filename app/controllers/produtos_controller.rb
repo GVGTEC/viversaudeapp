@@ -155,7 +155,11 @@ class ProdutosController < ApplicationController
 
     respond_to do |format|
       if @produto.save
+<<<<<<< HEAD
         format.html { redirect_to produtos_path, notice: "Produto Cadastrado" }
+=======
+        format.html { redirect_to produtos_path, notice: "Produto criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @produto }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -168,7 +172,11 @@ class ProdutosController < ApplicationController
   def update
     respond_to do |format|
       if @produto.update(produto_params)
+<<<<<<< HEAD
         format.html { redirect_to produtos_path, notice: "Produto Alterado" }
+=======
+        format.html { redirect_to produtos_path, notice: "Produto atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @produto }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -181,7 +189,11 @@ class ProdutosController < ApplicationController
   def destroy
     @produto.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to produtos_url, notice: "Produto Excluído" }
+=======
+      format.html { redirect_to produtos_url, notice: "Produto excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

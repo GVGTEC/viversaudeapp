@@ -34,15 +34,15 @@
   <dt>Hora saida:</dt>
   <dd><%= @nota_fiscal.hora_saida %></dd>
   <dt>Valor desconto:</dt>
-  <dd><%= @nota_fiscal.valor_desconto %></dd>
+  <dd><%= number_to_currency(@nota_fiscal.valor_desconto) %></dd>
   <dt>Valor produtos:</dt>
-  <dd><%= @nota_fiscal.valor_produtos %></dd>
+  <dd><%= number_to_currency(@nota_fiscal.valor_produtos)  %></dd>
   <dt>Valor total nota:</dt>
-  <dd><%= @nota_fiscal.valor_total_nota %></dd>
+  <dd><%= number_to_currency(@nota_fiscal.valor_total_nota) %></dd>
   <dt>Valor frete:</dt>
-  <dd><%= @nota_fiscal.valor_frete %></dd>
+  <dd><%= number_to_currency(@nota_fiscal.valor_frete) %></dd>
   <dt>Valor outras despesas:</dt>
-  <dd><%= @nota_fiscal.valor_outras_despesas %></dd>
+  <dd><%= number_to_currency(@nota_fiscal.valor_outras_despesas) %></dd>
   <dt>Numero pedido compra:</dt>
   <dd><%= @nota_fiscal.numero_pedido_compra %></dd>
   <dt>Tipo pagamento:</dt>

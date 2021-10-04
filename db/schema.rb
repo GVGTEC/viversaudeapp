@@ -50,8 +50,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.string "nome"
     t.string "telefone"
     t.string "email"
-    t.string "cargo"
-    t.string "departamento"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cliente_id"], name: "index_cliente_contatos_on_cliente_id"
@@ -191,7 +189,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.bigint "empresa_id"
     t.bigint "produto_id"
     t.bigint "fornecedor_id"
-    t.string "codprd_sac"
     t.string "lote"
     t.string "documento"
     t.string "ultima_alteracao"
@@ -234,8 +231,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.string "cep"
     t.string "uf"
     t.string "telefone"
-    t.string "telefone_alternativo"
-    t.string "telefone_nf"
     t.string "email"
     t.string "codcidade_ibgezz"
     t.datetime "created_at", null: false
@@ -272,7 +267,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.float "estoque_inicial"
     t.float "estoque_final"
     t.float "preco_custo"
-    t.string "motivo_operacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"

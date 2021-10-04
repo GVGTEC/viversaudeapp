@@ -29,7 +29,11 @@ class EmpresasController < ApplicationController
 
     respond_to do |format|
       if @empresa.save
+<<<<<<< HEAD
         format.html { redirect_to @empresa, notice: "Empresa Cadastrado" }
+=======
+        format.html { redirect_to @empresa, notice: "Empresa criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @empresa }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +46,11 @@ class EmpresasController < ApplicationController
   def update
     respond_to do |format|
       if @empresa.update(empresa_params)
+<<<<<<< HEAD
         format.html { redirect_to @empresa, notice: "Empresa Alterado" }
+=======
+        format.html { redirect_to @empresa, notice: "Empresa atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @empresa }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +63,11 @@ class EmpresasController < ApplicationController
   def destroy
     @empresa.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to empresas_url, notice: "Empresa Excluído" }
+=======
+      format.html { redirect_to empresas_url, notice: "Empresa excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

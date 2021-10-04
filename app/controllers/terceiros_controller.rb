@@ -30,7 +30,11 @@ class TerceirosController < ApplicationController
 
     respond_to do |format|
       if @terceiro.save
+<<<<<<< HEAD
         format.html { redirect_to @terceiro, notice: "Terceiro Cadastrado" }
+=======
+        format.html { redirect_to @terceiro, notice: "Terceiro criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @terceiro }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +47,11 @@ class TerceirosController < ApplicationController
   def update
     respond_to do |format|
       if @terceiro.update(terceiro_params)
+<<<<<<< HEAD
         format.html { redirect_to @terceiro, notice: "Terceiro Alterado" }
+=======
+        format.html { redirect_to @terceiro, notice: "Terceiro atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @terceiro }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +64,11 @@ class TerceirosController < ApplicationController
   def destroy
     @terceiro.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to terceiros_url, notice: "Terceiro Excluído" }
+=======
+      format.html { redirect_to terceiros_url, notice: "Terceiro excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

@@ -104,33 +104,30 @@ class NotaFiscaisController < ApplicationController
       # Bloco Prod
       out_file.puts("H|#{i + 1}||")
 
-      cProd = "000293"
+      cProd = "#{item.produto.codprd_sac}"
       cEAN = ""
-      xProd = "FOGUETE 12X1 [OURO] CX. C/ 6 UNI."
-      nCM = "36041000"
+      xProd = "#{item.produto.descricao_nfe.strip}"
+      nCM = "#{item.produto.ncm.strip}"
       nVE = ""
       cEST = ""
       indEscala = ""
       cNPJFab = ""
       cBenef = ""
       eXTIPI = ""
-      cFOP = "5102"
-      uCom = "UN"
-      qCom = "20.0000"
-      vUnCom = "21.0000"
-      vProd = "420.00"
+      cFOP = "#{item.cfop}"
+      uCom = "#{item.produto.unidade}"
+      qCom = "#{item.quantidade}"
+      vUnCom = "#{item.preco_unitario}"
+      vProd = "#{item.preco_total}"
       cEANTrib = ""
-      uTrib = "UN"
-      qTrib = "20.0000"
-      vUnTrib = "21.000"
-      vFrete = ""
+      uTrib = "#{item.produto.unidade}"
+      qTrib = "#{item.quantidade}"
+      vUnTrib = "#{item.preco_unitario}"
+      vFrete = "#{@nota_fiscal.valor_frete}"
       vSeg = ""
-      vDesc = ""
-      vOutro = ""
+      vDesc = "#{@nota_fiscal.valor_desconto}"
+      vOutro = "#{@nota_fiscal.valor_outras_despesas}"
       indTot = "1"
-      # xPed = ""
-      # nItemPed = ""
-      # nFCI = ""
       out_file.puts("I|#{cProd}|#{cEAN}|#{xProd}|#{nCM}|#{nVE}|#{cEST}|#{indEscala}|#{cNPJFab}|#{cBenef}|#{eXTIPI}|#{cFOP}|#{uCom}|#{qCom}|#{vUnCom}|#{vProd}|#{cEANTrib}|#{uTrib}|#{qTrib}|#{vUnTrib}|#{vFrete}|#{vSeg}|#{vDesc}|#{vOutro}|#{indTot}|")
 
       vTotTrib = "218.31"
@@ -142,16 +139,16 @@ class NotaFiscaisController < ApplicationController
       out_file.puts("N10d|#{orig}|#{cSOSN}|")
 
       cST = "01"
-      vBC = "420.00"
-      pPIS = "0.65"
-      vPIS = "2.73"
+      vBC = "#{item.preco_total}"
+      pPIS = "#{item.aliquota_pis}"
+      vPIS = "#{item.valor_pis}"
       out_file.puts("Q|")
       out_file.puts("Q02|#{cST}|#{vBC}|#{pPIS}|#{vPIS}|")
       
       cST = "01"
-      vBC = "420.00"
-      pCOFINS = "3.0"
-      vCOFINS = "12.60"
+      vBC = "#{item.preco_total}"
+      pCOFINS = "#{item.aliquota_cofins}"
+      vCOFINS = "#{item.valor_cofins}"
       out_file.puts("S|")
       out_file.puts("S02|#{cST}|#{vBC}|#{pCOFINS}|#{vCOFINS}|")
     end
@@ -167,16 +164,16 @@ class NotaFiscaisController < ApplicationController
     vICMSUFRemet = "0.00"
     vBCST = "0.00"
     vST = "0.00"
-    vProd = "420.00"
-    vFrete = "0.00"
+    vProd = "#{@nota_fiscal.valor_produtos}"
+    vFrete = "#{@nota_fiscal.valor_frete}"
     vSeg = "0.00"
-    vDesc = "0.00"
+    vDesc = "#{@nota_fiscal.valor_desconto}"
     vII = "0.00"
     vIPI = "0.00"
     vPIS = "2.73"
     vCOFINS = "12.60"
-    vOutro = "0.00"
-    vNF = "420.00"
+    vOutro = "#{@nota_fiscal.valor_outras_despesas}"
+    vNF =  "#{@nota_fiscal.valor_total_nota}"
     vTotTrib = "218.31"
     out_file.puts("W02|#{vBC}|#{vICMS}|#{vICMSDeson}|#{vFCPUFDest}|#{vICMSUFDest}|#{vICMSUFRemet}|#{vBCST}|#{vST}|#{vProd}|#{vFrete}|#{vSeg}|#{vDesc}|#{vII}|#{vIPI}|#{vPIS}|#{vCOFINS}|#{vOutro}|#{vNF}|#{vTotTrib}|")
     
@@ -184,40 +181,42 @@ class NotaFiscaisController < ApplicationController
     modFrete = "1"
     out_file.puts("X|#{modFrete}|")
 
-    xNome = "RETIRA"
-    iE = ""
-    xEnder = ""
-    xMun = ""
-    uF = "SP"
+    xNome = "#{@nota_fiscal.transportadora.nome}"
+    iE = "#{@nota_fiscal.transportadora.ie}"
+    xEnder = "#{@nota_fiscal.transportadora.endereco}"
+    xMun = "#{@nota_fiscal.transportadora.cidade}"
+    uF = "#{@nota_fiscal.transportadora.uf}"
     out_file.puts("X03|#{xNome}|#{iE}|#{xEnder}|#{xMun}|#{uF}|")
 
     cpf = ""
     out_file.puts("X05|#{cpf}|")
 
-    qVol = "1"
-    esp = "VOLUME"
-    marca = ""
+    qVol = "#{@nota_fiscal.qtd_volume}"
+    esp = "#{@nota_fiscal.especie}"
+    marca = "#{@nota_fiscal.marca}"
     nVol = ""
-    pesoL = "18.000"
-    pesoB = "18.000"
+    pesoL = "#{@nota_fiscal.peso_liquido}"
+    pesoB = "#{@nota_fiscal.peso_bruto}"
     out_file.puts("X26|#{qVol}|#{esp}|#{marca}|#{nVol}|#{pesoL}|#{pesoB}|")
 
     # Bloco Y
     out_file.puts("Y|")
 
-    nFat = "001271"
-    vOrig = "420.00"
+    nFat = "#{@nota_fiscal.numero_nota}"
+    vOrig = "#{@nota_fiscal.valor_total_nota}"
     vDesc = "0.00"
-    vLiq = "420.0"
+    vLiq = "#{@nota_fiscal.valor_total_nota}"
     out_file.puts("Y02|#{nFat}|#{vOrig}|#{vDesc}|#{vLiq}|")
 
-    nDup = "001"
-    cVenc= "2021-08-24"
-    vDup = "420.00"
-    out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
+    @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, i|
+      nDup = "#{faturamento_parcela.duplicata}"
+      cVenc = "#{faturamento_parcela.data_vencimento}"
+      vDup = "#{faturamento_parcela.valor_parcela}"
+      out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
+    end
 
     tPag = "01" 
-    vPag = "420.00" 
+    vPag = "#{@nota_fiscal.valor_total_nota}" 
     cNPJ = "" 
     tBand = "" 
     cAut = "" 
@@ -255,11 +254,15 @@ class NotaFiscaisController < ApplicationController
   # POST /nota_fiscais or /nota_fiscais.json
   def create
     @nota_fiscal = NotaFiscal.new(nota_fiscal_params)
-    @nota_fiscal.empresa_id = @adm.empresa.id
-
+    
     respond_to do |format|
       if @nota_fiscal.save
+<<<<<<< HEAD
         format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota Fiscal Cadastrada" }
+=======
+        salvar_nota_fiscal_transportadora
+        format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota fiscal criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @nota_fiscal }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -272,7 +275,12 @@ class NotaFiscaisController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
+<<<<<<< HEAD
         format.html { redirect_to @nota_fiscal, notice: "Nota Fiscal Alterada" }
+=======
+        salvar_nota_fiscal_transportadora
+        format.html { redirect_to @nota_fiscal, notice: "Nota fiscal atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @nota_fiscal }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -285,7 +293,11 @@ class NotaFiscaisController < ApplicationController
   def destroy
     @nota_fiscal.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to nota_fiscais_url, notice: "Nota Fiscal Excluída" }
+=======
+      format.html { redirect_to nota_fiscais_url, notice: "Nota fiscal excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end
@@ -296,9 +308,24 @@ class NotaFiscaisController < ApplicationController
   def set_nota_fiscal
     @nota_fiscal = NotaFiscal.find(params[:id] || params[:nota_fiscal_id])
   end
+  
+  def salvar_nota_fiscal_transportadora
+    NotaFiscalTransporta.where(nota_fiscal: @nota_fiscal.id).destroy_all
+    if params[:nota_fiscal].has_key?(:transportadora_id)
+      nota_fiscal_transporta = NotaFiscalTransporta.new
+      nota_fiscal_transporta.nota_fiscal_id = @nota_fiscal.id
+      nota_fiscal_transporta.transportadora_id = params[:nota_fiscal][:transportadora_id]
+      nota_fiscal_transporta.quantidade = params[:quantidade]
+      nota_fiscal_transporta.especie = params[:especie]
+      nota_fiscal_transporta.marca = params[:marca]
+      nota_fiscal_transporta.peso_liquido = params[:peso_liquido]
+      nota_fiscal_transporta.peso_bruto = params[:peso_bruto]
+      nota_fiscal_transporta.save
+    end
+  end
 
   # Only allow a list of trusted parameters through.
   def nota_fiscal_params
-    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn)
+    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn)
   end
 end

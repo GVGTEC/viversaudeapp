@@ -18,4 +18,21 @@ namespace :jobs do
     Produto.delete_all
     Cliente.delete_all
   end
+
+  desc "Verifica Detalhes Ncm"
+  task verifica_detalhes_ncm: :environment do
+    require 'net/http'
+
+    codigo_ncm = "36041000"
+
+    uri = URI.parse("https://api.cosmos.bluesoft.com.br/ncms/#{codigo_ncm}/products")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request['User-Agent'] = 'Cosmos-API-Request'
+    request['Content-Type'] = 'application/json'
+    request['X-Cosmos-Token'] = 'J4Tu_5FaHTXM0SaYGUrUjQ'
+    response = http.request(request)
+    puts response.body
+  end
 end

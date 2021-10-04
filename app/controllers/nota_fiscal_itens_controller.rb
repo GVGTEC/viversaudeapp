@@ -49,12 +49,17 @@ class NotaFiscalItensController < ApplicationController
         end
       end
 
-      @nota_fiscal.valor_total_nota = preco_total
+      @nota_fiscal.valor_produtos = preco_total
+      @nota_fiscal.valor_total_nota = calculo_valor_total_nota(preco_total)
       @nota_fiscal.save
     end
 
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: "Nota fiscal item Cadastrado" }
+=======
+      format.html { redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: "Nota fiscal item criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
     end
   end
 
@@ -62,7 +67,11 @@ class NotaFiscalItensController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal_item.update(nota_fiscal_item_params)
+<<<<<<< HEAD
         format.html { redirect_to @nota_fiscal_item, notice: "Nota fiscal item Alterado" }
+=======
+        format.html { redirect_to @nota_fiscal_item, notice: "Nota fiscal item atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @nota_fiscal_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -75,13 +84,20 @@ class NotaFiscalItensController < ApplicationController
   def destroy
     @nota_fiscal_item.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to nota_fiscal_itens_url, notice: "Nota fiscal item Excluído" }
+=======
+      format.html { redirect_to nota_fiscal_itens_url, notice: "Nota fiscal item excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end
 
   private
 
+  def calculo_valor_total_nota(preco_total)
+    preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
+  end
   # Use callbacks to share common setup or constraints between actions.
   def set_nota_fiscal_item
     @nota_fiscal_item = NotaFiscalItem.find(params[:id])

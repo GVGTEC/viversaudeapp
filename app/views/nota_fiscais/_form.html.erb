@@ -62,7 +62,7 @@
     <div class="row form-group">
         <div class="col-md-12">
           <%= f.label :transportadora, 'Transportadora' %>
-          <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
+          <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.transportadora_id, :include_blank => true}, {:class=> 'form-control'} %>
         </div>
     </div>   
     
@@ -84,30 +84,30 @@
     </div>   
 
     <div class="row form-group">
-        <div class="col-md-2">
-          <%= f.label :valor_desconto, 'Quantidade' %>
-          <%= f.text_field :valor_desconto, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= label(:nota_fiscal_transportas, :quantidade, "Quantidade") %>
+        <%= text_field_tag :quantidade, "#{@nota_fiscal.nota_fiscal_transporta.quantidade unless @nota_fiscal.new_record?}", class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :valor_frete, 'Marca' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= label(:nota_fiscal_transportas, :marca, "Marca") %>
+        <%= text_field_tag :marca, "#{@nota_fiscal.nota_fiscal_transporta.marca unless @nota_fiscal.new_record?}", class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :hora_saida, 'Espécie' %>
-          <%= f.text_field :hora_saida, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= label(:nota_fiscal_transportas, :especie, "Espécie") %>
+        <%= text_field_tag :especie, "#{@nota_fiscal.nota_fiscal_transporta.especie unless @nota_fiscal.new_record?}", class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :valor_frete, 'Peso Líquido' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= label(:nota_fiscal_transportas, :peso_liquido, "Peso Liquido") %>
+        <%= text_field_tag :peso_liquido, "#{@nota_fiscal.nota_fiscal_transporta.peso_liquido unless @nota_fiscal.new_record?}", class: "form-control" %>
+      </div>
 
-        <div class="col-md-2">
-          <%= f.label :valor_frete, 'Peso Bruto' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
+      <div class="col-md-2">
+        <%= label(:nota_fiscal_transportas, :peso_bruto, "Peso Bruto") %>
+        <%= text_field_tag :peso_bruto, "#{@nota_fiscal.nota_fiscal_transporta.peso_bruto unless @nota_fiscal.new_record?}", class: "form-control" %>
+      </div>
     </div>    
 
     <div class="row form-group">

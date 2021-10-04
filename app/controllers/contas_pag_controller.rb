@@ -31,7 +31,11 @@ class ContasPagController < ApplicationController
     respond_to do |format|
       if @contas_pag.save
         save_contas_pagar_parcelas
+<<<<<<< HEAD
         format.html { redirect_to @contas_pag, notice: "Contas pagar Cadastrado" }
+=======
+        format.html { redirect_to @contas_pag, notice: "Contas pagar criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @contas_pagar }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +49,11 @@ class ContasPagController < ApplicationController
     respond_to do |format|
       if @contas_pag.update(contas_pagar_params)
         save_contas_pagar_parcelas
+<<<<<<< HEAD
         format.html { redirect_to @contas_pag, notice: "Contas pagar Alterado" }
+=======
+        format.html { redirect_to @contas_pag, notice: "Contas pagar atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @contas_pagar }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +66,11 @@ class ContasPagController < ApplicationController
   def destroy
     @contas_pag.destroy
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to contas_pagar_index_url, notice: "Contas pagar Excluído" }
+=======
+      format.html { redirect_to contas_pagar_index_url, notice: "Contas pagar excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

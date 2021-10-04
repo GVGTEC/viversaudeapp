@@ -17,7 +17,6 @@ class NotaFiscalDuplicatasController < ApplicationController
   rescue => exception
     flash[:error] = "Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente."
     redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_faturamento_parcelas/new"
-    nil
   end
 
   private
@@ -33,7 +32,7 @@ class NotaFiscalDuplicatasController < ApplicationController
       params[:nota_fiscal][:nota_fiscal_faturamento_parcelas].each do |faturamento_parcela|
         @nota_fiscal_faturamento_parcela = NotaFiscalFaturamentoParcela.new
         @nota_fiscal_faturamento_parcela.nota_fiscal = @nota_fiscal
-        @nota_fiscal_faturamento_parcela.duplicata = "xxx"
+        @nota_fiscal_faturamento_parcela.duplicata = "#{@nota_fiscal.numero_nota}-#{rand(1..9)}"
         @nota_fiscal_faturamento_parcela.prazo_pagamento = faturamento_parcela[:prazo_pagamento]
         @nota_fiscal_faturamento_parcela.data_vencimento = faturamento_parcela[:data_vencimento]
         @nota_fiscal_faturamento_parcela.valor_parcela = faturamento_parcela[:valor_parcela]
@@ -42,7 +41,11 @@ class NotaFiscalDuplicatasController < ApplicationController
     end
 
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to nota_fiscais_path, notice: "Nota fiscal item Cadastrado" }
+=======
+      format.html { redirect_to nota_fiscais_path, notice: "Nota fiscal Item criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
     end
   end
 

@@ -31,7 +31,11 @@ class TransportadorasController < ApplicationController
     respond_to do |format|
       if @transportadora.save
         salvar_contatos
+<<<<<<< HEAD
         format.html { redirect_to @transportadora, notice: "Transportadora Cadastrada" }
+=======
+        format.html { redirect_to @transportadora, notice: "Transportadora criado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @transportadora }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +49,11 @@ class TransportadorasController < ApplicationController
     respond_to do |format|
       if @transportadora.update(transportadora_params)
         salvar_contatos
+<<<<<<< HEAD
         format.html { redirect_to @transportadora, notice: "Transportadora Alterada" }
+=======
+        format.html { redirect_to @transportadora, notice: "Transportadora atualizado com sucesso." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @transportadora }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +67,11 @@ class TransportadorasController < ApplicationController
     @transportadora.destroy
     salvar_contatos
     respond_to do |format|
+<<<<<<< HEAD
       format.html { redirect_to transportadoras_url, notice: "Transportadora Excluída" }
+=======
+      format.html { redirect_to transportadoras_url, notice: "Transportadora excluído com sucesso.." }
+>>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

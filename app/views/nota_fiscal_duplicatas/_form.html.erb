@@ -99,7 +99,15 @@
     });
   });
 
+  $(document).on('keyup', '[data-behavior~=np_pagamento]', function(event) {
+    calculaPrazoParcelas()
+  });
+
   $(document).on('keyup', '[data-behavior~=quanto_tempo]', function(event) {
+    calculaPrazoParcelas()
+  });
+
+  var calculaPrazoParcelas = () =>{
     const qtd_parcelas = parseInt($(`#nota_fiscal_numero_parcelas_pagamento`).val())
     const valor_total_nota = <%= @nota_fiscal.valor_total_nota %>
     const quanto_tempo = parseInt($(`#nota_fiscal_quanto_tempo`).val())
@@ -136,5 +144,5 @@
         );
       }
     }
-  });
+  }
 </script>
