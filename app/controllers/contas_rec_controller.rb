@@ -31,11 +31,7 @@ class ContasRecController < ApplicationController
     respond_to do |format|
       if @contas_rec.save
         save_contas_rec_parcelas
-<<<<<<< HEAD
         format.html { redirect_to @contas_rec, notice: "Contas rec Cadastrado" }
-=======
-        format.html { redirect_to @contas_rec, notice: "Contas rec criado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @contas_rec }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -49,11 +45,7 @@ class ContasRecController < ApplicationController
     respond_to do |format|
       if @contas_rec.update(contas_rec_params)
         save_contas_rec_parcelas
-<<<<<<< HEAD
         format.html { redirect_to @contas_rec, notice: "Contas rec Alterado" }
-=======
-        format.html { redirect_to @contas_rec, notice: "Contas rec atualizado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @contas_rec }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -66,11 +58,7 @@ class ContasRecController < ApplicationController
   def destroy
     @contas_rec.destroy
     respond_to do |format|
-<<<<<<< HEAD
       format.html { redirect_to contas_rec_index_url, notice: "Contas rec Excluído" }
-=======
-      format.html { redirect_to contas_rec_index_url, notice: "Contas rec excluído com sucesso.." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

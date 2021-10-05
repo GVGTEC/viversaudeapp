@@ -30,11 +30,7 @@ class VendedoresController < ApplicationController
 
     respond_to do |format|
       if @vendedor.save
-<<<<<<< HEAD
         format.html { redirect_to @vendedor, notice: "Vendedor Cadastrado" }
-=======
-        format.html { redirect_to @vendedor, notice: "Vendedor criado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @vendedor }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,11 +43,7 @@ class VendedoresController < ApplicationController
   def update
     respond_to do |format|
       if @vendedor.update(vendedor_params)
-<<<<<<< HEAD
         format.html { redirect_to @vendedor, notice: "Vendedor Alterado" }
-=======
-        format.html { redirect_to @vendedor, notice: "Vendedor atualizado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @vendedor }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,11 +56,7 @@ class VendedoresController < ApplicationController
   def destroy
     @vendedor.destroy
     respond_to do |format|
-<<<<<<< HEAD
       format.html { redirect_to vendedores_url, notice: "Vendedor Excluído" }
-=======
-      format.html { redirect_to vendedores_url, notice: "Vendedor excluído com sucesso.." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

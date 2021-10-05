@@ -30,11 +30,7 @@ class PlanoContasController < ApplicationController
 
     respond_to do |format|
       if @plano_conta.save
-<<<<<<< HEAD
         format.html { redirect_to @plano_conta, notice: "Plano conta Cadastrado" }
-=======
-        format.html { redirect_to @plano_conta, notice: "Plano conta criado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @plano_conta }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,11 +43,7 @@ class PlanoContasController < ApplicationController
   def update
     respond_to do |format|
       if @plano_conta.update(plano_conta_params)
-<<<<<<< HEAD
         format.html { redirect_to @plano_conta, notice: "Plano conta Alterado" }
-=======
-        format.html { redirect_to @plano_conta, notice: "Plano conta atualizado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @plano_conta }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,11 +56,7 @@ class PlanoContasController < ApplicationController
   def destroy
     @plano_conta.destroy
     respond_to do |format|
-<<<<<<< HEAD
       format.html { redirect_to plano_contas_url, notice: "Plano conta Excluído" }
-=======
-      format.html { redirect_to plano_contas_url, notice: "Plano conta excluído com sucesso.." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

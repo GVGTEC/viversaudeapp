@@ -30,11 +30,7 @@ class LocalizacaoEstoquesController < ApplicationController
 
     respond_to do |format|
       if @localizacao_estoque.save
-<<<<<<< HEAD
         format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque Cadastrado" }
-=======
-        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque criado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @localizacao_estoque }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -47,11 +43,7 @@ class LocalizacaoEstoquesController < ApplicationController
   def update
     respond_to do |format|
       if @localizacao_estoque.update(localizacao_estoque_params)
-<<<<<<< HEAD
         format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque Alterado" }
-=======
-        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque atualizado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @localizacao_estoque }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,11 +56,7 @@ class LocalizacaoEstoquesController < ApplicationController
   def destroy
     @localizacao_estoque.destroy
     respond_to do |format|
-<<<<<<< HEAD
       format.html { redirect_to localizacao_estoques_url, notice: "Localizacao estoque Excluído" }
-=======
-      format.html { redirect_to localizacao_estoques_url, notice: "Localizacao estoque excluído com sucesso.." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end

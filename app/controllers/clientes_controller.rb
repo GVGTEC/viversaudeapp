@@ -138,11 +138,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.save
         salvar_contatos
-<<<<<<< HEAD
         format.html { redirect_to @cliente, notice: "Cliente Cadastrado" }
-=======
-        format.html { redirect_to @cliente, notice: "Cliente criado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :created, location: @cliente }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -156,11 +152,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.update(cliente_params)
         salvar_contatos
-<<<<<<< HEAD
         format.html { redirect_to @cliente, notice: "Cliente Alterado" }
-=======
-        format.html { redirect_to @cliente, notice: "Cliente atualizado com sucesso." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
         format.json { render :show, status: :ok, location: @cliente }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -174,11 +166,7 @@ class ClientesController < ApplicationController
     @cliente.destroy
     salvar_contatos
     respond_to do |format|
-<<<<<<< HEAD
       format.html { redirect_to clientes_url, notice: "Cliente Excluído" }
-=======
-      format.html { redirect_to clientes_url, notice: "Cliente excluído com sucesso.." }
->>>>>>> 42141527517154d9ef483fb2aa8ad831f8d3e24e
       format.json { head :no_content }
     end
   end
