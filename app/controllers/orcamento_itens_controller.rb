@@ -1,5 +1,6 @@
 class OrcamentoItensController < ApplicationController
   before_action :set_orcamento_item, only: %i[ show edit update destroy ]
+  before_action :set_orcamento
 
   # GET /orcamento_itens or /orcamento_itens.json
   def index
@@ -62,6 +63,9 @@ class OrcamentoItensController < ApplicationController
       @orcamento_item = OrcamentoItem.find(params[:id])
     end
 
+    def set_orcamento
+      @orcamento = Orcamento.find(params[:orcamento_id])
+    end
     # Only allow a list of trusted parameters through.
     def orcamento_item_params
       params.require(:orcamento_item).permit(:orcamento_id, :produto_id, :quantidade, :preco_unitario, :preco_total)
