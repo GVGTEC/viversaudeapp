@@ -7,7 +7,7 @@ class EstoquesController < ApplicationController
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = {page: params[:page] || 1, per_page: 10}
     @estoques = @estoques.paginate(options)
   end
 
@@ -23,15 +23,15 @@ class EstoquesController < ApplicationController
         importar_csv
       else
         flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
-        redirect_to "/importar_estoque/importar"
+        redirect_to "/importar_estoques"
         return
       end
   
       flash[:sucesso] = "Estoques importados com sucesso"
-      redirect_to "/importar_estoque/importar"
+      redirect_to estoques_path
     rescue => exception
       flash[:error] = exception
-      redirect_to "/importar_estoque/importar"
+      redirect_to "/importar_estoques"
       return
     end
   end
@@ -61,12 +61,19 @@ class EstoquesController < ApplicationController
     begin
       estoque = Estoque.new
       estoque.codprd_sac = linha[codprd_sac]
+      
+      if Produto.find_by(codprd_sac: linha[codprd_sac]).present?
+        estoque.produto_id = Produto.find_by(codprd_sac: linha[codprd_sac]).id
+      end
+
       estoque.lote = linha[lote]
 
-      begin
-        estoque.fornecedor_id = Fornecedor.find(linha[fornecedor_id].to_i).id
-      rescue 
-        estoque.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
+      if linha[fornecedor_id].to_i > 0
+        begin
+          estoque.fornecedor_id = Fornecedor.find(linha[fornecedor_id].to_i).id
+        rescue 
+          estoque.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
+        end
       end
 
      # estoque.quantidade = linha[quantidade]
@@ -76,9 +83,11 @@ class EstoquesController < ApplicationController
       estoque.preco_custo_reposicao = separate_comma(linha[preco_custo_reposicao].to_i)
       estoque.data_reposicao = linha[data_reposicao]
       estoque.data_validade = linha[data_validade]
+      estoque.empresa_id = @adm.empresa.id
 
       estoque.save
     rescue Exception => err
+      debugger
       raise err
       Rails.logger.error err.message
     end

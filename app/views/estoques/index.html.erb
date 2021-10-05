@@ -33,7 +33,7 @@
 
     <tbody>
       <%= content_tag_for(:tr, @estoques) do |estoque| %>
-        <td><%= estoque.fornecedor.nome %></td>
+        <td><%= estoque.fornecedor.nome rescue ""%></td>
         <td><%= estoque.produto.descricao %></td>
         <td><%= estoque.lote %></td>
         <td><%= estoque.documento %></td>

@@ -71,9 +71,13 @@ class FornecedoresController < ApplicationController
     empresa_governo = 19
     
     begin
-      #debugger
-      fornecedor = Fornecedor.new
-      fornecedor.id = linha[id].to_i
+      begin
+        fornecedor = Fornecedor.find(linha[id].to_i)
+      rescue => exception
+        fornecedor = Fornecedor.new
+        fornecedor.id = linha[id].to_i
+      end
+
       fornecedor.pessoa = linha[pessoa]
       fornecedor.nome = linha[nome]
       fornecedor.cpf = linha[cpf] if linha[cpf].to_i != 0
@@ -89,7 +93,8 @@ class FornecedoresController < ApplicationController
       fornecedor.telefone_alternativo = linha[telefone_alternativo] 
       fornecedor.telefone_nf = linha[telefone_nf] 
       fornecedor.email = linha[email] 
-      fornecedor.codcidade_ibge = linha[codcidade_ibge] 
+      fornecedor.codcidade_ibge = linha[codcidade_ibge]
+      fornecedor.empresa_id = @adm.empresa.id
       fornecedor.save
     rescue Exception => err
       raise err
