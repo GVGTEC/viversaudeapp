@@ -1,0 +1,28 @@
+<h1>Alíquotas ICMS</h1>
+
+<div class="page-header">
+  <%= link_to icms_index_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_icms_path(@icms), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h1>Mostrar</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Estado:</dt>
+  <dd><%= @icms.estado %></dd>
+  <dt>% ICMS Interestadual:</dt>
+  <dd><%= @icms.aliquota_icms %></dd>
+  <dt>% ICMS Destino:</dt>
+  <dd><%= @icms.aliquota_icms_st %></dd>
+  <dt>% MVA:</dt>
+  <dd><%= @icms.mva_icms_st %></dd>
+  <dt>Recolher FCP</dt>
+  <dd><%= @icms.fcp_sn %></dd>
+  <dt>% FCP</dt>
+  <dd><%= @icms.fcp_pc %></dd>
+</dl>

@@ -14,6 +14,7 @@ class ClientesController < ApplicationController
 
   def importar
     begin
+      :debugger
       if params[:arquivo].blank?
         flash[:error] = "Selecione um arquivo .CSV"
         redirect_to "/clientes"
@@ -137,7 +138,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.save
         salvar_contatos
-        format.html { redirect_to @cliente, notice: "Cliente criado com sucesso." }
+        format.html { redirect_to @cliente, notice: "Cliente Cadastrado" }
         format.json { render :show, status: :created, location: @cliente }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -151,7 +152,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.update(cliente_params)
         salvar_contatos
-        format.html { redirect_to @cliente, notice: "Cliente atualizado com sucesso." }
+        format.html { redirect_to @cliente, notice: "Cliente Alterado" }
         format.json { render :show, status: :ok, location: @cliente }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -165,7 +166,7 @@ class ClientesController < ApplicationController
     @cliente.destroy
     salvar_contatos
     respond_to do |format|
-      format.html { redirect_to clientes_url, notice: "Cliente excluído com sucesso.." }
+      format.html { redirect_to clientes_url, notice: "Cliente Excluído" }
       format.json { head :no_content }
     end
   end

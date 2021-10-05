@@ -27,5 +27,4 @@ class LoginController < ApplicationController
     cookies[:admin_viver_saude] = nil
     redirect_to login_path
   end
-
 end

@@ -29,7 +29,7 @@ class AdministradoresController < ApplicationController
 
     respond_to do |format|
       if @administrador.save
-        format.html { redirect_to @administrador, notice: "Administrador criado com sucesso." }
+        format.html { redirect_to @administrador, notice: "Administrador Cadastrado" }
         format.json { render :show, status: :created, location: @administrador }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +42,7 @@ class AdministradoresController < ApplicationController
   def update
     respond_to do |format|
       if @administrador.update(administrador_params)
-        format.html { redirect_to @administrador, notice: "Administrador atualizado com sucesso." }
+        format.html { redirect_to @administrador, notice: "Administrador Alterado" }
         format.json { render :show, status: :ok, location: @administrador }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +55,7 @@ class AdministradoresController < ApplicationController
   def destroy
     @administrador.destroy
     respond_to do |format|
-      format.html { redirect_to administradores_url, notice: "Administrador excluído com sucesso.." }
+      format.html { redirect_to administradores_url, notice: "Administrador Excluído" }
       format.json { head :no_content }
     end
   end

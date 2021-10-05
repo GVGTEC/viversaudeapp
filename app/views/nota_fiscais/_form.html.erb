@@ -45,7 +45,10 @@
     <div class="row form-group input-cliente" style="display:none;">
         <div class="col-md-12">
           <%= f.label :cliente, 'Cliente' %>
-          <%= f.select :cliente_id, Cliente.all.reorder("nome asc").collect { |cliente| [cliente.nome, cliente.id] }, {:selected => @nota_fiscal.cliente_id, :include_blank => true}, {:class=> 'form-control'} %>
+          <%= f.select :cliente_id,
+          Cliente.all.reorder("nome asc").collect {|cliente| [cliente.nome, cliente.id]},
+          {:selected => @nota_fiscal.cliente_id, :include_blank => true},
+          {:class=> 'form-control'} %>
         </div>
     </div>       
 
@@ -124,7 +127,7 @@
         </div>
 
         <div class="col-sm-2">        
-          <%= f.label :numero_pedido_compra, 'Número Pedido Compra' %>
+          <%= f.label :numero_pedido_compra, 'Nº Pedido Compra' %>
           <%= f.text_field :numero_pedido_compra, class: "form-control" %>
         </div>
       </div>           
@@ -149,8 +152,6 @@ $(document).ready(function() {
 
   buscaCfop()
 });
-
-
 
 const buscaCfop = () => {
   let cfop_id = $("#nota_fiscal_cfop_id").val() 

@@ -42,7 +42,7 @@
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
         <td><%= produto.id %></td>
-        <td><%= produto.descricao_nfe %></td>
+        <td><%= produto.descricao %></td>
         <td><%= produto.ncm %></td>
         <td><%= produto.codprd_sac %></td>
         <td><%= number_to_currency(produto.preco_venda) %></td>

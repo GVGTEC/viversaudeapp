@@ -4,6 +4,7 @@ class OrcamentosController < ApplicationController
   # GET /orcamentos or /orcamentos.json
   def index
     @orcamentos = Orcamento.all
+    #@orcamentos = Orcamento.where(empresa_id: @adm.empresa.id)   O CAMPO EMPRESA_ID AINDA NÃO EXISTE NA TABELA DE ORÇAMENTO
 
     # paginação na view index (lista)
     options = {page: params[:page] || 1, per_page: 50} 
@@ -26,10 +27,12 @@ class OrcamentosController < ApplicationController
   # POST /orcamentos or /orcamentos.json
   def create
     @orcamento = Orcamento.new(orcamento_params)
+    #@orcamento.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @orcamento.save
-        format.html { redirect_to @orcamento, notice: "Orcamento was successfully created." }
+        #format.html { redirect_to @orcamento, notice: "Orçamento Cadastrado" }
+        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: "Orçamento Cadastrado" }
         format.json { render :show, status: :created, location: @orcamento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +45,7 @@ class OrcamentosController < ApplicationController
   def update
     respond_to do |format|
       if @orcamento.update(orcamento_params)
-        format.html { redirect_to @orcamento, notice: "Orcamento was successfully updated." }
+        format.html { redirect_to @orcamento, notice: "Orçamento Alterado" }
         format.json { render :show, status: :ok, location: @orcamento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,7 +58,7 @@ class OrcamentosController < ApplicationController
   def destroy
     @orcamento.destroy
     respond_to do |format|
-      format.html { redirect_to orcamentos_url, notice: "Orcamento was successfully destroyed." }
+      format.html { redirect_to orcamentos_url, notice: "Orcamento Excluído" }
       format.json { head :no_content }
     end
   end
