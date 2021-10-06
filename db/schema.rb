@@ -425,7 +425,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
   end
 
   create_table "orcamento_itens", force: :cascade do |t|
-    #t.bigint "empresa_id"
     t.bigint "orcamento_id"
     t.bigint "produto_id"
     t.float "quantidade"
@@ -438,7 +437,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
   end
 
   create_table "orcamentos", force: :cascade do |t|
-    #t.bigint "empresa_id"
     t.bigint "cliente_id"
     t.bigint "vendedor_id"
     t.datetime "data_emissao"

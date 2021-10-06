@@ -32,7 +32,7 @@ class NotaFiscalDuplicatasController < ApplicationController
       params[:nota_fiscal][:nota_fiscal_faturamento_parcelas].each do |faturamento_parcela|
         @nota_fiscal_faturamento_parcela = NotaFiscalFaturamentoParcela.new
         @nota_fiscal_faturamento_parcela.nota_fiscal = @nota_fiscal
-        @nota_fiscal_faturamento_parcela.duplicata = "#{@nota_fiscal.numero_nota}-#{rand(1..9)}"
+        @nota_fiscal_faturamento_parcela.duplicata = "#{rand(1..999)}"
         @nota_fiscal_faturamento_parcela.prazo_pagamento = faturamento_parcela[:prazo_pagamento]
         @nota_fiscal_faturamento_parcela.data_vencimento = faturamento_parcela[:data_vencimento]
         @nota_fiscal_faturamento_parcela.valor_parcela = faturamento_parcela[:valor_parcela]

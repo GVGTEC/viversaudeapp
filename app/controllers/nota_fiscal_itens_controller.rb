@@ -40,6 +40,8 @@ class NotaFiscalItensController < ApplicationController
             @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].match(/\d+/)[0]
             @nota_fiscal_item.save
 
+            calculo_imposto_item
+
             preco_total += nota_fiscal_item[:preco_total].match(/\d+/)[0].to_i
           rescue => exception
             flash[:error] = "Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente."
@@ -52,6 +54,8 @@ class NotaFiscalItensController < ApplicationController
       @nota_fiscal.valor_produtos = preco_total
       @nota_fiscal.valor_total_nota = calculo_valor_total_nota(preco_total)
       @nota_fiscal.save
+
+      calculo_imposto_nota
     end
 
     respond_to do |format|
@@ -83,9 +87,6 @@ class NotaFiscalItensController < ApplicationController
 
   private
 
-  def calculo_valor_total_nota(preco_total)
-    preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
-  end
   # Use callbacks to share common setup or constraints between actions.
   def set_nota_fiscal_item
     @nota_fiscal_item = NotaFiscalItem.find(params[:id])
@@ -93,6 +94,84 @@ class NotaFiscalItensController < ApplicationController
 
   def set_nota_fiscal
     @nota_fiscal = NotaFiscal.find(params[:nota_fiscal_id])
+  end
+
+  def calculo_valor_total_nota(preco_total)
+    #preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
+    preco_total
+  end
+
+  def calculo_imposto_item
+    #@nota_fiscal_item.cst = cst_csosn
+    @nota_fiscal_item.aliquota_icms = Icms.find_by(estado: @nota_fiscal.cliente.uf).aliquota_icms
+    @nota_fiscal_item.valor_bc_icms = @nota_fiscal_item.preco_total
+    @nota_fiscal_item.valor_icms = @nota_fiscal_item.preco_total * @nota_fiscal_item.aliquota_icms / 100
+
+    @nota_fiscal_item.aliquota_icms_st = 0
+    @nota_fiscal_item.valor_bc_icms_st = 0
+    @nota_fiscal_item.valor_icms_st = 0
+      
+    @nota_fiscal_item.aliquota_ipi = 0
+    @nota_fiscal_item.valor_ipi = 0
+
+    @nota_fiscal_item.aliquota_pis = @adm.empresa.aliquota_pis
+    @nota_fiscal_item.valor_pis = @nota_fiscal_item.preco_total * @nota_fiscal_item.aliquota_pis / 100
+
+    @nota_fiscal_item.aliquota_cofins = @adm.empresa.aliquota_cofins
+    @nota_fiscal_item.valor_cofins = @nota_fiscal_item.preco_total * @nota_fiscal_item.aliquota_cofins / 100
+
+    @nota_fiscal_item.aliquota_difal = 0
+    @nota_fiscal_item.valor_difal = 0
+
+    @nota_fiscal_item.valor_fcp = 0
+    @nota_fiscal_item.aliquota_fcp = 0
+    @nota_fiscal_item.save
+  end
+
+  def cst_csosn
+    " 00 - Tributada integralmente
+      10 - Tributada e com cobrança do ICMS por substituição tributária
+      20 - Com redução da BC
+      30 - Isenta / não tributada e com cobrança do ICMS por substituição tributária
+      40 - Isenta
+      41 - Não tributada
+      50 - Com suspensão
+      51 - Com diferimento
+      60 - ICMS cobrado anteriormente por substituição tributária
+      70 - Com redução da BC e cobrança do ICMS por substituição tributária
+      90 - Outras
+    "
+
+    " 101 - Tributada pelo Simples Nacional com permissão de crédito
+      102 - Tributada pelo Simples Nacional sem permissão de crédito
+      103 - Isenção do ICMS no Simples Nacional para faixa de receita bruta
+      201 - Tributada pelo Simples Nacional com permissão de crédito e com cobrança do ICMS
+    por substituição tributária
+      202 - Tributada pelo Simples Nacional sem permissão de crédito e com cobrança do ICMS
+    por substituição tributária
+      203 - Isenção do ICMS no Simples Nacional para faixa de receita bruta e com cobrança do
+    ICMS por substituição tributária
+      300 - Imune
+      400 - Não tributada pelo Simples Nacional
+      500 - ICMS cobrado anteriormente por substituição tributária (substituído) ou por
+    antecipação
+      900 - Outros
+    "
+  end
+
+  def calculo_imposto_nota
+    nota_fiscal_imposto = NotaFiscalImposto.new
+    nota_fiscal_imposto.nota_fiscal_id = @nota_fiscal.id
+    nota_fiscal_imposto.valor_bc_icms = @nota_fiscal.nota_fiscal_itens.sum(:valor_bc_icms)
+    nota_fiscal_imposto.valor_icms = @nota_fiscal.nota_fiscal_itens.sum(:valor_icms)
+    nota_fiscal_imposto.valor_bc_icms_st = @nota_fiscal.nota_fiscal_itens.sum(:valor_bc_icms_st)
+    nota_fiscal_imposto.valor_icms_st = @nota_fiscal.nota_fiscal_itens.sum(:valor_icms_st)
+    nota_fiscal_imposto.valor_pis = @nota_fiscal.nota_fiscal_itens.sum(:valor_pis)
+    nota_fiscal_imposto.valor_cofins = @nota_fiscal.nota_fiscal_itens.sum(:valor_cofins)
+    nota_fiscal_imposto.valor_ipi = @nota_fiscal.nota_fiscal_itens.sum(:valor_ipi)
+    nota_fiscal_imposto.valor_difal = @nota_fiscal.nota_fiscal_itens.sum(:valor_difal)
+    nota_fiscal_imposto.valor_fcp = @nota_fiscal.nota_fiscal_itens.sum(:valor_fcp)
+    nota_fiscal_imposto.save
   end
 
   # Only allow a list of trusted parameters through.

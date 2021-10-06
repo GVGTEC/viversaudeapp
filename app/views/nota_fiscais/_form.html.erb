@@ -86,27 +86,27 @@
     <div class="row form-group">
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :quantidade, "Quantidade") %>
-        <%= text_field_tag :quantidade, "#{@nota_fiscal.nota_fiscal_transporta.quantidade unless @nota_fiscal.new_record?}", class: "form-control" %>
+        <%= text_field_tag :quantidade, "#{@nota_fiscal.nota_fiscal_transporta.quantidade if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
 
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :marca, "Marca") %>
-        <%= text_field_tag :marca, "#{@nota_fiscal.nota_fiscal_transporta.marca unless @nota_fiscal.new_record?}", class: "form-control" %>
+        <%= text_field_tag :marca, "#{@nota_fiscal.nota_fiscal_transporta.marca if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
 
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :especie, "Espécie") %>
-        <%= text_field_tag :especie, "#{@nota_fiscal.nota_fiscal_transporta.especie unless @nota_fiscal.new_record?}", class: "form-control" %>
+        <%= text_field_tag :especie, "#{@nota_fiscal.nota_fiscal_transporta.especie if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
 
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :peso_liquido, "Peso Liquido") %>
-        <%= text_field_tag :peso_liquido, "#{@nota_fiscal.nota_fiscal_transporta.peso_liquido unless @nota_fiscal.new_record?}", class: "form-control" %>
+        <%= text_field_tag :peso_liquido, "#{@nota_fiscal.nota_fiscal_transporta.peso_liquido if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
 
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :peso_bruto, "Peso Bruto") %>
-        <%= text_field_tag :peso_bruto, "#{@nota_fiscal.nota_fiscal_transporta.peso_bruto unless @nota_fiscal.new_record?}", class: "form-control" %>
+        <%= text_field_tag :peso_bruto, "#{@nota_fiscal.nota_fiscal_transporta.peso_bruto if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
     </div>    
 

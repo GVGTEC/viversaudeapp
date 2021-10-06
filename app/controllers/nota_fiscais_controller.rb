@@ -191,12 +191,12 @@ class NotaFiscaisController < ApplicationController
     cpf = ""
     out_file.puts("X05|#{cpf}|")
 
-    qVol = "#{@nota_fiscal.qtd_volume}"
-    esp = "#{@nota_fiscal.especie}"
-    marca = "#{@nota_fiscal.marca}"
+    qVol = "#{@nota_fiscal.nota_fiscal_transporta.quantidade}"
+    esp = "#{@nota_fiscal.nota_fiscal_transporta.especie}"
+    marca = "#{@nota_fiscal.nota_fiscal_transporta.marca}"
     nVol = ""
-    pesoL = "#{@nota_fiscal.peso_liquido}"
-    pesoB = "#{@nota_fiscal.peso_bruto}"
+    pesoL = "#{@nota_fiscal.nota_fiscal_transporta.peso_liquido}"
+    pesoB = "#{@nota_fiscal.nota_fiscal_transporta.peso_bruto}"
     out_file.puts("X26|#{qVol}|#{esp}|#{marca}|#{nVol}|#{pesoL}|#{pesoB}|")
 
     # Bloco Y
@@ -257,6 +257,7 @@ class NotaFiscaisController < ApplicationController
     
     respond_to do |format|
       if @nota_fiscal.save
+        salvar_nota_fiscal_transportadora
         format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: "Nota Fiscal Cadastrada" }
         format.json { render :show, status: :created, location: @nota_fiscal }
       else
@@ -270,6 +271,7 @@ class NotaFiscaisController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
+        salvar_nota_fiscal_transportadora
         format.html { redirect_to @nota_fiscal, notice: "Nota Fiscal Alterada" }
         format.json { render :show, status: :ok, location: @nota_fiscal }
       else
