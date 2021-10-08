@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_02_231523) do
+ActiveRecord::Schema.define(version: 2021_10_07_213954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.string "telefone_alternativo"
     t.string "telefone_nf"
     t.string "email"
-    t.string "codcidade_ibge"
+    t.string "codcidade_ibgezz"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
@@ -306,7 +306,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.string "chave_acesso_nfe"
     t.string "nota_cancelada_sn"
     t.string "distancia_parcelas"
-    t.string "pagar_frete"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
@@ -425,7 +424,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
   end
 
   create_table "orcamento_itens", force: :cascade do |t|
-    #t.bigint "empresa_id"
     t.bigint "orcamento_id"
     t.bigint "produto_id"
     t.float "quantidade"
@@ -438,7 +436,6 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
   end
 
   create_table "orcamentos", force: :cascade do |t|
-    #t.bigint "empresa_id"
     t.bigint "cliente_id"
     t.bigint "vendedor_id"
     t.datetime "data_emissao"
@@ -494,6 +491,7 @@ ActiveRecord::Schema.define(version: 2021_10_02_231523) do
     t.float "estoque_minimo", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "origem"
     t.index ["empresa_id"], name: "index_produtos_on_empresa_id"
     t.index ["fornecedor_id"], name: "index_produtos_on_fornecedor_id"
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
