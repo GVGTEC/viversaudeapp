@@ -1,13 +1,13 @@
 class LocalizacaoEstoquesController < ApplicationController
-  before_action :set_localizacao_estoque, only: %i[ show edit update destroy ]
+  before_action :set_localizacao_estoque, only: %i[show edit update destroy]
 
   # GET /localizacao_estoques or /localizacao_estoques.json
   def index
     @localizacao_estoques = LocalizacaoEstoque.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @localizacao_estoques = @localizacao_estoques.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @localizacao_estoques = @localizacao_estoques.paginate(options)
   end
 
   # GET /localizacao_estoques/1 or /localizacao_estoques/1.json
@@ -62,13 +62,14 @@ class LocalizacaoEstoquesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_localizacao_estoque
-      @localizacao_estoque = LocalizacaoEstoque.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def localizacao_estoque_params
-      params.require(:localizacao_estoque).permit(:local, :observacao)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_localizacao_estoque
+    @localizacao_estoque = LocalizacaoEstoque.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def localizacao_estoque_params
+    params.require(:localizacao_estoque).permit(:local, :observacao)
+  end
 end
