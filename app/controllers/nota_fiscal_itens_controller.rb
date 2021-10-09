@@ -43,10 +43,9 @@ class NotaFiscalItensController < ApplicationController
             calculo_imposto_item
 
             preco_total += nota_fiscal_item[:preco_total].match(/\d+/)[0].to_i
-          rescue => exception
+          rescue
             flash[:error] = "Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente."
             redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
-            return
           end
         end
       end
@@ -97,12 +96,12 @@ class NotaFiscalItensController < ApplicationController
   end
 
   def calculo_valor_total_nota(preco_total)
-    #preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
+    # preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
     preco_total
   end
 
   def calculo_imposto_item
-    #@nota_fiscal_item.cst = cst_csosn
+    # @nota_fiscal_item.cst = cst_csosn
     @nota_fiscal_item.aliquota_icms = Icms.find_by(estado: @nota_fiscal.cliente.uf).aliquota_icms
     @nota_fiscal_item.valor_bc_icms = @nota_fiscal_item.preco_total
     @nota_fiscal_item.valor_icms = @nota_fiscal_item.preco_total * @nota_fiscal_item.aliquota_icms / 100
@@ -110,7 +109,7 @@ class NotaFiscalItensController < ApplicationController
     @nota_fiscal_item.aliquota_icms_st = 0
     @nota_fiscal_item.valor_bc_icms_st = 0
     @nota_fiscal_item.valor_icms_st = 0
-      
+
     @nota_fiscal_item.aliquota_ipi = 0
     @nota_fiscal_item.valor_ipi = 0
 
