@@ -1,5 +1,5 @@
 class IcmsController < ApplicationController
-  before_action :set_icms, only: %i[ show edit update destroy ]
+  before_action :set_icms, only: %i[show edit update destroy]
 
   # GET /icms or /icms.json
   def index
@@ -57,13 +57,14 @@ class IcmsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_icms
-      @icms = Icms.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def icms_params
-      params.require(:icms).permit(:estado, :aliquota_icms, :aliquota_icms_st, :mva_icms_st, :fcp_sn, :fcp_pc)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_icms
+    @icms = Icms.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def icms_params
+    params.require(:icms).permit(:estado, :aliquota_icms, :aliquota_icms_st, :mva_icms_st, :fcp_sn, :fcp_pc)
+  end
 end
