@@ -1,13 +1,13 @@
 class PlanoContasController < ApplicationController
-  before_action :set_plano_conta, only: %i[ show edit update destroy ]
+  before_action :set_plano_conta, only: %i[show edit update destroy]
 
   # GET /plano_contas or /plano_contas.json
   def index
     @plano_contas = PlanoConta.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @plano_contas = @plano_contas.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @plano_contas = @plano_contas.paginate(options)
   end
 
   # GET /plano_contas/1 or /plano_contas/1.json
@@ -62,13 +62,14 @@ class PlanoContasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_plano_conta
-      @plano_conta = PlanoConta.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def plano_conta_params
-      params.require(:plano_conta).permit(:conta, :descricao, :grau)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_plano_conta
+    @plano_conta = PlanoConta.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def plano_conta_params
+    params.require(:plano_conta).permit(:conta, :descricao, :grau)
+  end
 end
