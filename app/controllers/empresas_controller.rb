@@ -1,13 +1,13 @@
 class EmpresasController < ApplicationController
-  before_action :set_empresa, only: %i[ show edit update destroy ]
+  before_action :set_empresa, only: %i[show edit update destroy]
 
   # GET /empresas or /empresas.json
   def index
     @empresas = Empresa.all
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @empresas = @empresas.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @empresas = @empresas.paginate(options)
   end
 
   # GET /empresas/1 or /empresas/1.json
@@ -61,13 +61,14 @@ class EmpresasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_empresa
-      @empresa = Empresa.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def empresa_params
-      params.require(:empresa).permit(:nome, :nome_fantasia, :cnpj, :inscricao_estadual, :inscricao_municipal, :endereco, :numero, :complemento, :bairro, :cidade, :cep, :uf, :telefone, :email, :codigo_uf_emitente, :codcid_ibge, :aliquota_pis, :aliquota_cofins, :serie_nfe, :cnae, :ambiente, :versao_layout, :regime_tributario, :emissor_nfe, :permite_credito_icms, :credito_icms_pc, :empresa_uninfe, :pasta_envio, :pasta_retorno, :senha)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_empresa
+    @empresa = Empresa.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def empresa_params
+    params.require(:empresa).permit(:nome, :nome_fantasia, :cnpj, :inscricao_estadual, :inscricao_municipal, :endereco, :numero, :complemento, :bairro, :cidade, :cep, :uf, :telefone, :email, :codigo_uf_emitente, :codcid_ibge, :aliquota_pis, :aliquota_cofins, :serie_nfe, :cnae, :ambiente, :versao_layout, :regime_tributario, :emissor_nfe, :permite_credito_icms, :credito_icms_pc, :empresa_uninfe, :pasta_envio, :pasta_retorno, :senha)
+  end
 end
