@@ -1,5 +1,5 @@
 class OrcamentoItensController < ApplicationController
-  before_action :set_orcamento_item, only: %i[ show edit update destroy ]
+  before_action :set_orcamento_item, only: %i[show edit update destroy]
 
   # GET /orcamento_itens or /orcamento_itens.json
   def index
@@ -57,13 +57,14 @@ class OrcamentoItensController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_orcamento_item
-      @orcamento_item = OrcamentoItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def orcamento_item_params
-      params.require(:orcamento_item).permit(:orcamento_id, :produto_id, :quantidade, :preco_unitario, :preco_total)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_orcamento_item
+    @orcamento_item = OrcamentoItem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def orcamento_item_params
+    params.require(:orcamento_item).permit(:orcamento_id, :produto_id, :quantidade, :preco_unitario, :preco_total)
+  end
 end
