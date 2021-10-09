@@ -3,7 +3,6 @@ class Produto < ApplicationRecord
   belongs_to :fornecedor, optional: true
   belongs_to :empresa
 
-
   def self.atualizar_produto_reposto(estoque, params)
     produto = estoque.produto
     produto.preco_custo_medio = estoque.calculo_preco_custo_medio
@@ -14,17 +13,15 @@ class Produto < ApplicationRecord
   end
 
   def verifica_detalhes_ncm(codigo_ncm)
-    require 'net/http'
-
-    codigo_ncm = "36041000"
+    require "net/http"
 
     uri = URI.parse("https://api.cosmos.bluesoft.com.br/ncms/#{codigo_ncm}/products")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     request = Net::HTTP::Get.new(uri.request_uri)
-    request['User-Agent'] = 'Cosmos-API-Request'
-    request['Content-Type'] = 'application/json'
-    request['X-Cosmos-Token'] = 'J4Tu_5FaHTXM0SaYGUrUjQ'
+    request["User-Agent"] = "Cosmos-API-Request"
+    request["Content-Type"] = "application/json"
+    request["X-Cosmos-Token"] = "J4Tu_5FaHTXM0SaYGUrUjQ"
     response = http.request(request)
     puts response.body
   end
