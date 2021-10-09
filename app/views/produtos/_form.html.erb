@@ -13,169 +13,169 @@
   <% end %>
 
   <div class="ibox-content">
-          <div class="row form-group">
-              <div class="col-md-2">
-                <%= f.label :situacao, 'Situação' %>
-                <%= f.select(:situacao, options_for_select([['ATIVO', 1], ['INATIVO', 2]]), {}, {class: "form-control"}) %>
-              </div>
-       
-              <div class="col-md-2">
-                <%= f.label :data_inativo, 'Data Inativo' %>
-                <%= f.date_field :data_inativo, class: "form-control" %>
-              </div>
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :situacao, 'Situação' %>
+          <%= f.select(:situacao, options_for_select([['ATIVO', 1], ['INATIVO', 2]]), {}, {class: "form-control"}) %>
+        </div>
+  
+        <div class="col-md-2">
+          <%= f.label :data_inativo, 'Data Inativo' %>
+          <%= f.date_field :data_inativo, class: "form-control" %>
+        </div>
 
-              <div class="col-md-8">
-                <%= f.label :descricao, 'Descrição' %>
-                <%= f.text_field :descricao, class: "form-control" %>
-              </div>
-          </div>        
+        <div class="col-md-8">
+          <%= f.label :descricao, 'Descrição' %>
+          <%= f.text_field :descricao, class: "form-control" %>
+        </div>
+    </div>        
 
-          <div class="row form-group">
-              <div class="col-md-12">
-                <%= f.label :descricao_nfe, 'Descrição NF-e' %>
-                <%= f.text_field :descricao_nfe, class: "form-control" %>
-              </div>
-          </div>
-    
-          <div class="row form-group">
-              <div class="col-md-3">
-                <%= f.label :codigo_barras, 'Código Barras' %>
-                <%= f.text_field :codigo_barras, class: "form-control" %>
-              </div>
+    <div class="row form-group">
+        <div class="col-md-12">
+          <%= f.label :descricao_nfe, 'Descrição NF-e' %>
+          <%= f.text_field :descricao_nfe, class: "form-control" %>
+        </div>
+    </div>
 
-              <div class="col-md-4">
-                <%= f.label :localizacao_estoque, 'Local Estoque'%>
-                <%= f.select :localizacao_estoque_id,
-                LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
-                {:selected => @produto.localizacao_estoque_id},
-                {:class=> 'form-control'} %>          
-              </div>
+    <div class="row form-group">
+        <div class="col-md-3">
+          <%= f.label :codigo_barras, 'Código Barras' %>
+          <%= f.text_field :codigo_barras, class: "form-control" %>
+        </div>
 
-              <div class="col-md-5">
-                <%= f.label :origem, 'Origem Mercadoria' %>
-                <%= f.select(:origem, options_for_select([
-                  ['0-Nacional, exceto as indicadas nos códigos 3 a 5', '0'], 
-                  ['1-Estrangeira - Importação direta, exceto a indicada no código 6', '1'], 
-                  ['2-Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7', '2'], 
-                  ['3-Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%', '3'], 
-                  ['4-Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007', '4'], 
-                  ['5-Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%', '5'],
-                  ['6-Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural', '6'],
-                  ['7-Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural', '7']
-                  ]),{}, {class: "form-control"}) %>
-              </div>
-          </div>
+        <div class="col-md-4">
+          <%= f.label :localizacao_estoque, 'Local Estoque'%>
+          <%= f.select :localizacao_estoque_id,
+          LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
+          {:selected => @produto.localizacao_estoque_id},
+          {:class=> 'form-control'} %>          
+        </div>
 
-          <div class="row form-group">
-              <div class="col-md-3">
-                <%= f.label :unidade, 'Unidade' %>
-                <%= f.text_field :unidade, class: "form-control" %>
-              </div>
+        <div class="col-md-5">
+          <%= f.label :origem, 'Origem Mercadoria' %>
+          <%= f.select(:origem, options_for_select([
+            ['0-Nacional, exceto as indicadas nos códigos 3 a 5', '0'], 
+            ['1-Estrangeira - Importação direta, exceto a indicada no código 6', '1'], 
+            ['2-Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7', '2'], 
+            ['3-Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%', '3'], 
+            ['4-Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007', '4'], 
+            ['5-Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%', '5'],
+            ['6-Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural', '6'],
+            ['7-Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural', '7']
+            ]),{}, {class: "form-control"}) %>
+        </div>
+    </div>
 
-              <div class="col-md-3">
-                <%= f.label :embalagem, 'Quantidade na Embalagem' %>
-                <%= f.text_field :embalagem, class: "form-control" %>
-              </div>             
+    <div class="row form-group">
+        <div class="col-md-3">
+          <%= f.label :unidade, 'Unidade' %>
+          <%= f.text_field :unidade, class: "form-control" %>
+        </div>
 
-              <div class="col-md-3">
-                <%= f.label :ncm, 'Código NCM' %>
-                <%= f.text_field :ncm, class: "form-control" %>
-              </div>
-            
-              <div class="col-md-3">
-                <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
-                <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']]), {}, {class: "form-control"}) %>
-              </div>
-              
-          </div>        
+        <div class="col-md-3">
+          <%= f.label :embalagem, 'Quantidade na Embalagem' %>
+          <%= f.text_field :embalagem, class: "form-control" %>
+        </div>             
+
+        <div class="col-md-3">
+          <%= f.label :ncm, 'Código NCM' %>
+          <%= f.text_field :ncm, class: "form-control" %>
+        </div>
+      
+        <div class="col-md-3">
+          <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
+          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']]), {}, {class: "form-control"}) %>
+        </div>
         
-          <div class="row form-group">
-              <div class="col-md-2">
-                <%= f.label :controlar_estoque, 'Controlar Estoque ?' %>               
-                <%= f.select(:controlar_estoque, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
-              </div>
+    </div>        
+  
+    <div class="row form-group">
+        <div class="col-md-2">
+          <%= f.label :controlar_estoque, 'Controlar Estoque ?' %>               
+          <%= f.select(:controlar_estoque, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
+        </div>
 
-              <div class="col-md-2">
-                <%= f.label :estoque_atual, 'Estoque Atual' %>
-                <%= f.text_field :estoque_atual, class: "form-control" %>
-              </div>
+        <div class="col-md-2">
+          <%= f.label :estoque_atual, 'Estoque Atual' %>
+          <%= f.text_field :estoque_atual, class: "form-control" %>
+        </div>
 
-              <div class="col-md-2">
-                <%= f.label :estoque_minimo, 'Estoque Mínimo' %>
-                <%= f.text_field :estoque_minimo, class: "form-control" %>
-              </div>
-              
-              <div class="col-md-2">
-                <%= f.label :por_lote, 'Controlar Lote ?' %>
-                <%= f.select(:por_lote, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
-              </div>
-              
-              <div class="col-md-2">
-                <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
-                <%= f.date_field :data_ultima_reposicao, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :data_ultimo_reajuste, 'Data Último Reajuste' %>
-                <%= f.date_field :data_ultimo_reajuste, class: "form-control" %>
-              </div>
-          </div>
+        <div class="col-md-2">
+          <%= f.label :estoque_minimo, 'Estoque Mínimo' %>
+          <%= f.text_field :estoque_minimo, class: "form-control" %>
+        </div>
         
-          <div class="row form-group">
-              <div class="col-md-4">
-                <%= f.label :bloquear_preco, 'Bloquear Preço no Pedido ?' %>
-                <%= f.select(:bloquear_preco, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
-              </div>
+        <div class="col-md-2">
+          <%= f.label :por_lote, 'Controlar Lote ?' %>
+          <%= f.select(:por_lote, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
+        </div>
+        
+        <div class="col-md-2">
+          <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
+          <%= f.date_field :data_ultima_reposicao, class: "form-control" %>
+        </div>
 
-              <div class="col-md-4">
-                <%= f.label :preco_custo, 'Preço Custo' %>
-                <%= f.text_field :preco_custo, class: "form-control" %>
-              </div>
+        <div class="col-md-2">
+          <%= f.label :data_ultimo_reajuste, 'Data Último Reajuste' %>
+          <%= f.date_field :data_ultimo_reajuste, class: "form-control" %>
+        </div>
+    </div>
+  
+    <div class="row form-group">
+        <div class="col-md-4">
+          <%= f.label :bloquear_preco, 'Bloquear Preço no Pedido ?' %>
+          <%= f.select(:bloquear_preco, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
+        </div>
 
-              <div class="col-md-4">
-                <%= f.label :preco_custo_medio, 'Preço Custo Médio' %>
-                <%= f.text_field :preco_custo_medio, class: "form-control" %>
-              </div>             
-          </div>        
-       
-          <div class="row form-group">
-              <div class="col-md-3">
-                <%= f.label :margem_lucro, 'Margem Lucro (%)' %>
-                <%= f.text_field :margem_lucro, class: "form-control" %>
-              </div>
+        <div class="col-md-4">
+          <%= f.label :preco_custo, 'Preço Custo' %>
+          <%= f.text_field :preco_custo, class: "form-control" %>
+        </div>
 
-              <div class="col-md-3">
-                <%= f.label :preco_venda, 'Preço Venda' %>
-                <%= f.text_field :preco_venda, class: "form-control" %>
-              </div>
+        <div class="col-md-4">
+          <%= f.label :preco_custo_medio, 'Preço Custo Médio' %>
+          <%= f.text_field :preco_custo_medio, class: "form-control" %>
+        </div>             
+    </div>        
+  
+    <div class="row form-group">
+        <div class="col-md-3">
+          <%= f.label :margem_lucro, 'Margem Lucro (%)' %>
+          <%= f.text_field :margem_lucro, class: "form-control" %>
+        </div>
 
-              <div class="col-md-3">              
-                <%= f.label :margem_lucro_oferta, 'Margem Lucro Oferta (%)' %>
-                <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
-              </div>
+        <div class="col-md-3">
+          <%= f.label :preco_venda, 'Preço Venda' %>
+          <%= f.text_field :preco_venda, class: "form-control" %>
+        </div>
 
-              <div class="col-md-3">          
-                <%= f.label :preco_oferta, 'Preço Venda Oferta' %>
-                <%= f.text_field :preco_oferta, class: "form-control" %>
-            </div>
-          </div>
+        <div class="col-md-3">              
+          <%= f.label :margem_lucro_oferta, 'Margem Lucro Oferta (%)' %>
+          <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
+        </div>
 
-          <div class="row form-group">
-            <div class="col-md-4">
-              <%= f.label :data_inicial_oferta, 'Data Inicial OFerta' %>
-              <%= f.date_field :data_inicial_oferta, class: "form-control" %>
-            </div>
+        <div class="col-md-3">          
+          <%= f.label :preco_oferta, 'Preço Venda Oferta' %>
+          <%= f.text_field :preco_oferta, class: "form-control" %>
+      </div>
+    </div>
 
-            <div class="col-md-4">
-              <%= f.label :data_final_oferta, 'Data Final Oferta' %>
-              <%= f.date_field :data_final_oferta, class: "form-control" %>
-            </div>
+    <div class="row form-group">
+      <div class="col-md-4">
+        <%= f.label :data_inicial_oferta, 'Data Inicial OFerta' %>
+        <%= f.date_field :data_inicial_oferta, class: "form-control" %>
+      </div>
 
-            <div class="col-md-4">
-              <%= f.label :comissao_pc, 'Comissão (%)' %>
-              <%= f.text_field :comissao_pc, class: "form-control" %>
-            </div>             
-          </div>    
+      <div class="col-md-4">
+        <%= f.label :data_final_oferta, 'Data Final Oferta' %>
+        <%= f.date_field :data_final_oferta, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4">
+        <%= f.label :comissao_pc, 'Comissão (%)' %>
+        <%= f.text_field :comissao_pc, class: "form-control" %>
+      </div>             
+    </div>    
   </div>
 
   <div class="form-group">
