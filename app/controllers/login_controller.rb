@@ -1,8 +1,9 @@
 class LoginController < ApplicationController
   skip_before_action :authenticate_user!
-  layout 'login'
+  layout "login"
 
-  def index;end
+  def index
+  end
 
   def logar
     user = Administrador.where(email: params["login"]["email"], senha: params["login"]["senha"])
@@ -14,7 +15,7 @@ class LoginController < ApplicationController
         nome: user.nome,
         email: user.email
       }
-      cookies[:admin_viver_saude] = { value: value.to_json, expires: time, httponly: true }
+      cookies[:admin_viver_saude] = {value: value.to_json, expires: time, httponly: true}
 
       redirect_to "/"
     else
