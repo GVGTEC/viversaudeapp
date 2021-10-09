@@ -1,13 +1,13 @@
 class ContasPagController < ApplicationController
-  before_action :set_contas_pagar, only: %i[ show edit update destroy ]
+  before_action :set_contas_pagar, only: %i[show edit update destroy]
 
   # GET /contas_pagar or /contas_pagar.json
   def index
     @contas_pag = ContasPag.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @contas_pag = @contas_pag.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @contas_pag = @contas_pag.paginate(options)
   end
 
   # GET /contas_pagar/1 or /contas_pagar/1.json
@@ -64,32 +64,33 @@ class ContasPagController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contas_pagar
-      @contas_pag = ContasPag.find(params[:id])
-    end
 
-    def save_contas_pagar_parcelas
-      if params[:contas_pag].present? && params[:contas_pag][:contas_pagar_parcela].present?
-        @contas_pag.contas_pagar_parcelas.destroy_all
-        params[:contas_pag][:contas_pagar_parcela].each do |parcela|
-          if parcela[:data_vencimento].present? || parcela[:data_pagamento].present?
-            contas_pagar_parcela = ContasPagarParcela.new
-            contas_pagar_parcela.data_vencimento = parcela[:data_vencimento]
-            contas_pagar_parcela.data_pagamento = parcela[:data_pagamento]
-            contas_pagar_parcela.valor_parcela = parcela[:valor_parcela]
-            contas_pagar_parcela.valor_juros_desconto = parcela[:valor_juros_desconto]
-            contas_pagar_parcela.documento = parcela[:documento]
-            contas_pagar_parcela.descricao = parcela[:descricao]
-            contas_pagar_parcela.contas_pag = @contas_pag
-            contas_pagar_parcela.save!
-          end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_contas_pagar
+    @contas_pag = ContasPag.find(params[:id])
+  end
+
+  def save_contas_pagar_parcelas
+    if params[:contas_pag].present? && params[:contas_pag][:contas_pagar_parcela].present?
+      @contas_pag.contas_pagar_parcelas.destroy_all
+      params[:contas_pag][:contas_pagar_parcela].each do |parcela|
+        if parcela[:data_vencimento].present? || parcela[:data_pagamento].present?
+          contas_pagar_parcela = ContasPagarParcela.new
+          contas_pagar_parcela.data_vencimento = parcela[:data_vencimento]
+          contas_pagar_parcela.data_pagamento = parcela[:data_pagamento]
+          contas_pagar_parcela.valor_parcela = parcela[:valor_parcela]
+          contas_pagar_parcela.valor_juros_desconto = parcela[:valor_juros_desconto]
+          contas_pagar_parcela.documento = parcela[:documento]
+          contas_pagar_parcela.descricao = parcela[:descricao]
+          contas_pagar_parcela.contas_pag = @contas_pag
+          contas_pagar_parcela.save!
         end
       end
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def contas_pagar_params
-      params.require(:contas_pag).permit(:fornecedor_id, :plano_conta_id, :documento, :historico, :data_emissao, :valor_total)
-    end
+  # Only allow a list of trusted parameters through.
+  def contas_pagar_params
+    params.require(:contas_pag).permit(:fornecedor_id, :plano_conta_id, :documento, :historico, :data_emissao, :valor_total)
+  end
 end
