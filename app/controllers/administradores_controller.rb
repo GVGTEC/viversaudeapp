@@ -1,12 +1,12 @@
 class AdministradoresController < ApplicationController
-  before_action :set_administrador, only: %i[ show edit update destroy ]
+  before_action :set_administrador, only: %i[show edit update destroy]
 
   # GET /administradores or /administradores.json
   def index
     @administradores = Administrador.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
+    options = {page: params[:page] || 1, per_page: 50}
     @administradores = @administradores.paginate(options)
   end
 
@@ -61,13 +61,14 @@ class AdministradoresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_administrador
-      @administrador = Administrador.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def administrador_params
-      params.require(:administrador).permit(:empresa_id, :nome, :email, :senha)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_administrador
+    @administrador = Administrador.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def administrador_params
+    params.require(:administrador).permit(:empresa_id, :nome, :email, :senha)
+  end
 end
