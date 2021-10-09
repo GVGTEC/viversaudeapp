@@ -1,13 +1,13 @@
 class TransportadorasController < ApplicationController
-  before_action :set_transportadora, only: %i[ show edit update destroy ]
+  before_action :set_transportadora, only: %i[show edit update destroy]
 
   # GET /transportadoras or /transportadoras.json
   def index
     @transportadoras = Transportadora.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
-    @transportadoras = @transportadoras.paginate(options)    
+    options = {page: params[:page] || 1, per_page: 50}
+    @transportadoras = @transportadoras.paginate(options)
   end
 
   # GET /transportadoras/1 or /transportadoras/1.json
@@ -65,30 +65,31 @@ class TransportadorasController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_transportadora
-      @transportadora = Transportadora.find(params[:id])
-    end
 
-    def salvar_contatos
-      if params[:transportadora].present? && params[:transportadora][:contato].present?
-        @transportadora.contatos.destroy_all if @transportadora.contatos != []
-        params[:transportadora][:contato].each do |contato_transportadora|
-          if contato_transportadora[:nome].present? || contato_transportadora[:telefone].present?
-            contato = Contato.new
-            contato.nome = contato_transportadora[:nome]
-            contato.email = contato_transportadora[:email]
-            contato.telefone = contato_transportadora[:telefone]
-            contato.natureza = params[:controller]
-            contato.natureza_id = @transportadora.id
-            contato.save!
-          end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_transportadora
+    @transportadora = Transportadora.find(params[:id])
+  end
+
+  def salvar_contatos
+    if params[:transportadora].present? && params[:transportadora][:contato].present?
+      @transportadora.contatos.destroy_all if @transportadora.contatos != []
+      params[:transportadora][:contato].each do |contato_transportadora|
+        if contato_transportadora[:nome].present? || contato_transportadora[:telefone].present?
+          contato = Contato.new
+          contato.nome = contato_transportadora[:nome]
+          contato.email = contato_transportadora[:email]
+          contato.telefone = contato_transportadora[:telefone]
+          contato.natureza = params[:controller]
+          contato.natureza_id = @transportadora.id
+          contato.save!
         end
       end
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def transportadora_params
-      params.require(:transportadora).permit(:nome, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf)
-    end
+  # Only allow a list of trusted parameters through.
+  def transportadora_params
+    params.require(:transportadora).permit(:nome, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf)
+  end
 end
