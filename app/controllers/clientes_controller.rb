@@ -1,6 +1,6 @@
 class ClientesController < ApplicationController
-  before_action :set_cliente, only: %i[ show edit update destroy ]
-  skip_before_action :verify_authenticity_token, :only => [:importar]
+  before_action :set_cliente, only: %i[show edit update destroy]
+  skip_before_action :verify_authenticity_token, only: [:importar]
 
   # GET /clientes or /clientes.json
   def index
@@ -8,34 +8,31 @@ class ClientesController < ApplicationController
     @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 25} 
+    options = {page: params[:page] || 1, per_page: 25}
     @clientes = @clientes.paginate(options)
   end
 
   def importar
-    begin
-      :debugger
-      if params[:arquivo].blank?
-        flash[:error] = "Selecione um arquivo .CSV"
-        redirect_to "/clientes"
-        return
-      end
-  
-      if File.basename(params[:arquivo].tempfile).include?(".CSV")
-        importar_csv
-      else
-        flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
-        redirect_to "/clientes"
-        return
-      end
-  
-      flash[:sucesso] = "Clientes importados com sucesso"
-      redirect_to "/clientes"
-    rescue => exception
-      flash[:error] = exception
+    if params[:arquivo].blank?
+      flash[:error] = "Selecione um arquivo .CSV"
       redirect_to "/clientes"
       return
     end
+
+    if File.basename(params[:arquivo].tempfile).include?(".CSV")
+      importar_csv
+    else
+      flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
+      redirect_to "/clientes"
+      return
+    end
+
+    flash[:sucesso] = "Clientes importados com sucesso"
+    redirect_to "/clientes"
+  rescue => exception
+    flash[:error] = exception
+    redirect_to "/clientes"
+    nil
   end
 
   def importar_csv
@@ -69,52 +66,47 @@ class ClientesController < ApplicationController
     id_vendedor = 17
     id_terceiro = 18
     empresa_governo = 19
-    
-    begin
-      cliente = Cliente.new
-      cliente.id = linha[id].to_i
 
-      vendedor = linha[id_vendedor].to_i
-      if vendedor != 0
-        begin
-          cliente.vendedor_id = Vendedor.find(vendedor).id
-        rescue 
-          cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}",  empresa_id: @adm.empresa.id).id
-        end
+    cliente = Cliente.new
+    cliente.id = linha[id].to_i
+
+    vendedor = linha[id_vendedor].to_i
+    if vendedor != 0
+      begin
+        cliente.vendedor_id = Vendedor.find(vendedor).id
+      rescue
+        cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}", empresa_id: @adm.empresa.id).id
       end
-
-      terceiro = linha[id_terceiro].to_i
-      if terceiro != 0
-        begin
-          cliente.terceiro_id = Terceiro.find(terceiro).id
-        rescue 
-          cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}", empresa_id: @adm.empresa.id).id
-        end
-      end
-
-      cliente.nome = linha[nome]
-      cliente.pessoa = linha[pessoa]
-      cliente.cpf = linha[cpf] if linha[cpf].to_i != 0
-      cliente.rg = linha[rg] if linha[rg].to_i != 0
-      cliente.cnpj = linha[cnpj] if linha[cnpj].to_i != 0
-      cliente.ie = linha[ie] if linha[ie].to_i != 0
-      cliente.endereco = linha[endereco] 
-      cliente.bairro = linha[bairro] 
-      cliente.cidade = linha[cidade] 
-      cliente.cep = linha[cep] 
-      cliente.uf = linha[uf] 
-      cliente.telefone = linha[telefone] 
-      cliente.telefone_alternativo = linha[telefone_alternativo] 
-      cliente.telefone_nf = linha[telefone_nf] 
-      cliente.email = linha[email] 
-      cliente.codcidade_ibge = linha[codcidade_ibge] 
-      cliente.empresa_governo = true if linha[empresa_governo].include?("S")
-      cliente.empresa_id = @adm.empresa.id
-      cliente.save
-    rescue Exception => err
-      raise err
-      Rails.logger.error err.message
     end
+
+    terceiro = linha[id_terceiro].to_i
+    if terceiro != 0
+      begin
+        cliente.terceiro_id = Terceiro.find(terceiro).id
+      rescue
+        cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}", empresa_id: @adm.empresa.id).id
+      end
+    end
+
+    cliente.nome = linha[nome]
+    cliente.pessoa = linha[pessoa]
+    cliente.cpf = linha[cpf] if linha[cpf].to_i != 0
+    cliente.rg = linha[rg] if linha[rg].to_i != 0
+    cliente.cnpj = linha[cnpj] if linha[cnpj].to_i != 0
+    cliente.ie = linha[ie] if linha[ie].to_i != 0
+    cliente.endereco = linha[endereco]
+    cliente.bairro = linha[bairro]
+    cliente.cidade = linha[cidade]
+    cliente.cep = linha[cep]
+    cliente.uf = linha[uf]
+    cliente.telefone = linha[telefone]
+    cliente.telefone_alternativo = linha[telefone_alternativo]
+    cliente.telefone_nf = linha[telefone_nf]
+    cliente.email = linha[email]
+    cliente.codcidade_ibge = linha[codcidade_ibge]
+    cliente.empresa_governo = true if linha[empresa_governo].include?("S")
+    cliente.empresa_id = @adm.empresa.id
+    cliente.save
   end
 
   # GET /clientes/1 or /clientes/1.json
@@ -134,7 +126,7 @@ class ClientesController < ApplicationController
   def create
     @cliente = Cliente.new(cliente_params)
     @cliente.empresa_id = @adm.empresa.id
-    
+
     respond_to do |format|
       if @cliente.save
         salvar_contatos
@@ -172,32 +164,33 @@ class ClientesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cliente
-      @cliente = Cliente.find(params[:id])
-    end
 
-    def salvar_contatos
-      if params[:cliente].present? && params[:cliente][:contato].present?
-        @cliente.contatos.destroy_all if @cliente.contatos != []
-        params[:cliente][:contato].each do |contato_cliente|
-          if contato_cliente[:nome].present? || contato_cliente[:telefone].present?
-            contato = Contato.new
-            contato.nome = contato_cliente[:nome]
-            contato.email = contato_cliente[:email]
-            contato.telefone = contato_cliente[:telefone]
-            contato.cargo = contato_cliente[:cargo]
-            contato.departamento = contato_cliente[:departamento]
-            contato.natureza = params[:controller]
-            contato.natureza_id = @cliente.id
-            contato.save!
-          end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cliente
+    @cliente = Cliente.find(params[:id])
+  end
+
+  def salvar_contatos
+    if params[:cliente].present? && params[:cliente][:contato].present?
+      @cliente.contatos.destroy_all if @cliente.contatos != []
+      params[:cliente][:contato].each do |contato_cliente|
+        if contato_cliente[:nome].present? || contato_cliente[:telefone].present?
+          contato = Contato.new
+          contato.nome = contato_cliente[:nome]
+          contato.email = contato_cliente[:email]
+          contato.telefone = contato_cliente[:telefone]
+          contato.cargo = contato_cliente[:cargo]
+          contato.departamento = contato_cliente[:departamento]
+          contato.natureza = params[:controller]
+          contato.natureza_id = @cliente.id
+          contato.save!
         end
       end
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def cliente_params
-      params.require(:cliente).permit(:vendedor_id, :terceiro_id,:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge)
-    end
+  # Only allow a list of trusted parameters through.
+  def cliente_params
+    params.require(:cliente).permit(:vendedor_id, :terceiro_id, :nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge)
+  end
 end
