@@ -38,7 +38,7 @@
           </div>
     
           <div class="row form-group">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <%= f.label :codigo_barras, 'Código Barras' %>
                 <%= f.text_field :codigo_barras, class: "form-control" %>
               </div>
@@ -49,6 +49,20 @@
                 LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
                 {:selected => @produto.localizacao_estoque_id},
                 {:class=> 'form-control'} %>          
+              </div>
+
+              <div class="col-md-5">
+                <%= f.label :origem, 'Origem Mercadoria' %>
+                <%= f.select(:origem, options_for_select([
+                  ['0-Nacional, exceto as indicadas nos códigos 3 a 5', '0'], 
+                  ['1-Estrangeira - Importação direta, exceto a indicada no código 6', '1'], 
+                  ['2-Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7', '2'], 
+                  ['3-Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40%', '3'], 
+                  ['4-Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/1967 , e as Leis nºs 8.248/1991, 8.387/1991, 10.176/2001 e 11.484/2007', '4'], 
+                  ['5-Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%', '5'],
+                  ['6-Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural', '6'],
+                  ['7-Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural', '7']
+                  ]),{}, {class: "form-control"}) %>
               </div>
           </div>
 
@@ -67,11 +81,12 @@
                 <%= f.label :ncm, 'Código NCM' %>
                 <%= f.text_field :ncm, class: "form-control" %>
               </div>
-
+            
               <div class="col-md-3">
-                <%= f.label :situacao_tributaria, 'Situação Tributária' %>
-                <%= f.text_field :situacao_tributaria, class: "form-control" %>
+                <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
+                <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']]), {}, {class: "form-control"}) %>
               </div>
+              
           </div>        
         
           <div class="row form-group">
@@ -86,8 +101,8 @@
               </div>
 
               <div class="col-md-2">
-                <%= f.label :situacao_tributaria, 'Estoque Mínimo' %>
-                <%= f.text_field :situacao_tributaria, class: "form-control" %>
+                <%= f.label :estoque_minimo, 'Estoque Mínimo' %>
+                <%= f.text_field :estoque_minimo, class: "form-control" %>
               </div>
               
               <div class="col-md-2">
