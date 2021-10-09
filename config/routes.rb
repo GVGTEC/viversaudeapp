@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   resources :vendedores
   resources :contas_rec
   resources :plano_contas
- 
   resources :administradores
   resources :transportadoras
   resources :localizacao_estoques
@@ -17,39 +16,51 @@ Rails.application.routes.draw do
   end
 
   resources :nota_fiscais do
-    get "/gerar_nota", to: "nota_fiscais#gerar_nota"
+    resources :gerar_nota_fiscais, only: [:gerar_nota] do
+      get "gerar_nota", on: :collection
+    end
+
     resources :nota_fiscal_itens
     resources :nota_fiscal_duplicatas, only: [:new, :create]
   end
 
-  get "/estoques/ajuste", to: "estoques#ajuste"
-  get "/estoques/reposicao", to: "estoques#reposicao"
-  get "/estoques/baixa", to: "estoques#baixa"
-  post "/estoques/ajuste", to: "estoques#ajuste"
-  post "/estoques/reposicao", to: "estoques#create_reposicao"
-  post "/estoques/baixa", to: "estoques#baixa"
-  post "/estoques/importar", to: "estoques#importar"
-  resources :estoques, only: [:index, :show]
-  
-  post "/produtos/importar", to: "produtos#importar"
-  resources :produtos do
-    resources :movimento_estoques, only: [:index] 
+  resources :estoques, only: [:index, :show] do
+    collection do
+      get "ajuste"
+      get "reposicao"
+      get "baixa"
+      post "ajuste"
+      post "reposicao"
+      post "baixa"
+      post "importar"
+    end
   end
-  
-  post "/clientes/importar", to: "clientes#importar"
-  resources :clientes
 
-  post "/fornecedores/importar", to: "fornecedores#importar"
-  resources :fornecedores
+  resources :produtos do
+    post "importar", on: :collection
+    resources :movimento_estoques, only: [:index]
+  end
 
-  get "/importar_clientes", to: "importar#clientes"
-  get "/importar_fornecedores", to: "importar#fornecedores"
-  get "/importar_produtos", to: "importar#produtos"
-  get "/importar_estoques", to: "importar#estoques"
+  resources :clientes do
+    post "importar", on: :collection
+  end
 
-  root to: 'home#index'
+  resources :fornecedores do
+    post "importar", on: :collection
+  end
 
-  get '/login', to: 'login#index'
-  post '/login', to: 'login#logar'
-  get '/sair', to: 'login#deslogar'
+  resources :importacoes do
+    collection do
+      get "clientes"
+      get "produtos"
+      get "estoques"
+      get "fornecedores"
+    end
+  end
+
+  root to: "home#index"
+
+  get "/login", to: "login#index"
+  post "/login", to: "login#logar"
+  get "/sair", to: "login#deslogar"
 end
