@@ -19,6 +19,10 @@ class EmpresasController < ApplicationController
     @empresa = Empresa.new
   end
 
+  def configuracoes
+    @empresa = @adm.empresa
+  end
+
   # GET /empresas/1/edit
   def edit
   end
@@ -42,7 +46,7 @@ class EmpresasController < ApplicationController
   def update
     respond_to do |format|
       if @empresa.update(empresa_params)
-        format.html { redirect_to @empresa, notice: "Empresa Alterado" }
+        format.html { redirect_to configuracoes_empresas_path, notice: "Empresa Alterado" }
         format.json { render :show, status: :ok, location: @empresa }
       else
         format.html { render :edit, status: :unprocessable_entity }

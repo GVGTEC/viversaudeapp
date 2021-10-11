@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   resources :icms
   resources :cfop
-  resources :empresas
   resources :terceiros
   resources :contas_pag
   resources :vendedores
@@ -10,6 +9,10 @@ Rails.application.routes.draw do
   resources :administradores
   resources :transportadoras
   resources :localizacao_estoques
+
+  resources :empresas do
+    get "configuracoes", on: :collection
+  end
 
   resources :orcamentos do
     resources :orcamento_itens
