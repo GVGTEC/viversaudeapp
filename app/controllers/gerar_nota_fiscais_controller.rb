@@ -4,7 +4,7 @@ class GerarNotaFiscaisController < ApplicationController
   def gerar_nota
     require "fileutils"
 
-    path_tmp_nota = "tmp/nota-#{Time.now.strftime("%Y%m%d%H%M%S")}.txt"
+    path_tmp_nota = "tmp/#{@nota_fiscal.numero_nota}_0001_001_#{Time.now.strftime("%d_%m_%Y")}-nfe.txt"
     FileUtils.rm_rf Dir.glob("tmp/nota*.txt")
 
     out_file = File.new(path_tmp_nota, "w")
@@ -23,9 +23,9 @@ class GerarNotaFiscaisController < ApplicationController
     mod = "55"
     serie = "1"
     nNF = @nota_fiscal.numero_nota
-    dhEmi = @nota_fiscal.data_emissao
+    dhEmi = "#{@nota_fiscal.data_emissao.strftime("%Y-%m-%dT%H:%M:%S")}-02:00"
     dhSaiEnt = @nota_fiscal.data_saida
-    tpNF = @nota_fiscal.entsai
+    tpNF = @nota_fiscal.cfop.entrada_saida_es == 'S' ? 1 : 0
     idDest = "1"
     cMunFG = empresa.codcid_ibge
     tpImp = "1"
@@ -33,7 +33,7 @@ class GerarNotaFiscaisController < ApplicationController
     cDV = "0"
     tpAmb = "1"
     finNFe = "1"
-    indFinal = "0"
+    indFinal = @nota_fiscal.cliente.consumidor_final == 'N' ? 1 : 0
     indPres = "1"
     procEmi = "3"
     verProc = empresa.versao_layout
@@ -69,7 +69,7 @@ class GerarNotaFiscaisController < ApplicationController
 
     # Bloco E
     xNome = @nota_fiscal.cliente.nome.strip
-    indIEDest = "1"
+    indIEDest = @nota_fiscal.cliente.ie.blank? || @nota_fiscal.cliente.ie == "ISENTO" || @nota_fiscal.cliente.ie == "ISENTA" || @nota_fiscal.cliente.pessoa == "F" ? 9 : 1
     ie = @nota_fiscal.cliente.ie
     isuf = ""
     im = ""
@@ -94,7 +94,7 @@ class GerarNotaFiscaisController < ApplicationController
 
     @nota_fiscal.nota_fiscal_itens.each_with_index do |item, i|
       # Bloco Prod
-      out_file.puts("H|#{i + 1}||")
+      out_file.puts("H|#{i + 1}|Lote: 2021041802 Qtd: 2700 Val: 18/04/2024 - Local: RUA 05|")
 
       cProd = item.produto.codprd_sac.to_s
       cEAN = ""
@@ -122,22 +122,43 @@ class GerarNotaFiscaisController < ApplicationController
       indTot = "1"
       out_file.puts("I|#{cProd}|#{cEAN}|#{xProd}|#{nCM}|#{nVE}|#{cEST}|#{indEscala}|#{cNPJFab}|#{cBenef}|#{eXTIPI}|#{cFOP}|#{uCom}|#{qCom}|#{vUnCom}|#{vProd}|#{cEANTrib}|#{uTrib}|#{qTrib}|#{vUnTrib}|#{vFrete}|#{vSeg}|#{vDesc}|#{vOutro}|#{indTot}|")
 
-      vTotTrib = "218.31"
+      vTotTrib = ""
       out_file.puts("M|#{vTotTrib}|")
 
-      orig = "0"
-      cSOSN = "102"
-      out_file.puts("N|")
-      out_file.puts("N10d|#{orig}|#{cSOSN}|")
+      # orig = "0"
+      # cSOSN = "102"
+      # out_file.puts("N|")
+      # out_file.puts("N10d|#{orig}|#{cSOSN}|")
 
-      cST = "01"
+      if item.cst == "00"
+        orig = item.produto.origem
+        cST =  item.cst
+        modBC = "3"
+        vBC = item.valor_bc_icms
+        pICMS = item.aliquota_icms
+        vICMS = item.valor_icms
+        pFCP = ""
+        vFCP = ""
+        out_file.puts("N|")
+        out_file.puts("N02|#{orig}|#{cST}|#{modBC}|#{vBC}|#{pICMS}|#{vICMS}|#{pFCP}|#{vFCP}|")
+
+      elsif item.cst == "40"
+        orig = item.produto.origem
+        cst = item.cst
+        vICMSDeson = ""
+        motDesICM = ""
+        out_file.puts("N|")
+        out_file.puts("N06|#{orig}|#{cst}|#{vICMSDeson}|#{motDesICM}|")
+      end
+      
+      cST = item.cst
       vBC = item.preco_total.to_s
       pPIS = item.aliquota_pis.to_s
       vPIS = item.valor_pis.to_s
       out_file.puts("Q|")
       out_file.puts("Q02|#{cST}|#{vBC}|#{pPIS}|#{vPIS}|")
 
-      cST = "01"
+      cST = item.cst
       vBC = item.preco_total.to_s
       pCOFINS = item.aliquota_cofins.to_s
       vCOFINS = item.valor_cofins.to_s
@@ -148,8 +169,8 @@ class GerarNotaFiscaisController < ApplicationController
     # Bloco W
     out_file.puts("W|")
 
-    vBC = "0.00"
-    vICMS = "0.00"
+    vBC = @nota_fiscal.nota_fiscal_imposto.valor_bc_icms
+    vICMS = @nota_fiscal.nota_fiscal_imposto.valor_icms
     vICMSDeson = "0.00"
     vFCPUFDest = "0.00"
     vICMSUFDest = "0.00"
@@ -162,15 +183,15 @@ class GerarNotaFiscaisController < ApplicationController
     vDesc = @nota_fiscal.valor_desconto.to_s
     vII = "0.00"
     vIPI = "0.00"
-    vPIS = "2.73"
-    vCOFINS = "12.60"
+    vPIS = @nota_fiscal.nota_fiscal_imposto.valor_pis
+    vCOFINS = @nota_fiscal.nota_fiscal_imposto.valor_cofins
     vOutro = @nota_fiscal.valor_outras_despesas.to_s
     vNF = @nota_fiscal.valor_total_nota.to_s
-    vTotTrib = "218.31"
+    vTotTrib = ""
     out_file.puts("W02|#{vBC}|#{vICMS}|#{vICMSDeson}|#{vFCPUFDest}|#{vICMSUFDest}|#{vICMSUFRemet}|#{vBCST}|#{vST}|#{vProd}|#{vFrete}|#{vSeg}|#{vDesc}|#{vII}|#{vIPI}|#{vPIS}|#{vCOFINS}|#{vOutro}|#{vNF}|#{vTotTrib}|")
 
     # Bloco X
-    modFrete = "1"
+    modFrete = @nota_fiscal.pagar_frete
     out_file.puts("X|#{modFrete}|")
 
     xNome = @nota_fiscal.transportadora.nome.to_s
@@ -180,8 +201,8 @@ class GerarNotaFiscaisController < ApplicationController
     uF = @nota_fiscal.transportadora.uf.to_s
     out_file.puts("X03|#{xNome}|#{iE}|#{xEnder}|#{xMun}|#{uF}|")
 
-    cpf = ""
-    out_file.puts("X05|#{cpf}|")
+    # cpf = ""
+    # out_file.puts("X05|#{cpf}|")
 
     qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s
     esp = @nota_fiscal.nota_fiscal_transporta.especie.to_s
@@ -202,22 +223,21 @@ class GerarNotaFiscaisController < ApplicationController
 
     @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, i|
       nDup = faturamento_parcela.duplicata.to_s
-      cVenc = faturamento_parcela.data_vencimento.to_s
+      cVenc = faturamento_parcela.data_vencimento.strftime("%Y-%m-%d")
       vDup = faturamento_parcela.valor_parcela.to_s
       out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
     end
 
-    tPag = "01"
+    tPag = @nota_fiscal.meio_pagamento
     vPag = @nota_fiscal.valor_total_nota.to_s
     cNPJ = ""
     tBand = ""
     cAut = ""
     out_file.puts("YA|#{tPag}|#{vPag}|#{cNPJ}|#{tBand}|#{cAut}|")
-
-    out_file.puts("YA01||01|420.00|")
+    out_file.puts("YA01|1|#{tPag}|#{vPag}|")
 
     # Bloco Z
-    out_file.puts("Z|||")
+    out_file.puts("Z||PEDIDO 188169041.1 / PROCESSO 450045 / ENTREGA RODOVIA MANOEL SILVEIRO PINTO 125|")
 
     out_file.close
 
