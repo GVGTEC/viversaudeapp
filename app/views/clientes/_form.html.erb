@@ -28,6 +28,11 @@
         <option <% if @cliente.pessoa == 'J' %>selected="selected"<% end %> value="J">JURÍDICA</option>
       </select>
     </div>
+
+    <%= f.label :consumidor_final, 'Consumidor Final', class: "col-sm-2 control-label"  %>
+    <div class="col-sm-2">
+      <%= f.select(:consumidor_final, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
+    </div>
   </div>
 
   <div class="form-group pessoa-fisica" <% if @cliente.pessoa == 'F' %> style="display: block;" <% else %> style="display: none" <% end %>>
