@@ -38,6 +38,7 @@ class NotaFiscalItensController < ApplicationController
             @nota_fiscal_item.quantidade = nota_fiscal_item[:qtd]
             @nota_fiscal_item.preco_unitario = nota_fiscal_item[:preco_unitario].match(/\d+/)[0]
             @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].match(/\d+/)[0]
+            @nota_fiscal_item.cst = cst
             @nota_fiscal_item.save
 
             calculo_imposto_item
@@ -101,7 +102,6 @@ class NotaFiscalItensController < ApplicationController
   end
 
   def calculo_imposto_item
-    # @nota_fiscal_item.cst = cst_csosn
     @nota_fiscal_item.aliquota_icms = Icms.find_by(estado: @nota_fiscal.cliente.uf).aliquota_icms
     @nota_fiscal_item.valor_bc_icms = @nota_fiscal_item.preco_total
     @nota_fiscal_item.valor_icms = @nota_fiscal_item.preco_total * @nota_fiscal_item.aliquota_icms / 100
@@ -127,20 +127,34 @@ class NotaFiscalItensController < ApplicationController
     @nota_fiscal_item.save
   end
 
-  def cst_csosn
-    " 00 - Tributada integralmente
-      10 - Tributada e com cobrança do ICMS por substituição tributária
-      20 - Com redução da BC
-      30 - Isenta / não tributada e com cobrança do ICMS por substituição tributária
-      40 - Isenta
-      41 - Não tributada
-      50 - Com suspensão
-      51 - Com diferimento
-      60 - ICMS cobrado anteriormente por substituição tributária
-      70 - Com redução da BC e cobrança do ICMS por substituição tributária
-      90 - Outras
-    "
+  def cst
+    situacao_tributaria = @nota_fiscal_item.produto.situacao_tributaria
 
+    if situacao_tributaria == "T"
+      return "00" # Tributada integralmente
+    elsif situacao_tributaria == "I"
+      return "40" # Isenta
+    elsif situacao_tributaria == "S"
+      return "60" # ICMS cobrado anteriormente por substituição tributária
+    else
+      return "41" # Não tributada
+    end
+
+    # " 00 - Tributada integralmente
+    #   10 - Tributada e com cobrança do ICMS por substituição tributária
+    #   20 - Com redução da BC
+    #   30 - Isenta / não tributada e com cobrança do ICMS por substituição tributária
+    #   40 - Isenta
+    #   41 - Não tributada
+    #   50 - Com suspensão
+    #   51 - Com diferimento
+    #   60 - ICMS cobrado anteriormente por substituição tributária
+    #   70 - Com redução da BC e cobrança do ICMS por substituição tributária
+    #   90 - Outras
+    # "
+  end
+
+  def csosn
     " 101 - Tributada pelo Simples Nacional com permissão de crédito
       102 - Tributada pelo Simples Nacional sem permissão de crédito
       103 - Isenção do ICMS no Simples Nacional para faixa de receita bruta
