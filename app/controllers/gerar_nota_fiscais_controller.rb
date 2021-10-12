@@ -249,6 +249,8 @@ class GerarNotaFiscaisController < ApplicationController
 
   def float_two(number)
     "%.2f" % number
+  rescue
+    number
   end
 
   def set_nota_fiscal
