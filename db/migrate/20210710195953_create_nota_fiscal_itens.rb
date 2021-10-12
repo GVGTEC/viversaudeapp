@@ -5,7 +5,7 @@ class CreateNotaFiscalItens < ActiveRecord::Migration[5.2]
       t.references :produto, foreign_key: true
       t.text :descricao
       t.string :cfop
-      #t.string :st
+      # t.string :st
       t.string :ncm
       t.string :cst
       t.string :unidade

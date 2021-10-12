@@ -1,15 +1,15 @@
 namespace :jobs do
-  desc "Download TxT"
+  desc 'Download TxT'
   task download_txt: :environment do
-    out_file = File.new("tmp/nota.txt", "w")
-    #...
-    out_file.puts("write your stuff here")
-    #...
+    out_file = File.new('tmp/nota.txt', 'w')
+    # ...
+    out_file.puts('write your stuff here')
+    # ...
     out_file.close
-    #send_file "/tmp/nota.txt"
+    # send_file "/tmp/nota.txt"
   end
 
-  desc "Deletar Todos"
+  desc 'Deletar Todos'
   task deletar_todos: :environment do
     Fornecedor.delete_all
     LocalizacaoEstoque.delete_all
@@ -19,11 +19,11 @@ namespace :jobs do
     Cliente.delete_all
   end
 
-  desc "Verifica Detalhes Ncm"
+  desc 'Verifica Detalhes Ncm'
   task verifica_detalhes_ncm: :environment do
     require 'net/http'
 
-    codigo_ncm = "36041000"
+    codigo_ncm = '36041000'
 
     uri = URI.parse("https://api.cosmos.bluesoft.com.br/ncms/#{codigo_ncm}/products")
     http = Net::HTTP.new(uri.host, uri.port)

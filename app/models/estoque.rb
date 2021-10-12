@@ -1,3 +1,5 @@
+ 
+
 class Estoque < ApplicationRecord
   belongs_to :produto
   belongs_to :fornecedor, optional: true
@@ -11,7 +13,7 @@ class Estoque < ApplicationRecord
     movimento_estoque.qtd = estoque_atual_lote
     movimento_estoque.estoque_inicial = begin
       produto.estoque_atual - estoque_atual_lote
-    rescue
+    rescue StandardError
       0
     end
     movimento_estoque.estoque_final = produto.estoque_atual
@@ -23,12 +25,12 @@ class Estoque < ApplicationRecord
     produto = self.produto
     relacao_estoque_atual = begin
       produto.estoque_atual * produto.preco_custo
-    rescue
+    rescue StandardError
       0
     end
     relacao_estoque_reposicao = begin
       estoque_atual_lote * preco_custo_reposicao.to_i
-    rescue
+    rescue StandardError
       0
     end
     qtd_total_estoque = produto.estoque_atual + estoque_atual_lote
@@ -36,7 +38,7 @@ class Estoque < ApplicationRecord
 
     preco_custo_medio = begin
       qtd_relacao / qtd_total_estoque
-    rescue
+    rescue StandardError
       0
     end
     preco_custo_medio.ceil(2)
