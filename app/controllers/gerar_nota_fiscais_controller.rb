@@ -108,17 +108,17 @@ class GerarNotaFiscaisController < ApplicationController
       eXTIPI = ""
       cFOP = item.cfop.to_s
       uCom = item.produto.unidade.to_s
-      qCom = item.quantidade.to_s
-      vUnCom = item.preco_unitario.to_s
-      vProd = item.preco_total.to_s
+      qCom = float_two(item.quantidade) 
+      vUnCom = float_two(item.preco_unitario)
+      vProd = float_two(item.preco_total)
       cEANTrib = ""
       uTrib = item.produto.unidade.to_s
-      qTrib = item.quantidade.to_s
-      vUnTrib = item.preco_unitario.to_s
-      vFrete = @nota_fiscal.valor_frete.to_s
+      qTrib = float_two(item.quantidade)
+      vUnTrib = float_two(item.preco_unitario)
+      vFrete = float_two(@nota_fiscal.valor_frete)
       vSeg = ""
-      vDesc = @nota_fiscal.valor_desconto.to_s
-      vOutro = @nota_fiscal.valor_outras_despesas.to_s
+      vDesc = float_two(@nota_fiscal.valor_desconto)
+      vOutro = float_two(@nota_fiscal.valor_outras_despesas)
       indTot = "1"
       out_file.puts("I|#{cProd}|#{cEAN}|#{xProd}|#{nCM}|#{nVE}|#{cEST}|#{indEscala}|#{cNPJFab}|#{cBenef}|#{eXTIPI}|#{cFOP}|#{uCom}|#{qCom}|#{vUnCom}|#{vProd}|#{cEANTrib}|#{uTrib}|#{qTrib}|#{vUnTrib}|#{vFrete}|#{vSeg}|#{vDesc}|#{vOutro}|#{indTot}|")
 
@@ -134,9 +134,9 @@ class GerarNotaFiscaisController < ApplicationController
         orig = item.produto.origem
         cST =  item.cst
         modBC = "3"
-        vBC = item.valor_bc_icms
-        pICMS = item.aliquota_icms
-        vICMS = item.valor_icms
+        vBC = float_two(item.valor_bc_icms)
+        pICMS = float_two(item.aliquota_icms)
+        vICMS = float_two(item.valor_icms)
         pFCP = ""
         vFCP = ""
         out_file.puts("N|")
@@ -152,16 +152,16 @@ class GerarNotaFiscaisController < ApplicationController
       end
       
       cST = item.cst
-      vBC = item.preco_total.to_s
-      pPIS = item.aliquota_pis.to_s
-      vPIS = item.valor_pis.to_s
+      vBC = float_two(item.preco_total.to_s)
+      pPIS = float_two(item.aliquota_pis.to_s)
+      vPIS = float_two(item.valor_pis.to_s)
       out_file.puts("Q|")
       out_file.puts("Q02|#{cST}|#{vBC}|#{pPIS}|#{vPIS}|")
 
       cST = item.cst
-      vBC = item.preco_total.to_s
-      pCOFINS = item.aliquota_cofins.to_s
-      vCOFINS = item.valor_cofins.to_s
+      vBC = float_two(item.preco_total.to_s)
+      pCOFINS = float_two(item.aliquota_cofins.to_s)
+      vCOFINS = float_two(item.valor_cofins.to_s)
       out_file.puts("S|")
       out_file.puts("S02|#{cST}|#{vBC}|#{pCOFINS}|#{vCOFINS}|")
     end
@@ -169,24 +169,24 @@ class GerarNotaFiscaisController < ApplicationController
     # Bloco W
     out_file.puts("W|")
 
-    vBC = @nota_fiscal.nota_fiscal_imposto.valor_bc_icms
-    vICMS = @nota_fiscal.nota_fiscal_imposto.valor_icms
+    vBC = float_two(@nota_fiscal.nota_fiscal_imposto.valor_bc_icms)
+    vICMS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_icms)
     vICMSDeson = "0.00"
     vFCPUFDest = "0.00"
     vICMSUFDest = "0.00"
     vICMSUFRemet = "0.00"
     vBCST = "0.00"
     vST = "0.00"
-    vProd = @nota_fiscal.valor_produtos.to_s
-    vFrete = @nota_fiscal.valor_frete.to_s
+    vProd = float_two(@nota_fiscal.valor_produtos.to_s)
+    vFrete = float_two(@nota_fiscal.valor_frete.to_s)
     vSeg = "0.00"
-    vDesc = @nota_fiscal.valor_desconto.to_s
+    vDesc = float_two(@nota_fiscal.valor_desconto.to_s)
     vII = "0.00"
     vIPI = "0.00"
-    vPIS = @nota_fiscal.nota_fiscal_imposto.valor_pis
-    vCOFINS = @nota_fiscal.nota_fiscal_imposto.valor_cofins
-    vOutro = @nota_fiscal.valor_outras_despesas.to_s
-    vNF = @nota_fiscal.valor_total_nota.to_s
+    vPIS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_pis)
+    vCOFINS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_cofins)
+    vOutro = float_two(@nota_fiscal.valor_outras_despesas.to_s)
+    vNF = float_two(@nota_fiscal.valor_total_nota.to_s)
     vTotTrib = ""
     out_file.puts("W02|#{vBC}|#{vICMS}|#{vICMSDeson}|#{vFCPUFDest}|#{vICMSUFDest}|#{vICMSUFRemet}|#{vBCST}|#{vST}|#{vProd}|#{vFrete}|#{vSeg}|#{vDesc}|#{vII}|#{vIPI}|#{vPIS}|#{vCOFINS}|#{vOutro}|#{vNF}|#{vTotTrib}|")
 
@@ -208,28 +208,28 @@ class GerarNotaFiscaisController < ApplicationController
     esp = @nota_fiscal.nota_fiscal_transporta.especie.to_s
     marca = @nota_fiscal.nota_fiscal_transporta.marca.to_s
     nVol = ""
-    pesoL = @nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s
-    pesoB = @nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s
+    pesoL = float_two(@nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s)
+    pesoB = float_two(@nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s)
     out_file.puts("X26|#{qVol}|#{esp}|#{marca}|#{nVol}|#{pesoL}|#{pesoB}|")
 
     # Bloco Y
     out_file.puts("Y|")
 
     nFat = @nota_fiscal.numero_nota.to_s
-    vOrig = @nota_fiscal.valor_total_nota.to_s
+    vOrig = float_two(@nota_fiscal.valor_total_nota.to_s)
     vDesc = "0.00"
-    vLiq = @nota_fiscal.valor_total_nota.to_s
+    vLiq = float_two(@nota_fiscal.valor_total_nota.to_s)
     out_file.puts("Y02|#{nFat}|#{vOrig}|#{vDesc}|#{vLiq}|")
 
     @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, i|
       nDup = faturamento_parcela.duplicata.to_s
       cVenc = faturamento_parcela.data_vencimento.strftime("%Y-%m-%d")
-      vDup = faturamento_parcela.valor_parcela.to_s
+      vDup = float_two(faturamento_parcela.valor_parcela.to_s)
       out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
     end
 
     tPag = @nota_fiscal.meio_pagamento
-    vPag = @nota_fiscal.valor_total_nota.to_s
+    vPag = float_two(@nota_fiscal.valor_total_nota.to_s)
     cNPJ = ""
     tBand = ""
     cAut = ""
@@ -237,7 +237,8 @@ class GerarNotaFiscaisController < ApplicationController
     out_file.puts("YA01|1|#{tPag}|#{vPag}|")
 
     # Bloco Z
-    out_file.puts("Z||PEDIDO 188169041.1 / PROCESSO 450045 / ENTREGA RODOVIA MANOEL SILVEIRO PINTO 125|")
+    obs = @nota_fiscal.observacao
+    out_file.puts("Z||#{obs}|")
 
     out_file.close
 
@@ -245,6 +246,10 @@ class GerarNotaFiscaisController < ApplicationController
   end
 
   private
+
+  def float_two(number)
+    "%.2f" % number
+  end
 
   def set_nota_fiscal
     @nota_fiscal = NotaFiscal.find(params[:nota_fiscal_id])
