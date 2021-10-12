@@ -17,6 +17,6 @@ module Viversaude
     # the framework and any gems in your application.
 
     config.i18n.default_locale = :"pt-BR"
-  	config.time_zone = "Brasilia"
+    config.time_zone = 'Brasilia'
   end
 end
