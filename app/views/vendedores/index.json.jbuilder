@@ -1,1 +1,1 @@
-json.array! @vendedores, partial: "vendedores/vendedor", as: :vendedor
+json.array! @vendedores, partial: 'vendedores/vendedor', as: :vendedor
