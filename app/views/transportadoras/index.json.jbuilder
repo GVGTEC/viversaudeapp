@@ -1,1 +1,1 @@
-json.array! @transportadoras, partial: "transportadoras/transportadora", as: :transportadora
+json.array! @transportadoras, partial: 'transportadoras/transportadora', as: :transportadora

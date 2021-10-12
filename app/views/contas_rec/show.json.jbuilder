@@ -1,1 +1,1 @@
-json.partial! "contas_rec/contas_rec", contas_rec: @contas_rec
+json.partial! 'contas_rec/contas_rec', contas_rec: @contas_rec

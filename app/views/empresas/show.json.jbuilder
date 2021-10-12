@@ -1,1 +1,1 @@
-json.partial! "empresas/empresa", empresa: @empresa
+json.partial! 'empresas/empresa', empresa: @empresa

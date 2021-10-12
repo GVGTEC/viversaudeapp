@@ -1,1 +1,1 @@
-json.array! @terceiros, partial: "terceiros/terceiro", as: :terceiro
+json.array! @terceiros, partial: 'terceiros/terceiro', as: :terceiro

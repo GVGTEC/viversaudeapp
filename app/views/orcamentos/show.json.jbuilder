@@ -1,1 +1,1 @@
-json.partial! "orcamentos/orcamento", orcamento: @orcamento
+json.partial! 'orcamentos/orcamento', orcamento: @orcamento

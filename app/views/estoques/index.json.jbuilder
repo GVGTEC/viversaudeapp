@@ -1,1 +1,1 @@
-json.array! @estoques, partial: "estoques/estoque", as: :estoque
+json.array! @estoques, partial: 'estoques/estoque', as: :estoque

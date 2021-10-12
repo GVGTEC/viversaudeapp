@@ -1,1 +1,1 @@
-json.partial! "icms/icms", icms: @icms
+json.partial! 'icms/icms', icms: @icms

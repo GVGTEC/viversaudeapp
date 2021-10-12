@@ -1,1 +1,1 @@
-json.partial! "cfop/cfop", cfop: @cfop
+json.partial! 'cfop/cfop', cfop: @cfop

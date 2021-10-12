@@ -1,1 +1,1 @@
-json.partial! "fornecedores/fornecedor", fornecedor: @fornecedor
+json.partial! 'fornecedores/fornecedor', fornecedor: @fornecedor
