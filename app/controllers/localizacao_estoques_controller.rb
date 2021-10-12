@@ -6,13 +6,12 @@ class LocalizacaoEstoquesController < ApplicationController
     @localizacao_estoques = LocalizacaoEstoque.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @localizacao_estoques = @localizacao_estoques.paginate(options)
   end
 
   # GET /localizacao_estoques/1 or /localizacao_estoques/1.json
-  def show
-  end
+  def show; end
 
   # GET /localizacao_estoques/new
   def new
@@ -20,8 +19,7 @@ class LocalizacaoEstoquesController < ApplicationController
   end
 
   # GET /localizacao_estoques/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /localizacao_estoques or /localizacao_estoques.json
   def create
@@ -30,7 +28,7 @@ class LocalizacaoEstoquesController < ApplicationController
 
     respond_to do |format|
       if @localizacao_estoque.save
-        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque Cadastrado" }
+        format.html { redirect_to @localizacao_estoque, notice: 'Localizacao estoque Cadastrado' }
         format.json { render :show, status: :created, location: @localizacao_estoque }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class LocalizacaoEstoquesController < ApplicationController
   def update
     respond_to do |format|
       if @localizacao_estoque.update(localizacao_estoque_params)
-        format.html { redirect_to @localizacao_estoque, notice: "Localizacao estoque Alterado" }
+        format.html { redirect_to @localizacao_estoque, notice: 'Localizacao estoque Alterado' }
         format.json { render :show, status: :ok, location: @localizacao_estoque }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +54,7 @@ class LocalizacaoEstoquesController < ApplicationController
   def destroy
     @localizacao_estoque.destroy
     respond_to do |format|
-      format.html { redirect_to localizacao_estoques_url, notice: "Localizacao estoque Excluído" }
+      format.html { redirect_to localizacao_estoques_url, notice: 'Localizacao estoque Excluído' }
       format.json { head :no_content }
     end
   end

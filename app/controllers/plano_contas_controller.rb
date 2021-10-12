@@ -6,13 +6,12 @@ class PlanoContasController < ApplicationController
     @plano_contas = PlanoConta.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @plano_contas = @plano_contas.paginate(options)
   end
 
   # GET /plano_contas/1 or /plano_contas/1.json
-  def show
-  end
+  def show; end
 
   # GET /plano_contas/new
   def new
@@ -20,8 +19,7 @@ class PlanoContasController < ApplicationController
   end
 
   # GET /plano_contas/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /plano_contas or /plano_contas.json
   def create
@@ -30,7 +28,7 @@ class PlanoContasController < ApplicationController
 
     respond_to do |format|
       if @plano_conta.save
-        format.html { redirect_to @plano_conta, notice: "Plano conta Cadastrado" }
+        format.html { redirect_to @plano_conta, notice: 'Plano conta Cadastrado' }
         format.json { render :show, status: :created, location: @plano_conta }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class PlanoContasController < ApplicationController
   def update
     respond_to do |format|
       if @plano_conta.update(plano_conta_params)
-        format.html { redirect_to @plano_conta, notice: "Plano conta Alterado" }
+        format.html { redirect_to @plano_conta, notice: 'Plano conta Alterado' }
         format.json { render :show, status: :ok, location: @plano_conta }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +54,7 @@ class PlanoContasController < ApplicationController
   def destroy
     @plano_conta.destroy
     respond_to do |format|
-      format.html { redirect_to plano_contas_url, notice: "Plano conta Excluído" }
+      format.html { redirect_to plano_contas_url, notice: 'Plano conta Excluído' }
       format.json { head :no_content }
     end
   end

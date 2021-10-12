@@ -2,50 +2,50 @@ class GerarNotaFiscaisController < ApplicationController
   before_action :set_nota_fiscal
 
   def gerar_nota
-    require "fileutils"
+    require 'fileutils'
 
-    path_tmp_nota = "tmp/#{@nota_fiscal.numero_nota}_0001_001_#{Time.now.strftime("%d_%m_%Y")}-nfe.txt"
-    FileUtils.rm_rf Dir.glob("tmp/nota*.txt")
+    path_tmp_nota = "tmp/#{@nota_fiscal.numero_nota}_0001_001_#{Time.zone.now.strftime('%d_%m_%Y')}-nfe.txt"
+    FileUtils.rm_rf Dir.glob('tmp/nota*.txt')
 
-    out_file = File.new(path_tmp_nota, "w")
+    out_file = File.new(path_tmp_nota, 'w')
     empresa = Empresa.first
 
     # Inicio
-    out_file.puts("NOTA FISCAL|1|")
+    out_file.puts('NOTA FISCAL|1|')
 
     # Bloco A
-    out_file.puts("A|4.00|NFe|")
+    out_file.puts('A|4.00|NFe|')
 
     # Bloco B
     cUF = empresa.codigo_uf_emitente
-    cNF = ""
+    cNF = ''
     natOp = @nota_fiscal.cfop.natureza_operacao
-    mod = "55"
-    serie = "1"
+    mod = '55'
+    serie = '1'
     nNF = @nota_fiscal.numero_nota
-    dhEmi = "#{@nota_fiscal.data_emissao.strftime("%Y-%m-%dT%H:%M:%S")}-02:00"
+    dhEmi = "#{@nota_fiscal.data_emissao.strftime('%Y-%m-%dT%H:%M:%S')}-02:00"
     dhSaiEnt = @nota_fiscal.data_saida
     tpNF = @nota_fiscal.cfop.entrada_saida_es == 'S' ? 1 : 0
-    idDest = "1"
+    idDest = '1'
     cMunFG = empresa.codcid_ibge
-    tpImp = "1"
-    tpEmis = "1"
-    cDV = "0"
-    tpAmb = "1"
-    finNFe = "1"
+    tpImp = '1'
+    tpEmis = '1'
+    cDV = '0'
+    tpAmb = '1'
+    finNFe = '1'
     indFinal = @nota_fiscal.cliente.consumidor_final == 'N' ? 1 : 0
-    indPres = "1"
-    procEmi = "3"
+    indPres = '1'
+    procEmi = '3'
     verProc = empresa.versao_layout
-    dhCont = ""
-    xJust = ""
+    dhCont = ''
+    xJust = ''
     out_file.puts("B|#{cUF}|#{cNF}|#{natOp}|#{mod}|#{serie}|#{nNF}|#{dhEmi}|#{dhSaiEnt}|#{tpNF}|#{idDest}|#{cMunFG}|#{tpImp}|#{tpEmis}|#{cDV}|#{tpAmb}|#{finNFe}|#{indFinal}|#{indPres}|#{procEmi}|#{verProc}|#{dhCont}|#{xJust}|")
 
     # Bloco C
     xNome = empresa.nome
-    xFant = ""
+    xFant = ''
     iE = empresa.inscricao_estadual
-    iEST = ""
+    iEST = ''
     iM = empresa.inscricao_municipal
     cNAE = empresa.cnae
     cRT = empresa.regime_tributario
@@ -62,17 +62,17 @@ class GerarNotaFiscaisController < ApplicationController
     xMun = empresa.cidade
     uf = empresa.uf
     cep = empresa.cep
-    cPais = "1058"
-    xPais = "BRASIL"
+    cPais = '1058'
+    xPais = 'BRASIL'
     fone = empresa.telefone
     out_file.puts("C05|#{xLgr}|#{nro}|#{xCpl}|#{xBairro}|#{cMun}|#{xMun}|#{uf}|#{cep}|#{cPais}|#{xPais}|#{fone}|")
 
     # Bloco E
     xNome = @nota_fiscal.cliente.nome.strip
-    indIEDest = @nota_fiscal.cliente.ie.blank? || @nota_fiscal.cliente.ie == "ISENTO" || @nota_fiscal.cliente.ie == "ISENTA" || @nota_fiscal.cliente.pessoa == "F" ? 9 : 1
+    indIEDest = @nota_fiscal.cliente.ie.blank? || @nota_fiscal.cliente.ie == 'ISENTO' || @nota_fiscal.cliente.ie == 'ISENTA' || @nota_fiscal.cliente.pessoa == 'F' ? 9 : 1
     ie = @nota_fiscal.cliente.ie
-    isuf = ""
-    im = ""
+    isuf = ''
+    im = ''
     email = @nota_fiscal.cliente.email.strip
     out_file.puts("E|#{xNome}|#{indIEDest}|#{ie}|#{isuf}|#{im}|#{email}|")
 
@@ -80,15 +80,15 @@ class GerarNotaFiscaisController < ApplicationController
     out_file.puts("E02|#{cnpj}|")
 
     xLgr = @nota_fiscal.cliente.endereco.strip
-    nro = "00000"
-    xCpl = ""
+    nro = '00000'
+    xCpl = ''
     xBairro = @nota_fiscal.cliente.bairro.strip
     cMun = @nota_fiscal.cliente.codcidade_ibge.strip
     xMun = @nota_fiscal.cliente.cidade.strip
     uf = @nota_fiscal.cliente.uf.strip
     cep = @nota_fiscal.cliente.cep.strip
-    cPais = "1058"
-    xPais = "BRASIL"
+    cPais = '1058'
+    xPais = 'BRASIL'
     fone = @nota_fiscal.cliente.telefone_nf.strip
     out_file.puts("E05|#{xLgr}|#{nro}|#{xCpl}|#{xBairro}|#{cMun}|#{xMun}|#{uf}|#{cep}|#{cPais}|#{xPais}|#{fone}|")
 
@@ -97,32 +97,32 @@ class GerarNotaFiscaisController < ApplicationController
       out_file.puts("H|#{i + 1}|Lote: 2021041802 Qtd: 2700 Val: 18/04/2024 - Local: RUA 05|")
 
       cProd = item.produto.codprd_sac.to_s
-      cEAN = ""
+      cEAN = ''
       xProd = item.produto.descricao_nfe.strip.to_s
       nCM = item.produto.ncm.strip.to_s
-      nVE = ""
-      cEST = ""
-      indEscala = ""
-      cNPJFab = ""
-      cBenef = ""
-      eXTIPI = ""
+      nVE = ''
+      cEST = ''
+      indEscala = ''
+      cNPJFab = ''
+      cBenef = ''
+      eXTIPI = ''
       cFOP = item.cfop.to_s
       uCom = item.produto.unidade.to_s
-      qCom = float_two(item.quantidade) 
+      qCom = float_two(item.quantidade)
       vUnCom = float_two(item.preco_unitario)
       vProd = float_two(item.preco_total)
-      cEANTrib = ""
+      cEANTrib = ''
       uTrib = item.produto.unidade.to_s
       qTrib = float_two(item.quantidade)
       vUnTrib = float_two(item.preco_unitario)
       vFrete = float_two(@nota_fiscal.valor_frete)
-      vSeg = ""
+      vSeg = ''
       vDesc = float_two(@nota_fiscal.valor_desconto)
       vOutro = float_two(@nota_fiscal.valor_outras_despesas)
-      indTot = "1"
+      indTot = '1'
       out_file.puts("I|#{cProd}|#{cEAN}|#{xProd}|#{nCM}|#{nVE}|#{cEST}|#{indEscala}|#{cNPJFab}|#{cBenef}|#{eXTIPI}|#{cFOP}|#{uCom}|#{qCom}|#{vUnCom}|#{vProd}|#{cEANTrib}|#{uTrib}|#{qTrib}|#{vUnTrib}|#{vFrete}|#{vSeg}|#{vDesc}|#{vOutro}|#{indTot}|")
 
-      vTotTrib = ""
+      vTotTrib = ''
       out_file.puts("M|#{vTotTrib}|")
 
       # orig = "0"
@@ -130,64 +130,65 @@ class GerarNotaFiscaisController < ApplicationController
       # out_file.puts("N|")
       # out_file.puts("N10d|#{orig}|#{cSOSN}|")
 
-      if item.cst == "00"
+      case item.cst
+      when '00'
         orig = item.produto.origem
-        cST =  item.cst
-        modBC = "3"
+        cST = item.cst
+        modBC = '3'
         vBC = float_two(item.valor_bc_icms)
         pICMS = float_two(item.aliquota_icms)
         vICMS = float_two(item.valor_icms)
-        pFCP = ""
-        vFCP = ""
-        out_file.puts("N|")
+        pFCP = ''
+        vFCP = ''
+        out_file.puts('N|')
         out_file.puts("N02|#{orig}|#{cST}|#{modBC}|#{vBC}|#{pICMS}|#{vICMS}|#{pFCP}|#{vFCP}|")
 
-      elsif item.cst == "40"
+      when '40'
         orig = item.produto.origem
         cst = item.cst
-        vICMSDeson = ""
-        motDesICM = ""
-        out_file.puts("N|")
+        vICMSDeson = ''
+        motDesICM = ''
+        out_file.puts('N|')
         out_file.puts("N06|#{orig}|#{cst}|#{vICMSDeson}|#{motDesICM}|")
       end
-      
+
       cST = item.cst
       vBC = float_two(item.preco_total.to_s)
       pPIS = float_two(item.aliquota_pis.to_s)
       vPIS = float_two(item.valor_pis.to_s)
-      out_file.puts("Q|")
+      out_file.puts('Q|')
       out_file.puts("Q02|#{cST}|#{vBC}|#{pPIS}|#{vPIS}|")
 
       cST = item.cst
       vBC = float_two(item.preco_total.to_s)
       pCOFINS = float_two(item.aliquota_cofins.to_s)
       vCOFINS = float_two(item.valor_cofins.to_s)
-      out_file.puts("S|")
+      out_file.puts('S|')
       out_file.puts("S02|#{cST}|#{vBC}|#{pCOFINS}|#{vCOFINS}|")
     end
 
     # Bloco W
-    out_file.puts("W|")
+    out_file.puts('W|')
 
     vBC = float_two(@nota_fiscal.nota_fiscal_imposto.valor_bc_icms)
     vICMS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_icms)
-    vICMSDeson = "0.00"
-    vFCPUFDest = "0.00"
-    vICMSUFDest = "0.00"
-    vICMSUFRemet = "0.00"
-    vBCST = "0.00"
-    vST = "0.00"
+    vICMSDeson = '0.00'
+    vFCPUFDest = '0.00'
+    vICMSUFDest = '0.00'
+    vICMSUFRemet = '0.00'
+    vBCST = '0.00'
+    vST = '0.00'
     vProd = float_two(@nota_fiscal.valor_produtos.to_s)
     vFrete = float_two(@nota_fiscal.valor_frete.to_s)
-    vSeg = "0.00"
+    vSeg = '0.00'
     vDesc = float_two(@nota_fiscal.valor_desconto.to_s)
-    vII = "0.00"
-    vIPI = "0.00"
+    vII = '0.00'
+    vIPI = '0.00'
     vPIS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_pis)
     vCOFINS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_cofins)
     vOutro = float_two(@nota_fiscal.valor_outras_despesas.to_s)
     vNF = float_two(@nota_fiscal.valor_total_nota.to_s)
-    vTotTrib = ""
+    vTotTrib = ''
     out_file.puts("W02|#{vBC}|#{vICMS}|#{vICMSDeson}|#{vFCPUFDest}|#{vICMSUFDest}|#{vICMSUFRemet}|#{vBCST}|#{vST}|#{vProd}|#{vFrete}|#{vSeg}|#{vDesc}|#{vII}|#{vIPI}|#{vPIS}|#{vCOFINS}|#{vOutro}|#{vNF}|#{vTotTrib}|")
 
     # Bloco X
@@ -207,32 +208,32 @@ class GerarNotaFiscaisController < ApplicationController
     qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s
     esp = @nota_fiscal.nota_fiscal_transporta.especie.to_s
     marca = @nota_fiscal.nota_fiscal_transporta.marca.to_s
-    nVol = ""
+    nVol = ''
     pesoL = float_two(@nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s)
     pesoB = float_two(@nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s)
     out_file.puts("X26|#{qVol}|#{esp}|#{marca}|#{nVol}|#{pesoL}|#{pesoB}|")
 
     # Bloco Y
-    out_file.puts("Y|")
+    out_file.puts('Y|')
 
     nFat = @nota_fiscal.numero_nota.to_s
     vOrig = float_two(@nota_fiscal.valor_total_nota.to_s)
-    vDesc = "0.00"
+    vDesc = '0.00'
     vLiq = float_two(@nota_fiscal.valor_total_nota.to_s)
     out_file.puts("Y02|#{nFat}|#{vOrig}|#{vDesc}|#{vLiq}|")
 
-    @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, i|
+    @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, _i|
       nDup = faturamento_parcela.duplicata.to_s
-      cVenc = faturamento_parcela.data_vencimento.strftime("%Y-%m-%d")
+      cVenc = faturamento_parcela.data_vencimento.strftime('%Y-%m-%d')
       vDup = float_two(faturamento_parcela.valor_parcela.to_s)
       out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
     end
 
     tPag = @nota_fiscal.meio_pagamento
     vPag = float_two(@nota_fiscal.valor_total_nota.to_s)
-    cNPJ = ""
-    tBand = ""
-    cAut = ""
+    cNPJ = ''
+    tBand = ''
+    cAut = ''
     out_file.puts("YA|#{tPag}|#{vPag}|#{cNPJ}|#{tBand}|#{cAut}|")
     out_file.puts("YA01|1|#{tPag}|#{vPag}|")
 
@@ -248,8 +249,8 @@ class GerarNotaFiscaisController < ApplicationController
   private
 
   def float_two(number)
-    "%.2f" % number
-  rescue
+    '%.2f' % number
+  rescue StandardError
     number
   end
 

@@ -7,40 +7,38 @@ class EstoquesController < ApplicationController
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 10}
+    options = { page: params[:page] || 1, per_page: 10 }
     @estoques = @estoques.paginate(options)
   end
 
   def importar
     if params[:arquivo].blank?
-      flash[:error] = "Selecione um arquivo .CSV"
-      redirect_to "/importar_estoque/importar"
+      flash[:error] = 'Selecione um arquivo .CSV'
+      redirect_to '/importar_estoque/importar'
       return
     end
 
-    if File.basename(params[:arquivo].tempfile).include?(".CSV")
+    if File.basename(params[:arquivo].tempfile).include?('.CSV')
       importar_csv
     else
-      flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
-      redirect_to "/importar_estoques"
+      flash[:error] = 'Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV'
+      redirect_to '/importar_estoques'
       return
     end
 
-    flash[:sucesso] = "Estoques importados com sucesso"
+    flash[:sucesso] = 'Estoques importados com sucesso'
     redirect_to estoques_path
-  rescue => exception
-    flash[:error] = exception
-    redirect_to "/importar_estoques"
+  rescue StandardError => e
+    flash[:error] = e
+    redirect_to '/importar_estoques'
     nil
   end
 
   def importar_csv
     File.foreach(params[:arquivo].tempfile) do |line|
       d = CharlockHolmes::EncodingDetector.detect(line)
-      line = line.to_s.encode("UTF-8", d[:encoding], invalid: :replace, replace: "")
-      if line.present?
-        importar_linha(line.split(";"))
-      end
+      line = line.to_s.encode('UTF-8', d[:encoding], invalid: :replace, replace: '')
+      importar_linha(line.split(';')) if line.present?
     end
   end
 
@@ -62,10 +60,10 @@ class EstoquesController < ApplicationController
 
     estoque.lote = linha[lote]
 
-    if linha[fornecedor_id].to_i > 0
+    if linha[fornecedor_id].to_i.positive?
       begin
         estoque.fornecedor_id = Fornecedor.find(linha[fornecedor_id].to_i).id
-      rescue
+      rescue StandardError
         estoque.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
       end
     end
@@ -82,11 +80,10 @@ class EstoquesController < ApplicationController
     estoque.save
   end
 
-  def show
-  end
+  def show; end
 
   def reposicao
-    params[:data_reposicao] ||= Time.zone.now.strftime("%Y-%m-%d")
+    params[:data_reposicao] ||= Time.zone.now.strftime('%Y-%m-%d')
     @estoque = Estoque.new
     @estoque.fornecedor_id = params[:fornecedor_id] if params[:fornecedor_id].present?
     @estoque.documento = params[:documento] if params[:documento].present?
@@ -94,7 +91,7 @@ class EstoquesController < ApplicationController
   end
 
   def create_reposicao
-    @estoque = Estoque.new(estoque_reposicao_params.merge(ultima_alteracao: "REP"))
+    @estoque = Estoque.new(estoque_reposicao_params.merge(ultima_alteracao: 'REP'))
     @estoque.empresa_id = @adm.empresa.id
 
     if @estoque.save
@@ -118,13 +115,13 @@ class EstoquesController < ApplicationController
 
   def ajuste
     @estoque = Estoque.new
-    @params = "/estoques/ajuste"
+    @params = '/estoques/ajuste'
     updated_ajuste if params[@params]
   end
 
   def baixa
     @estoque = Estoque.new
-    @params = "/estoques/baixa"
+    @params = '/estoques/baixa'
     updated_baixa if params[@params]
   end
 
@@ -139,7 +136,7 @@ class EstoquesController < ApplicationController
     estoque_atual_lote = @estoque.estoque_atual_lote
     qtd_estoque_final = (@estoque.produto.estoque_atual - @estoque.estoque_atual_lote) + estoque_ajuste_params[:estoque_atual_lote].to_f
     @estoque.estoque_atual_lote = estoque_ajuste_params[:estoque_atual_lote]
-    @estoque.ultima_alteracao = "AJU"
+    @estoque.ultima_alteracao = 'AJU'
 
     if @estoque.save
       movimento_estoque = MovimentoEstoque.new
@@ -165,7 +162,7 @@ class EstoquesController < ApplicationController
     @estoque = Estoque.find(params[:id])
     estoque_atual_lote = @estoque.estoque_atual_lote
     @estoque.estoque_atual_lote = estoque_atual_lote - params[:estoque_atual_lote].to_f
-    @estoque.ultima_alteracao = "BAI"
+    @estoque.ultima_alteracao = 'BAI'
 
     if @estoque.save
       movimento_estoque = MovimentoEstoque.new
@@ -198,26 +195,27 @@ class EstoquesController < ApplicationController
   end
 
   def estoque_reposicao_params
-    params.require("/estoques/reposicao").permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
+    params.require('/estoques/reposicao').permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao,
+                                                 :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
   end
 
   def estoque_ajuste_params
-    params.require("/estoques/ajuste").permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
+    params.require('/estoques/ajuste').permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao,
+                                              :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
   end
 
   def estoque_baixa_params
-    params.require("/estoques/baixa").permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
+    params.require('/estoques/baixa').permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao,
+                                             :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
   end
-
-  private
 
   def separate_comma(number)
     reverse_digits = number.to_s.chars.reverse
-    reverse_digits.each_slice(2).map(&:join).join(",").reverse.to_f
+    reverse_digits.each_slice(2).map(&:join).join(',').reverse.to_f
   end
 
   def separate_margem(number)
     reverse_digits = number.to_s.chars.reverse
-    reverse_digits.each_slice(4).map(&:join).join(",").reverse.to_f
+    reverse_digits.each_slice(4).map(&:join).join(',').reverse.to_f
   end
 end

@@ -6,13 +6,12 @@ class VendedoresController < ApplicationController
     @vendedores = Vendedor.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @vendedores = @vendedores.paginate(options)
   end
 
   # GET /vendedores/1 or /vendedores/1.json
-  def show
-  end
+  def show; end
 
   # GET /vendedores/new
   def new
@@ -20,8 +19,7 @@ class VendedoresController < ApplicationController
   end
 
   # GET /vendedores/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /vendedores or /vendedores.json
   def create
@@ -30,7 +28,7 @@ class VendedoresController < ApplicationController
 
     respond_to do |format|
       if @vendedor.save
-        format.html { redirect_to @vendedor, notice: "Vendedor Cadastrado" }
+        format.html { redirect_to @vendedor, notice: 'Vendedor Cadastrado' }
         format.json { render :show, status: :created, location: @vendedor }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class VendedoresController < ApplicationController
   def update
     respond_to do |format|
       if @vendedor.update(vendedor_params)
-        format.html { redirect_to @vendedor, notice: "Vendedor Alterado" }
+        format.html { redirect_to @vendedor, notice: 'Vendedor Alterado' }
         format.json { render :show, status: :ok, location: @vendedor }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +54,7 @@ class VendedoresController < ApplicationController
   def destroy
     @vendedor.destroy
     respond_to do |format|
-      format.html { redirect_to vendedores_url, notice: "Vendedor Excluído" }
+      format.html { redirect_to vendedores_url, notice: 'Vendedor Excluído' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +68,7 @@ class VendedoresController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def vendedor_params
-    params.require(:vendedor).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email)
+    params.require(:vendedor).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf,
+                                     :telefone, :email)
   end
 end

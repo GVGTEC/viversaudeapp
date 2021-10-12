@@ -6,13 +6,12 @@ class TerceirosController < ApplicationController
     @terceiros = Terceiro.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @terceiros = @terceiros.paginate(options)
   end
 
   # GET /terceiros/1 or /terceiros/1.json
-  def show
-  end
+  def show; end
 
   # GET /terceiros/new
   def new
@@ -20,8 +19,7 @@ class TerceirosController < ApplicationController
   end
 
   # GET /terceiros/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /terceiros or /terceiros.json
   def create
@@ -30,7 +28,7 @@ class TerceirosController < ApplicationController
 
     respond_to do |format|
       if @terceiro.save
-        format.html { redirect_to @terceiro, notice: "Terceiro Cadastrado" }
+        format.html { redirect_to @terceiro, notice: 'Terceiro Cadastrado' }
         format.json { render :show, status: :created, location: @terceiro }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class TerceirosController < ApplicationController
   def update
     respond_to do |format|
       if @terceiro.update(terceiro_params)
-        format.html { redirect_to @terceiro, notice: "Terceiro Alterado" }
+        format.html { redirect_to @terceiro, notice: 'Terceiro Alterado' }
         format.json { render :show, status: :ok, location: @terceiro }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,7 +54,7 @@ class TerceirosController < ApplicationController
   def destroy
     @terceiro.destroy
     respond_to do |format|
-      format.html { redirect_to terceiros_url, notice: "Terceiro Excluído" }
+      format.html { redirect_to terceiros_url, notice: 'Terceiro Excluído' }
       format.json { head :no_content }
     end
   end
@@ -70,6 +68,7 @@ class TerceirosController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def terceiro_params
-    params.require(:terceiro).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email)
+    params.require(:terceiro).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf,
+                                     :telefone, :email)
   end
 end

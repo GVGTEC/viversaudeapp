@@ -7,8 +7,7 @@ class IcmsController < ApplicationController
   end
 
   # GET /icms/1 or /icms/1.json
-  def show
-  end
+  def show; end
 
   # GET /icms/new
   def new
@@ -16,8 +15,7 @@ class IcmsController < ApplicationController
   end
 
   # GET /icms/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /icms or /icms.json
   def create
@@ -25,7 +23,7 @@ class IcmsController < ApplicationController
 
     respond_to do |format|
       if @icms.save
-        format.html { redirect_to @icms, notice: "Icms Cadastrado" }
+        format.html { redirect_to @icms, notice: 'Icms Cadastrado' }
         format.json { render :show, status: :created, location: @icms }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,7 @@ class IcmsController < ApplicationController
   def update
     respond_to do |format|
       if @icms.update(icms_params)
-        format.html { redirect_to @icms, notice: "Icms Alterado" }
+        format.html { redirect_to @icms, notice: 'Icms Alterado' }
         format.json { render :show, status: :ok, location: @icms }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,7 +49,7 @@ class IcmsController < ApplicationController
   def destroy
     @icms.destroy
     respond_to do |format|
-      format.html { redirect_to icms_index_url, notice: "Icms Excluído" }
+      format.html { redirect_to icms_index_url, notice: 'Icms Excluído' }
       format.json { head :no_content }
     end
   end

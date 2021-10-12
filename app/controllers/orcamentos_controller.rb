@@ -7,13 +7,12 @@ class OrcamentosController < ApplicationController
     # @orcamentos = Orcamento.where(empresa_id: @adm.empresa.id)   O CAMPO EMPRESA_ID AINDA NÃO EXISTE NA TABELA DE ORÇAMENTO
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @orcamentos = @orcamentos.paginate(options)
   end
 
   # GET /orcamentos/1 or /orcamentos/1.json
-  def show
-  end
+  def show; end
 
   # GET /orcamentos/new
   def new
@@ -21,8 +20,7 @@ class OrcamentosController < ApplicationController
   end
 
   # GET /orcamentos/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /orcamentos or /orcamentos.json
   def create
@@ -32,7 +30,7 @@ class OrcamentosController < ApplicationController
     respond_to do |format|
       if @orcamento.save
         # format.html { redirect_to @orcamento, notice: "Orçamento Cadastrado" }
-        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: "Orçamento Cadastrado" }
+        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: 'Orçamento Cadastrado' }
         format.json { render :show, status: :created, location: @orcamento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +43,7 @@ class OrcamentosController < ApplicationController
   def update
     respond_to do |format|
       if @orcamento.update(orcamento_params)
-        format.html { redirect_to @orcamento, notice: "Orçamento Alterado" }
+        format.html { redirect_to @orcamento, notice: 'Orçamento Alterado' }
         format.json { render :show, status: :ok, location: @orcamento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +56,7 @@ class OrcamentosController < ApplicationController
   def destroy
     @orcamento.destroy
     respond_to do |format|
-      format.html { redirect_to orcamentos_url, notice: "Orcamento Excluído" }
+      format.html { redirect_to orcamentos_url, notice: 'Orcamento Excluído' }
       format.json { head :no_content }
     end
   end

@@ -1,5 +1,5 @@
 class OrcamentoItensController < ApplicationController
-  before_action :set_orcamento_item, only: %i[ show edit update destroy ]
+  before_action :set_orcamento_item, only: %i[show edit update destroy]
   before_action :set_orcamento
 
   # GET /orcamento_itens or /orcamento_itens.json
@@ -8,8 +8,7 @@ class OrcamentoItensController < ApplicationController
   end
 
   # GET /orcamento_itens/1 or /orcamento_itens/1.json
-  def show
-  end
+  def show; end
 
   # GET /orcamento_itens/new
   def new
@@ -17,8 +16,7 @@ class OrcamentoItensController < ApplicationController
   end
 
   # GET /orcamento_itens/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /orcamento_itens or /orcamento_itens.json
   def create
@@ -26,7 +24,7 @@ class OrcamentoItensController < ApplicationController
 
     respond_to do |format|
       if @orcamento_item.save
-        format.html { redirect_to @orcamento_item, notice: "Orçamento Itens Cadastrado" }
+        format.html { redirect_to @orcamento_item, notice: 'Orçamento Itens Cadastrado' }
         format.json { render :show, status: :created, location: @orcamento_item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +37,7 @@ class OrcamentoItensController < ApplicationController
   def update
     respond_to do |format|
       if @orcamento_item.update(orcamento_item_params)
-        format.html { redirect_to @orcamento_item, notice: "Orçamento Itens Alterado" }
+        format.html { redirect_to @orcamento_item, notice: 'Orçamento Itens Alterado' }
         format.json { render :show, status: :ok, location: @orcamento_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +50,7 @@ class OrcamentoItensController < ApplicationController
   def destroy
     @orcamento_item.destroy
     respond_to do |format|
-      format.html { redirect_to orcamento_itens_url, notice: "Orçamento Itens Excluído" }
+      format.html { redirect_to orcamento_itens_url, notice: 'Orçamento Itens Excluído' }
       format.json { head :no_content }
     end
   end

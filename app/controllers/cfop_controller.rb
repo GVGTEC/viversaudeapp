@@ -6,13 +6,12 @@ class CfopController < ApplicationController
     @cfop = Cfop.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @cfop = @cfop.paginate(options)
   end
 
   # GET /cfop/1 or /cfop/1.json
-  def show
-  end
+  def show; end
 
   # GET /cfop/new
   def new
@@ -20,8 +19,7 @@ class CfopController < ApplicationController
   end
 
   # GET /cfop/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /cfop or /cfop.json
   def create
@@ -34,9 +32,9 @@ class CfopController < ApplicationController
         @cfop.save
       end
 
-      format.html { redirect_to cfop_index_path, notice: "Cfop Cadastrado" }
+      format.html { redirect_to cfop_index_path, notice: 'Cfop Cadastrado' }
       format.json { render :show, status: :created, location: @cfop }
-    rescue
+    rescue StandardError
       format.html { render :new, status: :unprocessable_entity }
       format.json { render json: @cfop.errors, status: :unprocessable_entity }
     end
@@ -48,7 +46,7 @@ class CfopController < ApplicationController
       @natureza = @cfop.natureza_operacao
       if @cfop.update(cfop_params)
         atualiza_cfops_com_mesma_natureza
-        format.html { redirect_to cfop_index_path, notice: "Cfop Alterado" }
+        format.html { redirect_to cfop_index_path, notice: 'Cfop Alterado' }
         format.json { render :show, status: :ok, location: @cfop }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,7 +59,7 @@ class CfopController < ApplicationController
   def destroy
     @cfop.destroy
     respond_to do |format|
-      format.html { redirect_to cfop_index_url, notice: "Cfop Excluído" }
+      format.html { redirect_to cfop_index_url, notice: 'Cfop Excluído' }
       format.json { head :no_content }
     end
   end
@@ -82,6 +80,7 @@ class CfopController < ApplicationController
 
   # Only allow a licfopsst of trusted parameters through.
   def cfop_params
-    params.require(:cfop).permit(:descricao, :natureza_operacao, :natureza_operacao_st, :operacao, :nota_complementar_impostos_sn, :entrada_saida_es, :cliente_fornecedor_cf, :calcular_impostos_sn, :faturamento_sn, :observacao)
+    params.require(:cfop).permit(:descricao, :natureza_operacao, :natureza_operacao_st, :operacao,
+                                 :nota_complementar_impostos_sn, :entrada_saida_es, :cliente_fornecedor_cf, :calcular_impostos_sn, :faturamento_sn, :observacao)
   end
 end

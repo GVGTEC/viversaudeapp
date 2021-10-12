@@ -8,8 +8,7 @@ class NotaFiscalItensController < ApplicationController
   end
 
   # GET /nota_fiscal_itens/1 or /nota_fiscal_itens/1.json
-  def show
-  end
+  def show; end
 
   # GET /nota_fiscal_itens/new
   def new
@@ -17,37 +16,36 @@ class NotaFiscalItensController < ApplicationController
   end
 
   # GET /nota_fiscal_itens/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /nota_fiscal_itens or /nota_fiscal_itens.json
   def create
-    if params[:nota_fiscal].has_key?(:nota_fiscal_item)
+    if params[:nota_fiscal].key?(:nota_fiscal_item)
       NotaFiscalItem.where(nota_fiscal: @nota_fiscal.id).destroy_all
       preco_total = 0
       params[:nota_fiscal][:nota_fiscal_item].each do |nota_fiscal_item|
-        if nota_fiscal_item[:cod_produto].present?
-          begin
-            @nota_fiscal_item = NotaFiscalItem.new
-            @nota_fiscal_item.nota_fiscal = @nota_fiscal
-            @nota_fiscal_item.produto = Produto.find(nota_fiscal_item[:cod_produto])
-            @nota_fiscal_item.descricao = @nota_fiscal_item.produto.descricao
-            @nota_fiscal_item.cfop = nota_fiscal_item[:cfop]
-            @nota_fiscal_item.ncm = nota_fiscal_item[:ncm]
-            @nota_fiscal_item.unidade = nota_fiscal_item[:un]
-            @nota_fiscal_item.quantidade = nota_fiscal_item[:qtd]
-            @nota_fiscal_item.preco_unitario = nota_fiscal_item[:preco_unitario].match(/\d+/)[0]
-            @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].match(/\d+/)[0]
-            @nota_fiscal_item.cst = cst
-            @nota_fiscal_item.save
+        next if nota_fiscal_item[:cod_produto].blank?
 
-            calculo_imposto_item
+        begin
+          @nota_fiscal_item = NotaFiscalItem.new
+          @nota_fiscal_item.nota_fiscal = @nota_fiscal
+          @nota_fiscal_item.produto = Produto.find(nota_fiscal_item[:cod_produto])
+          @nota_fiscal_item.descricao = @nota_fiscal_item.produto.descricao
+          @nota_fiscal_item.cfop = nota_fiscal_item[:cfop]
+          @nota_fiscal_item.ncm = nota_fiscal_item[:ncm]
+          @nota_fiscal_item.unidade = nota_fiscal_item[:un]
+          @nota_fiscal_item.quantidade = nota_fiscal_item[:qtd]
+          @nota_fiscal_item.preco_unitario = nota_fiscal_item[:preco_unitario].match(/\d+/)[0]
+          @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].match(/\d+/)[0]
+          @nota_fiscal_item.cst = cst
+          @nota_fiscal_item.save
 
-            preco_total += nota_fiscal_item[:preco_total].match(/\d+/)[0].to_i
-          rescue
-            flash[:error] = "Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente."
-            redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
-          end
+          calculo_imposto_item
+
+          preco_total += nota_fiscal_item[:preco_total].match(/\d+/)[0].to_i
+        rescue StandardError
+          flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
+          redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
         end
       end
 
@@ -59,7 +57,9 @@ class NotaFiscalItensController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: "Nota fiscal item Cadastrado" }
+      format.html do
+        redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal), notice: 'Nota fiscal item Cadastrado'
+      end
     end
   end
 
@@ -67,7 +67,7 @@ class NotaFiscalItensController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal_item.update(nota_fiscal_item_params)
-        format.html { redirect_to @nota_fiscal_item, notice: "Nota fiscal item Alterado" }
+        format.html { redirect_to @nota_fiscal_item, notice: 'Nota fiscal item Alterado' }
         format.json { render :show, status: :ok, location: @nota_fiscal_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -80,7 +80,7 @@ class NotaFiscalItensController < ApplicationController
   def destroy
     @nota_fiscal_item.destroy
     respond_to do |format|
-      format.html { redirect_to nota_fiscal_itens_url, notice: "Nota fiscal item Excluído" }
+      format.html { redirect_to nota_fiscal_itens_url, notice: 'Nota fiscal item Excluído' }
       format.json { head :no_content }
     end
   end
@@ -130,14 +130,15 @@ class NotaFiscalItensController < ApplicationController
   def cst
     situacao_tributaria = @nota_fiscal_item.produto.situacao_tributaria
 
-    if situacao_tributaria == "T"
-      return "00" # Tributada integralmente
-    elsif situacao_tributaria == "I"
-      return "40" # Isenta
-    elsif situacao_tributaria == "S"
-      return "60" # ICMS cobrado anteriormente por substituição tributária
+    case situacao_tributaria
+    when 'T'
+      '00' # Tributada integralmente
+    when 'I'
+      '40' # Isenta
+    when 'S'
+      '60' # ICMS cobrado anteriormente por substituição tributária
     else
-      return "41" # Não tributada
+      '41' # Não tributada
     end
 
     # " 00 - Tributada integralmente
@@ -189,6 +190,7 @@ class NotaFiscalItensController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def nota_fiscal_item_params
-    params.require(:nota_fiscal_item).permit(:nota_fiscal_id, :produto_id, :descricao, :cfop, :st, :ncm, :cst, :unidade, :quantidade, :preco_unitario, :preco_total, :aliquota_icms, :valor_bc_icms, :valor_icms, :aliquota_icms_st, :valor_bc_icms_st, :valor_icms_st, :aliquota_ipi, :valor_ipi, :aliquota_pis, :valor_pis, :aliquota_cofins, :valor_cofins, :aliquota_difal, :valor_difal, :valor_fcp, :aliquota_fcp, :local_estoque, :baixou_estoque, :pagar_comissao_sn, :comissao_ven_pc, :comissao_ven_vr, :comissao_ter_pc, :comissao_ter_vr)
+    params.require(:nota_fiscal_item).permit(:nota_fiscal_id, :produto_id, :descricao, :cfop, :st, :ncm, :cst,
+                                             :unidade, :quantidade, :preco_unitario, :preco_total, :aliquota_icms, :valor_bc_icms, :valor_icms, :aliquota_icms_st, :valor_bc_icms_st, :valor_icms_st, :aliquota_ipi, :valor_ipi, :aliquota_pis, :valor_pis, :aliquota_cofins, :valor_cofins, :aliquota_difal, :valor_difal, :valor_fcp, :aliquota_fcp, :local_estoque, :baixou_estoque, :pagar_comissao_sn, :comissao_ven_pc, :comissao_ven_vr, :comissao_ter_pc, :comissao_ter_vr)
   end
 end

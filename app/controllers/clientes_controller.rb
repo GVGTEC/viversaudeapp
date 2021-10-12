@@ -8,40 +8,38 @@ class ClientesController < ApplicationController
     @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 25}
+    options = { page: params[:page] || 1, per_page: 25 }
     @clientes = @clientes.paginate(options)
   end
 
   def importar
     if params[:arquivo].blank?
-      flash[:error] = "Selecione um arquivo .CSV"
-      redirect_to "/clientes"
+      flash[:error] = 'Selecione um arquivo .CSV'
+      redirect_to '/clientes'
       return
     end
 
-    if File.basename(params[:arquivo].tempfile).include?(".CSV")
+    if File.basename(params[:arquivo].tempfile).include?('.CSV')
       importar_csv
     else
-      flash[:error] = "Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV"
-      redirect_to "/clientes"
+      flash[:error] = 'Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV'
+      redirect_to '/clientes'
       return
     end
 
-    flash[:sucesso] = "Clientes importados com sucesso"
-    redirect_to "/clientes"
-  rescue => exception
-    flash[:error] = exception
-    redirect_to "/clientes"
+    flash[:sucesso] = 'Clientes importados com sucesso'
+    redirect_to '/clientes'
+  rescue StandardError => e
+    flash[:error] = e
+    redirect_to '/clientes'
     nil
   end
 
   def importar_csv
     File.foreach(params[:arquivo].tempfile) do |line|
       d = CharlockHolmes::EncodingDetector.detect(line)
-      line = line.to_s.encode("UTF-8", d[:encoding], invalid: :replace, replace: "")
-      if line.present?
-        importar_linha(line.split(";"))
-      end
+      line = line.to_s.encode('UTF-8', d[:encoding], invalid: :replace, replace: '')
+      importar_linha(line.split(';')) if line.present?
     end
   end
 
@@ -74,8 +72,9 @@ class ClientesController < ApplicationController
     if vendedor != 0
       begin
         cliente.vendedor_id = Vendedor.find(vendedor).id
-      rescue
-        cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}", empresa_id: @adm.empresa.id).id
+      rescue StandardError
+        cliente.vendedor_id = Vendedor.create(id: vendedor, nome: "Vendendor #{vendedor}",
+                                              empresa_id: @adm.empresa.id).id
       end
     end
 
@@ -83,8 +82,9 @@ class ClientesController < ApplicationController
     if terceiro != 0
       begin
         cliente.terceiro_id = Terceiro.find(terceiro).id
-      rescue
-        cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}", empresa_id: @adm.empresa.id).id
+      rescue StandardError
+        cliente.terceiro_id = Terceiro.create(id: terceiro, nome: "Terceiro #{terceiro}",
+                                              empresa_id: @adm.empresa.id).id
       end
     end
 
@@ -104,14 +104,13 @@ class ClientesController < ApplicationController
     cliente.telefone_nf = linha[telefone_nf]
     cliente.email = linha[email]
     cliente.codcidade_ibge = linha[codcidade_ibge]
-    cliente.empresa_governo = true if linha[empresa_governo].include?("S")
+    cliente.empresa_governo = true if linha[empresa_governo].include?('S')
     cliente.empresa_id = @adm.empresa.id
     cliente.save
   end
 
   # GET /clientes/1 or /clientes/1.json
-  def show
-  end
+  def show; end
 
   # GET /clientes/new
   def new
@@ -119,8 +118,7 @@ class ClientesController < ApplicationController
   end
 
   # GET /clientes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /clientes or /clientes.json
   def create
@@ -130,7 +128,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.save
         salvar_contatos
-        format.html { redirect_to @cliente, notice: "Cliente Cadastrado" }
+        format.html { redirect_to @cliente, notice: 'Cliente Cadastrado' }
         format.json { render :show, status: :created, location: @cliente }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -144,7 +142,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.update(cliente_params)
         salvar_contatos
-        format.html { redirect_to @cliente, notice: "Cliente Alterado" }
+        format.html { redirect_to @cliente, notice: 'Cliente Alterado' }
         format.json { render :show, status: :ok, location: @cliente }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -158,7 +156,7 @@ class ClientesController < ApplicationController
     @cliente.destroy
     salvar_contatos
     respond_to do |format|
-      format.html { redirect_to clientes_url, notice: "Cliente Excluído" }
+      format.html { redirect_to clientes_url, notice: 'Cliente Excluído' }
       format.json { head :no_content }
     end
   end
@@ -174,23 +172,24 @@ class ClientesController < ApplicationController
     if params[:cliente].present? && params[:cliente][:contato].present?
       @cliente.contatos.destroy_all if @cliente.contatos != []
       params[:cliente][:contato].each do |contato_cliente|
-        if contato_cliente[:nome].present? || contato_cliente[:telefone].present?
-          contato = Contato.new
-          contato.nome = contato_cliente[:nome]
-          contato.email = contato_cliente[:email]
-          contato.telefone = contato_cliente[:telefone]
-          contato.cargo = contato_cliente[:cargo]
-          contato.departamento = contato_cliente[:departamento]
-          contato.natureza = params[:controller]
-          contato.natureza_id = @cliente.id
-          contato.save!
-        end
+        next unless contato_cliente[:nome].present? || contato_cliente[:telefone].present?
+
+        contato = Contato.new
+        contato.nome = contato_cliente[:nome]
+        contato.email = contato_cliente[:email]
+        contato.telefone = contato_cliente[:telefone]
+        contato.cargo = contato_cliente[:cargo]
+        contato.departamento = contato_cliente[:departamento]
+        contato.natureza = params[:controller]
+        contato.natureza_id = @cliente.id
+        contato.save!
       end
     end
   end
 
   # Only allow a list of trusted parameters through.
   def cliente_params
-    params.require(:cliente).permit(:vendedor_id, :terceiro_id, :nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge, :consumidor_final)
+    params.require(:cliente).permit(:vendedor_id, :terceiro_id, :nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco,
+                                    :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge, :consumidor_final)
   end
 end
