@@ -1,0 +1,29 @@
+<%= form_for(@nota_fiscal, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @nota_fiscal.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4>Confira os campos abaixo:</h4>
+
+      <ul>
+      <% @nota_fiscal.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br>
+
+  <div class="row form-group">
+    <div class="col-md-12">
+      <%= f.label :observacao, 'Observação sobre a nota:',  class: "control-label", style: "font-size: 20px" %>
+      <%= f.text_area :observacao, size: "10x20", class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-10">
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

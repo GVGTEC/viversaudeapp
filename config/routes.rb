@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   end
 
   resources :nota_fiscais do
+    get "observacoes", on: :member
+
     resources :gerar_nota_fiscais, only: [:gerar_nota] do
       get "gerar_nota", on: :collection
     end

@@ -1,5 +1,5 @@
 class NotaFiscaisController < ApplicationController
-  before_action :set_nota_fiscal, only: %i[show edit update destroy gerar_nota]
+  before_action :set_nota_fiscal, only: %i[show edit update destroy observacoes] 
 
   # GET /nota_fiscais or /nota_fiscais.json
   def index
@@ -23,6 +23,9 @@ class NotaFiscaisController < ApplicationController
 
     @transportadora = Transportadora.all
     @cfop = Cfop.all
+  end
+
+  def observacoes
   end
 
   # GET /nota_fiscais/1/edit
@@ -49,8 +52,8 @@ class NotaFiscaisController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
-        salvar_nota_fiscal_transportadora
-        format.html { redirect_to @nota_fiscal, notice: "Nota Fiscal Alterada" }
+        salvar_nota_fiscal_transportadora if params[:quantidade].present?
+        format.html { redirect_to nota_fiscais_path, notice: "Nota Fiscal Alterada" }
         format.json { render :show, status: :ok, location: @nota_fiscal }
       else
         format.html { render :edit, status: :unprocessable_entity }
