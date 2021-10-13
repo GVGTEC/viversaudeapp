@@ -5,40 +5,44 @@ class OrcamentosControllerTest < ActionDispatch::IntegrationTest
     @orcamento = orcamentos(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get orcamentos_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_orcamento_url
     assert_response :success
   end
 
-  test "should create orcamento" do
+  test 'should create orcamento' do
     assert_difference('Orcamento.count') do
-      post orcamentos_url, params: { orcamento: { cliente_id: @orcamento.cliente_id, data_emissao: @orcamento.data_emissao, flag: @orcamento.flag, observacao: @orcamento.observacao, valor_total: @orcamento.valor_total, vendedor_id: @orcamento.vendedor_id } }
+      post orcamentos_url,
+           params: { orcamento: { cliente_id: @orcamento.cliente_id, data_emissao: @orcamento.data_emissao, flag: @orcamento.flag,
+                                  observacao: @orcamento.observacao, valor_total: @orcamento.valor_total, vendedor_id: @orcamento.vendedor_id } }
     end
 
     assert_redirected_to orcamento_url(Orcamento.last)
   end
 
-  test "should show orcamento" do
+  test 'should show orcamento' do
     get orcamento_url(@orcamento)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_orcamento_url(@orcamento)
     assert_response :success
   end
 
-  test "should update orcamento" do
-    patch orcamento_url(@orcamento), params: { orcamento: { cliente_id: @orcamento.cliente_id, data_emissao: @orcamento.data_emissao, flag: @orcamento.flag, observacao: @orcamento.observacao, valor_total: @orcamento.valor_total, vendedor_id: @orcamento.vendedor_id } }
+  test 'should update orcamento' do
+    patch orcamento_url(@orcamento),
+          params: { orcamento: { cliente_id: @orcamento.cliente_id, data_emissao: @orcamento.data_emissao, flag: @orcamento.flag,
+                                 observacao: @orcamento.observacao, valor_total: @orcamento.valor_total, vendedor_id: @orcamento.vendedor_id } }
     assert_redirected_to orcamento_url(@orcamento)
   end
 
-  test "should destroy orcamento" do
+  test 'should destroy orcamento' do
     assert_difference('Orcamento.count', -1) do
       delete orcamento_url(@orcamento)
     end

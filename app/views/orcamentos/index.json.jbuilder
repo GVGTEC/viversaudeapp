@@ -1,1 +1,1 @@
-json.array! @orcamentos, partial: "orcamentos/orcamento", as: :orcamento
+json.array! @orcamentos, partial: 'orcamentos/orcamento', as: :orcamento

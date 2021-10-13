@@ -33,6 +33,8 @@
   <dd><%= @nota_fiscal.data_saida.strftime("%d/%m/%Y") rescue "" %></dd>
   <dt>Hora saida:</dt>
   <dd><%= @nota_fiscal.hora_saida %></dd>
+  <dt>Pagar Frete:</dt>
+  <dd><%= @nota_fiscal.pagar_frete %></dd>
   <dt>Valor desconto:</dt>
   <dd><%= number_to_currency(@nota_fiscal.valor_desconto) %></dd>
   <dt>Valor produtos:</dt>

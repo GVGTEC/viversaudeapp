@@ -1,1 +1,1 @@
-json.array! @icms, partial: "icms/icms", as: :icms
+json.array! @icms, partial: 'icms/icms', as: :icms

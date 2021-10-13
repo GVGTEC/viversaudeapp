@@ -1,1 +1,1 @@
-json.partial! "vendedores/vendedor", vendedor: @vendedor
+json.partial! 'vendedores/vendedor', vendedor: @vendedor

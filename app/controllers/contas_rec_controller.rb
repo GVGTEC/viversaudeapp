@@ -6,13 +6,12 @@ class ContasRecController < ApplicationController
     @contas_rec = ContasRec.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50}
+    options = { page: params[:page] || 1, per_page: 50 }
     @contas_rec = @contas_rec.paginate(options)
   end
 
   # GET /contas_rec/1 or /contas_rec/1.json
-  def show
-  end
+  def show; end
 
   # GET /contas_rec/new
   def new
@@ -20,8 +19,7 @@ class ContasRecController < ApplicationController
   end
 
   # GET /contas_rec/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /contas_rec or /contas_rec.json
   def create
@@ -31,7 +29,7 @@ class ContasRecController < ApplicationController
     respond_to do |format|
       if @contas_rec.save
         save_contas_rec_parcelas
-        format.html { redirect_to @contas_rec, notice: "Contas rec Cadastrado" }
+        format.html { redirect_to @contas_rec, notice: 'Contas rec Cadastrado' }
         format.json { render :show, status: :created, location: @contas_rec }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +43,7 @@ class ContasRecController < ApplicationController
     respond_to do |format|
       if @contas_rec.update(contas_rec_params)
         save_contas_rec_parcelas
-        format.html { redirect_to @contas_rec, notice: "Contas rec Alterado" }
+        format.html { redirect_to @contas_rec, notice: 'Contas rec Alterado' }
         format.json { render :show, status: :ok, location: @contas_rec }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -58,7 +56,7 @@ class ContasRecController < ApplicationController
   def destroy
     @contas_rec.destroy
     respond_to do |format|
-      format.html { redirect_to contas_rec_index_url, notice: "Contas rec Excluído" }
+      format.html { redirect_to contas_rec_index_url, notice: 'Contas rec Excluído' }
       format.json { head :no_content }
     end
   end
@@ -74,23 +72,24 @@ class ContasRecController < ApplicationController
     if params[:contas_rec].present? && params[:contas_rec][:contas_rec_parcela].present?
       @contas_pag.contas_rec_parcelas.destroy_all
       params[:contas_rec][:contas_rec_parcela].each do |parcela|
-        if parcela[:data_vencimento].present? || parcela[:data_recebimento].present?
-          contas_rec_parcela = ContasRecParcela.new
-          contas_rec_parcela.data_vencimento = parcela[:data_vencimento]
-          contas_rec_parcela.data_pagamento = parcela[:data_pagamento]
-          contas_rec_parcela.valor_parcela = parcela[:valor_parcela]
-          contas_rec_parcela.valor_juros_desconto = parcela[:valor_juros_desconto]
-          contas_rec_parcela.documento = parcela[:documento]
-          contas_rec_parcela.descricao = parcela[:descricao]
-          contas_rec_parcela.contas_rec = @contas_rec
-          contas_rec_parcela.save!
-        end
+        next unless parcela[:data_vencimento].present? || parcela[:data_recebimento].present?
+
+        contas_rec_parcela = ContasRecParcela.new
+        contas_rec_parcela.data_vencimento = parcela[:data_vencimento]
+        contas_rec_parcela.data_pagamento = parcela[:data_pagamento]
+        contas_rec_parcela.valor_parcela = parcela[:valor_parcela]
+        contas_rec_parcela.valor_juros_desconto = parcela[:valor_juros_desconto]
+        contas_rec_parcela.documento = parcela[:documento]
+        contas_rec_parcela.descricao = parcela[:descricao]
+        contas_rec_parcela.contas_rec = @contas_rec
+        contas_rec_parcela.save!
       end
     end
   end
 
   # Only allow a list of trusted parameters through.
   def contas_rec_params
-    params.require(:contas_rec).permit(:cliente_id, :plano_conta_id, :documento, :historico, :data_emissao, :valor_total)
+    params.require(:contas_rec).permit(:cliente_id, :plano_conta_id, :documento, :historico, :data_emissao,
+                                       :valor_total)
   end
 end

@@ -1,18 +1,17 @@
 class AdministradoresController < ApplicationController
-  before_action :set_administrador, only: %i[ show edit update destroy ]
+  before_action :set_administrador, only: %i[show edit update destroy]
 
   # GET /administradores or /administradores.json
   def index
     @administradores = Administrador.where(empresa_id: @adm.empresa.id)
 
     # paginação na view index (lista)
-    options = {page: params[:page] || 1, per_page: 50} 
+    options = { page: params[:page] || 1, per_page: 50 }
     @administradores = @administradores.paginate(options)
   end
 
   # GET /administradores/1 or /administradores/1.json
-  def show
-  end
+  def show; end
 
   # GET /administradores/new
   def new
@@ -20,8 +19,7 @@ class AdministradoresController < ApplicationController
   end
 
   # GET /administradores/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /administradores or /administradores.json
   def create
@@ -29,7 +27,7 @@ class AdministradoresController < ApplicationController
 
     respond_to do |format|
       if @administrador.save
-        format.html { redirect_to @administrador, notice: "Administrador Cadastrado" }
+        format.html { redirect_to @administrador, notice: 'Administrador Cadastrado' }
         format.json { render :show, status: :created, location: @administrador }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,7 +40,7 @@ class AdministradoresController < ApplicationController
   def update
     respond_to do |format|
       if @administrador.update(administrador_params)
-        format.html { redirect_to @administrador, notice: "Administrador Alterado" }
+        format.html { redirect_to @administrador, notice: 'Administrador Alterado' }
         format.json { render :show, status: :ok, location: @administrador }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,19 +53,20 @@ class AdministradoresController < ApplicationController
   def destroy
     @administrador.destroy
     respond_to do |format|
-      format.html { redirect_to administradores_url, notice: "Administrador Excluído" }
+      format.html { redirect_to administradores_url, notice: 'Administrador Excluído' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_administrador
-      @administrador = Administrador.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def administrador_params
-      params.require(:administrador).permit(:empresa_id, :nome, :email, :senha)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_administrador
+    @administrador = Administrador.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def administrador_params
+    params.require(:administrador).permit(:empresa_id, :nome, :email, :senha)
+  end
 end

@@ -1,1 +1,1 @@
-json.partial! "estoques/estoque", estoque: @estoque
+json.partial! 'estoques/estoque', estoque: @estoque

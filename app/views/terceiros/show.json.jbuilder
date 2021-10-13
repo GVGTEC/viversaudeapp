@@ -1,1 +1,1 @@
-json.partial! "terceiros/terceiro", terceiro: @terceiro
+json.partial! 'terceiros/terceiro', terceiro: @terceiro

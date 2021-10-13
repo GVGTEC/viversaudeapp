@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_213954) do
+ActiveRecord::Schema.define(version: 2021_10_09_235726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_213954) do
     t.boolean "empresa_governo", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "consumidor_final"
     t.index ["empresa_id"], name: "index_clientes_on_empresa_id"
     t.index ["terceiro_id"], name: "index_clientes_on_terceiro_id"
     t.index ["vendedor_id"], name: "index_clientes_on_vendedor_id"
@@ -237,7 +238,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_213954) do
     t.string "telefone_alternativo"
     t.string "telefone_nf"
     t.string "email"
-    t.string "codcidade_ibgezz"
+    t.string "codcidade_ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
@@ -306,6 +307,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_213954) do
     t.string "chave_acesso_nfe"
     t.string "nota_cancelada_sn"
     t.string "distancia_parcelas"
+    t.string "pagar_frete"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"

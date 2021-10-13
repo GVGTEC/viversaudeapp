@@ -1,1 +1,1 @@
-json.array! @cfop, partial: "cfop/cfop", as: :cfop
+json.array! @cfop, partial: 'cfop/cfop', as: :cfop
