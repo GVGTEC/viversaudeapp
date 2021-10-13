@@ -174,7 +174,9 @@ class NotaFiscalItensController < ApplicationController
   end
 
   def calculo_imposto_nota
-    nota_fiscal_imposto = NotaFiscalImposto.new
+    nota_fiscal_imposto = @nota_fiscal.nota_fiscal_imposto
+    nota_fiscal_imposto ||= NotaFiscalImposto.new
+
     nota_fiscal_imposto.nota_fiscal_id = @nota_fiscal.id
     nota_fiscal_imposto.valor_bc_icms = @nota_fiscal.nota_fiscal_itens.sum(:valor_bc_icms)
     nota_fiscal_imposto.valor_icms = @nota_fiscal.nota_fiscal_itens.sum(:valor_icms)
