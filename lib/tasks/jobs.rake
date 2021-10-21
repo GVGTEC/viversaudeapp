@@ -19,6 +19,13 @@ namespace :jobs do
     Cliente.delete_all
   end
 
+  desc 'Atualizar estoque sem validade'
+  task estoque_sem_validade: :environment do
+    debugger
+    debugger
+    Estoque.where(produto_id: nil).delete_all
+  end
+
   desc 'Verifica Detalhes Ncm'
   task verifica_detalhes_ncm: :environment do
     require 'net/http'

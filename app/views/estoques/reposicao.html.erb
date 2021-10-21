@@ -6,7 +6,7 @@
   <h1>Reposição de Estoque</h1>
 </div>
 
-<%= form_for(reposicao_estoques_path, html: { class: "form-horizontal", role: "form" }) do |f| %>
+<%= form_for(reposicao_estoques_path, method: :post, html: { class: "form-horizontal", role: "form" }) do |f| %>
   <% if @estoque.errors.any? %>
     <div class="alert alert-danger alert-dismissable" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>

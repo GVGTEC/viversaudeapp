@@ -4,8 +4,9 @@ class EstoquesController < ApplicationController
 
   def index
     @estoques = Estoque.where(empresa_id: @adm.empresa.id)
+    @estoques = @estoques.where("lote ilike '%#{params[:lote]}%'") if params[:lote].present?
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
-
+    
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 10 }
     @estoques = @estoques.paginate(options)

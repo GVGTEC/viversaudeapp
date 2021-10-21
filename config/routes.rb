@@ -35,7 +35,7 @@ Rails.application.routes.draw do
       get 'reposicao'
       get 'baixa'
       post 'ajuste'
-      post 'reposicao'
+      post 'reposicao', to: "estoques#create_reposicao"
       post 'baixa'
       post 'importar'
     end
