@@ -10,10 +10,18 @@ Rails.application.routes.draw do
   resources :transportadoras
   resources :localizacao_estoques
 
+  resources :estoques, only: %i[index show] do
+    collection do
+      post 'importar'
+
+      resources :ajustes, :baixas, :reposicoes, module: 'estoques', only: %i[new create]
+    end
+  end
+
   resources :empresas do
     get 'configuracoes', on: :collection
   end
-
+  
   resources :orcamentos do
     resources :orcamento_itens
   end
@@ -27,18 +35,6 @@ Rails.application.routes.draw do
 
     resources :nota_fiscal_itens
     resources :nota_fiscal_duplicatas, only: %i[new create]
-  end
-
-  resources :estoques, only: %i[index show] do
-    collection do
-      get 'ajuste'
-      get 'reposicao'
-      get 'baixa'
-      post 'ajuste'
-      post 'reposicao', to: "estoques#create_reposicao"
-      post 'baixa'
-      post 'importar'
-    end
   end
 
   resources :produtos do

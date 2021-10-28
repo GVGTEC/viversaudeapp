@@ -3,17 +3,19 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
   <% end %>
-  <h1>Lista de Movimentação em Estoque do Lote <%= @produto.descricao %></h1>
+  <h1> Lista de Movimentação em Estoque </h1>
 </div>
 
 <div style="text-align: right; margin-top:10px; margin-bottom: 15px;">
-  <form action="" method="GET">
+  <form action="" method="get">
     <div class="row" style="width:300px;display: inline-block;">
       <div style="float: left">
         <select class="form-control" name="estoque_id">
           <option value="">Buscar Lote</option>
-          <% Estoque.where(produto_id: @produto.id).each do |estoque| %>
-            <option <% if estoque.id == params[:estoque_id] %>selected="selected"<% end %> value="<%= estoque.id %>"><%= estoque.lote %></option>
+          <% if params[:produto_id].present? %>
+            <% Estoque.where(produto_id: params[:produto_id]).each do |estoque| %>
+              <option <% if estoque.id == params[:estoque_id] %>selected="selected"<% end %> value="<%= estoque.id %>"><%= estoque.lote %></option>
+            <% end %>
           <% end %>
         </select>
       </div>
@@ -42,12 +44,12 @@
     <tbody>
       <%= content_tag_for(:tr, @movimento_estoques) do |movimento_estoque| %>
         <td><%= movimento_estoque.estoque.lote %></td>
-        <td><%= movimento_estoque.estoque.fornecedor.nome %></td>
+        <td><%= movimento_estoque.estoque.fornecedor.nome rescue ""%></td>
         <td><%= movimento_estoque.origem %></td>
         <td><%= movimento_estoque.data.strftime("%d/%m/%Y") %></td>
-        <td><%= movimento_estoque.estoque_inicial %></td>
-        <td><%= movimento_estoque.qtd %></td>
-        <td><%= movimento_estoque.estoque_final %></td>
+        <td><%= formatar_qtd(movimento_estoque.estoque_inicial) %></td>
+        <td><%= formatar_qtd(movimento_estoque.qtd) %></td>
+        <td><%= formatar_qtd(movimento_estoque.estoque_final) %></td>
         <td><%= number_to_currency(movimento_estoque.preco_custo) %></td>
       <% end %>
     </tbody>

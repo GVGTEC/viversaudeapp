@@ -21,8 +21,6 @@ namespace :jobs do
 
   desc 'Atualizar estoque sem validade'
   task estoque_sem_validade: :environment do
-    debugger
-    debugger
     Estoque.where(produto_id: nil).delete_all
   end
 

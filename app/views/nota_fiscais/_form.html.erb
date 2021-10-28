@@ -16,7 +16,13 @@
     <div class="row form-group">
         <div class="col-md-2">
         <%= f.label :numero_nota, 'Nº Nota Fiscal' %>
-          <%= f.text_field :numero_nota, class: "form-control" %>
+
+          <% if @nota_fiscal.new_record? %>
+            <%= f.text_field :numero_nota, value: "#{(NotaFiscal.last.numero_nota.to_i + 1) rescue 0}",class: "form-control" %>
+          <% else %>
+            <%= f.text_field :numero_nota, class: "form-control" %>
+          <% end %>
+
         </div>
 
         <div class="col-md-2">

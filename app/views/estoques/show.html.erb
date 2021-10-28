@@ -9,12 +9,22 @@
 <dl class="dl-horizontal">
   <dt>Produto</dt>
   <dd><%= @estoque.produto.descricao %></dd>
+  <dt>Fornecedor</dt>
+  <dd><%= @estoque.fornecedor.nome rescue "" %></dd>
   <dt>Lote:</dt>
-  <td><%= @estoque.lote %></td>
-  <dt>Estoque Atual:</dt>
-  <td><%= @estoque.estoque_atual %></td>
-  <dt>Estoque Mínimo:</dt>
-  <td><%= @estoque.estoque_minimo %></td>
+  <dd><%= @estoque.lote %></dd>
+  <dt>Documento:</dt>
+  <dd><%= @estoque.documento %></dd>
+  <dt>Ultima Alteração:</dt>
+  <dd><%= @estoque.ultima_alteracao %></dd>
+  <dt>Estoque Atual Lote:</dt>
+  <dd><%= formatar_qtd(@estoque.estoque_atual_lote) %></dd>
+  <dt>Data Reposição:</dt>
+  <dd><%= @estoque.data_reposicao.strftime("%d/%m/%Y") rescue ""  %></dd>
+  <dt>Data Validade:</dt>
+  <dd><%= @estoque.data_validade.strftime("%d/%m/%Y") rescue ""  %></dd>
   <dt>Estoque Reservado:</dt>
-  <td><%= @estoque.estoque_reservado %></td>
+  <dd><%= @estoque.estoque_reservado %></dd>
+  <dt>Preco de Custo da Reposicao:</dt>
+  <dd><%= @estoque.preco_custo_reposicao %></dd>
 </dl>

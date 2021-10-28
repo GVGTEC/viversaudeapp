@@ -1,8 +1,9 @@
 <div class="page-header">
-  <%= link_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), class: 'btn btn-default' do %>
+  <%= link_to "javascript:window.location.assign('/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new')", class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
   <% end %>
+
   <h2>Duplicatas</h2>
 </div>
 

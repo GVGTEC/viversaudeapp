@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_09_235726) do
+ActiveRecord::Schema.define(version: 2021_10_24_214902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -276,6 +276,7 @@ ActiveRecord::Schema.define(version: 2021_10_09_235726) do
     t.string "motivo_operacao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "nota_fiscal_id"
     t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"
     t.index ["produto_id"], name: "index_movimento_estoques_on_produto_id"
   end
@@ -360,6 +361,7 @@ ActiveRecord::Schema.define(version: 2021_10_09_235726) do
     t.float "estoque_final"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "qtd"
     t.index ["nota_fiscal_item_id"], name: "index_nota_fiscal_item_lotes_on_nota_fiscal_item_id"
   end
 

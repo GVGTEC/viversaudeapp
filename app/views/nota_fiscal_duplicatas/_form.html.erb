@@ -57,29 +57,29 @@
       </div>
     </div>
 
-  <div class="table-responsive">
-    <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_nota_fiscal_id_<%= @nota_fiscal.id  %>">
-      <thead>
-        <tr>
-          <th>PC</th>
-          <th>Vencimento</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody_nota_fiscal_faturamento_parcelas">
-        <% @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, index| %>
-          <tr class="operacao">
-            <td>
-              <input class='form-control' type='integer' style='width: 20%;' value='<%= index %>'>
-              <input class='form-control' type='integer' style='display:none;' value='<%= faturamento_parcela.prazo_pagamento %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]'>
-            </td>
-            <td><input class='form-control' type='date' style='width: 50%;' value='<%= faturamento_parcela.data_vencimento.to_date %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'></td>
-            <td><input class='form-control' type='text' style='width: 25%;' value='<%= faturamento_parcela.valor_parcela %>'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>
+    <div class="table-responsive">
+      <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_nota_fiscal_id_<%= @nota_fiscal.id  %>">
+        <thead>
+          <tr>
+            <th>PC</th>
+            <th>Vencimento</th>
+            <th>Valor</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody id="tableBody_nota_fiscal_faturamento_parcelas">
+          <% @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, index| %>
+            <tr class="operacao">
+              <td>
+                <input class='form-control' type='integer' style='width: 20%;' value='<%= index %>'>
+                <input class='form-control' type='integer' style='display:none;' value='<%= faturamento_parcela.prazo_pagamento %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]'>
+              </td>
+              <td><input class='form-control' type='date' style='width: 50%;' value='<%= faturamento_parcela.data_vencimento.to_date %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'></td>
+              <td><input class='form-control' type='text' style='width: 30%;' value='R$ <%= faturamento_parcela.valor_parcela %>0'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   
     <br>
     
@@ -99,6 +99,8 @@
         return false;
       }
     });
+
+    calculaPrazoParcelas()
   });
 
   $(document).on('keyup', '[data-behavior~=np_pagamento]', function(event) {
@@ -109,7 +111,7 @@
     calculaPrazoParcelas()
   });
 
-  var calculaPrazoParcelas = () =>{
+  const calculaPrazoParcelas = () =>{
     const qtd_parcelas = parseInt($(`#nota_fiscal_numero_parcelas_pagamento`).val())
     const valor_total_nota = <%= @nota_fiscal.valor_total_nota %>
     const quanto_tempo = parseInt($(`#nota_fiscal_quanto_tempo`).val())
@@ -120,19 +122,7 @@
 
       for (let index = 0; index < qtd_parcelas; index++) {
         const prazo_pagamento = quanto_tempo * index
-        var data = new Date();
-        let dataVencimento = ""
-        data.setDate(data.getDate() + prazo_pagamento);
-      
-        if((data.getMonth() + 1) > 9 &&  data.getDate() > 9){
-          dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-" + data.getDate()
-        }else if((data.getMonth() + 1) <= 9 &&  data.getDate() > 9){
-          dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-" + data.getDate()
-        }else if((data.getMonth() + 1) > 9 &&  data.getDate() <= 9){
-          dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-0" + data.getDate()
-        }else{
-          dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-0" + data.getDate()
-        }
+        let dataVencimento = calculoData(prazo_pagamento)
 
         $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='" + prazo_pagamento + "' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
         $("#tableBody_nota_fiscal_faturamento_parcelas").append(
@@ -140,11 +130,29 @@
             "<tr class='operacao'>"+
               "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ index +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]'></td>"+
               "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'></td>"+
-              "<td><input class='form-control' type='text' value='"+ (valor_total_nota / qtd_parcelas).toFixed(2) +"' style='width: 25%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>"+
+              "<td><input class='form-control' type='text' value='R$ "+ (valor_total_nota / qtd_parcelas).toFixed(2) +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>"+
             "</tr>" 
           )
         );
       }
     }
+  }
+
+  const calculoData = (prazo_pagamento) => {
+    var data = new Date();
+    let dataVencimento = ""
+    data.setDate(data.getDate() + prazo_pagamento);
+  
+    if((data.getMonth() + 1) > 9 &&  data.getDate() > 9){
+      dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-" + data.getDate()
+    }else if((data.getMonth() + 1) <= 9 &&  data.getDate() > 9){
+      dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-" + data.getDate()
+    }else if((data.getMonth() + 1) > 9 &&  data.getDate() <= 9){
+      dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-0" + data.getDate()
+    }else{
+      dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-0" + data.getDate()
+    }
+
+    return dataVencimento
   }
 </script>

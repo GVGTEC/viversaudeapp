@@ -12,6 +12,9 @@ class ProdutosController < ApplicationController
     if params[:format] != 'json'
       options = { page: params[:page] || 1, per_page: 15 }
       @produtos = @produtos.paginate(options)
+    else
+      @produtos = @produtos.joins("inner join estoques on estoques.produto_id = produtos.id")
+      @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
     end
   end
 
