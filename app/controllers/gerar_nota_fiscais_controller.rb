@@ -152,14 +152,14 @@ class GerarNotaFiscaisController < ApplicationController
         out_file.puts("N06|#{orig}|#{cst}|#{vICMSDeson}|#{motDesICM}|")
       end
 
-      cST = item.cst
+      cST = "01"
       vBC = float_two(item.preco_total.to_s)
       pPIS = float_two(item.aliquota_pis.to_s)
       vPIS = float_two(item.valor_pis.to_s)
       out_file.puts('Q|')
       out_file.puts("Q02|#{cST}|#{vBC}|#{pPIS}|#{vPIS}|")
 
-      cST = item.cst
+      cST = "01"
       vBC = float_two(item.preco_total.to_s)
       pCOFINS = float_two(item.aliquota_cofins.to_s)
       vCOFINS = float_two(item.valor_cofins.to_s)
