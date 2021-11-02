@@ -69,27 +69,27 @@
     <div class="row form-group">
         <div class="col-md-2">
           <%= f.label :nota_complementar_impostos_sn, 'Cpl Impostos ?' %>
-          <%= f.select(:nota_complementar_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']], :selected => @cfop.nota_complementar_impostos_sn), {:include_blank => true}, {class: "form-control"}) %>
+          <%= f.select(:nota_complementar_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']], :selected => @cfop.nota_complementar_impostos_sn), {}, {class: "form-control"}) %>
         </div>         
 
         <div class="col-md-2">
           <%= f.label :entrada_saida_es, 'Entrada/Saída' %>
-          <%= f.select(:entrada_saida_es, options_for_select([['Saída', 'S'], ['Entrada', 'E']], :selected => @cfop.entrada_saida_es), {:include_blank => true}, {class: "form-control"}) %>
+          <%= f.select(:entrada_saida_es, options_for_select([['Saída', 'S'], ['Entrada', 'E']], :selected => @cfop.entrada_saida_es), {}, {class: "form-control"}) %>
         </div>
 
         <div class="col-md-2">
           <%= f.label :cliente_fornecedor_cf, 'Cliente/Fornecedor' %>
-          <%= f.select(:cliente_fornecedor_cf, options_for_select([['Cliente', 'C'], ['Fornecedor', 'F']], :selected => @cfop.cliente_fornecedor_cf), {:include_blank => true}, {class: "form-control"}) %>
+          <%= f.select(:cliente_fornecedor_cf, options_for_select([['Cliente', 'C'], ['Fornecedor', 'F']], :selected => @cfop.cliente_fornecedor_cf), {}, {class: "form-control"}) %>
         </div>
 
         <div class="col-md-2">
           <%= f.label :calcular_impostos_sn, 'Calcular Impostos' %>
-          <%= f.select(:calcular_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']], :selected => @cfop.calcular_impostos_sn), {:include_blank => true}, {class: "form-control"}) %>
+          <%= f.select(:calcular_impostos_sn, options_for_select([['NÃO', 'N'], ['SIM', 'S']], :selected => @cfop.calcular_impostos_sn), {}, {class: "form-control"}) %>
         </div>
 
         <div class="col-md-2">
           <%= f.label :faturamento_sn, 'Faturamento' %>
-          <%= f.select(:faturamento_sn, options_for_select([['SIM', 'S'], ['NÃO', 'N']], :selected => @cfop.faturamento_sn), {:include_blank => true}, {class: "form-control"}) %>
+          <%= f.select(:faturamento_sn, options_for_select([['SIM', 'S'], ['NÃO', 'N']], :selected => @cfop.faturamento_sn), {}, {class: "form-control"}) %>
         </div>         
     </div>        
 

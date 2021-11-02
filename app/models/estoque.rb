@@ -23,4 +23,16 @@
     produto.preco_venda = params[:preco_venda]
     produto.save
   end
+
+  def atualizar_produto_ajuste(qtd_estoque_final)
+    produto = self.produto
+    produto.estoque_atual = qtd_estoque_final
+    produto.save
+  end
+
+  def atualizar_produto_baixas(params)
+    produto = @estoque.produto
+    produto.estoque_atual -= params[:estoque_atual_lote].to_f
+    produto.save
+  end
 end

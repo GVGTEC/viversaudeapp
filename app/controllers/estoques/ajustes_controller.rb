@@ -15,9 +15,7 @@ class Estoques::AjustesController < ApplicationController
 
     respond_to do |format|
       if @estoque.save
-        produto = @estoque.produto
-        produto.estoque_atual = qtd_estoque_final
-        produto.save
+        @estoque.atualizar_produto_ajuste(qtd_estoque_final)
 
         salve_movimento_estoque(estoque_atual_lote)
         format.html { redirect_to estoques_path, notice: 'Estoque Ajustado' }

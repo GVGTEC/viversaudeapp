@@ -3,7 +3,15 @@ class NotaFiscalItem < ApplicationRecord
   belongs_to :produto
 
   def calculo_imposto_item(adm)
-    self.aliquota_icms = Icms.find_by(estado: self.nota_fiscal.cliente.uf).aliquota_icms
+    cf = self.nota_fiscal.cfop.cliente_fornecedor_cf
+
+    uf = if cf == 'C'
+      self.nota_fiscal.cliente.uf
+    else
+      self.nota_fiscal.fornecedor.uf
+    end
+
+    self.aliquota_icms = Icms.find_by(estado: uf).aliquota_icms
     self.valor_bc_icms = self.preco_total
     self.valor_icms = self.preco_total * self.aliquota_icms / 100
 

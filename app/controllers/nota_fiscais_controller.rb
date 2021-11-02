@@ -32,9 +32,7 @@ class NotaFiscaisController < ApplicationController
     respond_to do |format|
       if @nota_fiscal.save
         salvar_nota_fiscal_transportadora
-        format.html do
-          redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal), notice: 'Nota Fiscal Cadastrada'
-        end
+        format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal) }
         format.json { render :show, status: :created, location: @nota_fiscal }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -116,7 +114,6 @@ class NotaFiscaisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def nota_fiscal_params
-    debugger
     params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id,
                                         :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete)
   end

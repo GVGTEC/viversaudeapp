@@ -14,10 +14,7 @@ class Estoques::BaixasController < ApplicationController
 
     respond_to do |format|
       if @estoque.save
-        produto = @estoque.produto
-        produto.estoque_atual -= params[:estoque_atual_lote].to_f
-        produto.save
-
+        @estoque.atualizar_produto_baixas(params)
         salve_movimento_estoque(estoque_atual_lote)
         format.html { redirect_to estoques_path, notice: 'Estoque baixado com sucesso' }
       else
