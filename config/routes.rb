@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :administradores
   resources :transportadoras
   resources :localizacao_estoques
+  resources :movimento_estoques, only: [:index]
 
   resources :estoques, only: %i[index show] do
     collection do
@@ -42,7 +43,6 @@ Rails.application.routes.draw do
 
   resources :produtos do
     post 'importar', on: :collection
-    resources :movimento_estoques, only: [:index]
   end
 
   resources :clientes do
