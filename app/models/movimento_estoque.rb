@@ -1,5 +1,6 @@
 class MovimentoEstoque < ApplicationRecord
   belongs_to :estoque
+  belongs_to :produto
 
   def self.novo_movimento(estoque)
     movimento_estoque = self.new
