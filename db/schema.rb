@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.string "telefone_alternativo"
     t.string "telefone_nf"
     t.string "email"
-    t.string "codcidade_ibge"
+    t.string "codcidade_ibgezz"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
@@ -308,7 +308,6 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.string "chave_acesso_nfe"
     t.string "nota_cancelada_sn"
     t.string "distancia_parcelas"
-    t.string "pagar_frete"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
