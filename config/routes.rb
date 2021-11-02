@@ -14,7 +14,10 @@ Rails.application.routes.draw do
     collection do
       post 'importar'
 
-      resources :ajustes, :baixas, :reposicoes, module: 'estoques', only: %i[new create]
+      scope module: 'estoques' do
+        resources :reposicoes, only: %i[new create]
+        resources :ajustes, :baixas, only: %i[new create]
+      end
     end
   end
 

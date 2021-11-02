@@ -1,4 +1,6 @@
 class Estoques::BaixasController < ApplicationController
+  before_action :set_estoque, only: %i[create]
+
   # GET /administradores/new
   def new
     @estoque = Estoque.new
@@ -6,42 +8,42 @@ class Estoques::BaixasController < ApplicationController
 
   # POST /administradores or /administradores.json
   def create
-    @estoque = Estoque.find(params[:id])
     estoque_atual_lote = @estoque.estoque_atual_lote
-    @estoque.estoque_atual_lote = estoque_atual_lote - params[:estoque_atual_lote].to_f
+    @estoque.estoque_atual_lote = estoque_atual_lote - params[:qtd_baixa].to_f
     @estoque.ultima_alteracao = 'BAI'
-
-    if @estoque.save
-      movimento_estoque = MovimentoEstoque.new
-      movimento_estoque.estoque_id = @estoque.id
-      movimento_estoque.produto_id = @estoque.produto_id
-      movimento_estoque.origem = @estoque.ultima_alteracao
-      movimento_estoque.data = @estoque.updated_at
-      movimento_estoque.estoque_inicial = estoque_atual_lote
-      movimento_estoque.qtd = params[:estoque_atual_lote].to_f
-      movimento_estoque.estoque_final = @estoque.estoque_atual_lote
-      movimento_estoque.preco_custo = @estoque.produto.preco_custo
-      movimento_estoque.save
-
-      produto = @estoque.produto
-      produto.estoque_atual -= params[:estoque_atual_lote].to_f
-      produto.save
-
-      redirect_to estoques_path
-    end
 
     respond_to do |format|
       if @estoque.save
-        format.html { redirect_to @estoque, notice: 'Estoque Cadastrado' }
-        format.json { render :show, status: :created, location: @estoque }
+        produto = @estoque.produto
+        produto.estoque_atual -= params[:estoque_atual_lote].to_f
+        produto.save
+
+        salve_movimento_estoque(estoque_atual_lote)
+        format.html { redirect_to estoques_path, notice: 'Estoque baixado com sucesso' }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @estoque.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
+
+  def set_estoque
+    @estoque = Estoque.find(params[:estoque][:id])
+  end
+
+  def salve_movimento_estoque(estoque_atual_lote)
+    movimento_estoque = MovimentoEstoque.new
+    movimento_estoque.estoque_id = @estoque.id
+    movimento_estoque.produto_id = @estoque.produto_id
+    movimento_estoque.origem = @estoque.ultima_alteracao
+    movimento_estoque.data = @estoque.updated_at
+    movimento_estoque.estoque_inicial = estoque_atual_lote
+    movimento_estoque.qtd = params[:qtd_baixa].to_f
+    movimento_estoque.estoque_final = @estoque.estoque_atual_lote
+    movimento_estoque.preco_custo = @estoque.produto.preco_custo
+    movimento_estoque.save
+  end
 
   # Only allow a list of trusted parameters through.
   def estoque_params

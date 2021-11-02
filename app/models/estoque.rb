@@ -15,7 +15,6 @@
   end
 
   def atualizar_produto_reposicao(params)
-    debugger
     produto = self.produto
     produto.preco_custo_medio = self.calculo_preco_custo_medio
     produto.estoque_atual += self.estoque_atual_lote

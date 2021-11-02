@@ -19,6 +19,13 @@ namespace :jobs do
     Cliente.delete_all
   end
 
+  desc 'Teste Symbol'
+  task teste_symbol: :environment do
+    nome = :thiago_carlos
+
+    puts "Hola, #{nome}"
+  end
+
   desc 'Atualizar estoque sem validade'
   task estoque_sem_validade: :environment do
     Estoque.where(produto_id: nil).delete_all
