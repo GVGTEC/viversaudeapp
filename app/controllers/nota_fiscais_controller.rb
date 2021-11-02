@@ -17,12 +17,7 @@ class NotaFiscaisController < ApplicationController
   # GET /nota_fiscais/new
   def new
     @nota_fiscal = NotaFiscal.new
-
-    params[:data_emissao] ||= Time.zone.now.strftime('%Y-%m-%d')
-    @nota_fiscal.data_emissao = params[:data_emissao]
-
-    @transportadora = Transportadora.all
-    @cfop = Cfop.all
+    @nota_fiscal.data_emissao = Time.zone.now.strftime('%Y-%m-%dT%H:%M')
   end
 
   def observacoes; end
@@ -121,6 +116,7 @@ class NotaFiscaisController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def nota_fiscal_params
+    debugger
     params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id,
                                         :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete)
   end

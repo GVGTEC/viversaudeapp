@@ -97,7 +97,7 @@
             ['3 – Transporte Próprio por conta do Remetente;', '3'], 
             ['4 – Transporte Próprio por conta do Destinatário', '4'], 
             ['9 – Sem Ocorrência de Transporte', '9']
-            ]),{:selected => @nota_fiscal.pagar_frete}, {class: "form-control"}) %>
+            ], :selected => @nota_fiscal.pagar_frete), {:include_blank => true}, {class: "form-control"}) %>
         </div>
     </div>   
 
@@ -174,22 +174,25 @@ $(document).ready(function() {
 const buscaCfop = () => {
   let cfop_id = $("#nota_fiscal_cfop_id").val() 
 
-  $.ajax({
-    type: "GET",
-    url: `/cfop/${cfop_id}.json`,
-    success: function(cfop){
-      if(cfop){       
-        $('#natureza_operacao').val(cfop.natureza_operacao);
-        if(cfop.cliente_fornecedor_cf == "C"){
-          $(".input-cliente").show()
-          $(".input-fornecedor").hide()
-        }else{
-          $(".input-cliente").hide()
-          $(".input-fornecedor").show()
+  if(cfop_id){
+    $.ajax({
+      type: "GET",
+      url: `/cfop/${cfop_id}.json`,
+      success: function(cfop){
+        if(cfop){       
+          $('#natureza_operacao').val(cfop.natureza_operacao);
+          if(cfop.cliente_fornecedor_cf == "C"){
+            $(".input-cliente").show()
+            $(".input-fornecedor").hide()
+          }else{
+            $(".input-cliente").hide()
+            $(".input-fornecedor").show()
+          }
         }
       }
-    }
-  })
+    })
+  }
+  
 }
 
 </script>

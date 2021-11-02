@@ -31,12 +31,12 @@
 
     <%= f.label :consumidor_final, 'Consumidor Final', class: "col-sm-2 control-label"  %>
     <div class="col-sm-2">
-      <%= f.select(:consumidor_final, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
+      <%= f.select(:consumidor_final, options_for_select([['NÃO', 'N'], ['SIM', 'S']], :selected => @cliente.consumidor_final), {:include_blank => true}, {class: "form-control"}) %>
     </div>
 
     <%= f.label :empresa_governo, 'Empresa do Governo', class: "col-sm-2 control-label"  %>
     <div class="col-sm-2">
-      <%= f.select(:empresa_governo, options_for_select([['NÃO', 'N'], ['SIM', 'S']]), {}, {class: "form-control"}) %>
+      <%= f.select(:empresa_governo, options_for_select([['NÃO', false], ['SIM', true]], :selected => @cliente.empresa_governo), {:include_blank => true}, {class: "form-control"}) %>
     </div>
   </div>
 

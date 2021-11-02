@@ -16,7 +16,7 @@
     <div class="row form-group">
         <div class="col-md-2">
           <%= f.label :situacao, 'Situação' %>
-          <%= f.select(:situacao, options_for_select([['ATIVO', 1], ['INATIVO', 2]]), {}, {class: "form-control"}) %>
+          <%= f.select(:situacao, options_for_select([['ATIVO', true], ['INATIVO', false]], :selected => @produto.situacao), {:include_blank => true}, {class: "form-control"}) %>
         </div>
   
         <div class="col-md-2">
@@ -62,7 +62,7 @@
             ['5-Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%', '5'],
             ['6-Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural', '6'],
             ['7-Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural', '7']
-            ]),{}, {class: "form-control"}) %>
+            ], :selected => @produto.origem), {:include_blank => true}, {class: "form-control"}) %>
         </div>
     </div>
 
@@ -84,7 +84,7 @@
       
         <div class="col-md-3">
           <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
-          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']]), {}, {class: "form-control"}) %>
+          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']], :selected => @produto.situacao_tributaria), {:include_blank => true}, {class: "form-control"}) %>
         </div>
         
     </div>        
@@ -92,7 +92,7 @@
     <div class="row form-group">
         <div class="col-md-2">
           <%= f.label :controlar_estoque, 'Controlar Estoque ?' %>               
-          <%= f.select(:controlar_estoque, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
+          <%= f.select(:controlar_estoque, options_for_select([['SIM', true], ['NÃO', false]], :selected => @produto.controlar_estoque), {:include_blank => true}, {class: "form-control"}) %>
         </div>
 
         <div class="col-md-2">
@@ -107,7 +107,7 @@
         
         <div class="col-md-2">
           <%= f.label :por_lote, 'Controlar Lote ?' %>
-          <%= f.select(:por_lote, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
+          <%= f.select(:por_lote, options_for_select([['SIM', true], ['NÃO', false]], :selected => @produto.por_lote), {:include_blank => true}, {class: "form-control"}) %>
         </div>
         
         <div class="col-md-2">
@@ -124,7 +124,7 @@
     <div class="row form-group">
         <div class="col-md-4">
           <%= f.label :bloquear_preco, 'Bloquear Preço no Pedido ?' %>
-          <%= f.select(:bloquear_preco, options_for_select([['SIM', 1], ['NÃO', 2]]), {}, {class: "form-control"}) %>
+          <%= f.select(:bloquear_preco, options_for_select([['SIM', true], ['NÃO', false]], :selected => @produto.bloquear_preco), {:include_blank => true}, {class: "form-control"}) %>
         </div>
 
         <div class="col-md-4">
