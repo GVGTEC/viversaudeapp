@@ -372,12 +372,12 @@
         movimentoEstoque = {
           produto_id: JSON.parse(localStorage.getItem("produto_id")),
           estoque_id: this.id,
-          origem: "VDA",
+          origem: "<%= Estoque::VENDA %>",
           data: new Date,
           qtd: $(`#${this.id}-qtd_venda`).val(),
           estoque_inicial: $(`#${this.id}-estoque`).html(),
           estoque_final: parseFloat($(`#${this.id}-estoque`).html()) - parseFloat($(`#${this.id}-qtd_venda`).val()),
-          nota_fiscal_id: <%= @nota_fiscal.id %>
+          nota_fiscal_id: "<%= @nota_fiscal.id %>"
         }
 
         movimentoEstoques.push(movimentoEstoque)

@@ -10,7 +10,7 @@ class Estoques::BaixasController < ApplicationController
   def create
     estoque_atual_lote = @estoque.estoque_atual_lote
     @estoque.estoque_atual_lote = estoque_atual_lote - params[:qtd_baixa].to_f
-    @estoque.ultima_alteracao = 'BAI'
+    @estoque.ultima_alteracao = Estoque::BAIXA 
 
     respond_to do |format|
       if @estoque.save

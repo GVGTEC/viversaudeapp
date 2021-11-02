@@ -16,7 +16,7 @@
         <th>Número Pedido</th>
         <th>Cliente / Fornecedor</th>
         <th>Data Emissão</th>
-        <th style="width: 85px;">Valor Total</th>
+        <th style="width: 100px;">Valor Total</th>
         <th></th>
         <th></th>
         <th></th>
@@ -30,7 +30,7 @@
         <td><%= nota_fiscal.numero_pedido %></td>
         <td><%= nota_fiscal.cliente.nome rescue "" %><%= nota_fiscal.fornecedor.nome rescue "" %></td>
         <td><%= nota_fiscal.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
-        <td><%= number_to_currency(nota_fiscal.valor_total_nota) %></td>
+        <td style="text-align: end;"><%= number_to_currency(nota_fiscal.valor_total_nota) %></td>
         <td><%= link_to 'Itens', nota_fiscal_nota_fiscal_itens_path(nota_fiscal) %></td>
         <td><%= link_to 'Gerar Nota', gerar_nota_nota_fiscal_gerar_nota_fiscais_path(nota_fiscal), class: "btn btn-success", target: "blanck" %></td>
         <td><%= link_to 'Mostrar', nota_fiscal, class: "btn btn-primary" %></td>

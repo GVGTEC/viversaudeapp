@@ -12,7 +12,7 @@ class Estoques::ReposicoesController < ApplicationController
   # POST /estoques/reposicoes
   def create
     @estoque = Estoque.new(estoque_params)
-    @estoque.ultima_alteracao = 'REP'
+    @estoque.ultima_alteracao = Estoque::REPOSICAO  
     @estoque.empresa_id = @adm.empresa.id
     
     respond_to do |format|

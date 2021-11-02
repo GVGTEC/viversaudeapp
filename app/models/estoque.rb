@@ -3,6 +3,11 @@
   belongs_to :fornecedor, optional: true
   belongs_to :empresa
 
+  VENDA = 'VDA'
+  AJUSTE = 'AJU'
+  REPOSICAO = 'REP'
+  BAIXA = 'BAI'
+
   def calculo_preco_custo_medio
     produto = self.produto
     relacao_estoque_atual = produto.estoque_atual * produto.preco_custo rescue 0
@@ -31,7 +36,7 @@
   end
 
   def atualizar_produto_baixas(params)
-    produto = @estoque.produto
+    produto = self.produto
     produto.estoque_atual -= params[:estoque_atual_lote].to_f
     produto.save
   end

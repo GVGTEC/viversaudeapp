@@ -11,7 +11,7 @@ class Estoques::AjustesController < ApplicationController
     estoque_atual_lote = @estoque.estoque_atual_lote
     qtd_estoque_final = (@estoque.produto.estoque_atual - @estoque.estoque_atual_lote) + estoque_params[:estoque_atual_lote].to_f
     @estoque.estoque_atual_lote = estoque_params[:estoque_atual_lote]
-    @estoque.ultima_alteracao = 'AJU'
+    @estoque.ultima_alteracao = Estoque::AJUSTE
 
     respond_to do |format|
       if @estoque.save
