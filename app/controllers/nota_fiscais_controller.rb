@@ -73,7 +73,7 @@ class NotaFiscaisController < ApplicationController
   end
 
   def salvar_nota_fiscal_transportadora
-    return if params[:quantidade].blank?
+    return if params[:nota_fiscal][:transportadora_id].blank?
     
     NotaFiscalTransporta.where(nota_fiscal: @nota_fiscal.id).destroy_all
     if params[:nota_fiscal].key?(:transportadora_id)

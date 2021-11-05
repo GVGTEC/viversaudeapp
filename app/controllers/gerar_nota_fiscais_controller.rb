@@ -68,28 +68,36 @@ class GerarNotaFiscaisController < ApplicationController
     out_file.puts("C05|#{xLgr}|#{nro}|#{xCpl}|#{xBairro}|#{cMun}|#{xMun}|#{uf}|#{cep}|#{cPais}|#{xPais}|#{fone}|")
 
     # Bloco E
-    xNome = @nota_fiscal.cliente.nome.strip
-    indIEDest = @nota_fiscal.cliente.ie.blank? || @nota_fiscal.cliente.ie == 'ISENTO' || @nota_fiscal.cliente.ie == 'ISENTA' || @nota_fiscal.cliente.pessoa == 'F' ? 9 : 1
-    ie = @nota_fiscal.cliente.ie
+    cf = @nota_fiscal.cfop.cliente_fornecedor_cf
+
+    usuario = if cf == 'C'
+      @nota_fiscal.cliente
+    else
+      @nota_fiscal.fornecedor
+    end
+
+    xNome = usuario.nome.strip
+    indIEDest = usuario.ie.blank? || usuario.ie == 'ISENTO' || usuario.ie == 'ISENTA' || usuario.pessoa == 'F' ? 9 : 1
+    ie = usuario.ie
     isuf = ''
     im = ''
-    email = @nota_fiscal.cliente.email.strip
+    email = usuario.email.strip
     out_file.puts("E|#{xNome}|#{indIEDest}|#{ie}|#{isuf}|#{im}|#{email}|")
 
-    cnpj = @nota_fiscal.cliente.cnpj.strip
+    cnpj = usuario.cnpj.strip
     out_file.puts("E02|#{cnpj}|")
 
-    xLgr = @nota_fiscal.cliente.endereco.strip
+    xLgr = usuario.endereco.strip
     nro = '00000'
     xCpl = ''
-    xBairro = @nota_fiscal.cliente.bairro.strip
-    cMun = @nota_fiscal.cliente.codcidade_ibge.strip
-    xMun = @nota_fiscal.cliente.cidade.strip
-    uf = @nota_fiscal.cliente.uf.strip
-    cep = @nota_fiscal.cliente.cep.strip
+    xBairro = usuario.bairro.strip
+    cMun = usuario.codcidade_ibge.strip
+    xMun = usuario.cidade.strip
+    uf = usuario.uf.strip
+    cep = usuario.cep.strip
     cPais = '1058'
     xPais = 'BRASIL'
-    fone = @nota_fiscal.cliente.telefone_nf.strip
+    fone = usuario.telefone_nf.strip
     out_file.puts("E05|#{xLgr}|#{nro}|#{xCpl}|#{xBairro}|#{cMun}|#{xMun}|#{uf}|#{cep}|#{cPais}|#{xPais}|#{fone}|")
 
     @nota_fiscal.nota_fiscal_itens.each_with_index do |item, i|
@@ -205,12 +213,12 @@ class GerarNotaFiscaisController < ApplicationController
     # cpf = ""
     # out_file.puts("X05|#{cpf}|")
 
-    qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s
-    esp = @nota_fiscal.nota_fiscal_transporta.especie.to_s
-    marca = @nota_fiscal.nota_fiscal_transporta.marca.to_s
+    qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s rescue ""
+    esp = @nota_fiscal.nota_fiscal_transporta.especie.to_s rescue ""
+    marca = @nota_fiscal.nota_fiscal_transporta.marca.to_s rescue ""
     nVol = ''
-    pesoL = float_two(@nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s)
-    pesoB = float_two(@nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s)
+    pesoL = float_two(@nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s) rescue ""
+    pesoB = float_two(@nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s) rescue ""
     out_file.puts("X26|#{qVol}|#{esp}|#{marca}|#{nVol}|#{pesoL}|#{pesoB}|")
 
     # Bloco Y
