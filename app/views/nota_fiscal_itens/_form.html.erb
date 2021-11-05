@@ -189,29 +189,25 @@
       var nextId = body.find('tr').length + 1;
       table.append(
         $(
-        "<tr id='"+ nextId +"' class='operacao' >"+ 
-          "<td>"+ nextId +"</td>"+
+        "<tr id='"+nextId+"' class='operacao' >"+ 
+          "<td>"+nextId+"</td>"+
           "<td><input  class='form-control' id='"+nextId+"-cod_produto'    type='text' name='nota_fiscal[nota_fiscal_item][][cod_produto]'    style='width: 55px;'                                         data-behavior='cod_produto'                              ></td>" +
           "<td><select class='form-control form-produtos-itens' id='"+nextId+"-descricao'                  name='nota_fiscal_item[descricao]'                     style='margin: 0px; height: 36px; width: 350px;' onblur='atualizaProduto()'  id='nota_fiscal_item_descricao'></select></td>" +
           "<td><input  class='form-control' id='"+nextId+"-cfop'           type='text' name='nota_fiscal[nota_fiscal_item][][cfop]'           style='width: 65px;' value='<%= @nota_fiscal.cfop.codigo %>' data-behavior='cfop'                                     ></td>" +
           "<td><input  class='form-control' id='"+nextId+"-ncm'            type='text' name='nota_fiscal[nota_fiscal_item][][ncm]'                                    readonly                                                                                              ></td>" +
           "<td><input  class='form-control' id='"+nextId+"-un'             type='text' name='nota_fiscal[nota_fiscal_item][][un]'             style='width: 50px;'    readonly                                                                                            ></td>" +
           "<td><input  class='form-control' id='"+nextId+"-qtd'            type='number' name='nota_fiscal[nota_fiscal_item][][qtd]'            style='width: 70px;'                                         data-behavior='qtd'                                      ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;'   readonly                              data-behavior='preco_unitario'                                                                                                                        ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;'   readonly                              data-behavior='preco_unitario'                              ></td>" +
           "<td><input  class='form-control' id='"+nextId+"-preco_total'    type='text' name='nota_fiscal[nota_fiscal_item][][preco_total]'    style='width: 110px;'  readonly                              data-behavior='preco_total'                              ></td>" +
           "<td><button type='button' id='"+nextId+"-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td>" +
         "</tr>"
         )
       );
-      
-      let produtos = getProdutos()
 
-      if(produtos){
-        $(`#${nextId}-descricao`).append(`<option value=""></option>`);
-        produtos.forEach(produto => {
-          $(`#${nextId}-descricao`).append(`<option value="${produto.id}">${produto.descricao}</option>`);
-        });
-      }
+      $(`#${nextId}-descricao`).append(`<option value=""></option>`);
+      <% @produtos.each do |produto| %>
+        $(`#${nextId}-descricao`).append(`<option value="<%= produto.id %>"><%= produto.descricao %></option>`);
+      <% end %>
 
       $("#"+nextId+"-cod_produto").parent().find(".tabledit-edit-button").trigger("click");
 
@@ -421,21 +417,6 @@
 
   
   // =============== Busca de Dados ===============
-  const getProdutos = () => {
-    let produtos = null
-    
-    $.ajax({
-      type: "GET",
-      url: `/produtos.json`,
-      async: false,
-      success: function(produtosRetornados){
-        produtos = produtosRetornados
-      }
-    })
-
-    return produtos
-  }
-
   const getProduto = (produto_id) =>{
     let produto = null
     $.ajax({

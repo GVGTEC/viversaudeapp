@@ -13,6 +13,11 @@ class NotaFiscalItensController < ApplicationController
   # GET /nota_fiscal_itens/new
   def new
     @nota_fiscal_item = NotaFiscalItem.new
+
+    @produtos = Produto.where(empresa_id: @adm.empresa.id)
+    @produtos = @produtos.order('descricao asc')
+    @produtos = @produtos.joins("inner join estoques on estoques.produto_id = produtos.id")
+    @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
   end
 
   # GET /nota_fiscal_itens/1/edit

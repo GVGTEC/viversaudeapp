@@ -357,10 +357,10 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.bigint "nota_fiscal_item_id"
     t.string "lote"
     t.float "estoque_inicial"
+    t.float "qtd"
     t.float "estoque_final"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "qtd"
     t.index ["nota_fiscal_item_id"], name: "index_nota_fiscal_item_lotes_on_nota_fiscal_item_id"
   end
 

@@ -2,6 +2,8 @@ class NotaFiscalItem < ApplicationRecord
   belongs_to :nota_fiscal
   belongs_to :produto
 
+  has_many :nota_fiscal_item_lotes, dependent: :delete_all
+
   def calculo_imposto_item(adm)
     cf = self.nota_fiscal.cfop.cliente_fornecedor_cf
 
