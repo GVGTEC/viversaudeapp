@@ -45,15 +45,15 @@
                 <%= f.select :descricao,
                   Produto.all.reorder("descricao asc").collect { |produto| [produto.descricao, produto.id] },
                   {:selected => nota_fiscal_item.produto.id },
-                  {:class=> 'form-control form-produtos-itens', name: 'nota_fiscal[nota_fiscal_item][][descricao]', onclick: "atualizaProduto()", id: "#{index+1}-descricao"} 
+                  {:class=> 'form-control form-produtos-itens', name: 'nota_fiscal[nota_fiscal_item][][descricao]', onblur: "atualizaProduto()", id: "#{index+1}-descricao"} 
                 %> 
               </td>
               <td><input class='form-control' id='<%= index+1 %>-cfop'           type='text' value='<%= nota_fiscal_item.cfop %>'                               name='nota_fiscal[nota_fiscal_item][][cfop]'           style='width: 65px;' data-behavior='cfop'       ></td>
-              <td><input class='form-control' id='<%= index+1 %>-ncm'            type='text' value='<%= nota_fiscal_item.ncm %>'                                name='nota_fiscal[nota_fiscal_item][][ncm]'                                                            ></td>
-              <td><input class='form-control' id='<%= index+1 %>-un'             type='text' value='<%= nota_fiscal_item.unidade %>'                            name='nota_fiscal[nota_fiscal_item][][un]'             style='width: 50px;'                            ></td>
-              <td><input class='form-control' id='<%= index+1 %>-qtd'            type='text' value='<%= formatar_qtd(nota_fiscal_item.quantidade) %>'              name='nota_fiscal[nota_fiscal_item][][qtd]'            style='width: 70px;' data-behavior='qtd'        ></td>
-              <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='R$ <%= nota_fiscal_item.preco_unitario %>0' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;' data-behavior='preco_unitario'></td>
-              <td><input class='form-control' id='<%= index+1 %>-preco_total'    type='text' value='R$ <%= nota_fiscal_item.preco_total %>0'    name='nota_fiscal[nota_fiscal_item][][preco_total]'    style="width: 110px;" data-behavior='preco_total'></td>
+              <td><input class='form-control' id='<%= index+1 %>-ncm'            type='text' value='<%= nota_fiscal_item.ncm %>'                                name='nota_fiscal[nota_fiscal_item][][ncm]'    readonly                                                        ></td>
+              <td><input class='form-control' id='<%= index+1 %>-un'             type='text' value='<%= nota_fiscal_item.unidade %>'                            name='nota_fiscal[nota_fiscal_item][][un]'    readonly         style='width: 50px;'                            ></td>
+              <td><input class='form-control' id='<%= index+1 %>-qtd'            type='number' value='<%= formatar_qtd(nota_fiscal_item.quantidade) %>'           name='nota_fiscal[nota_fiscal_item][][qtd]'            style='width: 70px;' data-behavior='qtd'        ></td>
+              <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='R$ <%= nota_fiscal_item.preco_unitario %>0' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' readonly style='width: 95px;' data-behavior='preco_unitario'></td>
+              <td><input class='form-control' id='<%= index+1 %>-preco_total'    type='text' value='R$ <%= nota_fiscal_item.preco_total %>0'    name='nota_fiscal[nota_fiscal_item][][preco_total]'   readonly style="width: 110px;" data-behavior='preco_total'></td>
               <td><button type='button' id='<%= index+1 %>-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td>
             </tr>
           <% end %>
@@ -156,10 +156,6 @@
     $(`#${number_tr}-descricao`).val(`${val}`)
   });
 
-  $(document).on('click keyup', '[data-behavior~=cfop]', function(event) {
-    atualizaProduto()
-  });
-
   $(document).on('click keyup', '[data-behavior~=qtd]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const preco_unitario = parseFloat($(`#${number_tr}-preco_unitario`).val().match(/\d+/)[0])
@@ -196,13 +192,13 @@
         "<tr id='"+ nextId +"' class='operacao' >"+ 
           "<td>"+ nextId +"</td>"+
           "<td><input  class='form-control' id='"+nextId+"-cod_produto'    type='text' name='nota_fiscal[nota_fiscal_item][][cod_produto]'    style='width: 55px;'                                         data-behavior='cod_produto'                              ></td>" +
-          "<td><select class='form-control form-produtos-itens' id='"+nextId+"-descricao'                  name='nota_fiscal_item[descricao]'                     style='margin: 0px; height: 36px; width: 350px;' onclick='atualizaProduto()'  id='nota_fiscal_item_descricao'></select></td>" +
+          "<td><select class='form-control form-produtos-itens' id='"+nextId+"-descricao'                  name='nota_fiscal_item[descricao]'                     style='margin: 0px; height: 36px; width: 350px;' onblur='atualizaProduto()'  id='nota_fiscal_item_descricao'></select></td>" +
           "<td><input  class='form-control' id='"+nextId+"-cfop'           type='text' name='nota_fiscal[nota_fiscal_item][][cfop]'           style='width: 65px;' value='<%= @nota_fiscal.cfop.codigo %>' data-behavior='cfop'                                     ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-ncm'            type='text' name='nota_fiscal[nota_fiscal_item][][ncm]'                                                                                                                                  ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-un'             type='text' name='nota_fiscal[nota_fiscal_item][][un]'             style='width: 50px;'                                                                                                  ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-qtd'            type='text' name='nota_fiscal[nota_fiscal_item][][qtd]'            style='width: 70px;'                                         data-behavior='qtd'                                      ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;'                                         data-behavior='preco_unitario'                                                                                                                        ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-preco_total'    type='text' name='nota_fiscal[nota_fiscal_item][][preco_total]'    style='width: 110px;'                                        data-behavior='preco_total'                              ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-ncm'            type='text' name='nota_fiscal[nota_fiscal_item][][ncm]'                                    readonly                                                                                              ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-un'             type='text' name='nota_fiscal[nota_fiscal_item][][un]'             style='width: 50px;'    readonly                                                                                            ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-qtd'            type='number' name='nota_fiscal[nota_fiscal_item][][qtd]'            style='width: 70px;'                                         data-behavior='qtd'                                      ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;'   readonly                              data-behavior='preco_unitario'                                                                                                                        ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-preco_total'    type='text' name='nota_fiscal[nota_fiscal_item][][preco_total]'    style='width: 110px;'  readonly                              data-behavior='preco_total'                              ></td>" +
           "<td><button type='button' id='"+nextId+"-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td>" +
         "</tr>"
         )
@@ -218,6 +214,8 @@
       }
 
       $("#"+nextId+"-cod_produto").parent().find(".tabledit-edit-button").trigger("click");
+
+      $("#myModal").hide()
       calculoValorTotal()
     }, 100);
   }
@@ -236,7 +234,7 @@
         $(`#${number_tr}-un`).val(produto.unidade);
         $(`#${number_tr}-qtd`).val("");
         $(`#${number_tr}-preco_unitario`).val("R$ "+produto.preco_custo + ".00");
-        $(`#${number_tr}-preco_total`).val("R$ "+produto.preco_custo + ".00");
+        $(`#${number_tr}-preco_total`).val("");
 
         calculoValorTotal()
       }
@@ -252,27 +250,37 @@
         if(valor) valorTotal += parseFloat(valor)
       }catch(error){}
     });
-
-    $(`.valor-total`).html(`R$ ${valorTotal}0`);
-    
+  
+    if(isInt(valorTotal)){
+      $(`.valor-total`).html(`R$ ${valorTotal}.00`);
+    }else{
+      $(`.valor-total`).html(`R$ ${valorTotal}0`);
+    }
+      
     $("#loader").hide()
     $(".table-nota").show()
   }
 
-
+  const isInt = (n) => {
+    return Number(n) === n && n % 1 === 0;
+  }
 
   // =============== Atualizar Estuque ===============
   var modal = document.getElementById("myModal");
   var span = document.getElementsByClassName("close")[0];
 
-  $(document).on('click keyup', '[data-behavior~=preco_unitario]', function(event) {
+  span.onclick = function() {
+    $("#myModal").hide()
+  }
+
+  $(document).on('blur', '[data-behavior~=qtd]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const produto_id = $(`#${number_tr}-cod_produto`).val()
 
     abrirEstoques(produto_id, number_tr)
   });
 
-  $(document).on('keyup', '[data-behavior~=qtd_venda]', function(event){
+  $(document).on('keyup', '[data-behavior~=qtd_venda]', function(event) {
     const estoque_id = parseInt(event.target.id.match(/\d+/)[0])
     const total_estoque = parseInt($(`#${estoque_id}-estoque`).html())
     const qtd_venda = parseFloat($(`#${estoque_id}-qtd_venda`).val())
@@ -385,9 +393,17 @@
     })
 
     setMovimentoEstoque(movimentoEstoques)
-    addProduto()
 
-    $("#myModal").hide()
+    let codProdutos = $('[data-behavior~=cod_produto]')
+    let qtdProdutos = codProdutos.length
+    let trPorduto = codProdutos[qtdProdutos - 1]
+    let cod_produto_next = $(`#${trPorduto.id}`).val()
+
+    if(cod_produto_next){
+       addProduto()
+    }else{
+      $("#myModal").hide()
+    }
   }
 
   const qtdSelecionadaIgualBaixa = () => {
@@ -403,15 +419,11 @@
     if(qtdSelecinado != qtdAdd) return false
   }
 
-  span.onclick = function() {
-    $("#myModal").hide()
-  }
-
-
-
+  
   // =============== Busca de Dados ===============
   const getProdutos = () => {
     let produtos = null
+    
     $.ajax({
       type: "GET",
       url: `/produtos.json`,
@@ -440,16 +452,18 @@
 
   const getEstoques = (produto_id) => {
     let estoques = null
-    $.ajax({
-      type: "GET",
-      url: `/estoques.json`,
-      async: false,
-      data: { produto_id: produto_id },
-      success: function(estoquesRetornado){
-        estoques = estoquesRetornado
-      }
-    })
-
+    if(produto_id){
+      $.ajax({
+        type: "GET",
+        url: `/estoques.json`,
+        async: false,
+        data: { produto_id: produto_id },
+        success: function(estoquesRetornado){
+          estoques = estoquesRetornado
+        }
+      })
+    }
+    
     return estoques
   }
 
