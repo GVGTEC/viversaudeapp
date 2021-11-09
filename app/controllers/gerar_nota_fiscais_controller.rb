@@ -16,6 +16,13 @@ class GerarNotaFiscaisController < ApplicationController
     # Bloco A
     out_file.puts('A|4.00|NFe|')
 
+    cf = @nota_fiscal.cfop.cliente_fornecedor_cf
+    usuario = if cf == 'C'
+      @nota_fiscal.cliente
+    else
+      @nota_fiscal.fornecedor
+    end
+
     # Bloco B
     cUF = empresa.codigo_uf_emitente
     cNF = ''
@@ -33,7 +40,7 @@ class GerarNotaFiscaisController < ApplicationController
     cDV = '0'
     tpAmb = '1'
     finNFe = '1'
-    indFinal = @nota_fiscal.cliente.consumidor_final == 'N' ? 1 : 0
+    indFinal = usuario.consumidor_final == 'N' ? 1 : 0 rescue 1
     indPres = '1'
     procEmi = '3'
     verProc = empresa.versao_layout
@@ -68,14 +75,6 @@ class GerarNotaFiscaisController < ApplicationController
     out_file.puts("C05|#{xLgr}|#{nro}|#{xCpl}|#{xBairro}|#{cMun}|#{xMun}|#{uf}|#{cep}|#{cPais}|#{xPais}|#{fone}|")
 
     # Bloco E
-    cf = @nota_fiscal.cfop.cliente_fornecedor_cf
-
-    usuario = if cf == 'C'
-      @nota_fiscal.cliente
-    else
-      @nota_fiscal.fornecedor
-    end
-
     xNome = usuario.nome.strip
     indIEDest = usuario.ie.blank? || usuario.ie == 'ISENTO' || usuario.ie == 'ISENTA' || usuario.pessoa == 'F' ? 9 : 1
     ie = usuario.ie
