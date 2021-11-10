@@ -3,7 +3,7 @@ class PlanoContasController < ApplicationController
 
   # GET /plano_contas or /plano_contas.json
   def index
-    @plano_contas = PlanoConta.where(empresa_id: @adm.empresa.id)
+    @plano_contas = administrador.empresa.plano_contas
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }

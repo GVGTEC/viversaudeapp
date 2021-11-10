@@ -31,6 +31,23 @@ namespace :jobs do
     Estoque.where(produto_id: nil).delete_all
   end
 
+  desc 'Setval Atualizar Ids'
+  task setval_atualizar_ids: :environment do
+    tables = ActiveRecord::Base.connection.tables
+    tables.each do |table|
+      begin
+        if table.classify.constantize.column_names.include?("id")
+          ActiveRecord::Base.connection.exec_query("
+            SELECT setval(pg_get_serial_sequence('#{table}', 'id'), max(id)) FROM #{table}
+          ")
+        end
+      rescue => exception
+        puts "Não Funcionou - #{exception}"
+      end
+    end
+  end
+
+
   desc 'Verifica Detalhes Ncm'
   task verifica_detalhes_ncm: :environment do
     require 'net/http'

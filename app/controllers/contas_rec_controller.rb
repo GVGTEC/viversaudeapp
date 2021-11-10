@@ -3,7 +3,7 @@ class ContasRecController < ApplicationController
 
   # GET /contas_rec or /contas_rec.json
   def index
-    @contas_rec = ContasRec.where(empresa_id: @adm.empresa.id)
+    @contas_rec = administrador.empresa.contas_rec
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }

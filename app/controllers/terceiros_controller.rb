@@ -3,7 +3,7 @@ class TerceirosController < ApplicationController
 
   # GET /terceiros or /terceiros.json
   def index
-    @terceiros = Terceiro.where(empresa_id: @adm.empresa.id)
+    @terceiros = administrador.empresa.terceiros
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }

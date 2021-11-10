@@ -3,7 +3,7 @@ class EstoquesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:importar]
 
   def index
-    @estoques = Estoque.where(empresa_id: @adm.empresa.id)
+    @estoques = administrador.empresa.estoques
     @estoques = @estoques.where("lote ilike '%#{params[:lote]}%'") if params[:lote].present?
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
     

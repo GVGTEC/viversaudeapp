@@ -3,7 +3,7 @@ class CfopController < ApplicationController
 
   # GET /cfop or /cfop.json
   def index
-    @cfop = Cfop.where(empresa_id: @adm.empresa.id)
+    @cfop = administrador.empresa.cfop
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }
@@ -28,7 +28,7 @@ class CfopController < ApplicationController
         @cfop = Cfop.new(cfop_params)
         @cfop.codigo = value
         @cfop.informativo = key
-        @cfop.empresa_id = @adm.empresa.id
+        @cfop.empresa_id = administrador.empresa.id
         @cfop.save
       end
 
