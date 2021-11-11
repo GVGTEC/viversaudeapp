@@ -20,7 +20,9 @@ class NotaFiscaisController < ApplicationController
     @nota_fiscal.data_emissao = Time.zone.now.strftime('%Y-%m-%dT%H:%M')
   end
 
-  def observacoes; end
+  def observacoes
+    @nota_fiscal.observacao = @nota_fiscal.cfop.observacao
+  end
 
   # GET /nota_fiscais/1/edit
   def edit; end
