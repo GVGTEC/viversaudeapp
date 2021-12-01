@@ -83,9 +83,14 @@ class GerarNotaFiscaisController < ApplicationController
     email = usuario.email.strip
     out_file.puts("E|#{xNome}|#{indIEDest}|#{ie}|#{isuf}|#{im}|#{email}|")
 
-    cnpj = usuario.cnpj.strip rescue usuario.cnpj
-    out_file.puts("E02|#{cnpj}|")
-
+    if usuario.cnpj
+      cnpj = usuario.cnpj.strip rescue usuario.cnpj
+      out_file.puts("E02|#{cnpj}|")
+    else
+      cpf = usuario.cpf.strip rescue usuario.cpf
+      out_file.puts("E03|#{cpf}|")
+    end
+    
     xLgr = usuario.endereco.strip
     nro = '00000'
     xCpl = ''
