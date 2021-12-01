@@ -212,7 +212,7 @@ class GerarNotaFiscaisController < ApplicationController
     # cpf = ""
     # out_file.puts("X05|#{cpf}|")
 
-    qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s rescue ""
+    qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s rescue "."
     esp = @nota_fiscal.nota_fiscal_transporta.especie.to_s rescue ""
     marca = @nota_fiscal.nota_fiscal_transporta.marca.to_s rescue ""
     nVol = ''
