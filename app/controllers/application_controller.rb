@@ -4,10 +4,11 @@ class ApplicationController < ActionController::Base
   def authenticate_user!
     if cookies[:admin_viver_saude].blank?
       redirect_to '/login'
-    else
-      ApplicationRecord.administrador_record = (administrador)
-      administrador
+      return
     end
+
+    ApplicationRecord.administrador_record=(administrador)
+    administrador
   end
 
   def administrador
@@ -17,5 +18,9 @@ class ApplicationController < ActionController::Base
       @adm = Administrador.find(JSON.parse(cookies[:admin_viver_saude])['id'])
       @adm
     end
+  end
+
+  def empresa
+    @adm.empresa
   end
 end

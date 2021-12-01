@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.string "telefone_alternativo"
     t.string "telefone_nf"
     t.string "email"
-    t.string "codcidade_ibgezz"
+    t.string "codcidade_ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
@@ -308,6 +308,7 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.string "chave_acesso_nfe"
     t.string "nota_cancelada_sn"
     t.string "distancia_parcelas"
+    t.string "pagar_frete"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
@@ -357,10 +358,10 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.bigint "nota_fiscal_item_id"
     t.string "lote"
     t.float "estoque_inicial"
-    t.float "qtd"
     t.float "estoque_final"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "qtd"
     t.index ["nota_fiscal_item_id"], name: "index_nota_fiscal_item_lotes_on_nota_fiscal_item_id"
   end
 
@@ -369,7 +370,6 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.bigint "produto_id"
     t.text "descricao"
     t.string "cfop"
-    t.string "st"
     t.string "ncm"
     t.string "cst"
     t.string "unidade"

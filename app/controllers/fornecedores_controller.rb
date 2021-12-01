@@ -4,7 +4,7 @@ class FornecedoresController < ApplicationController
 
   # GET /fornecedores or /fornecedores.json
   def index
-    @fornecedores = administrador.empresa.fornecedores
+    @fornecedores = empresa.fornecedores
     @fornecedores = @fornecedores.order('nome asc')
     @fornecedores = @fornecedores.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 

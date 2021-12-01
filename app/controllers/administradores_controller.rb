@@ -3,7 +3,7 @@ class AdministradoresController < ApplicationController
 
   # GET /administradores or /administradores.json
   def index
-    @administradores = administrador.empresa.administradores
+    @administradores = empresa.administradores
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }

@@ -4,7 +4,7 @@ class ProdutosController < ApplicationController
 
   # GET /produtos or /produtos.json
   def index
-    @produtos = administrador.empresa.produtos
+    @produtos = empresa.produtos
     @produtos = @produtos.order('descricao asc')
     @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
 

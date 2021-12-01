@@ -3,7 +3,7 @@ class NotaFiscaisController < ApplicationController
 
   # GET /nota_fiscais or /nota_fiscais.json
   def index
-    @nota_fiscais = administrador.empresa.nota_fiscais
+    @nota_fiscais = empresa.nota_fiscais
     @nota_fiscais = @nota_fiscais.order("numero_nota desc")
 
     # paginação na view index (lista)

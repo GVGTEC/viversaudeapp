@@ -3,7 +3,7 @@ class LocalizacaoEstoquesController < ApplicationController
 
   # GET /localizacao_estoques or /localizacao_estoques.json
   def index
-    @localizacao_estoques = administrador.empresa.localizacao_estoques
+    @localizacao_estoques = empresa.localizacao_estoques
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }

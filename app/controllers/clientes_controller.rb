@@ -4,7 +4,7 @@ class ClientesController < ApplicationController
 
   # GET /clientes or /clientes.json
   def index
-    @clientes = administrador.empresa.clientes
+    @clientes = empresa.clientes
     @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
     # paginação na view index (lista)
