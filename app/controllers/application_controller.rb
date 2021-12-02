@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    ApplicationRecord.administrador_record=(administrador)
+    ApplicationRecord.administrador_record = (administrador)
     administrador
   end
 

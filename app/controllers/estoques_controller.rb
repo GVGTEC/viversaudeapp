@@ -78,20 +78,20 @@ class EstoquesController < ApplicationController
     estoque.save
   end
 
-  def show
-  end
+  def show; end
 
   private
-    def set_estoque
-      @estoque = Estoque.find(params[:id])
-    end
 
-    def separar_virgula(number)
-      reverse_digits = number.to_s.chars.reverse
-      reverse_digits.each_slice(2).map(&:join).join(',').reverse.to_f
-    end
+  def set_estoque
+    @estoque = Estoque.find(params[:id])
+  end
 
-    def estoque_params
-      params.require(:estoque).permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
-    end
+  def separar_virgula(number)
+    reverse_digits = number.to_s.chars.reverse
+    reverse_digits.each_slice(2).map(&:join).join(',').reverse.to_f
+  end
+
+  def estoque_params
+    params.require(:estoque).permit(:produto_id, :fornecedor_id, :lote, :documento, :ultima_alteracao, :estoque_atual_lote, :data_reposicao, :data_validade, :estoque_reservado, :preco_custo_reposicao)
+  end
 end

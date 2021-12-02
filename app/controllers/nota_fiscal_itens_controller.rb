@@ -16,7 +16,7 @@ class NotaFiscalItensController < ApplicationController
 
     @produtos = Produto.where(empresa_id: @adm.empresa.id)
     @produtos = @produtos.order('descricao asc')
-    @produtos = @produtos.joins("inner join estoques on estoques.produto_id = produtos.id")
+    @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
     @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
   end
 
@@ -30,6 +30,7 @@ class NotaFiscalItensController < ApplicationController
 
       params[:nota_fiscal][:nota_fiscal_item].each do |nota_fiscal_item|
         next if nota_fiscal_item[:cod_produto].blank?
+
         begin
           @nota_fiscal_item = NotaFiscalItem.new
           @nota_fiscal_item.nota_fiscal = @nota_fiscal
@@ -45,7 +46,7 @@ class NotaFiscalItensController < ApplicationController
           @nota_fiscal_item.save
           
           @nota_fiscal_item.calculo_imposto_item(@adm)
-        rescue => e
+        rescue StandardError => e
           flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
           redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
           return
@@ -101,6 +102,7 @@ class NotaFiscalItensController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def nota_fiscal_item_params
-    params.require(:nota_fiscal_item).permit(:nota_fiscal_id, :produto_id, :descricao, :cfop, :st, :ncm, :cst, :unidade, :quantidade, :preco_unitario, :preco_total, :aliquota_icms, :valor_bc_icms, :valor_icms, :aliquota_icms_st, :valor_bc_icms_st, :valor_icms_st, :aliquota_ipi, :valor_ipi, :aliquota_pis, :valor_pis, :aliquota_cofins, :valor_cofins, :aliquota_difal, :valor_difal, :valor_fcp, :aliquota_fcp, :local_estoque, :baixou_estoque, :pagar_comissao_sn, :comissao_ven_pc, :comissao_ven_vr, :comissao_ter_pc, :comissao_ter_vr)
+    params.require(:nota_fiscal_item).permit(:nota_fiscal_id, :produto_id, :descricao, :cfop, :st, :ncm, :cst, :unidade, :quantidade, :preco_unitario, :preco_total, :aliquota_icms, :valor_bc_icms, :valor_icms, :aliquota_icms_st, :valor_bc_icms_st, :valor_icms_st, :aliquota_ipi, :valor_ipi, :aliquota_pis, :valor_pis, :aliquota_cofins, :valor_cofins, :aliquota_difal, :valor_difal, :valor_fcp, :aliquota_fcp, :local_estoque, :baixou_estoque, :pagar_comissao_sn, 
+                                             :comissao_ven_pc, :comissao_ven_vr, :comissao_ter_pc, :comissao_ter_vr)
   end
 end

@@ -13,7 +13,7 @@ class ProdutosController < ApplicationController
       options = { page: params[:page] || 1, per_page: 15 }
       @produtos = @produtos.paginate(options)
     else
-      @produtos = @produtos.joins("inner join estoques on estoques.produto_id = produtos.id")
+      @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
       @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
     end
   end
@@ -187,7 +187,8 @@ class ProdutosController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def produto_params
-    params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codprd_sac, :situacao, :data_inativo, :descricao, :descricao_nfe, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, :embalagem, :controlar_estoque, :por_lote, :bloquear_preco, :data_ultima_reposicao, :data_ultimo_reajuste, :preco_custo, :preco_custo_medio, :margem_lucro, :preco_venda, :preco_oferta, :margem_lucro_oferta, :data_inicial_oferta, :data_final_oferta, :comissao_pc, :estoque_atual, :estoque_minimo, :origem)
+    params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codprd_sac, :situacao, :data_inativo, :descricao, :descricao_nfe, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, :embalagem, :controlar_estoque, :por_lote, :bloquear_preco, :data_ultima_reposicao, :data_ultimo_reajuste, :preco_custo, :preco_custo_medio, :margem_lucro, :preco_venda, :preco_oferta, :margem_lucro_oferta, :data_inicial_oferta, :data_final_oferta, 
+                                    :comissao_pc, :estoque_atual, :estoque_minimo, :origem)
   end
 
   def separate_comma(number)

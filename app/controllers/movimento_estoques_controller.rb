@@ -9,7 +9,7 @@ class MovimentoEstoquesController < ApplicationController
     if params[:data_inicio].present? && params[:data_fim].present? 
       data_inicio = Time.zone.parse(params[:data_inicio]).beginning_of_day 
       data_fim = Time.zone.parse(params[:data_fim]).end_of_day 
-      @movimento_estoques = @movimento_estoques.where("data BETWEEN ? AND ?", data_inicio, data_fim)
+      @movimento_estoques = @movimento_estoques.where('data BETWEEN ? AND ?', data_inicio, data_fim)
     end
 
     # paginação na view index (lista)

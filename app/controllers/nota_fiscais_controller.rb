@@ -4,7 +4,7 @@ class NotaFiscaisController < ApplicationController
   # GET /nota_fiscais or /nota_fiscais.json
   def index
     @nota_fiscais = empresa.nota_fiscais
-    @nota_fiscais = @nota_fiscais.order("numero_nota desc")
+    @nota_fiscais = @nota_fiscais.order('numero_nota desc')
 
     # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }
@@ -94,8 +94,12 @@ class NotaFiscaisController < ApplicationController
   def salvar_estoque
     return if params[:movimentos].blank?
     
-    movimentos = params[:movimentos].split("[").join("").split("]")
-    movimentos = movimentos.first.split("},").map{|mv| mv = mv.include?("}") ? mv << "" : mv << "}"} rescue []
+    movimentos = params[:movimentos].split('[').join('').split(']')
+    movimentos = begin
+      movimentos.first.split('},').map { |mv| mv = mv << (mv.include?('}') ? '' : '}') }
+    rescue StandardError
+      []
+    end
     
     @nota_fiscal.salvar_movimento_estoque(movimentos)
     @nota_fiscal.salvar_nota_fiscal_item_lotes(movimentos)
