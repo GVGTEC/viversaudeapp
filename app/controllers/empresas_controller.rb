@@ -1,19 +1,15 @@
 class EmpresasController < ApplicationController
   before_action :set_empresa, only: %i[show edit update destroy]
 
-  # GET /empresas or /empresas.json
   def index
     @empresas = Empresa.all
 
-    # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }
     @empresas = @empresas.paginate(options)
   end
 
-  # GET /empresas/1 or /empresas/1.json
   def show; end
 
-  # GET /empresas/new
   def new
     @empresa = Empresa.new
   end
@@ -22,10 +18,8 @@ class EmpresasController < ApplicationController
     @empresa = @adm.empresa
   end
 
-  # GET /empresas/1/edit
   def edit; end
 
-  # POST /empresas or /empresas.json
   def create
     @empresa = Empresa.new(empresa_params)
 
@@ -40,7 +34,6 @@ class EmpresasController < ApplicationController
     end
   end
 
-  # PATCH/PUT /empresas/1 or /empresas/1.json
   def update
     respond_to do |format|
       if @empresa.update(empresa_params)
@@ -53,7 +46,6 @@ class EmpresasController < ApplicationController
     end
   end
 
-  # DELETE /empresas/1 or /empresas/1.json
   def destroy
     @empresa.destroy
     respond_to do |format|
@@ -64,12 +56,10 @@ class EmpresasController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_empresa
     @empresa = Empresa.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def empresa_params
     params.require(:empresa).permit(:nome, :nome_fantasia, :cnpj, :inscricao_estadual, :inscricao_municipal, :endereco,
                                     :numero, :complemento, :bairro, :cidade, :cep, :uf, :telefone, :email, :codigo_uf_emitente, :codcid_ibge, :aliquota_pis, :aliquota_cofins, :serie_nfe, :cnae, :ambiente, :versao_layout, :regime_tributario, :emissor_nfe, :permite_credito_icms, :credito_icms_pc, :empresa_uninfe, :pasta_envio, :pasta_retorno, :senha)

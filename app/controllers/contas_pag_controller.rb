@@ -1,7 +1,6 @@
 class ContasPagController < ApplicationController
   before_action :set_contas_pagar, only: %i[show edit update destroy]
 
-  # GET /contas_pagar or /contas_pagar.json
   def index
     @contas_pag = empresa.contas_pag
 
@@ -10,18 +9,14 @@ class ContasPagController < ApplicationController
     @contas_pag = @contas_pag.paginate(options)
   end
 
-  # GET /contas_pagar/1 or /contas_pagar/1.json
   def show; end
 
-  # GET /contas_pagar/new
   def new
     @contas_pag = ContasPag.new
   end
 
-  # GET /contas_pagar/1/edit
   def edit; end
 
-  # POST /contas_pagar or /contas_pagar.json
   def create
     @contas_pag = ContasPag.new(contas_pagar_params)
     @contas_pag.empresa_id = @adm.empresa.id
@@ -38,7 +33,6 @@ class ContasPagController < ApplicationController
     end
   end
 
-  # PATCH/PUT /contas_pagar/1 or /contas_pagar/1.json
   def update
     respond_to do |format|
       if @contas_pag.update(contas_pagar_params)
@@ -52,7 +46,6 @@ class ContasPagController < ApplicationController
     end
   end
 
-  # DELETE /contas_pagar/1 or /contas_pagar/1.json
   def destroy
     @contas_pag.destroy
     respond_to do |format|
@@ -63,7 +56,6 @@ class ContasPagController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_contas_pagar
     @contas_pag = ContasPag.find(params[:id])
   end
@@ -87,7 +79,6 @@ class ContasPagController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
   def contas_pagar_params
     params.require(:contas_pag).permit(:fornecedor_id, :plano_conta_id, :documento, :historico, :data_emissao,
                                        :valor_total)

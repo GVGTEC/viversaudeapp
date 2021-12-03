@@ -1,7 +1,6 @@
 class ContasRecController < ApplicationController
   before_action :set_contas_rec, only: %i[show edit update destroy]
 
-  # GET /contas_rec or /contas_rec.json
   def index
     @contas_rec = empresa.contas_rec
 
@@ -10,18 +9,14 @@ class ContasRecController < ApplicationController
     @contas_rec = @contas_rec.paginate(options)
   end
 
-  # GET /contas_rec/1 or /contas_rec/1.json
   def show; end
 
-  # GET /contas_rec/new
   def new
     @contas_rec = ContasRec.new
   end
 
-  # GET /contas_rec/1/edit
   def edit; end
 
-  # POST /contas_rec or /contas_rec.json
   def create
     @contas_rec = ContasRec.new(contas_rec_params)
     @contas_rec.empresa_id = @adm.empresa.id
@@ -38,7 +33,6 @@ class ContasRecController < ApplicationController
     end
   end
 
-  # PATCH/PUT /contas_rec/1 or /contas_rec/1.json
   def update
     respond_to do |format|
       if @contas_rec.update(contas_rec_params)
@@ -52,7 +46,6 @@ class ContasRecController < ApplicationController
     end
   end
 
-  # DELETE /contas_rec/1 or /contas_rec/1.json
   def destroy
     @contas_rec.destroy
     respond_to do |format|
@@ -63,7 +56,6 @@ class ContasRecController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_contas_rec
     @contas_rec = ContasRec.find(params[:id])
   end
@@ -87,7 +79,6 @@ class ContasRecController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
   def contas_rec_params
     params.require(:contas_rec).permit(:cliente_id, :plano_conta_id, :documento, :historico, :data_emissao,
                                        :valor_total)

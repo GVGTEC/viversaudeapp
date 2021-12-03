@@ -1,20 +1,16 @@
 class NotaFiscaisController < ApplicationController
   before_action :set_nota_fiscal, only: %i[show edit update destroy observacoes]
 
-  # GET /nota_fiscais or /nota_fiscais.json
   def index
     @nota_fiscais = empresa.nota_fiscais
     @nota_fiscais = @nota_fiscais.order('numero_nota desc')
 
-    # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }
     @nota_fiscais = @nota_fiscais.paginate(options)
   end
 
-  # GET /nota_fiscais/1 or /nota_fiscais/1.json
   def show; end
 
-  # GET /nota_fiscais/new
   def new
     @nota_fiscal = NotaFiscal.new
     @nota_fiscal.data_emissao = Time.zone.now.strftime('%Y-%m-%dT%H:%M')
@@ -24,7 +20,6 @@ class NotaFiscaisController < ApplicationController
     @nota_fiscal.observacao = @nota_fiscal.cfop.observacao
   end
 
-  # GET /nota_fiscais/1/edit
   def edit; end
 
   # POST /nota_fiscais or /nota_fiscais.json
@@ -43,7 +38,6 @@ class NotaFiscaisController < ApplicationController
     end
   end
 
-  # PATCH/PUT /nota_fiscais/1 or /nota_fiscais/1.json
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
@@ -58,7 +52,6 @@ class NotaFiscaisController < ApplicationController
     end
   end
 
-  # DELETE /nota_fiscais/1 or /nota_fiscais/1.json
   def destroy
     @nota_fiscal.destroy
     respond_to do |format|
@@ -69,7 +62,6 @@ class NotaFiscaisController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_nota_fiscal
     @nota_fiscal = NotaFiscal.find(params[:id] || params[:nota_fiscal_id])
   end
@@ -105,7 +97,6 @@ class NotaFiscaisController < ApplicationController
     @nota_fiscal.salvar_nota_fiscal_item_lotes(movimentos)
   end
 
-  # Only allow a list of trusted parameters through.
   def nota_fiscal_params
     params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete)
   end

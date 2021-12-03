@@ -1,27 +1,21 @@
 class CfopController < ApplicationController
   before_action :set_cfop, only: %i[show edit update destroy]
 
-  # GET /cfop or /cfop.json
   def index
     @cfop = empresa.cfop
 
-    # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }
     @cfop = @cfop.paginate(options)
   end
 
-  # GET /cfop/1 or /cfop/1.json
   def show; end
 
-  # GET /cfop/new
   def new
     @cfop = Cfop.new
   end
 
-  # GET /cfop/1/edit
   def edit; end
 
-  # POST /cfop or /cfop.json
   def create
     respond_to do |format|
       params[:codigo].each do |key, value|
@@ -40,7 +34,6 @@ class CfopController < ApplicationController
     end
   end
 
-  # PATCH/PUT /cfop/1 or /cfop/1.json
   def update
     respond_to do |format|
       @natureza = @cfop.natureza_operacao
@@ -55,7 +48,6 @@ class CfopController < ApplicationController
     end
   end
 
-  # DELETE /cfop/1 or /cfop/1.json
   def destroy
     @cfop.destroy
     respond_to do |format|
@@ -66,7 +58,6 @@ class CfopController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_cfop
     @cfop = Cfop.find(params[:id])
   end
@@ -78,7 +69,6 @@ class CfopController < ApplicationController
     end
   end
 
-  # Only allow a licfopsst of trusted parameters through.
   def cfop_params
     params.require(:cfop).permit(:descricao, :natureza_operacao, :natureza_operacao_st, :operacao, :nota_complementar_impostos_sn, :entrada_saida_es, :cliente_fornecedor_cf, :calcular_impostos_sn, :faturamento_sn, :observacao)
   end

@@ -2,7 +2,6 @@ class ProdutosController < ApplicationController
   before_action :set_produto, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: [:importar]
 
-  # GET /produtos or /produtos.json
   def index
     @produtos = empresa.produtos
     @produtos = @produtos.order('descricao asc')
@@ -82,12 +81,12 @@ class ProdutosController < ApplicationController
                 Produto.new
               end
 
-    produto.codprd_sac = linha[codprd_sac]
+    produto.codprd_sac = linha[codprd_sac].strip
     produto.situacao = linha[situacao].blank?
-    produto.codigo_fabricante = linha[codigo_fabricante]
-    produto.codigo_barras = linha[codigo_barras]
-    produto.descricao = linha[descricao]
-    produto.descricao_nfe = linha[descricao_nfe]
+    produto.codigo_fabricante = linha[codigo_fabricante].strip
+    produto.codigo_barras = linha[codigo_barras].strip
+    produto.descricao = linha[descricao].strip
+    produto.descricao_nfe = linha[descricao_nfe].strip
 
     fornecedor = linha[fornecedor_id].to_i
     if fornecedor != 0
@@ -109,9 +108,9 @@ class ProdutosController < ApplicationController
       end
     end
 
-    produto.situacao_tributaria = linha[situacao_tributaria]
-    produto.ncm = linha[ncm]
-    produto.unidade = linha[unidade]
+    produto.situacao_tributaria = linha[situacao_tributaria].strip
+    produto.ncm = linha[ncm].strip
+    produto.unidade = linha[unidade].strip
     produto.preco_custo_medio = separate_comma(linha[preco_custo_medio].to_i)
     produto.preco_custo = separate_comma(linha[preco_custo].to_i)
     produto.margem_lucro = separate_margem(linha[margem_lucro].to_i)
@@ -129,18 +128,14 @@ class ProdutosController < ApplicationController
     produto.save
   end
 
-  # GET /produtos/1 or /produtos/1.json
   def show; end
 
-  # GET /produtos/new
   def new
     @produto = Produto.new
   end
 
-  # GET /produtos/1/edit
   def edit; end
 
-  # POST /produtos or /produtos.json
   def create
     @produto = Produto.new(produto_params)
     @produto.empresa_id = @adm.empresa.id
@@ -156,7 +151,6 @@ class ProdutosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /produtos/1 or /produtos/1.json
   def update
     respond_to do |format|
       if @produto.update(produto_params)
@@ -169,7 +163,6 @@ class ProdutosController < ApplicationController
     end
   end
 
-  # DELETE /produtos/1 or /produtos/1.json
   def destroy
     @produto.destroy
     respond_to do |format|
@@ -180,12 +173,10 @@ class ProdutosController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_produto
     @produto = Produto.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def produto_params
     params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codprd_sac, :situacao, :data_inativo, :descricao, :descricao_nfe, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, :embalagem, :controlar_estoque, :por_lote, :bloquear_preco, :data_ultima_reposicao, :data_ultimo_reajuste, :preco_custo, :preco_custo_medio, :margem_lucro, :preco_venda, :preco_oferta, :margem_lucro_oferta, :data_inicial_oferta, :data_final_oferta, 
                                     :comissao_pc, :estoque_atual, :estoque_minimo, :origem)

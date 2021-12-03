@@ -2,15 +2,12 @@ class NotaFiscalItensController < ApplicationController
   before_action :set_nota_fiscal_item, only: %i[show edit update destroy]
   before_action :set_nota_fiscal
 
-  # GET /nota_fiscal_itens or /nota_fiscal_itens.json
   def index
     @nota_fiscal_itens = NotaFiscalItem.where(nota_fiscal_id: @nota_fiscal.id)
   end
 
-  # GET /nota_fiscal_itens/1 or /nota_fiscal_itens/1.json
   def show; end
 
-  # GET /nota_fiscal_itens/new
   def new
     @nota_fiscal_item = NotaFiscalItem.new
 
@@ -20,10 +17,8 @@ class NotaFiscalItensController < ApplicationController
     @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
   end
 
-  # GET /nota_fiscal_itens/1/edit
   def edit; end
 
-  # POST /nota_fiscal_itens or /nota_fiscal_itens.json
   def create
     if params[:nota_fiscal].key?(:nota_fiscal_item)
       NotaFiscalItem.where(nota_fiscal: @nota_fiscal.id).destroy_all
@@ -80,7 +75,6 @@ class NotaFiscalItensController < ApplicationController
     end
   end
 
-  # DELETE /nota_fiscal_itens/1 or /nota_fiscal_itens/1.json
   def destroy
     @nota_fiscal_item.destroy
     respond_to do |format|
@@ -91,7 +85,6 @@ class NotaFiscalItensController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_nota_fiscal_item
     @nota_fiscal_item = NotaFiscalItem.find(params[:id])
   end
@@ -100,7 +93,6 @@ class NotaFiscalItensController < ApplicationController
     @nota_fiscal = NotaFiscal.find(params[:nota_fiscal_id])
   end
 
-  # Only allow a list of trusted parameters through.
   def nota_fiscal_item_params
     params.require(:nota_fiscal_item).permit(:nota_fiscal_id, :produto_id, :descricao, :cfop, :st, :ncm, :cst, :unidade, :quantidade, :preco_unitario, :preco_total, :aliquota_icms, :valor_bc_icms, :valor_icms, :aliquota_icms_st, :valor_bc_icms_st, :valor_icms_st, :aliquota_ipi, :valor_ipi, :aliquota_pis, :valor_pis, :aliquota_cofins, :valor_cofins, :aliquota_difal, :valor_difal, :valor_fcp, :aliquota_fcp, :local_estoque, :baixou_estoque, :pagar_comissao_sn, 
                                              :comissao_ven_pc, :comissao_ven_vr, :comissao_ter_pc, :comissao_ter_vr)

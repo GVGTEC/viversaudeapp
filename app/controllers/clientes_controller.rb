@@ -2,12 +2,10 @@ class ClientesController < ApplicationController
   before_action :set_cliente, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: [:importar]
 
-  # GET /clientes or /clientes.json
   def index
     @clientes = empresa.clientes
     @clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
-    # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 25 }
     @clientes = @clientes.paginate(options)
   end
@@ -88,39 +86,35 @@ class ClientesController < ApplicationController
       end
     end
 
-    cliente.nome = linha[nome]
-    cliente.pessoa = linha[pessoa]
-    cliente.cpf = linha[cpf] if linha[cpf].to_i != 0
-    cliente.rg = linha[rg] if linha[rg].to_i != 0
+    cliente.nome = linha[nome].strip
+    cliente.pessoa = linha[pessoa].strip
+    cliente.cpf = linha[cpf].strip if linha[cpf].to_i != 0
+    cliente.rg = linha[rg].strip if linha[rg].to_i != 0
     cliente.cnpj = linha[cnpj] if linha[cnpj].to_i != 0
     cliente.ie = linha[ie] if linha[ie].to_i != 0
-    cliente.endereco = linha[endereco]
-    cliente.bairro = linha[bairro]
-    cliente.cidade = linha[cidade]
-    cliente.cep = linha[cep]
-    cliente.uf = linha[uf]
-    cliente.telefone = linha[telefone]
-    cliente.telefone_alternativo = linha[telefone_alternativo]
-    cliente.telefone_nf = linha[telefone_nf]
-    cliente.email = linha[email]
-    cliente.codcidade_ibge = linha[codcidade_ibge]
+    cliente.endereco = linha[endereco].strip
+    cliente.bairro = linha[bairro].strip
+    cliente.cidade = linha[cidade].strip
+    cliente.cep = linha[cep].strip
+    cliente.uf = linha[uf].strip
+    cliente.telefone = linha[telefone].strip
+    cliente.telefone_alternativo = linha[telefone_alternativo].strip
+    cliente.telefone_nf = linha[telefone_nf].strip
+    cliente.email = linha[email].strip
+    cliente.codcidade_ibge = linha[codcidade_ibge].strip
     cliente.empresa_governo = true if linha[empresa_governo].include?('S')
     cliente.empresa_id = @adm.empresa.id
     cliente.save
   end
 
-  # GET /clientes/1 or /clientes/1.json
   def show; end
 
-  # GET /clientes/new
   def new
     @cliente = Cliente.new
   end
 
-  # GET /clientes/1/edit
   def edit; end
 
-  # POST /clientes or /clientes.json
   def create
     @cliente = Cliente.new(cliente_params)
     @cliente.empresa_id = @adm.empresa.id
@@ -137,7 +131,6 @@ class ClientesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /clientes/1 or /clientes/1.json
   def update
     respond_to do |format|
       if @cliente.update(cliente_params)
@@ -151,7 +144,6 @@ class ClientesController < ApplicationController
     end
   end
 
-  # DELETE /clientes/1 or /clientes/1.json
   def destroy
     @cliente.destroy
     salvar_contatos
@@ -163,7 +155,6 @@ class ClientesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_cliente
     @cliente = Cliente.find(params[:id])
   end
@@ -187,7 +178,6 @@ class ClientesController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
   def cliente_params
     params.require(:cliente).permit(:vendedor_id, :terceiro_id, :nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco,
                                     :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge, :consumidor_final)

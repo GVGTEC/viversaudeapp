@@ -1,12 +1,10 @@
 class Estoques::AjustesController < ApplicationController
   before_action :set_estoque, only: %i[create]
 
-  # GET /administradores/new
   def new
     @estoque = Estoque.new
   end
 
-  # POST /administradores or /administradores.json
   def create
     estoque_atual_lote = @estoque.estoque_atual_lote
     qtd_estoque_final = (@estoque.produto.estoque_atual - @estoque.estoque_atual_lote) + estoque_params[:estoque_atual_lote].to_f

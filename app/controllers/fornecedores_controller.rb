@@ -2,13 +2,11 @@ class FornecedoresController < ApplicationController
   before_action :set_fornecedor, only: %i[show edit update destroy]
   skip_before_action :verify_authenticity_token, only: [:importar]
 
-  # GET /fornecedores or /fornecedores.json
   def index
     @fornecedores = empresa.fornecedores
     @fornecedores = @fornecedores.order('nome asc')
     @fornecedores = @fornecedores.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
 
-    # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 10 }
     @fornecedores = @fornecedores.paginate(options)
   end
@@ -70,35 +68,32 @@ class FornecedoresController < ApplicationController
       fornecedor.id = linha[id].to_i
     end
 
-    fornecedor.pessoa = linha[pessoa]
-    fornecedor.nome = linha[nome]
-    fornecedor.cpf = linha[cpf] if linha[cpf].to_i != 0
-    fornecedor.rg = linha[rg] if linha[rg].to_i != 0
-    fornecedor.cnpj = linha[cnpj] if linha[cnpj].to_i != 0
-    fornecedor.ie = linha[ie] if linha[ie].to_i != 0
-    fornecedor.endereco = linha[endereco]
-    fornecedor.bairro = linha[bairro]
-    fornecedor.cidade = linha[cidade]
-    fornecedor.cep = linha[cep]
-    fornecedor.uf = linha[uf]
-    fornecedor.telefone = linha[telefone]
-    fornecedor.telefone_alternativo = linha[telefone_alternativo]
-    fornecedor.telefone_nf = linha[telefone_nf]
-    fornecedor.email = linha[email]
-    fornecedor.codcidade_ibge = linha[codcidade_ibge]
+    fornecedor.pessoa = linha[pessoa].strip
+    fornecedor.nome = linha[nome].strip
+    fornecedor.cpf = linha[cpf].strip if linha[cpf].to_i != 0
+    fornecedor.rg = linha[rg].strip if linha[rg].to_i != 0
+    fornecedor.cnpj = linha[cnpj].strip if linha[cnpj].to_i != 0
+    fornecedor.ie = linha[ie].strip if linha[ie].to_i != 0
+    fornecedor.endereco = linha[endereco].strip
+    fornecedor.bairro = linha[bairro].strip
+    fornecedor.cidade = linha[cidade].strip
+    fornecedor.cep = linha[cep].strip
+    fornecedor.uf = linha[uf].strip
+    fornecedor.telefone = linha[telefone].strip
+    fornecedor.telefone_alternativo = linha[telefone_alternativo].strip
+    fornecedor.telefone_nf = linha[telefone_nf].strip
+    fornecedor.email = linha[email].strip
+    fornecedor.codcidade_ibge = linha[codcidade_ibge].strip
     fornecedor.empresa_id = @adm.empresa.id
     fornecedor.save
   end
 
-  # GET /fornecedores/1 or /fornecedores/1.json
   def show; end
 
-  # GET /fornecedores/new
   def new
     @fornecedor = Fornecedor.new
   end
 
-  # GET /fornecedores/1/edit
   def edit; end
 
   # POST /fornecedores or /fornecedores.json
@@ -165,7 +160,6 @@ class FornecedoresController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
   def fornecedor_params
     params.require(:fornecedor).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf,
                                        :telefone, :email, :codcidade_ibge)

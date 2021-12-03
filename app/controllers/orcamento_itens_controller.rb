@@ -2,23 +2,18 @@ class OrcamentoItensController < ApplicationController
   before_action :set_orcamento_item, only: %i[show edit update destroy]
   before_action :set_orcamento
 
-  # GET /orcamento_itens or /orcamento_itens.json
   def index
     @orcamento_itens = OrcamentoItem.all
   end
 
-  # GET /orcamento_itens/1 or /orcamento_itens/1.json
   def show; end
 
-  # GET /orcamento_itens/new
   def new
     @orcamento_item = OrcamentoItem.new
   end
 
-  # GET /orcamento_itens/1/edit
   def edit; end
 
-  # POST /orcamento_itens or /orcamento_itens.json
   def create
     @orcamento_item = OrcamentoItem.new(orcamento_item_params)
 
@@ -33,7 +28,6 @@ class OrcamentoItensController < ApplicationController
     end
   end
 
-  # PATCH/PUT /orcamento_itens/1 or /orcamento_itens/1.json
   def update
     respond_to do |format|
       if @orcamento_item.update(orcamento_item_params)
@@ -46,7 +40,6 @@ class OrcamentoItensController < ApplicationController
     end
   end
 
-  # DELETE /orcamento_itens/1 or /orcamento_itens/1.json
   def destroy
     @orcamento_item.destroy
     respond_to do |format|
@@ -57,7 +50,6 @@ class OrcamentoItensController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_orcamento_item
     @orcamento_item = OrcamentoItem.find(params[:id])
   end
@@ -66,7 +58,6 @@ class OrcamentoItensController < ApplicationController
     @orcamento = Orcamento.find(params[:orcamento_id])
   end
 
-  # Only allow a list of trusted parameters through.
   def orcamento_item_params
     params.require(:orcamento_item).permit(:orcamento_id, :produto_id, :quantidade, :preco_unitario, :preco_total)
   end

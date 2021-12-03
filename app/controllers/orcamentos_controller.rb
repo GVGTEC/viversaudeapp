@@ -1,28 +1,22 @@
 class OrcamentosController < ApplicationController
   before_action :set_orcamento, only: %i[show edit update destroy]
 
-  # GET /orcamentos or /orcamentos.json
   def index
     @orcamentos = Orcamento.all
     # @orcamentos = Orcamento.where(empresa_id: @adm.empresa.id)   O CAMPO EMPRESA_ID AINDA NÃO EXISTE NA TABELA DE ORÇAMENTO
 
-    # paginação na view index (lista)
     options = { page: params[:page] || 1, per_page: 50 }
     @orcamentos = @orcamentos.paginate(options)
   end
 
-  # GET /orcamentos/1 or /orcamentos/1.json
   def show; end
 
-  # GET /orcamentos/new
   def new
     @orcamento = Orcamento.new
   end
 
-  # GET /orcamentos/1/edit
   def edit; end
 
-  # POST /orcamentos or /orcamentos.json
   def create
     @orcamento = Orcamento.new(orcamento_params)
     # @orcamento.empresa_id = @adm.empresa.id
@@ -39,7 +33,6 @@ class OrcamentosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /orcamentos/1 or /orcamentos/1.json
   def update
     respond_to do |format|
       if @orcamento.update(orcamento_params)
@@ -52,7 +45,6 @@ class OrcamentosController < ApplicationController
     end
   end
 
-  # DELETE /orcamentos/1 or /orcamentos/1.json
   def destroy
     @orcamento.destroy
     respond_to do |format|
@@ -63,12 +55,10 @@ class OrcamentosController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_orcamento
     @orcamento = Orcamento.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def orcamento_params
     params.require(:orcamento).permit(:cliente_id, :vendedor_id, :data_emissao, :valor_total, :observacao, :flag)
   end

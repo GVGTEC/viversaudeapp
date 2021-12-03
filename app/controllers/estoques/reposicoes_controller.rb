@@ -1,5 +1,4 @@
 class Estoques::ReposicoesController < ApplicationController
-  # GET /estoques/reposicoes/new
   def new
     params[:data_reposicao] ||= Time.zone.now.strftime('%Y-%m-%d')
 
@@ -9,7 +8,6 @@ class Estoques::ReposicoesController < ApplicationController
     @estoque.data_reposicao = params[:data_reposicao]
   end
 
-  # POST /estoques/reposicoes
   def create
     @estoque = Estoque.new(estoque_params)
     @estoque.ultima_alteracao = Estoque::REPOSICAO  

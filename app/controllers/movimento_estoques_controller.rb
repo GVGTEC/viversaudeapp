@@ -1,5 +1,4 @@
 class MovimentoEstoquesController < ApplicationController
-  # GET /movimento_estoques or /movimento_estoques.json
   def index
     @movimento_estoques = MovimentoEstoque.all
     @movimento_estoques = @movimento_estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
