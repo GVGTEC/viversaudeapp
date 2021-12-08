@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class OrcamentosControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @orcamento = orcamentos(:one)
   end
 

@@ -1,7 +1,7 @@
 require 'application_system_test_case'
 
 class OrcamentoItensTest < ApplicationSystemTestCase
-  setup do
+  before do
     @orcamento_item = orcamento_itens(:one)
   end
 

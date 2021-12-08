@@ -17,11 +17,12 @@ class GerarNotaFiscaisController < ApplicationController
     out_file.puts('A|4.00|NFe|')
 
     cf = @nota_fiscal.cfop.cliente_fornecedor_cf
-    usuario = if cf == 'C'
-                @nota_fiscal.cliente
-              else
-                @nota_fiscal.fornecedor
-              end
+    usuario = 
+      if cf == 'C'
+        @nota_fiscal.cliente
+      else
+        @nota_fiscal.fornecedor
+      end
 
     # Bloco B
     cUF = empresa.codigo_uf_emitente
@@ -40,11 +41,7 @@ class GerarNotaFiscaisController < ApplicationController
     cDV = '0'
     tpAmb = '1'
     finNFe = '1'
-    indFinal = begin
-      usuario.consumidor_final == 'N' ? 1 : 0
-    rescue StandardError
-      1
-    end
+    indFinal = usuario.consumidor_final == 'N' ? 1 : 0 rescue 1
     indPres = '1'
     procEmi = '3'
     verProc = empresa.versao_layout
@@ -88,18 +85,10 @@ class GerarNotaFiscaisController < ApplicationController
     out_file.puts("E|#{xNome}|#{indIEDest}|#{ie}|#{isuf}|#{im}|#{email}|")
 
     if usuario.cnpj
-      cnpj = begin
-        usuario.cnpj.strip
-      rescue StandardError
-        usuario.cnpj
-      end
+      cnpj = usuario.cnpj.strip rescue usuario.cnpj
       out_file.puts("E02|#{cnpj}|")
     else
-      cpf = begin
-        usuario.cpf.strip
-      rescue StandardError
-        usuario.cpf
-      end
+      cpf = usuario.cpf.strip rescue usuario.cpf
       out_file.puts("E03|#{cpf}|")
     end
     
@@ -149,14 +138,9 @@ class GerarNotaFiscaisController < ApplicationController
       vTotTrib = ''
       out_file.puts("M|#{vTotTrib}|")
 
-      # orig = "0"
-      # cSOSN = "102"
-      # out_file.puts("N|")
-      # out_file.puts("N10d|#{orig}|#{cSOSN}|")
-
       case item.cst
       when '00'
-        orig = item.produto.origem
+        orig = item.produto.origem.presence || 0
         cST = item.cst
         modBC = '3'
         vBC = float_two(item.valor_bc_icms)
@@ -166,9 +150,8 @@ class GerarNotaFiscaisController < ApplicationController
         vFCP = ''
         out_file.puts('N|')
         out_file.puts("N02|#{orig}|#{cST}|#{modBC}|#{vBC}|#{pICMS}|#{vICMS}|#{pFCP}|#{vFCP}|")
-
-      when '40'
-        orig = item.produto.origem
+      when '40', '41'
+        orig = item.produto.origem.presence || 0
         cst = item.cst
         vICMSDeson = ''
         motDesICM = ''
@@ -229,32 +212,12 @@ class GerarNotaFiscaisController < ApplicationController
     # cpf = ""
     # out_file.puts("X05|#{cpf}|")
 
-    qVol = begin
-      @nota_fiscal.nota_fiscal_transporta.quantidade.to_s
-    rescue StandardError
-      '.'
-    end
-    esp = begin
-      @nota_fiscal.nota_fiscal_transporta.especie.to_s
-    rescue StandardError
-      ''
-    end
-    marca = begin
-      @nota_fiscal.nota_fiscal_transporta.marca.to_s
-    rescue StandardError
-      ''
-    end
+    qVol = @nota_fiscal.nota_fiscal_transporta.quantidade.to_s rescue '.'
+    esp =  @nota_fiscal.nota_fiscal_transporta.especie.to_s rescue ''
+    marca = @nota_fiscal.nota_fiscal_transporta.marca.to_s rescue ''
     nVol = ''
-    pesoL = begin
-      float_two(@nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s)
-    rescue StandardError
-      ''
-    end
-    pesoB = begin
-      float_two(@nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s)
-    rescue StandardError
-      ''
-    end
+    pesoL = float_two(@nota_fiscal.nota_fiscal_transporta.peso_liquido.to_s) rescue ''
+    pesoB = float_two(@nota_fiscal.nota_fiscal_transporta.peso_bruto.to_s) rescue ''
     out_file.puts("X26|#{qVol}|#{esp}|#{marca}|#{nVol}|#{pesoL}|#{pesoB}|")
 
     # Bloco Y
@@ -293,9 +256,7 @@ class GerarNotaFiscaisController < ApplicationController
   private
 
   def float_two(number)
-    '%.2f' % number
-  rescue StandardError
-    number
+    '%.2f' % number rescue number
   end
 
   def set_nota_fiscal

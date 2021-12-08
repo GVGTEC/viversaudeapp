@@ -54,26 +54,20 @@ class EstoquesController < ApplicationController
     data_reposicao = 8
     data_validade = 9
 
-    estoque = Estoque.new
-   
-    if linha[fornecedor_id].to_i.positive?
-      begin
-        estoque.fornecedor_id = Fornecedor.find(linha[fornecedor_id].to_i).id
-      rescue StandardError
-        estoque.fornecedor_id = Fornecedor.create(id: linha[fornecedor_id].to_i).id
-      end
-    end
-
     produto = Produto.find_by(codprd_sac: linha[codprd_sac])
-
+    
+    estoque = Estoque.new
     estoque.produto_id = produto.id if produto.present?
-    estoque.codprd_sac = linha[codprd_sac]
-    estoque.lote = linha[lote]
-    estoque.estoque_atual_lote = linha[estoque_atual_lote]
-    estoque.preco_custo_reposicao = separar_virgula(linha[preco_custo_reposicao].to_i)
-    estoque.data_reposicao = linha[data_reposicao]
-    estoque.data_validade = linha[data_validade]
-    estoque.empresa_id = @adm.empresa.id
+    estoque.codprd_sac = linha[codprd_sac] rescue linha[codprd_sac] 
+    estoque.lote = linha[lote] rescue linha[lote] 
+    estoque.estoque_atual_lote = linha[estoque_atual_lote] rescue linha[estoque_atual_lote] 
+    estoque.preco_custo_reposicao = separar_virgula(linha[preco_custo_reposicao].to_i) rescue linha[preco_custo_reposicao] 
+    estoque.data_reposicao = linha[data_reposicao] rescue linha[data_reposicao] 
+    estoque.data_validade = linha[data_validade] rescue linha[data_validade] 
+    estoque.empresa_id = empresa.id
+
+    fornecedor = linha[fornecedor_id].to_i
+    estoque.fornecedor_id = Fornecedor.find_or_create_by(id: fornecedor_id, empresa_id: empresa.id).id if fornecedor.positive?
 
     estoque.save
   end

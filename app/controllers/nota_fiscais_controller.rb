@@ -71,14 +71,16 @@ class NotaFiscaisController < ApplicationController
     
     NotaFiscalTransporta.where(nota_fiscal: @nota_fiscal.id).destroy_all
     if params[:nota_fiscal].key?(:transportadora_id)
-      nota_fiscal_transporta = NotaFiscalTransporta.new
-      nota_fiscal_transporta.nota_fiscal_id = @nota_fiscal.id
-      nota_fiscal_transporta.transportadora_id = params[:nota_fiscal][:transportadora_id]
-      nota_fiscal_transporta.quantidade = params[:quantidade]
-      nota_fiscal_transporta.especie = params[:especie]
-      nota_fiscal_transporta.marca = params[:marca]
-      nota_fiscal_transporta.peso_liquido = params[:peso_liquido]
-      nota_fiscal_transporta.peso_bruto = params[:peso_bruto]
+      nota_fiscal_transporta = NotaFiscalTransporta.new(
+        nota_fiscal_id: @nota_fiscal.id,
+        transportadora_id: params[:nota_fiscal][:transportadora_id],
+        quantidade: params[:quantidade],
+        especie: params[:especie],
+        marca: params[:marca],
+        peso_liquido: params[:peso_liquido],
+        peso_bruto: params[:peso_bruto]
+      )
+      
       nota_fiscal_transporta.save
     end
   end
@@ -86,18 +88,14 @@ class NotaFiscaisController < ApplicationController
   def salvar_estoque
     return if params[:movimentos].blank?
     
-    movimentos = params[:movimentos].split('[').join('').split(']')
-    movimentos = begin
-      movimentos.first.split('},').map { |mv| mv = mv << (mv.include?('}') ? '' : '}') }
-    rescue StandardError
-      []
-    end
+    movimentos = JSON.parse(params[:movimentos])
     
     @nota_fiscal.salvar_movimento_estoque(movimentos)
     @nota_fiscal.salvar_nota_fiscal_item_lotes(movimentos)
   end
 
   def nota_fiscal_params
-    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete)
+    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, 
+                                        :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete)
   end
 end

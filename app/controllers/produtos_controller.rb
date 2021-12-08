@@ -8,12 +8,12 @@ class ProdutosController < ApplicationController
     @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
 
     # paginação na view index (lista)
-    if params[:format] != 'json'
-      options = { page: params[:page] || 1, per_page: 15 }
-      @produtos = @produtos.paginate(options)
-    else
+    if params[:format] == 'json'
       @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
       @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
+    else
+      options = { page: params[:page] || 1, per_page: 15 }
+      @produtos = @produtos.paginate(options)
     end
   end
 
@@ -74,12 +74,8 @@ class ProdutosController < ApplicationController
     bloquear_preco = 32
     localizacao_estoque_id = 33
 
-    produto = Produto.where(codprd_sac: linha[codprd_sac])
-    produto = if produto.count.positive?
-                produto.first
-              else
-                Produto.new
-              end
+    produto = Produto.find_by(codprd_sac: linha[codprd_sac])
+    produto ||=  Produto.new
 
     produto.codprd_sac = linha[codprd_sac].strip
     produto.situacao = linha[situacao].blank?
@@ -87,27 +83,6 @@ class ProdutosController < ApplicationController
     produto.codigo_barras = linha[codigo_barras].strip
     produto.descricao = linha[descricao].strip
     produto.descricao_nfe = linha[descricao_nfe].strip
-
-    fornecedor = linha[fornecedor_id].to_i
-    if fornecedor != 0
-      begin
-        produto.fornecedor_id = Fornecedor.find(fornecedor).id
-      rescue StandardError
-        produto.fornecedor_id = Fornecedor.create(id: fornecedor, nome: "Fornecedor #{fornecedor}",
-                                                  empresa_id: @adm.empresa.id).id
-      end
-    end
-
-    localizacao_estoque = linha[localizacao_estoque_id].to_i
-    if localizacao_estoque != 0
-      begin
-        produto.localizacao_estoque_id = LocalizacaoEstoque.find(localizacao_estoque).id
-      rescue StandardError
-        produto.localizacao_estoque_id = LocalizacaoEstoque.create(id: localizacao_estoque,
-                                                                   local: "Rua #{localizacao_estoque}", empresa_id: @adm.empresa.id).id
-      end
-    end
-
     produto.situacao_tributaria = linha[situacao_tributaria].strip
     produto.ncm = linha[ncm].strip
     produto.unidade = linha[unidade].strip
@@ -125,6 +100,13 @@ class ProdutosController < ApplicationController
     produto.comissao_pc = linha[comissao_pc]
     produto.bloquear_preco = linha[bloquear_preco]
     produto.empresa_id = @adm.empresa.id
+
+    fornecedor = linha[fornecedor_id].to_i
+    produto.fornecedor_id = Fornecedor.find(id: fornecedor, empresa_id: @adm.empresa.id).id unless fornecedor.zero?
+
+    localizacao_estoque = linha[localizacao_estoque_id].to_i
+    produto.localizacao_estoque_id = LocalizacaoEstoque.find_or_create_by(id: localizacao_estoque, empresa_id: @adm.empresa.id).id unless localizacao_estoque.zero?
+    
     produto.save
   end
 
@@ -176,10 +158,11 @@ class ProdutosController < ApplicationController
   def set_produto
     @produto = Produto.find(params[:id])
   end
-
+                                             
   def produto_params
-    params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codprd_sac, :situacao, :data_inativo, :descricao, :descricao_nfe, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, :embalagem, :controlar_estoque, :por_lote, :bloquear_preco, :data_ultima_reposicao, :data_ultimo_reajuste, :preco_custo, :preco_custo_medio, :margem_lucro, :preco_venda, :preco_oferta, :margem_lucro_oferta, :data_inicial_oferta, :data_final_oferta, 
-                                    :comissao_pc, :estoque_atual, :estoque_minimo, :origem)
+    params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codprd_sac, :situacao, :data_inativo, :descricao, :descricao_nfe, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, 
+                                    :embalagem, :controlar_estoque, :por_lote, :bloquear_preco, :data_ultima_reposicao, :data_ultimo_reajuste, :preco_custo, :preco_custo_medio, :margem_lucro, :preco_venda, 
+                                    :preco_oferta, :margem_lucro_oferta, :data_inicial_oferta, :data_final_oferta, :comissao_pc, :estoque_atual, :estoque_minimo, :origem)
   end
 
   def separate_comma(number)

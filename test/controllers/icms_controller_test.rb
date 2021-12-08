@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class IcmsControllerTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @icms = icms(:one)
   end
 

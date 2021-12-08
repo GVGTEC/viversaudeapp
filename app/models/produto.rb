@@ -25,4 +25,17 @@ class Produto < ApplicationRecord
     response = http.request(request)
     Rails.logger.debug response.body
   end
+
+  def tipo_situacao_tributaria
+    case situacao_tributaria
+    when 'T'
+      'Tributada integralmente'
+    when 'I'
+      'Isento' 
+    when 'S'
+      'ICMS cobrado anteriormente por substituição tributária' # 
+    else
+      'Não tributada'
+    end
+  end
 end

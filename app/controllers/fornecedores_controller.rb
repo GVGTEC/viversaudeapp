@@ -61,30 +61,27 @@ class FornecedoresController < ApplicationController
     telefone_nf = 15
     email = 16
 
-    begin
-      fornecedor = Fornecedor.find(linha[id].to_i)
-    rescue StandardError
-      fornecedor = Fornecedor.new
-      fornecedor.id = linha[id].to_i
-    end
-
-    fornecedor.pessoa = linha[pessoa].strip
-    fornecedor.nome = linha[nome].strip
+    fornecedor = Fornecedor.find_by(id: linha[id].to_i)
+    fornecedor ||= Fornecedor.new
+    
+    fornecedor.id = linha[id].to_i  
+    fornecedor.pessoa = linha[pessoa].strip rescue linha[pessoa]
+    fornecedor.nome = linha[nome].strip rescue linha[nome]
     fornecedor.cpf = linha[cpf].strip if linha[cpf].to_i != 0
     fornecedor.rg = linha[rg].strip if linha[rg].to_i != 0
     fornecedor.cnpj = linha[cnpj].strip if linha[cnpj].to_i != 0
     fornecedor.ie = linha[ie].strip if linha[ie].to_i != 0
-    fornecedor.endereco = linha[endereco].strip
-    fornecedor.bairro = linha[bairro].strip
-    fornecedor.cidade = linha[cidade].strip
-    fornecedor.cep = linha[cep].strip
-    fornecedor.uf = linha[uf].strip
-    fornecedor.telefone = linha[telefone].strip
-    fornecedor.telefone_alternativo = linha[telefone_alternativo].strip
-    fornecedor.telefone_nf = linha[telefone_nf].strip
-    fornecedor.email = linha[email].strip
-    fornecedor.codcidade_ibge = linha[codcidade_ibge].strip
-    fornecedor.empresa_id = @adm.empresa.id
+    fornecedor.endereco = linha[endereco].strip rescue linha[endereco]
+    fornecedor.bairro = linha[bairro].strip rescue linha[bairro]
+    fornecedor.cidade = linha[cidade].strip rescue linha[cidade]
+    fornecedor.cep = linha[cep].strip rescue linha[cep]
+    fornecedor.uf = linha[uf].strip rescue linha[uf]
+    fornecedor.telefone = linha[telefone].strip rescue linha[telefone]
+    fornecedor.telefone_alternativo = linha[telefone_alternativo].strip rescue linha[telefone_alternativo]
+    fornecedor.telefone_nf = linha[telefone_nf].strip rescue linha[telefone_nf]
+    fornecedor.email = linha[email].strip rescue linha[email]
+    fornecedor.codcidade_ibge = linha[codcidade_ibge].strip rescue linha[codcidade_ibge]
+    fornecedor.empresa_id = empresa.id
     fornecedor.save
   end
 

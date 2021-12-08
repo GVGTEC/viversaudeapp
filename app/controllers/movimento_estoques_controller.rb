@@ -12,9 +12,9 @@ class MovimentoEstoquesController < ApplicationController
     end
 
     # paginação na view index (lista)
-    if params[:format] != 'json'
-      options = { page: params[:page] || 1, per_page: 10 }
-      @movimento_estoques = @movimento_estoques.paginate(options)
-    end
+    return unless params[:format] != 'json'
+
+    options = { page: params[:page] || 1, per_page: 10 }
+    @movimento_estoques = @movimento_estoques.paginate(options)
   end
 end

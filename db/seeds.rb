@@ -7,8 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Empresa.create(nome: 'Viver Saúde')
-Administrador.create(nome: 'Thiago', email: "malaquiastech@gmail.com", senha: "123456", empresa_id: Empresa.first.id)
-Administrador.create(nome: 'Gilberto', email: "gvgtec@terra.com.br", senha: "123456", empresa_id: Empresa.first.id)
+Administrador.create(nome: 'Thiago', email: 'malaquiastech@gmail.com', senha: '123456', empresa_id: Empresa.first.id)
+Administrador.create(nome: 'Gilberto', email: 'gvgtec@terra.com.br', senha: '123456', empresa_id: Empresa.first.id)
 
 Icms.create(estado: 'AC', aliquota_icms: 0o7, aliquota_icms_st: 0, mva_icms_st: 0, fcp_sn: 'N', fcp_pc: 0)
 Icms.create(estado: 'AL', aliquota_icms: 0o7, aliquota_icms_st: 0, mva_icms_st: 0, fcp_sn: 'N', fcp_pc: 0)

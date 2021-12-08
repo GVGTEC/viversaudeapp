@@ -1,7 +1,7 @@
 require 'application_system_test_case'
 
 class IcmsTest < ApplicationSystemTestCase
-  setup do
+  before do
     @icms = icms(:one)
   end
 
