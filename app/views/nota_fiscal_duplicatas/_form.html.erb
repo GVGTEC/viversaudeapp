@@ -5,7 +5,7 @@
         <div class="col-sm-6"></div>
         <div class="col-sm-6" style="text-align:end">
         <p><b>Valor Total:<b></p>
-        <p class="valor-total" style="font-size: 30px"><%= @nota_fiscal.valor_total_nota %>0</p>
+        <p class="valor-total" style="font-size: 30px"><%= number_to_currency(@nota_fiscal.valor_total_nota) %></p>
         </div>
       </div>
 
@@ -37,10 +37,9 @@
       <div class="col-md-6">
         <label for="nota_fiscal_tipo_pagamento">Forma de Pagamento</label>
         <select class="form-control" name="nota_fiscal[tipo_pagamento]" id="nota_fiscal_tipo_pagamento">
-          <option <%if @nota_fiscal.tipo_pagamento == "" %> selected <%end%> value=""></option>
-          <option <%if @nota_fiscal.tipo_pagamento == "V" %> selected <%end%> value="V">A Vista</option>
-          <option <%if @nota_fiscal.tipo_pagamento == "P" %> selected <%end%> value="P">A Prazo</option>
-          <option <%if @nota_fiscal.tipo_pagamento == "N" %> selected <%end%> value="N">Nenhum</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "" %> selected <%end%> value="">Nenhum</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "0" %> selected <%end%> value="0">A Vista</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "1" %> selected <%end%> value="1">A Prazo</option>
         </select>
       </div>
 
@@ -74,7 +73,13 @@
             <tr class="operacao">
               <td><input class='form-control' type='integer' style='width: 20%;' value='<%= index %>'><input class='form-control' type='integer' style='display:none;' value='<%= faturamento_parcela.prazo_pagamento %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='<%= index %>_prazo_pagamento'></td>
               <td><input class='form-control' type='date' style='width: 50%;' value='<%= faturamento_parcela.data_vencimento.to_date %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'  id='<%= index %>_data_vencimento'></td>
-              <td><input class='form-control' type='text' style='width: 30%;' value='R$ <%= faturamento_parcela.valor_parcela %>'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>
+              <td>
+                <div style="position: relative">
+                  <input class='form-control' type='text' style='width: 30%;' value='<%= faturamento_parcela.valor_parcela %>'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'>
+                  <div style="position: absolute">R$</div>
+                </div>
+              </td>
+
             </tr>
           <% end %>
         </tbody>
@@ -139,7 +144,7 @@
             "<tr class='operacao'>"+
               "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ (index + 1) +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='" + index + "_prazo_pagamento'></td>"+
               "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]' id='" + index + "_data_vencimento'></td>"+
-              "<td><input class='form-control' type='text' value='R$ "+ (valor_total_nota / qtd_parcelas).toFixed(2) +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>"+
+              "<td><input class='form-control' type='text' value='R$ "+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>"+
             "</tr>" 
           )
         );
@@ -163,5 +168,9 @@
     }
 
     return dataVencimento
+  }
+
+  const calculoValorParcela = (valor_total_nota, qtd_parcelas) => {
+    (valor_total_nota / qtd_parcelas).toFixed(2)
   }
 </script>
