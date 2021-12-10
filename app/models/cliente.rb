@@ -1,5 +1,3 @@
- 
-
 class Cliente < ApplicationRecord
   belongs_to :empresa
   default_scope { order('nome asc') }

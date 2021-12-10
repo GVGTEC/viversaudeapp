@@ -13,9 +13,9 @@ class NotaFiscalDuplicatasController < ApplicationController
     @nota_fiscal.save
 
     salvar_vencimento_parcelas
-  rescue StandardError
+  rescue StandardError => e
     flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
-    redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_faturamento_parcelas/new"
+    redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal)
   end
 
   private
@@ -36,9 +36,8 @@ class NotaFiscalDuplicatasController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      format.html { redirect_to observacoes_nota_fiscal_path(@nota_fiscal), notice: 'Nota fiscal item Cadastrado' }
-    end
+    flash[:notice] = 'Nota fiscal item Cadastrado' 
+    redirect_to observacoes_nota_fiscal_path(@nota_fiscal)
   end
 
   def formatar_numero_duplicata(numero)

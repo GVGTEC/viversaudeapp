@@ -16,7 +16,7 @@
     <div class="row form-group">
         <div class="col-md-2">
           <%= f.label :situacao, 'Situação' %>
-          <%= f.select(:situacao, options_for_select([['ATIVO', true], ['INATIVO', false]], :selected => @produto.situacao), {:include_blank => true}, {class: "form-control"}) %>
+          <%= f.select(:situacao, options_for_select([['ATIVO', 'ATIVO'], ['INATIVO', 'INATIVO']], :selected => @produto.situacao), {:include_blank => true}, {class: "form-control"}) %>
         </div>
   
         <div class="col-md-2">

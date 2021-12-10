@@ -27,23 +27,23 @@ class NotaFiscalItensController < ApplicationController
         next if nota_fiscal_item[:cod_produto].blank?
 
         begin
-          @nota_fiscal_item = NotaFiscalItem.new
-          @nota_fiscal_item.nota_fiscal = @nota_fiscal
-          @nota_fiscal_item.produto = Produto.find(nota_fiscal_item[:cod_produto])
-          @nota_fiscal_item.descricao = @nota_fiscal_item.produto.descricao
-          @nota_fiscal_item.cfop = nota_fiscal_item[:cfop]
-          @nota_fiscal_item.ncm = nota_fiscal_item[:ncm]
-          @nota_fiscal_item.unidade = nota_fiscal_item[:un]
-          @nota_fiscal_item.quantidade = nota_fiscal_item[:qtd]
-          @nota_fiscal_item.preco_unitario = nota_fiscal_item[:preco_unitario].gsub('R$', '').to_f
-          @nota_fiscal_item.preco_total = nota_fiscal_item[:preco_total].gsub('R$', '').to_f
-          @nota_fiscal_item.cst = @nota_fiscal_item.verifica_cst
-          @nota_fiscal_item.save
+          produto = Produto.find(nota_fiscal_item[:cod_produto])
+          @nota_fiscal_item = NotaFiscalItem.new(
+            nota_fiscal_id: @nota_fiscal.id,
+            produto_id: produto.id,
+            descricao: produto.descricao,
+            cfop: nota_fiscal_item[:cfop],
+            ncm: nota_fiscal_item[:ncm],
+            unidade: nota_fiscal_item[:un],
+            quantidade: nota_fiscal_item[:qtd],
+            preco_unitario: formatar_preco(nota_fiscal_item[:preco_unitario]),
+            preco_total: formatar_preco(nota_fiscal_item[:preco_total])
+          )
           
-          @nota_fiscal_item.calculo_imposto_item
-        rescue StandardError
+          @nota_fiscal_item.save
+        rescue StandardError => e
           flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
-          redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
+          redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal)
           return
         end
       end
@@ -52,7 +52,7 @@ class NotaFiscalItensController < ApplicationController
       @nota_fiscal.valor_total_nota = @nota_fiscal.calculo_valor_total_nota
       @nota_fiscal.save
 
-      @nota_fiscal.calculo_imposto_nota
+      salvar_estoque
     end
 
     respond_to do |format|
@@ -85,12 +85,25 @@ class NotaFiscalItensController < ApplicationController
 
   private
 
+  def salvar_estoque
+    return if params[:movimentos].blank?
+    movimentos = JSON.parse(params[:movimentos])
+    
+    @nota_fiscal.salvar_movimento_estoque(movimentos)
+    @nota_fiscal.salvar_nota_fiscal_item_lotes(movimentos)
+    @nota_fiscal.calculo_imposto_nota
+  end
+
   def set_nota_fiscal_item
     @nota_fiscal_item = NotaFiscalItem.find(params[:id])
   end
 
   def set_nota_fiscal
     @nota_fiscal = NotaFiscal.find(params[:nota_fiscal_id])
+  end
+
+  def formatar_preco(valor)
+    valor.gsub('R$', '').to_f
   end
 
   def nota_fiscal_item_params

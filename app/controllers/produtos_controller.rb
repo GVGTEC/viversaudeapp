@@ -6,15 +6,17 @@ class ProdutosController < ApplicationController
     @produtos = empresa.produtos
     @produtos = @produtos.order('descricao asc')
     @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
+    @produtos = @produtos.where(id: params[:codigo]) if params[:codigo].present?
 
     # paginação na view index (lista)
     if params[:format] == 'json'
       @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
       @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
-    else
-      options = { page: params[:page] || 1, per_page: 15 }
-      @produtos = @produtos.paginate(options)
+      return
     end
+
+    options = { page: params[:page] || 1, per_page: 15 }
+    @produtos = @produtos.paginate(options)
   end
 
   def importar
@@ -75,10 +77,10 @@ class ProdutosController < ApplicationController
     localizacao_estoque_id = 33
 
     produto = Produto.find_by(codprd_sac: linha[codprd_sac])
-    produto ||=  Produto.new
+    produto ||= Produto.new
 
     produto.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac]
-    produto.situacao = linha[situacao].strip rescue linha[situacao]
+    produto.situacao = linha[situacao].blank? ? 'ATIVO' : linha[situacao]
     produto.codigo_fabricante = linha[codigo_fabricante].strip rescue linha[codigo_fabricante]
     produto.codigo_barras = linha[codigo_barras].strip rescue linha[codigo_barras]
     produto.descricao = linha[descricao].strip rescue linha[descricao]
@@ -92,14 +94,14 @@ class ProdutosController < ApplicationController
     produto.preco_venda = separate_comma(linha[preco_venda].to_i)
     produto.margem_lucro_oferta = separate_margem(linha[margem_lucro_oferta].to_i)
     produto.preco_oferta = separate_comma(linha[preco_oferta].to_i)
-    produto.data_inicial_oferta = linha[data_inicial_oferta]
-    produto.controlar_estoque = linha[controlar_estoque]
-    produto.estoque_atual = linha[estoque_atual]
-    produto.estoque_minimo = linha[estoque_minimo]
-    produto.data_ultimo_reajuste = linha[data_ultimo_reajuste]
-    produto.comissao_pc = linha[comissao_pc]
-    produto.bloquear_preco = linha[bloquear_preco]
-    produto.empresa_id = @adm.empresa.id
+    produto.data_inicial_oferta = ApplicationHelper.formatar_data(linha[data_inicial_oferta])
+    produto.controlar_estoque = linha[controlar_estoque] == "S"
+    produto.estoque_atual = (linha[estoque_atual].to_i / 100) rescue linha[estoque_atual].to_i
+    produto.estoque_minimo = (linha[estoque_minimo].to_i / 100) rescue linha[estoque_minimo].to_i
+    produto.data_ultimo_reajuste = ApplicationHelper.formatar_data(linha[data_ultimo_reajuste])
+    produto.comissao_pc = linha[comissao_pc].to_i
+    produto.bloquear_preco = linha[bloquear_preco].present?
+    produto.empresa_id = empresa.id
 
     fornecedor = linha[fornecedor_id].to_i
     produto.fornecedor_id = Fornecedor.find_or_create_by(id: fornecedor, empresa_id: empresa.id).id unless fornecedor.zero?

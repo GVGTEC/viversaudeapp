@@ -4,6 +4,8 @@ class NotaFiscalItem < ApplicationRecord
 
   has_many :nota_fiscal_item_lotes, dependent: :delete_all
 
+  after_create :calculo_imposto_item, :verifica_cst
+
   def calculo_imposto_item
     cf = nota_fiscal.cfop.cliente_fornecedor_cf
 
@@ -29,16 +31,19 @@ class NotaFiscalItem < ApplicationRecord
   def verifica_cst
     st = produto.situacao_tributaria
 
-    case st
-    when 'T'
-      '00' # Tributada integralmente
-    when 'I'
-      '40' # Isenta
-    when 'S'
-      '60' # ICMS cobrado anteriormente por substituição tributária
-    else
-      '41' # Não tributada
-    end
+    self.cst = 
+      case st
+      when 'T'
+        '00' # Tributada integralmente
+      when 'I'
+        '40' # Isenta
+      when 'S'
+        '60' # ICMS cobrado anteriormente por substituição tributária
+      else
+        '41' # Não tributada
+      end
+
+    save
   end
 
   def verifica_cson

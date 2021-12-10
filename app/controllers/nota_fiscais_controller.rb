@@ -41,7 +41,6 @@ class NotaFiscaisController < ApplicationController
   def update
     respond_to do |format|
       if @nota_fiscal.update(nota_fiscal_params)
-        salvar_estoque
         salvar_nota_fiscal_transportadora
         format.html { redirect_to nota_fiscais_path, notice: 'Nota Fiscal Alterada' }
         format.json { render :show, status: :ok, location: @nota_fiscal }
@@ -83,15 +82,6 @@ class NotaFiscaisController < ApplicationController
       
       nota_fiscal_transporta.save
     end
-  end
-
-  def salvar_estoque
-    return if params[:movimentos].blank?
-    
-    movimentos = JSON.parse(params[:movimentos])
-    
-    @nota_fiscal.salvar_movimento_estoque(movimentos)
-    @nota_fiscal.salvar_nota_fiscal_item_lotes(movimentos)
   end
 
   def nota_fiscal_params

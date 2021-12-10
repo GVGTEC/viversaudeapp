@@ -21,36 +21,9 @@
     </div>
   </div>
 
-  <div class="row form-group" style="display: none;">
-    <div class="col-md-12">
-      <%= text_field_tag :movimentos, " "%>
-    </div>
-  </div>
-
   <div class="form-group">
     <div class="col-sm-10">
-      <a href="javascript:;" class="btn btn-primary" onclick="buscarMovimentoEstoque()">Salvar</a>
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
-
-<script>
-  const buscarMovimentoEstoque = () => {
-    let movimentoEstoques = getMovimentoEstoque()
-    let nota_fiscal_id = <%= @nota_fiscal.id %>
-    let movimentoSaida = []
-    let movimentoPermanece = []
-
-    movimentoEstoques.forEach(movimento => {
-      if(movimento.nota_fiscal_id == nota_fiscal_id){
-        movimentoSaida.push(movimento)
-      }else{
-        movimentoPermanece.push(movimento)
-      }
-    });
-
-    setMovimentoEstoque(movimentoPermanece)
-    $("#movimentos").val(JSON.stringify(movimentoSaida));
-    $(`#edit_nota_fiscal_${nota_fiscal_id}`).submit()
-  }
-</script>

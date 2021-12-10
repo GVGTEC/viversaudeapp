@@ -30,37 +30,37 @@
   <dt>Origem:</dt>
   <dd><%= @produto.origem %></dd>
   <dt>Situacao tributaria:</dt>
-  <dd><%= @produto.situacao_tributaria %></dd>
+  <dd><%= @produto.tipo_situacao_tributaria %></dd>
   <dt>Unidade:</dt>
   <dd><%= @produto.unidade %></dd>
   <dt>Embalagem:</dt>
   <dd><%= @produto.embalagem %></dd>
   <dt>Controlar estoque:</dt>
-  <dd><%= @produto.controlar_estoque %></dd>
+  <dd><%= @produto.controlar_estoque ? "Sim" : "Não" %></dd>
   <dt>Por lote:</dt>
   <dd><%= @produto.por_lote %></dd>
   <dt>Bloquear preco:</dt>
-  <dd><%= @produto.bloquear_preco %></dd>
+  <dd><%= @produto.bloquear_preco ? "Sim" : "Não" %></dd>
   <dt>Data ultima reposicao:</dt>
   <dd><%= @produto.data_ultima_reposicao %></dd>
   <dt>Data ultimo reajuste:</dt>
   <dd><%= @produto.data_ultimo_reajuste %></dd>
   <dt>Preco custo:</dt>
-  <dd><%= @produto.preco_custo %></dd>
+  <dd><%= number_to_currency(@produto.preco_custo) %></dd>
   <dt>Preco custo medio:</dt>
-  <dd><%= @produto.preco_custo_medio %></dd>
+  <dd><%= number_to_currency(@produto.preco_custo_medio) %></dd>
   <dt>Margem lucro:</dt>
-  <dd><%= @produto.margem_lucro %></dd>
+  <dd><%= number_to_currency(@produto.margem_lucro) %></dd>
   <dt>Preco venda:</dt>
-  <dd><%= @produto.preco_venda %></dd>
+  <dd><%= number_to_currency(@produto.preco_venda) %></dd>
   <dt>Preco oferta:</dt>
-  <dd><%= @produto.preco_oferta %></dd>
+  <dd><%= number_to_currency(@produto.preco_oferta) %></dd>
   <dt>Margem lucro oferta:</dt>
-  <dd><%= @produto.margem_lucro_oferta %></dd>
+  <dd><%= number_to_currency(@produto.margem_lucro_oferta) %></dd>
   <dt>Data inicial oferta:</dt>
   <dd><%= @produto.data_inicial_oferta %></dd>
   <dt>Data final oferta:</dt>
   <dd><%= @produto.data_final_oferta %></dd>
   <dt>Comissao pc:</dt>
-  <dd><%= @produto.comissao_pc %></dd>
+  <dd><%= number_to_currency(@produto.comissao_pc) %></dd>
 </dl>

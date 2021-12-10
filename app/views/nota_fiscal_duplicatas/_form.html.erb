@@ -107,7 +107,10 @@
         return false;
       }
     });
+
+    atualizarValorParcelas()
   });
+
 
   $(document).on('keyup', '[data-behavior~=np_pagamento]', function(event) {
     calculaPrazoParcelas()
@@ -121,8 +124,17 @@
       $(`#${inputId}_data_vencimento`).val(dataVencimento)
       $(`#${inputId}_prazo_pagamento`).val(value)
     }
-    
   });
+
+  const atualizarValorParcelas = () => {
+    const qtdParcelas = $(".valor-parcela").length
+    const valorTotalNota = <%= @nota_fiscal.valor_total_nota %>
+    const valorPercela = calculoValorParcela(valorTotalNota, qtdParcelas)
+
+    $(".valor-parcela").each(function(){
+      $(this).val(valorPercela);
+    })
+  }
 
   const calculaPrazoParcelas = () =>{
     const qtd_parcelas = parseInt($(`#nota_fiscal_numero_parcelas_pagamento`).val())
@@ -131,27 +143,27 @@
     $("#nota_fiscal_numero_prazo_pagamento").html("");
     $("#tableBody_nota_fiscal_faturamento_parcelas").html("");
 
-    if(qtd_parcelas){
-      for (let index = 0; index < qtd_parcelas; index++) {
-        const qtd_tempo = $(`#${index}_prazo`).val()
-        let prazo_pagamento = 0
+    if(!qtd_parcelas) return
 
-        if(qtd_tempo) prazo_pagamento = qtd_tempo
-        if(!qtd_tempo) prazo_pagamento = index
-         
-        const dataVencimento = calculoData(prazo_pagamento)
+    for (let index = 0; index < qtd_parcelas; index++) {
+      const qtd_tempo = $(`#${index}_prazo`).val()
+      let prazo_pagamento = 0
 
-        $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='' id='" + index + "_prazo' data-js='prazo' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
-        $("#tableBody_nota_fiscal_faturamento_parcelas").append(
-          $(
-            "<tr class='operacao'>"+
-              "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ (index + 1) +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='" + index + "_prazo_pagamento'></td>"+
-              "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]' id='" + index + "_data_vencimento'></td>"+
-              "<td><div style='position: relative'><input class='form-control valor-parcela' type='text' value='"+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'><div class='simbolo-real'>R$</div></div></td>"+
-            "</tr>" 
-          )
-        );
-      }
+      if(qtd_tempo) prazo_pagamento = qtd_tempo
+      if(!qtd_tempo) prazo_pagamento = index
+        
+      const dataVencimento = calculoData(prazo_pagamento)
+
+      $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='' id='" + index + "_prazo' data-js='prazo' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
+      $("#tableBody_nota_fiscal_faturamento_parcelas").append(
+        $(
+          "<tr class='operacao'>"+
+            "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ (index + 1) +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='" + index + "_prazo_pagamento'></td>"+
+            "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]' id='" + index + "_data_vencimento'></td>"+
+            "<td><div style='position: relative'><input class='form-control valor-parcela' type='text' value='"+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'><div class='simbolo-real'>R$</div></div></td>"+
+          "</tr>" 
+        )
+      );
     }
   }
 

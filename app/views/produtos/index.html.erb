@@ -26,7 +26,7 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-        <th>Id</th>
+        <th>Codigo</th>
         <th>Descrição</th>
         <th>NCM</th>
         <th>CodprdSAC</th>
@@ -46,7 +46,7 @@
         <td><%= produto.ncm %></td>
         <td><%= produto.codprd_sac %></td>
         <td><%= number_to_currency(produto.preco_venda) %></td>
-        <td><%= produto.estoque_atual %></td>
+        <td><%= formatar_qtd(produto.estoque_atual) %></td>
         <td><%= link_to 'Movimento', "/movimento_estoques?produto_id=#{produto.id}" %></td>
         <td><%= link_to 'Mostrar', produto %></td>
         <td><%= link_to 'Editar', edit_produto_path(produto) %></td>
