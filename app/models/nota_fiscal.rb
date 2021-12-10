@@ -41,18 +41,19 @@ class NotaFiscal < ApplicationRecord
 
     MovimentoEstoque.where(nota_fiscal_id: id).destroy_all
     movimentos.each do |movimento|
-      next unless produto_ids.include?(movimento['produto_id'])
+      next unless produto_ids.include?(movimento['produto_id'].to_i)
 
       movimento_estoque = MovimentoEstoque.new(
+        nota_fiscal_id: id,
         produto_id: movimento['produto_id'],
         estoque_id: movimento['estoque_id'],
-        nota_fiscal_id: id,
         origem: movimento['origem'],
         data: movimento['data'].to_date,
         qtd: movimento['qtd'],
         estoque_inicial: movimento['estoque_inicial'],
         estoque_final: movimento['estoque_final'],
-        preco_custo: Produto.find(movimento['produto_id']).preco_custo
+        preco_custo: Produto.find(movimento['produto_id']).preco_custo,
+        empresa_id: self.empresa.id
       )
       
       movimento_estoque.save
@@ -65,9 +66,12 @@ class NotaFiscal < ApplicationRecord
     NotaFiscalItemLote.where(nota_fiscal_item_id: nota_fiscal_iten_ids).destroy_all
     
     movimentos.each do |movimento|
+      nota_fiscal_item = nota_fiscal_itens.find_by(produto_id: movimento['produto_id'])
+      next if nota_fiscal_item.blank?
+
       nota_fiscal_item_lote = NotaFiscalItemLote.new(
-        nota_fiscal_item_id: nota_fiscal_itens.find_by(produto_id: movimento['produto_id']).id,
-        lote: Estoque.find(movimento['estoque_id']).lote.strip,
+        nota_fiscal_item_id: nota_fiscal_item.id,
+        estoque_id: movimento['estoque_id'],
         estoque_inicial: movimento['estoque_inicial'],
         qtd: movimento['qtd'],
         estoque_final: movimento['estoque_final']

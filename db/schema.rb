@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_24_214902) do
+ActiveRecord::Schema.define(version: 2021_12_10_022622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,8 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "nota_fiscal_id"
+    t.bigint "empresa_id"
+    t.index ["empresa_id"], name: "index_movimento_estoques_on_empresa_id"
     t.index ["estoque_id"], name: "index_movimento_estoques_on_estoque_id"
     t.index ["produto_id"], name: "index_movimento_estoques_on_produto_id"
   end
@@ -356,12 +358,13 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
 
   create_table "nota_fiscal_item_lotes", force: :cascade do |t|
     t.bigint "nota_fiscal_item_id"
-    t.string "lote"
     t.float "estoque_inicial"
     t.float "estoque_final"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "qtd"
+    t.bigint "estoque_id"
+    t.index ["estoque_id"], name: "index_nota_fiscal_item_lotes_on_estoque_id"
     t.index ["nota_fiscal_item_id"], name: "index_nota_fiscal_item_lotes_on_nota_fiscal_item_id"
   end
 
@@ -376,22 +379,22 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.float "quantidade"
     t.float "preco_unitario"
     t.float "preco_total"
-    t.float "aliquota_icms"
-    t.float "valor_bc_icms"
-    t.float "valor_icms"
-    t.float "aliquota_icms_st"
-    t.float "valor_bc_icms_st"
-    t.float "valor_icms_st"
-    t.float "aliquota_ipi"
-    t.float "valor_ipi"
-    t.float "aliquota_pis"
-    t.float "valor_pis"
-    t.float "aliquota_cofins"
-    t.float "valor_cofins"
-    t.float "aliquota_difal"
-    t.float "valor_difal"
-    t.float "valor_fcp"
-    t.float "aliquota_fcp"
+    t.float "aliquota_icms", default: 0.0
+    t.float "valor_bc_icms", default: 0.0
+    t.float "valor_icms", default: 0.0
+    t.float "aliquota_icms_st", default: 0.0
+    t.float "valor_bc_icms_st", default: 0.0
+    t.float "valor_icms_st", default: 0.0
+    t.float "aliquota_ipi", default: 0.0
+    t.float "valor_ipi", default: 0.0
+    t.float "aliquota_pis", default: 0.0
+    t.float "valor_pis", default: 0.0
+    t.float "aliquota_cofins", default: 0.0
+    t.float "valor_cofins", default: 0.0
+    t.float "aliquota_difal", default: 0.0
+    t.float "valor_difal", default: 0.0
+    t.float "valor_fcp", default: 0.0
+    t.float "aliquota_fcp", default: 0.0
     t.string "local_estoque"
     t.boolean "baixou_estoque"
     t.string "pagar_comissao_sn"
@@ -466,7 +469,7 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
     t.bigint "localizacao_estoque_id"
     t.bigint "fornecedor_id"
     t.string "codprd_sac"
-    t.boolean "situacao"
+    t.string "situacao"
     t.datetime "data_inativo"
     t.string "descricao"
     t.string "descricao_nfe"
@@ -585,6 +588,7 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
   add_foreign_key "fornecedor_contatos", "fornecedores"
   add_foreign_key "fornecedores", "empresas"
   add_foreign_key "localizacao_estoques", "empresas"
+  add_foreign_key "movimento_estoques", "empresas"
   add_foreign_key "movimento_estoques", "estoques"
   add_foreign_key "movimento_estoques", "produtos"
   add_foreign_key "nota_fiscais", "cfop"
@@ -596,6 +600,7 @@ ActiveRecord::Schema.define(version: 2021_10_24_214902) do
   add_foreign_key "nota_fiscal_chave_acessos", "nota_fiscais"
   add_foreign_key "nota_fiscal_faturamento_parcelas", "nota_fiscais"
   add_foreign_key "nota_fiscal_impostos", "nota_fiscais"
+  add_foreign_key "nota_fiscal_item_lotes", "estoques"
   add_foreign_key "nota_fiscal_item_lotes", "nota_fiscal_itens"
   add_foreign_key "nota_fiscal_itens", "nota_fiscais"
   add_foreign_key "nota_fiscal_itens", "produtos"

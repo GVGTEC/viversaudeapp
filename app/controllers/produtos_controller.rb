@@ -77,15 +77,15 @@ class ProdutosController < ApplicationController
     produto = Produto.find_by(codprd_sac: linha[codprd_sac])
     produto ||=  Produto.new
 
-    produto.codprd_sac = linha[codprd_sac].strip
-    produto.situacao = linha[situacao].blank?
-    produto.codigo_fabricante = linha[codigo_fabricante].strip
-    produto.codigo_barras = linha[codigo_barras].strip
-    produto.descricao = linha[descricao].strip
-    produto.descricao_nfe = linha[descricao_nfe].strip
-    produto.situacao_tributaria = linha[situacao_tributaria].strip
-    produto.ncm = linha[ncm].strip
-    produto.unidade = linha[unidade].strip
+    produto.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac]
+    produto.situacao = linha[situacao].strip rescue linha[situacao]
+    produto.codigo_fabricante = linha[codigo_fabricante].strip rescue linha[codigo_fabricante]
+    produto.codigo_barras = linha[codigo_barras].strip rescue linha[codigo_barras]
+    produto.descricao = linha[descricao].strip rescue linha[descricao]
+    produto.descricao_nfe = linha[descricao_nfe].strip rescue linha[descricao_nfe]
+    produto.situacao_tributaria = linha[situacao_tributaria].strip rescue linha[situacao_tributaria]
+    produto.ncm = linha[ncm].strip rescue linha[ncm]
+    produto.unidade = linha[unidade].strip rescue linha[unidade]
     produto.preco_custo_medio = separate_comma(linha[preco_custo_medio].to_i)
     produto.preco_custo = separate_comma(linha[preco_custo].to_i)
     produto.margem_lucro = separate_margem(linha[margem_lucro].to_i)
@@ -102,10 +102,10 @@ class ProdutosController < ApplicationController
     produto.empresa_id = @adm.empresa.id
 
     fornecedor = linha[fornecedor_id].to_i
-    produto.fornecedor_id = Fornecedor.find(id: fornecedor, empresa_id: @adm.empresa.id).id unless fornecedor.zero?
+    produto.fornecedor_id = Fornecedor.find_or_create_by(id: fornecedor, empresa_id: empresa.id).id unless fornecedor.zero?
 
     localizacao_estoque = linha[localizacao_estoque_id].to_i
-    produto.localizacao_estoque_id = LocalizacaoEstoque.find_or_create_by(id: localizacao_estoque, empresa_id: @adm.empresa.id).id unless localizacao_estoque.zero?
+    produto.localizacao_estoque_id = LocalizacaoEstoque.find_or_create_by(id: localizacao_estoque, empresa_id: empresa.id).id unless localizacao_estoque.zero?
     
     produto.save
   end

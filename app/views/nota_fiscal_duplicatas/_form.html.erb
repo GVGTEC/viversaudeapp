@@ -1,3 +1,7 @@
+<style>
+.valor-parcela{width: 30%; padding-left: 32px;}
+.simbolo-real{position: absolute; left: 2%; top: 22%;color: #555555;}
+</style>
 <form class="form-horizontal" id="new_nota_fiscal_nota_fiscal_duplicata" role="form" action="/nota_fiscais/<%= @nota_fiscal.id %>/nota_fiscal_duplicatas" accept-charset="UTF-8" method="post">
   <div class="ibox-content">
     <div class="row form-group">
@@ -75,11 +79,10 @@
               <td><input class='form-control' type='date' style='width: 50%;' value='<%= faturamento_parcela.data_vencimento.to_date %>' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]'  id='<%= index %>_data_vencimento'></td>
               <td>
                 <div style="position: relative">
-                  <input class='form-control' type='text' style='width: 30%;' value='<%= faturamento_parcela.valor_parcela %>'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'>
-                  <div style="position: absolute">R$</div>
+                  <input class='form-control valor-parcela' type='text' style='width: 30%;' value='<%= formatar_valor(faturamento_parcela.valor_parcela) %>'  name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'>
+                  <div class="simbolo-real">R$</div>
                 </div>
               </td>
-
             </tr>
           <% end %>
         </tbody>
@@ -138,13 +141,13 @@
          
         const dataVencimento = calculoData(prazo_pagamento)
 
-        $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='" + prazo_pagamento + "' id='" + index + "_prazo' data-js='prazo' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
+        $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='' id='" + index + "_prazo' data-js='prazo' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
         $("#tableBody_nota_fiscal_faturamento_parcelas").append(
           $(
             "<tr class='operacao'>"+
               "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ (index + 1) +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='" + index + "_prazo_pagamento'></td>"+
               "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]' id='" + index + "_data_vencimento'></td>"+
-              "<td><input class='form-control' type='text' value='R$ "+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'></td></td>"+
+              "<td><div style='position: relative'><input class='form-control valor-parcela' type='text' value='"+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'><div class='simbolo-real'>R$</div></div></td>"+
             "</tr>" 
           )
         );
@@ -171,6 +174,7 @@
   }
 
   const calculoValorParcela = (valor_total_nota, qtd_parcelas) => {
-    (valor_total_nota / qtd_parcelas).toFixed(2)
+    let valor = (valor_total_nota / qtd_parcelas).toFixed(2)
+    return valor.toString().replace(".", ",")
   }
 </script>

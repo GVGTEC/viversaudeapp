@@ -4,7 +4,7 @@ class NotaFiscalItem < ApplicationRecord
 
   has_many :nota_fiscal_item_lotes, dependent: :delete_all
 
-  def calculo_imposto_item(adm)
+  def calculo_imposto_item
     cf = nota_fiscal.cfop.cliente_fornecedor_cf
 
     uf = 
@@ -18,10 +18,10 @@ class NotaFiscalItem < ApplicationRecord
     self.valor_bc_icms = preco_total
     self.valor_icms = preco_total * aliquota_icms / 100
 
-    self.aliquota_pis = adm.empresa.aliquota_pis
+    self.aliquota_pis = nota_fiscal.empresa.aliquota_pis
     self.valor_pis = preco_total * aliquota_pis / 100
 
-    self.aliquota_cofins = adm.empresa.aliquota_cofins
+    self.aliquota_cofins = nota_fiscal.empresa.aliquota_cofins
     self.valor_cofins = preco_total * aliquota_cofins / 100
     save
   end

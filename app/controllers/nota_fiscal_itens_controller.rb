@@ -40,10 +40,11 @@ class NotaFiscalItensController < ApplicationController
           @nota_fiscal_item.cst = @nota_fiscal_item.verifica_cst
           @nota_fiscal_item.save
           
-          @nota_fiscal_item.calculo_imposto_item(@adm)
+          @nota_fiscal_item.calculo_imposto_item
         rescue StandardError
           flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
           redirect_to "/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new"
+          return
         end
       end
 

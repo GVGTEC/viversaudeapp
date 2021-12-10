@@ -66,14 +66,16 @@ class ContasRecController < ApplicationController
       params[:contas_rec][:contas_rec_parcela].each do |parcela|
         next unless parcela[:data_vencimento].present? || parcela[:data_recebimento].present?
 
-        contas_rec_parcela = ContasRecParcela.new
-        contas_rec_parcela.data_vencimento = parcela[:data_vencimento]
-        contas_rec_parcela.data_pagamento = parcela[:data_pagamento]
-        contas_rec_parcela.valor_parcela = parcela[:valor_parcela]
-        contas_rec_parcela.valor_juros_desconto = parcela[:valor_juros_desconto]
-        contas_rec_parcela.documento = parcela[:documento]
-        contas_rec_parcela.descricao = parcela[:descricao]
-        contas_rec_parcela.contas_rec = @contas_rec
+        contas_rec_parcela = ContasRecParcela.new(
+          data_vencimento: parcela[:data_vencimento],
+          data_pagamento: parcela[:data_pagamento],
+          valor_parcela: parcela[:valor_parcela],
+          valor_juros_desconto: parcela[:valor_juros_desconto],
+          documento: parcela[:documento],
+          descricao: parcela[:descricao],
+          contas_rec: @contas_rec
+        )
+        
         contas_rec_parcela.save!
       end
     end

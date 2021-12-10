@@ -1,9 +1,10 @@
 module ApplicationHelper
   def formatar_qtd(number)
-    if number == number.to_i
-      number.to_i
-    else
-      number
-    end
+    return number.to_i if number == number.to_i
+    number
+  end
+
+  def formatar_valor(valor)
+    sprintf('%.2f', valor).tr('.', ',')
   end
 end
