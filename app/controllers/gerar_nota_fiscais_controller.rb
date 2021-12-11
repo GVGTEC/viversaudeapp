@@ -236,13 +236,14 @@ class GerarNotaFiscaisController < ApplicationController
       out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
     end
 
+    indPag = @nota_fiscal.tipo_pagamento
     tPag = @nota_fiscal.meio_pagamento
     vPag = float_two(@nota_fiscal.valor_total_nota.to_s)
     cNPJ = ''
     tBand = ''
     cAut = ''
-    out_file.puts("YA|#{tPag}|#{vPag}|#{cNPJ}|#{tBand}|#{cAut}|")
-    out_file.puts("YA01|1|#{tPag}|#{vPag}|")
+    out_file.puts("YA|#{indPag}|#{tPag}||#{vPag}|#{cNPJ}|#{tBand}|#{cAut}|")
+    out_file.puts("YA01|#{indPag}|#{tPag}|#{vPag}|")
 
     # Bloco Z
     obs = @nota_fiscal.observacao

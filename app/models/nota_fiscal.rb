@@ -10,6 +10,7 @@ class NotaFiscal < ApplicationRecord
 
   has_one :nota_fiscal_transporta, dependent: :destroy
   has_one :nota_fiscal_imposto, dependent: :destroy
+  has_many :nota_fiscal_impostos, dependent: :delete_all
   has_many :nota_fiscal_itens, dependent: :delete_all
   has_many :nota_fiscal_faturamento_parcelas, dependent: :delete_all
 

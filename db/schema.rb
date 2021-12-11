@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_10_022622) do
+ActiveRecord::Schema.define(version: 2021_12_11_002027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 2021_12_10_022622) do
     t.float "valor_outras_despesas"
     t.string "numero_pedido_compra"
     t.string "tipo_pagamento"
-    t.integer "meio_pagamento"
+    t.string "meio_pagamento"
     t.integer "numero_parcelas_pagamento"
     t.text "observacao"
     t.string "chave_acesso_nfe"

@@ -22,19 +22,19 @@
       <div class="col-md-6">
         <label for="nota_fiscal_meio_pagamento">Meio de Pagamento</label>
         <select class="form-control" name="nota_fiscal[meio_pagamento]" id="nota_fiscal_meio_pagamento_id">
-          <option <%if @nota_fiscal.meio_pagamento == 0 %> selected <%end%> value=""></option>
-          <option <%if @nota_fiscal.meio_pagamento == 1 %> selected <%end%> value="01">Dinheiro</option>
-          <option <%if @nota_fiscal.meio_pagamento == 2 %> selected <%end%> value="02">Cheque</option>
-          <option <%if @nota_fiscal.meio_pagamento == 3 %> selected <%end%> value="03">Cartão de Crédito</option>
-          <option <%if @nota_fiscal.meio_pagamento == 4 %> selected <%end%> value="04">Cartão de Débito</option>
-          <option <%if @nota_fiscal.meio_pagamento == 5 %> selected <%end%> value="05">Crédito da Loja</option>
-          <option <%if @nota_fiscal.meio_pagamento == 10 %> selected <%end%> value="10">Vale Alimentação</option>
-          <option <%if @nota_fiscal.meio_pagamento == 11 %> selected <%end%> value="11">Vale Refeição</option>
-          <option <%if @nota_fiscal.meio_pagamento == 12 %> selected <%end%> value="12">Vale Presente</option>
-          <option <%if @nota_fiscal.meio_pagamento == 13 %> selected <%end%> value="13">Vale Combustível</option>
-          <option <%if @nota_fiscal.meio_pagamento == 15 %> selected <%end%> value="15">Boleto Bancário</option>
-          <option <%if @nota_fiscal.meio_pagamento == 90 %> selected <%end%> value="90">Sem Pagamento</option>
-          <option <%if @nota_fiscal.meio_pagamento == 99 %> selected <%end%> value="99">Outros<option>
+          <option <%if @nota_fiscal.meio_pagamento == "" %> selected <%end%> value=""></option>
+          <option <%if @nota_fiscal.meio_pagamento == "01" %> selected <%end%> value="01">Dinheiro</option>
+          <option <%if @nota_fiscal.meio_pagamento == "02" %> selected <%end%> value="02">Cheque</option>
+          <option <%if @nota_fiscal.meio_pagamento == "03" %> selected <%end%> value="03">Cartão de Crédito</option>
+          <option <%if @nota_fiscal.meio_pagamento == "04" %> selected <%end%> value="04">Cartão de Débito</option>
+          <option <%if @nota_fiscal.meio_pagamento == "05" %> selected <%end%> value="05">Crédito da Loja</option>
+          <option <%if @nota_fiscal.meio_pagamento == "10" %> selected <%end%> value="10">Vale Alimentação</option>
+          <option <%if @nota_fiscal.meio_pagamento == "11" %> selected <%end%> value="11">Vale Refeição</option>
+          <option <%if @nota_fiscal.meio_pagamento == "12" %> selected <%end%> value="12">Vale Presente</option>
+          <option <%if @nota_fiscal.meio_pagamento == "13" %> selected <%end%> value="13">Vale Combustível</option>
+          <option <%if @nota_fiscal.meio_pagamento == "15" %> selected <%end%> value="15">Boleto Bancário</option>
+          <option <%if @nota_fiscal.meio_pagamento == "90" %> selected <%end%> value="90">Sem Pagamento</option>
+          <option <%if @nota_fiscal.meio_pagamento == "99" %> selected <%end%> value="99">Outros<option>
         </select>
       </div>
 
