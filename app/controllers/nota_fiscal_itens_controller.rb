@@ -32,7 +32,7 @@ class NotaFiscalItensController < ApplicationController
             nota_fiscal_id: @nota_fiscal.id,
             produto_id: produto.id,
             descricao: produto.descricao,
-            cfop: nota_fiscal_item[:cfop],
+            cfop: @nota_fiscal.cfop.codigo,
             ncm: nota_fiscal_item[:ncm],
             unidade: nota_fiscal_item[:un],
             quantidade: nota_fiscal_item[:qtd],

@@ -26,7 +26,7 @@ class EstoquesController < ApplicationController
       importar_csv
     else
       flash[:error] = 'Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV'
-      redirect_to '/importar_estoques'
+      redirect_to estoques_importacoes_path
       return
     end
 
@@ -34,7 +34,7 @@ class EstoquesController < ApplicationController
     redirect_to estoques_path
   rescue StandardError => e
     flash[:error] = e
-    redirect_to '/importar_estoques'
+    redirect_to estoques_importacoes_path
     nil
   end
 
@@ -56,15 +56,19 @@ class EstoquesController < ApplicationController
     data_validade = 9
 
     produto = Produto.find_by(codprd_sac: linha[codprd_sac])
+    produto ||= Produto.find_or_create_by(descricao: "Produto Não Encontrado", empresa_id: empresa.id)
     
-    estoque = Estoque.new
+    lote = linha[lote].strip rescue linha[lote] 
+    estoque = Estoque.find_by(lote: lote)
+    estoque ||= Estoque.new
+
     estoque.produto_id = produto.id if produto.present?
-    estoque.codprd_sac = linha[codprd_sac] rescue linha[codprd_sac] 
-    estoque.lote = linha[lote] rescue linha[lote] 
-    estoque.estoque_atual_lote = linha[estoque_atual_lote] rescue linha[estoque_atual_lote] 
+    estoque.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac] 
+    estoque.lote = lote 
+    estoque.estoque_atual_lote = linha[estoque_atual_lote].to_i / 100 rescue linha[estoque_atual_lote] 
     estoque.preco_custo_reposicao = separar_virgula(linha[preco_custo_reposicao].to_i) rescue linha[preco_custo_reposicao] 
-    estoque.data_reposicao = linha[data_reposicao] rescue linha[data_reposicao] 
-    estoque.data_validade = linha[data_validade] rescue linha[data_validade] 
+    estoque.data_reposicao = Estoque.formatar_data(linha[data_reposicao]) rescue linha[data_reposicao] 
+    estoque.data_validade = Estoque.formatar_data(linha[data_validade]) rescue linha[data_validade] 
     estoque.empresa_id = empresa.id
 
     fornecedor = linha[fornecedor_id].to_i

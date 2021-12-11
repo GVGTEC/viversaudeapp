@@ -13,6 +13,7 @@ class NotaFiscal < ApplicationRecord
   has_many :nota_fiscal_impostos, dependent: :delete_all
   has_many :nota_fiscal_itens, dependent: :delete_all
   has_many :nota_fiscal_faturamento_parcelas, dependent: :delete_all
+  has_many :movimento_estoques, dependent: :delete_all
 
   def calculo_valor_total_nota
     # preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
@@ -61,7 +62,7 @@ class NotaFiscal < ApplicationRecord
         estoque = Estoque.find(movimento['estoque_id'])
         estoque_atual_lote = estoque.estoque_atual_lote
         estoque.estoque_atual_lote = estoque_atual_lote - movimento['qtd'].to_f
-        estoque.ultima_alteracao = Estoque::BAIXA 
+        estoque.ultima_alteracao = Estoque::VENDA 
         estoque.save
 
         estoque.atualizar_produto_baixas({qtd_baixa: movimento['qtd'].to_f})

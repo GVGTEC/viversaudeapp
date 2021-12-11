@@ -109,7 +109,7 @@ class GerarNotaFiscaisController < ApplicationController
 
     @nota_fiscal.nota_fiscal_itens.each_with_index do |item, i|
       # Bloco Prod
-      out_file.puts("H|#{i + 1}|Lote: 2021041802 Qtd: 2700 Val: 18/04/2024 - Local: RUA 05|")
+      out_file.puts("H|#{i + 1}|#{item.informacoes_lote}|")
 
       cProd = item.produto.codprd_sac.to_s
       cEAN = ''

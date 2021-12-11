@@ -3,6 +3,8 @@ class Produto < ApplicationRecord
   belongs_to :fornecedor, optional: true
   belongs_to :empresa
 
+  has_many :estoques, dependent: :delete_all
+
   def self.atualizar_produto_reposto(estoque, params)
     produto = estoque.produto
     produto.preco_custo_medio = estoque.calculo_preco_custo_medio

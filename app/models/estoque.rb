@@ -39,4 +39,18 @@ class Estoque < ApplicationRecord
     produto.estoque_atual -= params[:qtd_baixa].to_f
     produto.save
   end
+
+  def self.formatar_data(data)
+    dia = data[0..1].to_i
+    mes = data[2..3].to_i
+    ano = data[4..7].to_i
+
+    return "" if dia.zero?
+
+    Date.new(ano, mes, dia)
+  rescue => e
+    puts "============="
+    puts "#{e}"
+    puts "============="
+  end
 end
