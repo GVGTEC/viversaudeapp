@@ -57,7 +57,15 @@ class NotaFiscal < ApplicationRecord
         empresa_id: self.empresa.id
       )
       
-      movimento_estoque.save
+      if movimento_estoque.save
+        estoque = Estoque.find(movimento['estoque_id'])
+        estoque_atual_lote = estoque.estoque_atual_lote
+        estoque.estoque_atual_lote = estoque_atual_lote - movimento['qtd'].to_f
+        estoque.ultima_alteracao = Estoque::BAIXA 
+        estoque.save
+
+        estoque.atualizar_produto_baixas({qtd_baixa: movimento['qtd'].to_f})
+      end
     end
   end
 

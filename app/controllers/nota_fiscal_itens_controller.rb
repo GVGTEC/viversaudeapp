@@ -103,7 +103,7 @@ class NotaFiscalItensController < ApplicationController
   end
 
   def formatar_preco(valor)
-    valor.gsub('R$', '').to_f
+    valor.gsub('.', '').gsub('R$', '').to_f
   end
 
   def nota_fiscal_item_params

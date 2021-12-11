@@ -6,6 +6,7 @@ class EstoquesController < ApplicationController
     @estoques = empresa.estoques
     @estoques = @estoques.where("lote ilike '%#{params[:lote]}%'") if params[:lote].present?
     @estoques = @estoques.where(produto_id: params[:produto_id]) if params[:produto_id].present?
+    @estoques = @estoques.order("updated_at desc")
     
     # paginação na view index (lista)
     if params[:format] != 'json'

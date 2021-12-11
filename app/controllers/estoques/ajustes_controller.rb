@@ -32,15 +32,18 @@ class Estoques::AjustesController < ApplicationController
   end
 
   def salve_movimento_estoque(estoque_atual_lote)
-    movimento_estoque = MovimentoEstoque.new
-    movimento_estoque.estoque_id = @estoque.id
-    movimento_estoque.produto_id = @estoque.produto_id
-    movimento_estoque.origem = @estoque.ultima_alteracao
-    movimento_estoque.data = @estoque.updated_at
-    movimento_estoque.qtd = 0
-    movimento_estoque.estoque_inicial = estoque_atual_lote
-    movimento_estoque.estoque_final = @estoque.estoque_atual_lote
-    movimento_estoque.preco_custo = @estoque.produto.preco_custo
+    movimento_estoque = MovimentoEstoque.new(
+      estoque_id: @estoque.id,
+      produto_id: @estoque.produto_id,
+      origem: @estoque.ultima_alteracao,
+      data: @estoque.updated_at,
+      qtd: 0,
+      estoque_inicial: estoque_atual_lote,
+      estoque_final: @estoque.estoque_atual_lote,
+      preco_custo: @estoque.produto.preco_custo,
+      empresa_id: @estoque.empresa_id
+    )
+    
     movimento_estoque.save
   end
 

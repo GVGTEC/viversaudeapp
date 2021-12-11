@@ -219,7 +219,7 @@
     $("input[data-behavior~=preco_total]").each(function(){
       try {
         var input = $(this);
-        var valor = input.val().replace(/,/g, ".").replace('R$', '')
+        var valor = input.val().replace('.', '').replace(/,/g, ".").replace('R$', '')
         if(valor) valorTotal += parseFloat(valor)
       }catch(error){}
     });

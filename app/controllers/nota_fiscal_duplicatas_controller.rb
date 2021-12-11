@@ -29,7 +29,7 @@ class NotaFiscalDuplicatasController < ApplicationController
           duplicata: formatar_numero_duplicata(i + 1),
           prazo_pagamento: faturamento_parcela[:prazo_pagamento],
           data_vencimento: faturamento_parcela[:data_vencimento],
-          valor_parcela: faturamento_parcela[:valor_parcela].gsub('R$', '').to_f
+          valor_parcela: faturamento_parcela[:valor_parcela].gsub('.', '').gsub(',', '.').to_f
         )
         
         @nota_fiscal_faturamento_parcela.save

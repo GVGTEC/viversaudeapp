@@ -7,10 +7,12 @@ class NotaFiscalItem < ApplicationRecord
   after_create :calculo_imposto_item, :verifica_cst
 
   def calculo_imposto_item
-    cf = nota_fiscal.cfop.cliente_fornecedor_cf
+    return if produto.situacao_tributaria != 'T'
 
+    cf = nota_fiscal.cfop.cliente_fornecedor_cf
     uf = 
       if cf == 'C'
+        return if nota_fiscal.cliente.empresa_governo
         nota_fiscal.cliente.uf
       else
         nota_fiscal.fornecedor.uf
@@ -29,10 +31,19 @@ class NotaFiscalItem < ApplicationRecord
   end
 
   def verifica_cst
-    st = produto.situacao_tributaria
+    cf = nota_fiscal.cfop.cliente_fornecedor_cf
 
+    if cf == 'C'
+      if nota_fiscal.cliente.empresa_governo
+        self.cst = '41'
+        save
+        return
+      end
+    end
+
+    situacao_tributaria = produto.situacao_tributaria
     self.cst = 
-      case st
+      case situacao_tributaria
       when 'T'
         '00' # Tributada integralmente
       when 'I'
@@ -42,6 +53,16 @@ class NotaFiscalItem < ApplicationRecord
       else
         '41' # Não tributada
       end
+
+    if situacao_tributaria == 'S'
+      informativo = nota_fiscal.cfop.informativo
+      self.cfop = 
+        if informativo.include?('de')
+          Cfop.find_by(informativo: 'cfop_st_de').codigo
+        else
+          Cfop.find_by(informativo: 'cfop_fe_st').codigo
+        end
+    end
 
     save
   end

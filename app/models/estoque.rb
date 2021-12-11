@@ -28,7 +28,7 @@ class Estoque < ApplicationRecord
     produto.save
   end
 
-  def atualizar_produto_ajuste(qtd_estoque_final = {})
+  def atualizar_produto_ajuste(qtd_estoque_final)
     produto = self.produto
     produto.estoque_atual = qtd_estoque_final
     produto.save
@@ -36,7 +36,7 @@ class Estoque < ApplicationRecord
 
   def atualizar_produto_baixas(params = {})
     produto = self.produto
-    produto.estoque_atual -= params[:estoque_atual_lote].to_f
+    produto.estoque_atual -= params[:qtd_baixa].to_f
     produto.save
   end
 end
