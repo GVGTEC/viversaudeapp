@@ -2,6 +2,7 @@
 .table-nota {display: none;}
 .form-control {text-align: center;}
 .form-produtos-itens{margin: 0px; height: 36px; width: 400px; text-align: inherit;}
+.table-overflow-auto{ max-height: 300px; overflow: auto;}
 </style>
 
 <%= form_for([@nota_fiscal, @nota_fiscal_item], html: { class: "form-horizontal", role: "form" }) do |f| %>
@@ -87,25 +88,26 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <div class="table-responsive">
+    <div>
       <h3>Produto: <span class="descricaoProd"></span></h3>
       <h4>Quantidade: <span class="qtdProd"></span></h4>
       <hr>
-      <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_estoque">
-        <thead>
-          <tr>
-            <th>Lote</th>
-            <th>Validade</th>
-            <th>Estoque</th>
-            <th>Baixar</th>
-            <th>Total</th>
-          </tr>
-        </thead>
+      <div class="table-overflow-auto">
+        <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_estoque">
+          <thead>
+            <tr>
+              <th>Lote</th>
+              <th>Validade</th>
+              <th>Estoque</th>
+              <th>Baixar</th>
+              <th>Total</th>
+            </tr>
+          </thead>
 
-        <tbody id="tableBody_estoque">
-        </tbody>
-      </table>
-
+          <tbody id="tableBody_estoque">
+          </tbody>
+        </table>
+      </div>
       <br>
 
       <a href="javascript:;" class="btn btn-primary" onclick="salvarMovimentoEstoque()">Salvar</a>
@@ -308,17 +310,20 @@
     body.html("")
 
     estoques.forEach(estoque => {
-      if(!estoque.estoque_atual_lote > 0) return
+      //if(!estoque.estoque_atual_lote > 0) return
       var date = new Date(estoque.created_at);
       produtoEmEstoque = true
-
+      
+      let input = ''
+      if(estoque.estoque_atual_lote > 0) input = "<input  class='form-control' id='"+ estoque.id +"-qtd_venda' type='text' style='width: 115px;' data-behavior='qtd_venda'>"
+      
       table.append(
         $(
         "<tr id='"+ estoque.id +"' class='operacao-estoque' >"+ 
           "<td>"+ estoque.lote +"</td>" +
           "<td>"+ `${date.getMonth() + 1}/${date.getFullYear()}` +"</td>" +
           "<td id='"+ estoque.id + "-estoque'>"+ estoque.estoque_atual_lote +"</td>" +
-          "<td><input  class='form-control' id='"+ estoque.id +"-qtd_venda' type='text' style='width: 115px;' data-behavior='qtd_venda'></td>" +
+          "<td>" + input +"</td>" +
           "<td id='"+ estoque.id + "-total'>"+ estoque.estoque_atual_lote +"</td>" +
         "</tr>"
         )
@@ -330,10 +335,11 @@
 
     for (let index = 0; index < movimentoEstoque.length; index++) {
       const movimento = movimentoEstoque[index];
-      if(!movimento.produto_id == produto_id) return
+      if(!(movimento.produto_id == parseInt(produto_id))) continue
 
-      let total = movimento.estoque_inicial - movimento.qtd
-      $(`#${movimento.estoque_id}-estoque`).html(movimento.estoque_inicial)
+      let total = parseInt($(`#${movimento.estoque_id}-estoque`).html())
+      let estoque_inicial = total + movimento.qtd
+      $(`#${movimento.estoque_id}-estoque`).html(estoque_inicial)
       $(`#${movimento.estoque_id}-qtd_venda`).val(movimento.qtd)
       $(`#${movimento.estoque_id}-total`).html(total)
     }
@@ -367,7 +373,7 @@
         }
       }
 
-      if(!qtd > 0) return
+      if(!(qtd > 0)) return
 
       movimentoEstoque = {
         produto_id: JSON.parse(localStorage.getItem("produto_id")),

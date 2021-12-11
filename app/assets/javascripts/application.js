@@ -16,3 +16,16 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+const setMovimentoEstoque = (movimentoEstoque) => {
+  localStorage.setItem("movimentoEstoque", JSON.stringify(movimentoEstoque));
+}
+
+const getMovimentoEstoque = () => {
+  try{
+    let movimentoEstoque = JSON.parse(localStorage.getItem("movimentoEstoque"))
+    if(!movimentoEstoque) return [];
+    return movimentoEstoque;
+  }
+  catch(e){ return [] }
+}

@@ -107,15 +107,17 @@ class NotaFiscalItem < ApplicationRecord
   end
 
   def reverter_baixa_estoque
-    debugger
-    produto.estoque_atual += quantidade
-    produto.save
-
-    
     movimento_estoques = nota_fiscal.movimento_estoques
-    movimento_estoques.each do |movimento| 
+    movimento_estoques.each do |movimento|
       produto = movimento.produto
-      #produto.estoque_atual +=  
+      produto.estoque_atual += movimento.qtd
+      produto.save
+
+      estoque = movimento.estoque
+      estoque.estoque_atual_lote += movimento.qtd
+      estoque.save
+
+      movimento.destroy
     end
   end
 end
