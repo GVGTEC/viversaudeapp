@@ -17,11 +17,11 @@
 //= require bootstrap
 //= require_tree .
 
-const setMovimentoEstoque = (movimentoEstoque) => {
+var setMovimentoEstoque = (movimentoEstoque) => {
   localStorage.setItem("movimentoEstoque", JSON.stringify(movimentoEstoque));
 }
 
-const getMovimentoEstoque = () => {
+var getMovimentoEstoque = () => {
   try{
     let movimentoEstoque = JSON.parse(localStorage.getItem("movimentoEstoque"))
     if(!movimentoEstoque) return [];
