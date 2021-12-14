@@ -18,5 +18,7 @@ module Viversaude
 
     config.i18n.default_locale = :"pt-BR"
     config.time_zone = 'Brasilia'
+
+    config.assets.initialize_on_precompile = false
   end
 end
