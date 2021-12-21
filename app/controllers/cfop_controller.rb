@@ -49,10 +49,15 @@ class CfopController < ApplicationController
   end
 
   def destroy
-    @cfop.destroy
     respond_to do |format|
-      format.html { redirect_to cfop_index_url, notice: 'Cfop Excluído' }
-      format.json { head :no_content }
+      begin
+        @cfop.destroy
+        format.html { redirect_to cfop_index_url, notice: 'Cfop Excluído' }
+        format.json { head :no_content }
+      rescue
+        format.html { render :index, status: :unprocessable_entity }
+        format.json { render json: @cfop.errors, status: :unprocessable_entity }
+      end
     end
   end
 
