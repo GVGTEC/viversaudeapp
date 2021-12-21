@@ -208,13 +208,23 @@
     let produtoEmEstoque = false
     body.html("")
 
+    movimentoEstoque = getMovimentoEstoque()
+    if(!movimentoEstoque) return
+
+    const estoquesMovimentados = []
+    movimentoEstoque.forEach((movimento) => {
+      if((movimento.produto_id == parseInt(produto_id))){
+        estoquesMovimentados.push(movimento.estoque_id) 
+      } 
+    })
+
     estoques.forEach(estoque => {
-      //if(!estoque.estoque_atual_lote > 0) return
+      if(!(estoquesMovimentados.includes(estoque.id)) && estoque.estoque_atual_lote == 0) return
+
       var date = new Date(estoque.created_at);
       produtoEmEstoque = true
       
-      let input = ''
-      if(estoque.estoque_atual_lote > 0) input = "<input  class='form-control' id='"+ estoque.id +"-qtd_venda' type='text' style='width: 115px;' data-behavior='qtd_venda'>"
+      let input = "<input  class='form-control' id='"+ estoque.id +"-qtd_venda' type='text' style='width: 115px;' data-behavior='qtd_venda'>"
       
       table.append(
         $(
@@ -229,9 +239,6 @@
       );
     });
 
-    movimentoEstoque = getMovimentoEstoque()
-    if(!movimentoEstoque) return
-
     movimentoEstoque.forEach((movimento) => {
       if(!(movimento.produto_id == parseInt(produto_id))) return
 
@@ -241,6 +248,8 @@
       $(`#${movimento.estoque_id}-qtd_venda`).val(movimento.qtd)
       $(`#${movimento.estoque_id}-total`).html(total)
     });
+
+    
 
     return produtoEmEstoque
   }

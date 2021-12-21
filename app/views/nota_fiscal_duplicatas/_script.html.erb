@@ -1,0 +1,91 @@
+<script>
+  $(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+
+    atualizarValorParcelas()
+  });
+
+
+  $(document).on('keyup', '[data-behavior~=np_pagamento]', function(event) {
+    calculaPrazoParcelas()
+  });
+
+  $(document).on('keyup', '[data-js=prazo]', function(event) {
+    const inputId = parseInt(this.id.match(/\d+/)[0])
+    const value = $(`#${this.id}`).val()
+    if(value >= 0){
+      const dataVencimento = calculoData(parseInt(value))
+      $(`#${inputId}_data_vencimento`).val(dataVencimento)
+      $(`#${inputId}_prazo_pagamento`).val(value)
+    }
+  });
+
+  const atualizarValorParcelas = () => {
+    const qtdParcelas = $(".valor-parcela").length
+    const valorTotalNota = <%= @nota_fiscal.valor_total_nota %>
+    const valorPercela = calculoValorParcela(valorTotalNota, qtdParcelas)
+
+    $(".valor-parcela").each(function(){
+      $(this).val(valorPercela);
+    })
+  }
+
+  const calculaPrazoParcelas = () =>{
+    const qtd_parcelas = parseInt($(`#nota_fiscal_numero_parcelas_pagamento`).val())
+    const valor_total_nota = <%= @nota_fiscal.valor_total_nota %>
+
+    $("#nota_fiscal_numero_prazo_pagamento").html("");
+    $("#tableBody_nota_fiscal_faturamento_parcelas").html("");
+
+    if(!qtd_parcelas) return
+
+    for (let index = 0; index < qtd_parcelas; index++) {
+      const qtd_tempo = $(`#${index}_prazo`).val()
+      let prazo_pagamento = 0
+
+      if(qtd_tempo) prazo_pagamento = qtd_tempo
+      if(!qtd_tempo) prazo_pagamento = index
+        
+      const dataVencimento = calculoData(prazo_pagamento)
+
+      $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='' id='" + index + "_prazo' data-js='prazo' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
+      $("#tableBody_nota_fiscal_faturamento_parcelas").append(
+        $(
+          "<tr class='operacao'>"+
+            "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ (index + 1) +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='" + index + "_prazo_pagamento'></td>"+
+            "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]' id='" + index + "_data_vencimento'></td>"+
+            "<td><div style='position: relative'><input class='form-control valor-parcela' type='text' value='"+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'><div class='simbolo-real'>R$</div></div></td>"+
+          "</tr>" 
+        )
+      );
+    }
+  }
+
+  const calculoData = (prazo_pagamento) => {
+    var data = new Date();
+    let dataVencimento = ""
+    data.setDate(data.getDate() + prazo_pagamento);
+  
+    if((data.getMonth() + 1) > 9 &&  data.getDate() > 9){
+      dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-" + data.getDate()
+    }else if((data.getMonth() + 1) <= 9 &&  data.getDate() > 9){
+      dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-" + data.getDate()
+    }else if((data.getMonth() + 1) > 9 &&  data.getDate() <= 9){
+      dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-0" + data.getDate()
+    }else{
+      dataVencimento = ((data.getFullYear() )) + "-0" + ((data.getMonth() + 1)) + "-0" + data.getDate()
+    }
+
+    return dataVencimento
+  }
+
+  const calculoValorParcela = (valor_total_nota, qtd_parcelas) => {
+    let valor = (valor_total_nota / qtd_parcelas).toFixed(2)
+    return valor.toString().replace(".", ",")
+  }
+</script>

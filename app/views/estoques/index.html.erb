@@ -1,6 +1,13 @@
 <h1>Estoques</h1>
 
 <div class="page-header">
+  <%if params[:produto_id].present? %>
+    <%= link_to "javascript:history.back()", class: 'btn btn-default' do %>
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Voltar
+    <% end %>
+  <% end %>
+  
   <h2>Lista</h2>  
 </div>
 
