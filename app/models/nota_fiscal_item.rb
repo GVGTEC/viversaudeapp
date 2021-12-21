@@ -14,6 +14,7 @@ class NotaFiscalItem < ApplicationRecord
     uf = 
       if cf == 'C'
         return if nota_fiscal.cliente.empresa_governo
+
         nota_fiscal.cliente.uf
       else
         nota_fiscal.fornecedor.uf
@@ -34,12 +35,10 @@ class NotaFiscalItem < ApplicationRecord
   def verifica_cst
     cf = nota_fiscal.cfop.cliente_fornecedor_cf
 
-    if cf == 'C'
-      if nota_fiscal.cliente.empresa_governo
-        self.cst = '41'
-        save
-        return
-      end
+    if cf == 'C' && nota_fiscal.cliente.empresa_governo
+      self.cst = '41'
+      save
+      return
     end
 
     situacao_tributaria = produto.situacao_tributaria

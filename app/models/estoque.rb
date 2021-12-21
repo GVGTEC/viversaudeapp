@@ -50,7 +50,7 @@ class Estoque < ApplicationRecord
     Date.new(ano, mes, dia)
   rescue => e
     puts "============="
-    puts "#{e}"
+    puts e.to_s
     puts "============="
   end
 end

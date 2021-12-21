@@ -50,15 +50,13 @@ class CfopController < ApplicationController
 
   def destroy
     respond_to do |format|
-      begin
-        @cfop.destroy
-        format.html { redirect_to cfop_index_url, notice: 'Cfop Excluído' }
-        format.json { head :no_content }
-      rescue
-        format.html { render :index, status: :unprocessable_entity }
-        format.json { render json: @cfop.errors, status: :unprocessable_entity }
-      end
+      @cfop.destroy
+      format.html { redirect_to cfop_index_url, notice: 'Cfop Excluído' }
+      format.json { head :no_content }
     end
+  rescue
+    flash[:error] = 'CFOP vinculado a uma Nota Fiscal'
+    redirect_to cfop_path
   end
 
   private

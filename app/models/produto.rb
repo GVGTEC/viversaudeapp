@@ -35,7 +35,7 @@ class Produto < ApplicationRecord
     when 'I'
       'Isento' 
     when 'S'
-      'ICMS cobrado anteriormente por substituição tributária' # 
+      'ICMS cobrado anteriormente por substituição tributária'
     else
       'Não tributada'
     end

@@ -80,7 +80,7 @@ class ProdutosController < ApplicationController
     produto ||= Produto.new
 
     produto.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac]
-    produto.situacao = linha[situacao].blank? ? 'ATIVO' : linha[situacao]
+    produto.situacao = linha[situacao].presence || 'ATIVO'
     produto.codigo_fabricante = linha[codigo_fabricante].strip rescue linha[codigo_fabricante]
     produto.codigo_barras = linha[codigo_barras].strip rescue linha[codigo_barras]
     produto.descricao = linha[descricao].strip rescue linha[descricao]
