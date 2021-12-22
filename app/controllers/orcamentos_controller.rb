@@ -13,18 +13,19 @@ class OrcamentosController < ApplicationController
 
   def new
     @orcamento = Orcamento.new
+    @orcamento.data_emissao = Time.zone.now.strftime('%Y-%m-%dT%H:%M')
   end
 
   def edit; end
 
   def create
     @orcamento = Orcamento.new(orcamento_params)
-    # @orcamento.empresa_id = @adm.empresa.id
 
     respond_to do |format|
       if @orcamento.save
+
         # format.html { redirect_to @orcamento, notice: "Orçamento Cadastrado" }
-        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: 'Orçamento Cadastrado' }
+        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento)}
         format.json { render :show, status: :created, location: @orcamento }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,7 +37,8 @@ class OrcamentosController < ApplicationController
   def update
     respond_to do |format|
       if @orcamento.update(orcamento_params)
-        format.html { redirect_to @orcamento, notice: 'Orçamento Alterado' }
+        #format.html { redirect_to @orcamento, notice: 'Orçamento Alterado' }
+        format.html { redirect_to new_orcamento_orcamento_item_path(@orcamento), notice: '' }
         format.json { render :show, status: :ok, location: @orcamento }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,6 +62,6 @@ class OrcamentosController < ApplicationController
   end
 
   def orcamento_params
-    params.require(:orcamento).permit(:cliente_id, :vendedor_id, :data_emissao, :valor_total, :observacao, :flag)
+    params.require(:orcamento).permit(:cliente_id, :vendedor_id, :data_emissao, :valor_sub_total, :valor_desconto, :valor_total, :observacao, :flag)
   end
 end

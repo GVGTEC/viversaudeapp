@@ -8,7 +8,10 @@ class GerarNotaFiscaisController < ApplicationController
     FileUtils.rm_rf Dir.glob('tmp/nota*.txt')
 
     out_file = File.new(path_tmp_nota, 'w')
+
     empresa = Empresa.first
+
+    #debugger
 
     # Inicio
     out_file.puts('NOTA FISCAL|1|')

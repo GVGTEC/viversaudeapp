@@ -4,7 +4,7 @@ class ApplicationRecord < ActiveRecord::Base
   def self.administrador_record=(administrador)
     @@administrador_record = administrador
   end
-
+  
   def self.administrador_record
     @@administrador_record
   rescue StandardError

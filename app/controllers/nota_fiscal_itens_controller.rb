@@ -49,7 +49,7 @@ class NotaFiscalItensController < ApplicationController
       end
 
       @nota_fiscal.valor_produtos = @nota_fiscal.nota_fiscal_itens.sum(:preco_total)
-      @nota_fiscal.valor_total_nota = @nota_fiscal.calculo_valor_total_nota
+      @nota_fiscal.valor_total_nota = @nota_fiscal.calculo_valor_total_orcamento
       @nota_fiscal.save
 
       salvar_estoque
