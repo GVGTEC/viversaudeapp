@@ -183,11 +183,11 @@
 
     let estoques = getEstoques(produto_id)
     let qtdProd = $(`#${number_tr}-qtd`).val()
+    if(!estoques || !qtdProd) return
 
     $(".descricaoProd").html(`${produto.descricao.trim()}`)
     $(".qtdProd").html(`${qtdProd}`)
   
-    if(!estoques) return
     const produtoEmEstoque = prepararEstoqueParaMovimento(estoques)
 
     if (produtoEmEstoque) {
