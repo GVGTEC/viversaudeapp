@@ -11,6 +11,8 @@ class MovimentoEstoquesController < ApplicationController
       @movimento_estoques = @movimento_estoques.where('data BETWEEN ? AND ?', data_inicio, data_fim)
     end
 
+    @movimento_estoques = @movimento_estoques.order("data desc")
+
     # paginação na view index (lista)
     return unless params[:format] != 'json'
 

@@ -196,3 +196,6 @@ database.yml
 !/storage/.keep
 reset_banco.sh
 # End of https://www.toptal.com/developers/gitignore/api/rails,node
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key

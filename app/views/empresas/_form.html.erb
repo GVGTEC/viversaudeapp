@@ -13,180 +13,140 @@
   <% end %>
 
   <div class="ibox-content">
-            <div class="row form-group">
-              <div class="col-md-12">
-                <%= f.label :nome, 'Razão Social' %>
-                <%= f.text_field :nome, class: "form-control" %>
-              </div>
-            </div>
-
-            <div class="row form-group">
-              <div class="col-md-6">
-                <%= f.label :nome_fantasia, 'Nome Fantasia' %>
-                <%= f.text_field :nome_fantasia, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :cnpj, 'CNPJ' %>
-                <%= f.text_field :cnpj, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :inscricao_estadual, 'Inscrição Estadual' %>
-                <%= f.text_field :inscricao_estadual, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :inscricao_municipal, 'Inscrição Municipal' %>
-                <%= f.text_field :inscricao_municipal, class: "form-control" %>
-              </div>              
-            </div>
-
-            <div class="row form-group">
-              <div class="col-md-10">
-                <%= f.label :endereco, 'Endereço' %>
-                <%= f.text_field :endereco, class: "form-control" %>
-              </div>
-
-              <div class="col-md-1">
-                <%= f.label :numero, 'Nº' %>
-                <%= f.text_field :numero, class: "form-control" %>
-              </div>
-            </div>
-
-           <div class="row form-group">
-              <div class="col-md-4">
-                <%= f.label :bairro, 'Bairro' %>
-                <%= f.text_field :bairro, class: "form-control" %>
-              </div>
-
-              <div class="col-md-5">
-                <%= f.label :cidade, 'Cidade' %>
-                <%= f.text_field :cidade, class: "form-control" %>
-              </div>
-
-              <div class="col-md-1">
-                <%= f.label :uf, 'UF' %>
-                <%= f.text_field :uf, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :cep, 'CEP' %>
-                <%= f.text_field :cep, class: "form-control" %>
-              </div>
-            </div>
-
-            <div class="row form-group">
-              <div class="col-md-2">
-                <%= f.label :codcid_ibge, 'Código IBGE' %>
-                <%= f.text_field :codcid_ibge, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :codigo_uf_emitente, 'Código UF Emitente' %>
-                <%= f.text_field :codigo_uf_emitente, class: "form-control" %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.label :telefone, 'DDD+Telefone' %>
-                <%= f.text_field :telefone, class: "form-control" %>
-              </div>
-             
-              <div class="col-md-6">
-                <%= f.label :email, 'Email' %>
-                <%= f.text_field :email, class: "form-control" %>
-              </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :aliquota_pis, 'PIS (%)', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :aliquota_pis, class: "form-control" %>
+    <div class="row form-group">
+      <div class="col-md-12">
+        <%= f.label :nome, 'Razão Social' %>
+        <%= f.text_field :nome, class: "form-control" %>
+      </div>
     </div>
 
-    <%= f.label :aliquota_cofins, 'COFINS (%)', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :aliquota_cofins, class: "form-control" %>
+    <div class="row form-group">
+      <div class="col-md-6">
+        <%= f.label :nome_fantasia, 'Nome Fantasia' %>
+        <%= f.text_field :nome_fantasia, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :cnpj, 'CNPJ' %>
+        <%= f.text_field :cnpj, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :inscricao_estadual, 'Inscrição Estadual' %>
+        <%= f.text_field :inscricao_estadual, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :inscricao_municipal, 'Inscrição Municipal' %>
+        <%= f.text_field :inscricao_municipal, class: "form-control" %>
+      </div>              
     </div>
 
-    <%= f.label :serie_nfe, 'Série NF', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :serie_nfe, class: "form-control" %>
+    <div class="row form-group">
+      <div class="col-md-5">
+        <%= f.label :endereco, 'Endereço' %>
+        <%= f.text_field :endereco, class: "form-control" %>
+      </div>
+
+      <div class="col-md-1">
+        <%= f.label :numero, 'Nº' %>
+        <%= f.text_field :numero, class: "form-control" %>
+      </div>
+
+      <div class="col-md-3">
+        <%= f.label :bairro, 'Bairro' %>
+        <%= f.text_field :bairro, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :cidade, 'Cidade' %>
+        <%= f.text_field :cidade, class: "form-control" %>
+      </div>
+
+      <div class="col-md-1">
+        <%= f.label :uf, 'UF' %>
+        <%= f.text_field :uf, class: "form-control" %>
+      </div>
     </div>
 
-    <%= f.label :cnae, 'CNAE', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :cnae, class: "form-control" %>
+    <div class="row form-group">
+      <div class="col-md-2">
+        <%= f.label :cep, 'CEP' %>
+        <%= f.text_field :cep, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <%= f.label :codcid_ibge, 'Código IBGE' %>
+        <%= f.text_field :codcid_ibge, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :codigo_uf_emitente, 'Código UF Emitente' %>
+        <%= f.text_field :codigo_uf_emitente, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :telefone, 'DDD+Telefone' %>
+        <%= f.text_field :telefone, class: "form-control" %>
+      </div>
+      
+      <div class="col-md-4">
+        <%= f.label :email, 'Email' %>
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
     </div>
 
-    <%= f.label :ambiente, 'Ambiente', class: "col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <select class="form-control" name="empresa[ambiente]">
-        <option value=""></option>
-        <option <% if @empresa.ambiente == '1' %>selected="selected"<% end %> value="1">Produção</option>
-        <option <% if @empresa.ambiente == '2' %>selected="selected"<% end %> value="2">Homologação</option>
-      </select>
-    </div>    
-  </div>
-  
-  <div class="form-group">
-    <%= f.label :versao_layout, 'Versão Layout', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :versao_layout, class: "form-control" %>
+    <div class="row form-group">
+      <div class="col-md-2">
+        <%= f.label :aliquota_pis, 'PIS (%)' %>
+        <%= f.text_field :aliquota_pis, class: "form-control" %>
+      </div>
+      <div class="col-md-2">
+        <%= f.label :aliquota_cofins, 'COFINS (%)' %>
+        <%= f.text_field :aliquota_cofins, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :serie_nfe, 'Série NF' %>
+        <%= f.text_field :serie_nfe, class: "form-control" %>
+      </div>
+
+      <div class="col-md-2">
+        <%= f.label :cnae, 'CNAE' %>
+        <%= f.text_field :cnae, class: "form-control" %>
+      </div>
+      
+      <div class="col-md-4">
+        <%= f.label :ambiente, 'Ambiente' %>
+        <%= f.select(:ambiente, options_for_select([['Produção', '1'], ['Lucro Presumido', '2']], :selected => @empresa.ambiente), {:include_blank => true}, {class: "form-control"}) %>
+      </div>
     </div>
 
-    <%= f.label :regime_tributario, 'Regime Tributário', class: "col-sm-2 control-label" %>
-    <div class="col-sm-2">
-      <select class="form-control" name="empresa[regime_tributario]">
-        <option value=""></option>
-        <option <% if @empresa.regime_tributario == '1' %>selected="selected"<% end %> value="1">Simples Nacional</option>
-        <option <% if @empresa.regime_tributario == '2' %>selected="selected"<% end %> value="2">Simples Nacional</option>
-        <option <% if @empresa.regime_tributario == '3' %>selected="selected"<% end %> value="3">Regime Normal</option>        
-      </select>
-    </div>        
+    <div class="row form-group">
+      <div class="col-md-2">
+        <%= f.label :versao_layout, 'Versão Layout' %>
+        <%= f.text_field :versao_layout, class: "form-control" %>
+      </div>
 
-    <%= f.label :emissor_nfe, 'Emissor', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <select class="form-control" name="empresa[emissor_nfe]">
-        <option value=""></option>
-        <option <% if @empresa.emissor_nfe == 'P' %>selected="selected"<% end %> value="P">Próprio</option>
-        <option <% if @empresa.emissor_nfe == 'S' %>selected="selected"<% end %> value="S">Sefaz</option>
-      </select>
-    </div>        
-   
-    <%= f.label :permite_credito_icms, 'Permite Crédito ICMS ?', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <select class="form-control" name="empresa[permite_credito_icms]">
-        <option value=""></option>
-        <option <% if @empresa.permite_credito_icms == 'S' %>selected="selected"<% end %> value="S">Sim</option>
-        <option <% if @empresa.permite_credito_icms == 'N' %>selected="selected"<% end %> value="N">Não</option>
-      </select>
-    </div>   
+      <div class="col-md-2">
+        <%= f.label :emissor_nfe, 'Emissor' %>
+        <%= f.select(:emissor_nfe, options_for_select([['Próprio', 'P'], ['Sefaz', 'S']], :selected => @empresa.emissor_nfe), {:include_blank => true}, {class: "form-control"}) %>
+      </div>
 
-    <%= f.label :credito_icms_pc, 'Crédito ICMS (%)', class: "col-sm-1 control-label" %>
-    <div class="col-sm-1">
-      <%= f.text_field :credito_icms_pc, class: "form-control" %>
+      <div class="col-md-2">
+        <%= f.label :permite_credito_icms, 'Permite Crédito ICMS ?' %>
+        <%= f.select(:permite_credito_icms, options_for_select([['Sim', 'S'], ['Não', 'N']], :selected => @empresa.permite_credito_icms), {:include_blank => true}, {class: "form-control"}) %>
+      </div>
+      
+      <div class="col-md-2">
+        <%= f.label :credito_icms_pc, 'Crédito ICMS (%)' %>
+        <%= f.text_field :credito_icms_pc, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4">
+        <%= f.label :regime_tributario, 'Regime Tributário' %>
+        <%= f.select(:regime_tributario, options_for_select([['Simples Nacional', '1'], ['Homologação', '2'], ['Regime Normal', '3']], :selected => @empresa.regime_tributario), {:include_blank => true}, {class: "form-control"}) %>
+      </div>
     </div>
-  </div>
-
-  <div class="ibox-content">
-        <div class="row form-group">
-              <div class="col-md-5">
-                <%= f.label :pasta_envio, 'Caminho Pasta Envio' %>
-                <%= f.text_field :pasta_envio, class: "form-control" %>
-              </div>
-
-              <div class="col-md-5">
-                <%= f.label :pasta_retorno, 'Caminho Pasta Retorno' %>
-                <%= f.text_field :pasta_retorno, class: "form-control" %>
-              </div>              
-
-              <div class="col-md-2">
-                <%= f.label :senha, 'Senha' %>
-                <%= f.text_field :senha, class: "form-control" %>
-              </div>
-        </div>                            
-  </div>
 
   <div class="form-group">
     <div class="col-sm-1">

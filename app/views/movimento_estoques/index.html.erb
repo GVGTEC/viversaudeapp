@@ -68,7 +68,7 @@
         <td><%= movimento_estoque.estoque.lote %></td>
         <td><%= movimento_estoque.estoque.fornecedor.nome rescue ""%></td>
         <td><%= movimento_estoque.origem %></td>
-        <td><%= movimento_estoque.data.strftime("%d/%m/%Y") %></td>
+        <td><%= (movimento_estoque.data - 3.hours).strftime("%d/%m/%Y") %></td>
         <td><%= formatar_qtd(movimento_estoque.estoque_inicial) %></td>
         <td><%= formatar_qtd(movimento_estoque.qtd) %></td>
         <td><%= formatar_qtd(movimento_estoque.estoque_final) %></td>

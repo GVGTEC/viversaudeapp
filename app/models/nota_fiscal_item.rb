@@ -4,7 +4,8 @@ class NotaFiscalItem < ApplicationRecord
 
   has_many :nota_fiscal_item_lotes, dependent: :delete_all
 
-  after_create :calculo_imposto_item, :verifica_cst
+  after_create :calculo_imposto_item, :verifica_cst, :verifica_cfop
+  before_destroy :reverter_baixa_estoque
 
   def calculo_imposto_item
     return if produto.situacao_tributaria != 'T'
@@ -13,6 +14,7 @@ class NotaFiscalItem < ApplicationRecord
     uf = 
       if cf == 'C'
         return if nota_fiscal.cliente.empresa_governo
+
         nota_fiscal.cliente.uf
       else
         nota_fiscal.fornecedor.uf
@@ -33,12 +35,10 @@ class NotaFiscalItem < ApplicationRecord
   def verifica_cst
     cf = nota_fiscal.cfop.cliente_fornecedor_cf
 
-    if cf == 'C'
-      if nota_fiscal.cliente.empresa_governo
-        self.cst = '41'
-        save
-        return
-      end
+    if cf == 'C' && nota_fiscal.cliente.empresa_governo
+      self.cst = '41'
+      save
+      return
     end
 
     situacao_tributaria = produto.situacao_tributaria
@@ -54,16 +54,36 @@ class NotaFiscalItem < ApplicationRecord
         '41' # Não tributada
       end
 
-    if situacao_tributaria == 'S'
-      informativo = nota_fiscal.cfop.informativo
-      self.cfop = 
-        if informativo.include?('de')
-          Cfop.find_by(informativo: 'cfop_st_de').codigo
-        else
-          Cfop.find_by(informativo: 'cfop_fe_st').codigo
-        end
+    save
+  end
+
+  def informacoes_lote
+    lotes = []
+    nota_fiscal_item_lotes.each do |item_lote|
+      lote = ""
+      lote << "Lote: #{item_lote.estoque.lote} "
+      lote << "Qtd: #{item_lote.qtd} "
+      lote << "Val: #{item_lote.estoque.data_validade} "
+      lote << "Local: #{produto.localizacao_estoque.local rescue ''}"
+
+      lotes.push(lote)
     end
 
+    lotes.join(" - ")
+  end
+
+  def verifica_cfop
+    situacao_tributaria = produto.situacao_tributaria
+    return if situacao_tributaria != 'S'
+
+    informativo = nota_fiscal.cfop.informativo
+    self.cfop = 
+      if informativo.include?('de')
+        Cfop.find_by(informativo: 'cfop_st_de').codigo
+      else
+        Cfop.find_by(informativo: 'cfop_fe_st').codigo
+      end
+      
     save
   end
 
@@ -83,5 +103,20 @@ class NotaFiscalItem < ApplicationRecord
     antecipação
       900 - Outros
     "
+  end
+
+  def reverter_baixa_estoque
+    movimento_estoques = nota_fiscal.movimento_estoques
+    movimento_estoques.each do |movimento|
+      produto = movimento.produto
+      produto.estoque_atual += movimento.qtd
+      produto.save
+
+      estoque = movimento.estoque
+      estoque.estoque_atual_lote += movimento.qtd
+      estoque.save
+
+      movimento.destroy
+    end
   end
 end

@@ -31,6 +31,14 @@ namespace :jobs do
     Estoque.where(produto_id: nil).delete_all
   end
 
+  desc 'Atualizar estoque atual dos Produtos'
+  task estoque_atual_produtos: :environment do
+    Produto.all.each do |produto|
+      produto.estoque_atual = produto.estoques.sum(:estoque_atual_lote)
+      produto.save
+    end
+  end
+
   desc 'Setval Atualizar Ids'
   task setval_atualizar_ids: :environment do
     tables = ActiveRecord::Base.connection.tables

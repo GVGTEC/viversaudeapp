@@ -2,6 +2,7 @@ class MovimentoEstoque < ApplicationRecord
   belongs_to :estoque
   belongs_to :produto
   belongs_to :empresa
+  belongs_to :nota_fiscal, optional: true
 
   def self.novo_movimento(estoque)
     movimento_estoque = new(

@@ -49,11 +49,14 @@ class CfopController < ApplicationController
   end
 
   def destroy
-    @cfop.destroy
     respond_to do |format|
+      @cfop.destroy
       format.html { redirect_to cfop_index_url, notice: 'Cfop Excluído' }
       format.json { head :no_content }
     end
+  rescue
+    flash[:error] = 'CFOP vinculado a uma Nota Fiscal'
+    redirect_to cfop_path
   end
 
   private

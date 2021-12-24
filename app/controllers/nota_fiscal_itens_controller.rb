@@ -13,8 +13,8 @@ class NotaFiscalItensController < ApplicationController
 
     @produtos = Produto.where(empresa_id: @adm.empresa.id)
     @produtos = @produtos.order('descricao asc')
-    #@produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
-    #@produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
+    # @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
+    # @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
   end
 
   def edit; end
@@ -32,7 +32,7 @@ class NotaFiscalItensController < ApplicationController
             nota_fiscal_id: @nota_fiscal.id,
             produto_id: produto.id,
             descricao: produto.descricao,
-            cfop: nota_fiscal_item[:cfop],
+            cfop: @nota_fiscal.cfop.codigo,
             ncm: nota_fiscal_item[:ncm],
             unidade: nota_fiscal_item[:un],
             quantidade: nota_fiscal_item[:qtd],
@@ -41,7 +41,7 @@ class NotaFiscalItensController < ApplicationController
           )
           
           @nota_fiscal_item.save
-        rescue StandardError => e
+        rescue
           flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
           redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal)
           return
@@ -62,7 +62,6 @@ class NotaFiscalItensController < ApplicationController
     end
   end
 
-  # PATCH/PUT /nota_fiscal_itens/1 or /nota_fiscal_itens/1.json
   def update
     respond_to do |format|
       if @nota_fiscal_item.update(nota_fiscal_item_params)
@@ -87,6 +86,7 @@ class NotaFiscalItensController < ApplicationController
 
   def salvar_estoque
     return if params[:movimentos].blank?
+
     movimentos = JSON.parse(params[:movimentos])
     
     @nota_fiscal.salvar_movimento_estoque(movimentos)
@@ -103,7 +103,7 @@ class NotaFiscalItensController < ApplicationController
   end
 
   def formatar_preco(valor)
-    valor.gsub('.', '').gsub('R$', '').to_f
+    valor.tr('.', '').tr('R$', '').to_f
   end
 
   def nota_fiscal_item_params

@@ -80,7 +80,7 @@ class ProdutosController < ApplicationController
     produto ||= Produto.new
 
     produto.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac]
-    produto.situacao = linha[situacao].blank? ? 'ATIVO' : linha[situacao]
+    produto.situacao = linha[situacao].presence || 'ATIVO'
     produto.codigo_fabricante = linha[codigo_fabricante].strip rescue linha[codigo_fabricante]
     produto.codigo_barras = linha[codigo_barras].strip rescue linha[codigo_barras]
     produto.descricao = linha[descricao].strip rescue linha[descricao]
@@ -98,7 +98,7 @@ class ProdutosController < ApplicationController
     produto.controlar_estoque = linha[controlar_estoque] == "S"
     produto.estoque_atual = (linha[estoque_atual].to_i / 100) rescue linha[estoque_atual].to_i
     produto.estoque_minimo = (linha[estoque_minimo].to_i / 100) rescue linha[estoque_minimo].to_i
-    produto.data_ultimo_reajuste = formatar_data(linha[data_ultimo_reajuste])
+    produto.data_ultimo_reajuste = Estoque.formatar_data(linha[data_ultimo_reajuste])
     produto.comissao_pc = linha[comissao_pc].to_i
     produto.bloquear_preco = linha[bloquear_preco].present?
     produto.empresa_id = empresa.id
@@ -175,15 +175,5 @@ class ProdutosController < ApplicationController
   def separate_margem(number)
     reverse_digits = number.to_s.chars.reverse
     reverse_digits.each_slice(4).map(&:join).join(',').reverse.to_f
-  end
-
-  def formatar_data(data)
-    dia = [0..1].to_i
-    mes = [2..3].to_i
-    ano = [4..7].to_i
-
-    Date.new(ano, mes, dia)
-  rescue
-    data
   end
 end

@@ -16,3 +16,16 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+function setMovimentoEstoque(movimentoEstoque){
+  localStorage.setItem("movimentoEstoque", JSON.stringify(movimentoEstoque));
+}
+
+function getMovimentoEstoque(){
+  try{
+    var movimentoEstoque = JSON.parse(localStorage.getItem("movimentoEstoque"))
+    if(!movimentoEstoque) return [];
+    return movimentoEstoque;
+  }
+  catch(e){ return [] }
+}

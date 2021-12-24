@@ -32,17 +32,3 @@
 
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/jquery-tabledit.js"></script>
-<script type="text/javascript">
-  const setMovimentoEstoque = (movimentoEstoque) => {
-    localStorage.setItem("movimentoEstoque", JSON.stringify(movimentoEstoque));
-  }
-
-  const getMovimentoEstoque = () => {
-    try{
-      let movimentoEstoque = JSON.parse(localStorage.getItem("movimentoEstoque"))
-      if(!movimentoEstoque) return [];
-      return movimentoEstoque;
-    }
-    catch(e){ return [] }
-  }
-</script>
