@@ -2,7 +2,11 @@ class OrcamentosController < ApplicationController
   before_action :set_orcamento, only: %i[show edit update destroy]
 
   def index
+    #@nota_fiscais = empresa.nota_fiscais (HABILITAR QUANDO CRIAR O CAMPO EMPRESA NO ORCAMENTO)
+
     @orcamentos = Orcamento.all
+    @orcamentos = @orcamentos.order('Id desc')
+   
     # @orcamentos = Orcamento.where(empresa_id: @adm.empresa.id)   O CAMPO EMPRESA_ID AINDA NÃO EXISTE NA TABELA DE ORÇAMENTO
 
     options = { page: params[:page] || 1, per_page: 50 }

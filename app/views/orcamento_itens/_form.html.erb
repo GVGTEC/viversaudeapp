@@ -15,8 +15,7 @@
           <th></th>
           <th>Código</th>
           <th>Descrição</th>
-          <th>Un</th>
-          <th>Qtd</th>
+          <th>Quantidade</th>
           <th>Preço Unitário</th>
           <th>Preço Total</th>
           <th></th>
@@ -35,11 +34,10 @@
                 {:class=> 'form-control', name: 'orcamento[orcamento_item][][descricao]', onclick: "atualizaProduto()", id: "#{index+1}-descricao"} 
               %> 
             </td>
-            <td><input class='form-control' id='<%= index+1 %>-un' type='text' value='<%= orcamento_item.unidade %>' style='width: 50px;' name='orcamento[orcamento_item][][un]'></td></td>
             <td><input class='form-control' id='<%= index+1 %>-qtd' type='text' value='<%= orcamento_item.quantidade %>' style='width: 55px;' data-behavior='qtd' name='orcamento[orcamento_item][][qtd]'></td></td>
-            <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='R$ <%= number_to_currency(orcamento_item.preco_unitario) %>0' style='70px;' name='orcamento[orcamento_item][][preco_unitario]'></td></td>
-            <td><input class='form-control' id='<%= index+1 %>-preco_total' type='text' value='R$ <%= orcamento_item.preco_total %>0' data-behavior='preco_total' style="width: 90px;" name='orcamento[orcamento_item][][preco_total]'></td></td>
-            
+            #<td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='R$ <%= number_to_currency(orcamento_item.preco_unitario) %>0' style='70px;' name='orcamento[orcamento_item][][preco_unitario]'></td></td>
+            #<td><input class='form-control' id='<%= index+1 %>-preco_total' type='text' value='R$ <%= orcamento_item.preco_total %>0' data-behavior='preco_total' style="width: 90px;" name='orcamento[orcamento_item][][preco_total]'></td></td>
+           
             <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='<%= number_to_currency(nota_fiscal_item.preco_unitario) %>' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' readonly style='width: 95px;' data-behavior='preco_unitario'></td>
             <td><input class='form-control' id='<%= index+1 %>-preco_total'    type='text' value='<%= number_to_currency(nota_fiscal_item.preco_total) %>'    name='nota_fiscal[nota_fiscal_item][][preco_total]'   readonly style="width: 110px;" data-behavior='preco_total'></td>
             

@@ -12,8 +12,7 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-        <th>Número Nota</th>
-        <th>Número Pedido</th>
+        <th>Número NF</th>
         <th>Cliente / Fornecedor</th>
         <th>Data Emissão</th>
         <th style="width: 100px;">Valor Total</th>
@@ -27,7 +26,6 @@
     <tbody>
       <%= content_tag_for(:tr, @nota_fiscais) do |nota_fiscal| %>
         <td><%= nota_fiscal.numero_nota %></td>
-        <td><%= nota_fiscal.numero_pedido %></td>
         <td><%= nota_fiscal.cliente.nome rescue "" %><%= nota_fiscal.fornecedor.nome rescue "" %></td>
         <td><%= nota_fiscal.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
         <td style="text-align: end;"><%= number_to_currency(nota_fiscal.valor_total_nota) %></td>
