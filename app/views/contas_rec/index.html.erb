@@ -13,11 +13,10 @@
     <thead>
       <tr>
         <th>Cliente</th>
-        <th>Plano conta</th>
         <th>Documento</th>
         <th>Histórico</th>
-        <th>Data emissao</th>
-        <th>Valor total</th>
+        <th>Data Emissão</th>
+        <th>Valor Total</th>
         <th></th>
         <th></th>
         <th></th>
@@ -26,15 +25,16 @@
 
     <tbody>
       <%= content_tag_for(:tr, @contas_rec) do |contas_rec| %>
-            <td><%= contas_rec.cliente %></td>
-            <td><%= contas_rec.plano_conta %></td>
+            <td><%= contas_rec.cliente.nome %></td>
             <td><%= contas_rec.documento %></td>
             <td><%= contas_rec.historico %></td>
-            <td><%= contas_rec.data_emissao %></td>
-            <td><%= contas_rec.valor_total %></td>
-            <td><%= link_to 'Mostrar', contas_rec %></td>
-        <td><%= link_to 'Editar', edit_contas_rec_path(contas_rec) %></td>
-        <td><%= link_to 'Apagar', contas_rec, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+            <td><%= contas_rec.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
+            <td style="text-align: end;"><%= number_to_currency(contas_rec.valor_total) %></td>
+
+            <td><%= link_to 'Parcelas', nota_fiscal_nota_fiscal_itens_path(nota_fiscal) %></td>            
+            <td><%= link_to 'Mostrar', contas_rec, class: "btn btn-primary" %></td>
+            <td><a href="javascript:window.location.assign('/contas_rec/<%=contas_rec.id%>/edit')" class="btn btn-warning">Editar</a></td>
+            <td><%= link_to 'Apagar', contas_rec, method: :delete, data: { confirm: 'Confirma Exclusão ?' }, class: "btn btn-danger" %></td>
       <% end %>
     </tbody>
   </table>

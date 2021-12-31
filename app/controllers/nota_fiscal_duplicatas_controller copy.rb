@@ -13,10 +13,10 @@ class NotaFiscalDuplicatasController < ApplicationController
     @nota_fiscal.save
 
     salvar_vencimento_parcelas
-
-    #debugger
-
-    salvar_contas_receber
+    #salvar_contas_receber
+  rescue
+    flash[:error] = 'Erro no cadastramento. Verifique se todos os campos estão prenchidos corretamente.'
+    redirect_to new_nota_fiscal_nota_fiscal_duplicata_path(@nota_fiscal)
   end
 
   private
@@ -25,7 +25,6 @@ class NotaFiscalDuplicatasController < ApplicationController
     if params[:nota_fiscal].key?(:nota_fiscal_faturamento_parcelas)
       NotaFiscalFaturamentoParcela.where(nota_fiscal: @nota_fiscal.id).destroy_all
       params[:nota_fiscal][:nota_fiscal_faturamento_parcelas].each_with_index do |faturamento_parcela, i|
-        #debugger
         @nota_fiscal_faturamento_parcela = NotaFiscalFaturamentoParcela.new(
           nota_fiscal: @nota_fiscal,
           duplicata: formatar_numero_duplicata(i + 1),
@@ -38,22 +37,25 @@ class NotaFiscalDuplicatasController < ApplicationController
       end
     end
 
+    #salvar_contas_receber
+
     flash[:notice] = 'Nota fiscal item Cadastrado' 
+
     redirect_to observacoes_nota_fiscal_path(@nota_fiscal)   
   end
 
-  def salvar_contas_receber      
-        @contas_receber = ContasRec.new(
-        #nota_fiscal: @nota_fiscal,
-        empresa_id: 1,
-        #plano_conta_id: 1,
-        cliente_id: @nota_fiscal[:cliente_id],
-        documento: @nota_fiscal[:numero_nota],
-        data_emissao: @nota_fiscal[:data_emissao],
-        valor_total: @nota_fiscal[:valor_total_nota]
-      )
-      
-      @contas_receber.save!
+  def salvar_contas_receber
+    if params[:nota_fiscal].key?(:nota_fiscal_faturamento_parcelas)
+      Contas_Receber.where(nota_fiscal: @nota_fiscal.id).destroy_all
+        @contas_receber = ContasReceber.new(
+          cliente_id: faturamento_parcela[:cliene_id],
+          documento: faturamento_parcela[:numero_nota],
+          data_emissao: faturamento_parcela[:data_emissao],
+          valor_total: faturamento_parcela[:total_nota].tr('.', '').tr(',', '.').to_f
+        )
+        
+        @contas_receber.save
+    end
   end
 
   def formatar_numero_duplicata(numero)

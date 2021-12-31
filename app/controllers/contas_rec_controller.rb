@@ -41,7 +41,7 @@ class ContasRecController < ApplicationController
         format.json { render :show, status: :ok, location: @contas_rec }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @contas_rec.errors, status: :unprocessable_entity }
+         format.json { render json: @contas_rec.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,7 +62,7 @@ class ContasRecController < ApplicationController
 
   def save_contas_pagar_parcelas
     if params[:contas_rec].present? && params[:contas_rec][:contas_rec_parcela].present?
-      @contas_pag.contas_rec_parcelas.destroy_all
+      @contas_rec.contas_rec_parcelas.destroy_all
       params[:contas_rec][:contas_rec_parcela].each do |parcela|
         next unless parcela[:data_vencimento].present? || parcela[:data_recebimento].present?
 
