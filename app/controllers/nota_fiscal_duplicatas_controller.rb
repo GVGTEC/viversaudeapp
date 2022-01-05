@@ -14,7 +14,7 @@ class NotaFiscalDuplicatasController < ApplicationController
 
     salvar_vencimento_parcelas
 
-    #debugger
+    debugger
 
     salvar_contas_receber
   end
@@ -25,7 +25,6 @@ class NotaFiscalDuplicatasController < ApplicationController
     if params[:nota_fiscal].key?(:nota_fiscal_faturamento_parcelas)
       NotaFiscalFaturamentoParcela.where(nota_fiscal: @nota_fiscal.id).destroy_all
       params[:nota_fiscal][:nota_fiscal_faturamento_parcelas].each_with_index do |faturamento_parcela, i|
-        #debugger
         @nota_fiscal_faturamento_parcela = NotaFiscalFaturamentoParcela.new(
           nota_fiscal: @nota_fiscal,
           duplicata: formatar_numero_duplicata(i + 1),
@@ -38,11 +37,13 @@ class NotaFiscalDuplicatasController < ApplicationController
       end
     end
 
-    flash[:notice] = 'Nota fiscal item Cadastrado' 
+    flash[:notice] = 'Nota Fiscal Duplicata Cadastrada' 
     redirect_to observacoes_nota_fiscal_path(@nota_fiscal)   
   end
 
-  def salvar_contas_receber      
+  def salvar_contas_receber
+        #ContasRec.where(contas_rec: @nota_fiscal.id).destroy_all
+       
         @contas_receber = ContasRec.new(
         #nota_fiscal: @nota_fiscal,
         empresa_id: 1,
@@ -51,9 +52,51 @@ class NotaFiscalDuplicatasController < ApplicationController
         documento: @nota_fiscal[:numero_nota],
         data_emissao: @nota_fiscal[:data_emissao],
         valor_total: @nota_fiscal[:valor_total_nota]
-      )
+        )
       
-      @contas_receber.save!
+        @contas_receber.save
+
+        #######debugger
+
+        #@nota_fiscal.update(nota_fiscal_params)
+
+        #Pegar o id do contas a receber para salvar na nota fiscal        
+        @nota_fiscal.contas_rec_id = @contas_receber.id
+        @nota_fiscal.save
+
+        #@nota_fiscal.update(contas_rec_id)
+
+        ######debugger
+
+        #@parcelas = @nota_fiscal_faturamento_parcelas.where(@nota_fiscal.id == @nota_fiscal_faturamento_parcela.nota_fiscal_id)
+
+        #@parcelas = @nota_fiscal_faturamento_parcela.all
+
+        #SALVAR AS PARCELAS NO CONTAS A RECEBER
+        if params[:nota_fiscal].key?(:nota_fiscal_faturamento_parcelas)
+        #if params[:contas_receber].key?(:contas_rec_parcelas)
+          @parcelas = ContasRecParcela.where(contas_rec: @contas_receber.id).destroy_all
+          params[:nota_fiscal][:nota_fiscal_faturamento_parcelas].each_with_index do |parcela, i|
+          #params[:nota_fiscal][:contas_rec_parcelas].each_with_index do |parcela, i|
+            @contas_rec_parcela = ContasRecParcela.new( 
+              #nota_fiscal: @nota_fiscal,
+              contas_rec_id: @contas_receber.id,
+              data_vencimento: parcela[:data_vencimento],
+              documento: "TESTE",
+              valor_parcela: parcela[:valor_parcela].tr('.', '').tr(',', '.').to_f
+
+              #t.bigint "contas_rec_id"
+              #t.datetime "data_vencimento"
+              #t.datetime "data_recebimento"
+              #t.float "valor_parcela"
+              #t.float "valor_juros_desconto"
+              #t.string "documento"
+              #t.string "descricao"              
+            )
+            
+            @contas_rec_parcela.save
+          end
+        end
   end
 
   def formatar_numero_duplicata(numero)

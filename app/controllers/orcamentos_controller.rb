@@ -1,6 +1,24 @@
 class OrcamentosController < ApplicationController
   before_action :set_orcamento, only: %i[show edit update destroy]
 
+#  if params[:gerar_pdf].present?
+#    render pdf: "Invoice No",
+#    page_size: "A4"
+#    template: "orcamentos/index.pdf.erb",
+#    layout: "pdf.html.erb
+#    lowquality: true,
+#    zoom:1
+#    dpi: 75
+#    return
+#  end
+
+  def relatorio
+    render pdf: "file",
+    template: "orcamento/relatorio.pdf.erb",
+    #layout: "pdf.html.erb"
+    layout: "relatorio.pdf.erb"
+  end
+
   def index
     #@nota_fiscais = empresa.nota_fiscais (HABILITAR QUANDO CRIAR O CAMPO EMPRESA NO ORCAMENTO)
 

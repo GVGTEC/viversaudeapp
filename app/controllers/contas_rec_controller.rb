@@ -60,7 +60,7 @@ class ContasRecController < ApplicationController
     @contas_rec = ContasRec.find(params[:id])
   end
 
-  def save_contas_pagar_parcelas
+  def save_contas_rec_parcelas
     if params[:contas_rec].present? && params[:contas_rec][:contas_rec_parcela].present?
       @contas_rec.contas_rec_parcelas.destroy_all
       params[:contas_rec][:contas_rec_parcela].each do |parcela|

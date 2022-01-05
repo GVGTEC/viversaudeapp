@@ -67,36 +67,36 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Data de Vencimento</label>
           <div class="col-sm-3">
-            <input class="form-control" type="date" value="<%= contas_pagar_parcela.data_vencimento.strftime("%Y-%m-%d") %>" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
+            <input class="form-control" type="date" value="<%= contas_rec_parcela.data_vencimento.strftime("%Y-%m-%d") rescue "" %>" name="contas_rec[contas_rec_parcela][][data_vencimento]">
           </div>
 
-          <label class="col-sm-2 control-label">Data de Pagamento</label>
+          <label class="col-sm-2 control-label">Data de Recebimento</label>
           <div class="col-sm-3">
-            <input class="form-control" type="date" value="<%= contas_pagar_parcela.data_pagamento.strftime("%Y-%m-%d") %>" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
+            <input class="form-control" type="date" value="<%= contas_rec_parcela.data_recebimento.strftime("%Y-%m-%d") rescue "" %>" name="contas_rec[contas_rec_parcela][][data_recebimento]">
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-sm-2 control-label">Valor</label>
           <div class="col-sm-3">
-            <input class="form-control" type="text" value="<%= contas_pagar_parcela.valor_parcela %>" name="contas_pag[contas_pagar_parcela][][valor_parcela]">
+            <input class="form-control" type="text" value="<%= contas_rec_parcela.valor_parcela %>" name="contas_rec[contas_rec_parcela][][valor_parcela]">
           </div>
 
           <label class="col-sm-2 control-label">Valor Acréscimo/Desconto</label>
           <div class="col-sm-3">
-            <input class="form-control" type="text" value="<%= contas_pagar_parcela.valor_juros_desconto %>" name="contas_pag[contas_pagar_parcela][][valor_juros_desconto]">
+            <input class="form-control" type="text" value="<%= contas_rec_parcela.valor_juros_desconto %>" name="contas_rec[contas_rec_parcela][][valor_juros_desconto]">
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-sm-2 control-label">Documento</label>
           <div class="col-sm-3">
-            <input class="form-control" type="text" value="<%= contas_pagar_parcela.documento %>" name="contas_pag[contas_pagar_parcela][][documento]">
+            <input class="form-control" type="text" value="<%= contas_rec_parcela.documento %>" name="contas_rec[contas_rec_parcela][][documento]">
           </div>
 
           <label class="col-sm-2 control-label">Descrição</label>
           <div class="col-sm-3">
-            <input class="form-control" type="text" value="<%= contas_pagar_parcela.descricao %>" name="contas_pag[contas_pagar_parcela][][descricao]">
+            <input class="form-control" type="text" value="<%= contas_rec_parcela.descricao %>" name="contas_rec[contas_rec_parcela][][descricao]">
           </div>
         </div>
 
@@ -108,36 +108,36 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Data de Vencimento</label>
         <div class="col-sm-3">
-          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
+          <input class="form-control" type="date" name="contas_rec[contas_rec_parcela][][data_vencimento]">
         </div>
 
-        <label class="col-sm-2 control-label">Data de Pagamento</label>
+        <label class="col-sm-2 control-label">Data de Recebimento</label>
         <div class="col-sm-3">
-          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
+          <input class="form-control" type="date" name="contas_rec[contas_rec_parcela][][data_recebimento]">
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-2 control-label">Valor</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_parcela]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][valor_parcela]">
         </div>
 
         <label class="col-sm-2 control-label">Valor Acréscimo/Desconto</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_juros_desconto]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][valor_juros_desconto]">
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-2 control-label">Documento</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][documento]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][documento]">
         </div>
 
         <label class="col-sm-2 control-label">Descrição</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][descricao]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][descricao]">
         </div>
       </div>
 
@@ -163,36 +163,36 @@
       <div class="form-group">
         <label class="col-sm-2 control-label">Data de Vencimento</label>
         <div class="col-sm-3">
-          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_vencimento]">
+          <input class="form-control" type="date" name="contas_rec[contas_rec_parcela][][data_vencimento]">
         </div>
 
-        <label class="col-sm-2 control-label">Data de Pagamento</label>
+        <label class="col-sm-2 control-label">Data de Recebimento</label>
         <div class="col-sm-3">
-          <input class="form-control" type="date" name="contas_pag[contas_pagar_parcela][][data_pagamento]">
+          <input class="form-control" type="date" name="contas_rec[contas_rec_parcela][][data_recebimento]">
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-2 control-label">Valor</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_parcela]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][valor_parcela]">
         </div>
 
         <label class="col-sm-2 control-label">Valor Acréscimo/Desconto</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][valor_juros_desconto]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][valor_juros_desconto]">
         </div>
       </div>
 
       <div class="form-group">
         <label class="col-sm-2 control-label">Documento</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][documento]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][documento]">
         </div>
 
         <label class="col-sm-2 control-label">Descrição</label>
         <div class="col-sm-3">
-          <input class="form-control" type="text" name="contas_pag[contas_pagar_parcela][][descricao]">
+          <input class="form-control" type="text" name="contas_rec[contas_rec_parcela][][descricao]">
         </div>
       </div>
 

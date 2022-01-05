@@ -67,4 +67,6 @@ Rails.application.routes.draw do
   get '/login', to: 'login#index'
   post '/login', to: 'login#logar'
   get '/sair', to: 'login#deslogar'
+
+  get "/orcamento/relatorio", to: "orcamento#relatorio"
 end

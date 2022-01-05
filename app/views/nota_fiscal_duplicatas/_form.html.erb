@@ -42,8 +42,8 @@
         <label for="nota_fiscal_tipo_pagamento">Forma de Pagamento</label>
         <select class="form-control" name="nota_fiscal[tipo_pagamento]" id="nota_fiscal_tipo_pagamento">
           <option <%if @nota_fiscal.tipo_pagamento == "" %> selected <%end%> value="">Nenhum</option>
-          <option <%if @nota_fiscal.tipo_pagamento == "0" %> selected <%end%> value="0">A Vista</option>
-          <option <%if @nota_fiscal.tipo_pagamento == "1" %> selected <%end%> value="1">A Prazo</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "0" %> selected <%end%> value="0">à Vista</option>
+          <option <%if @nota_fiscal.tipo_pagamento == "1" %> selected <%end%> value="1">à Prazo</option>
         </select>
       </div>
 

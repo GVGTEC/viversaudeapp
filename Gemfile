@@ -17,6 +17,10 @@ gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 gem 'will_paginate'
 
+#Gerar PDF
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

@@ -30,8 +30,6 @@
             <td><%= contas_rec.historico %></td>
             <td><%= contas_rec.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
             <td style="text-align: end;"><%= number_to_currency(contas_rec.valor_total) %></td>
-
-            <td><%= link_to 'Parcelas', nota_fiscal_nota_fiscal_itens_path(nota_fiscal) %></td>            
             <td><%= link_to 'Mostrar', contas_rec, class: "btn btn-primary" %></td>
             <td><a href="javascript:window.location.assign('/contas_rec/<%=contas_rec.id%>/edit')" class="btn btn-warning">Editar</a></td>
             <td><%= link_to 'Apagar', contas_rec, method: :delete, data: { confirm: 'Confirma Exclusão ?' }, class: "btn btn-danger" %></td>
