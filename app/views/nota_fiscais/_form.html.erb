@@ -49,14 +49,22 @@
     </div>
     
     <div class="row form-group input-cliente" style="display:none;">
-        <div class="col-md-12">
+        <div class="col-md-10">
           <%= f.label :cliente, 'Cliente' %>
           <%= f.select :cliente_id,
           Cliente.all.reorder("nome asc").collect {|cliente| [cliente.nome, cliente.id]},
           {:selected => @nota_fiscal.cliente_id, :include_blank => true},
           {:class=> 'form-control'} %>
         </div>
-    </div>       
+
+        <div class="col-md-1">
+            <%= submit_tag 'Pesquisar' %>
+        </div>
+
+        <button>Click Aqui</button>
+
+        <input type="button" value="Clique Aqui" onclick="msg()">
+    </div>
 
     <div class="row form-group input-fornecedor" style="display:none;">
         <div class="col-md-12">

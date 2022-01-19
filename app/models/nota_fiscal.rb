@@ -7,10 +7,12 @@ class NotaFiscal < ApplicationRecord
   belongs_to :empresa
 
   before_validation :salvar_empresa
-  before_destroy :apagar_dados
+  #before_destroy :apagar_dados
 
   has_one :nota_fiscal_transporta, dependent: :destroy
   has_one :nota_fiscal_imposto, dependent: :destroy
+  # LINHA DO MERGE
+  has_many :nota_fiscal_impostos, dependent: :delete_all
   has_many :nota_fiscal_itens, dependent: :delete_all
   has_many :nota_fiscal_faturamento_parcelas, dependent: :delete_all
   has_many :movimento_estoques, dependent: :delete_all

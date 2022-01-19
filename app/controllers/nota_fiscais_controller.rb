@@ -28,6 +28,7 @@ class NotaFiscaisController < ApplicationController
 
     respond_to do |format|
       if @nota_fiscal.save
+
         salvar_nota_fiscal_transportadora
         format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal) }
         format.json { render :show, status: :created, location: @nota_fiscal }
@@ -67,8 +68,9 @@ class NotaFiscaisController < ApplicationController
 
   def salvar_nota_fiscal_transportadora
     return if params[:nota_fiscal][:transportadora_id].blank?
-    
+       
     NotaFiscalTransporta.where(nota_fiscal: @nota_fiscal.id).destroy_all
+
     if params[:nota_fiscal].key?(:transportadora_id)
       nota_fiscal_transporta = NotaFiscalTransporta.new(
         nota_fiscal_id: @nota_fiscal.id,
@@ -79,13 +81,14 @@ class NotaFiscaisController < ApplicationController
         peso_liquido: params[:peso_liquido],
         peso_bruto: params[:peso_bruto]
       )
-      
+     
       nota_fiscal_transporta.save
     end
   end
 
   def nota_fiscal_params
     params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, 
-                                        :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete)
+                                        :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete,
+                                        :contas_rec_id)
   end
 end
