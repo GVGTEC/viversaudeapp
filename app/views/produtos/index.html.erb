@@ -48,12 +48,12 @@
 
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
-        <td><%= produto.id %></td>
+        <td style="text-align: end;"><%= produto.id %></td>
         <td><%= produto.descricao %></td>
-        <td><%= produto.ncm %></td>
-        <td><%= produto.codprd_sac %></td>
-        <td><%= number_to_currency(produto.preco_venda) %></td>
-        <td><%= formatar_qtd(produto.estoque_atual) %></td>
+        <td style="text-align: center;"><%= produto.ncm %></td>
+        <td style="text-align: center"><%= produto.codprd_sac %></td>
+        <td style="text-align: end;"> <%= number_to_currency(produto.preco_venda) %></td>       
+        <td style="text-align: end;"> <%= formatar_qtd(produto.estoque_atual) %></td>
         <td><%= link_to 'Movimento', "/movimento_estoques?produto_id=#{produto.id}" %></td>
         <td><%= link_to 'Lotes', "/estoques?produto_id=#{produto.id}" %></td>
         <td><%= link_to 'Mostrar', produto %></td>

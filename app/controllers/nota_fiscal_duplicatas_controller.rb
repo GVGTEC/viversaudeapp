@@ -14,7 +14,7 @@ class NotaFiscalDuplicatasController < ApplicationController
 
     salvar_vencimento_parcelas
 
-    debugger
+    #debugger
 
     salvar_contas_receber
   end

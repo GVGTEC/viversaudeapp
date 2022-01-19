@@ -135,9 +135,12 @@ class ProdutosController < ApplicationController
     end
   end
 
-  def update
+  def update   
+    #debugger
     respond_to do |format|
       if @produto.update(produto_params)
+        #@produto.preco_custo = produto_params[:preco_custo].tr(",",".")
+        #@produto.save
         format.html { redirect_to produtos_path, notice: 'Produto Alterado' }
         format.json { render :show, status: :ok, location: @produto }
       else

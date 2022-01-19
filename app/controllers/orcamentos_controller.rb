@@ -16,7 +16,8 @@ class OrcamentosController < ApplicationController
     render pdf: "file",
     template: "orcamento/relatorio.pdf.erb",
     #layout: "pdf.html.erb"
-    layout: "relatorio.pdf.erb"
+    #layout: "relatorio.pdf.erb"
+    layout: "application.pdf.ebr"
   end
 
   def index

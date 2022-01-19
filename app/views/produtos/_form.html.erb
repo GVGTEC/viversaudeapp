@@ -129,40 +129,40 @@
 
         <div class="col-md-4">
           <%= f.label :preco_custo, 'Preço Custo' %>
-          <%= f.text_field :preco_custo, class: "form-control" %>
+          <%= f.text_field :preco_custo, class: "form-control", value: "#{'%.3f' % @produto.preco_custo}" %>         
         </div>
 
         <div class="col-md-4">
           <%= f.label :preco_custo_medio, 'Preço Custo Médio' %>
-          <%= f.text_field :preco_custo_medio, class: "form-control" %>
+          <%= f.text_field :preco_custo_medio, class: "form-control", :value => (number_with_precision(f.object.preco_custo_medio, :precision => 3) || 0)  %>
         </div>             
     </div>        
   
     <div class="row form-group">
         <div class="col-md-3">
           <%= f.label :margem_lucro, 'Margem Lucro (%)' %>
-          <%= f.text_field :margem_lucro, class: "form-control" %>
+          <%= f.text_field :margem_lucro, class: "form-control", :value => (number_with_precision(f.object.margem_lucro, :precision => 3) || 0)  %>
         </div>
 
         <div class="col-md-3">
           <%= f.label :preco_venda, 'Preço Venda' %>
-          <%= f.text_field :preco_venda, class: "form-control" %>
+          <%= f.text_field :preco_venda, class: "form-control", :value => (number_with_precision(f.object.preco_venda, :precision => 2) || 0)  %>
         </div>
 
         <div class="col-md-3">              
           <%= f.label :margem_lucro_oferta, 'Margem Lucro Oferta (%)' %>
-          <%= f.text_field :margem_lucro_oferta, class: "form-control" %>
+          <%= f.text_field :margem_lucro_oferta, class: "form-control", :value => (number_with_precision(f.object.margem_lucro_oferta, :precision => 3) || 0)  %>
         </div>
 
         <div class="col-md-3">          
           <%= f.label :preco_oferta, 'Preço Venda Oferta' %>
-          <%= f.text_field :preco_oferta, class: "form-control" %>
+          <%= f.text_field :preco_oferta, class: "form-control", :value => (number_with_precision(f.object.preco_oferta, :precision => 2) || 0)  %>
       </div>
     </div>
 
     <div class="row form-group">
       <div class="col-md-4">
-        <%= f.label :data_inicial_oferta, 'Data Inicial OFerta' %>
+        <%= f.label :data_inicial_oferta, 'Data Inicial Oferta' %>
         <%= f.date_field :data_inicial_oferta, class: "form-control" %>
       </div>
 

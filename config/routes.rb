@@ -68,5 +68,5 @@ Rails.application.routes.draw do
   post '/login', to: 'login#logar'
   get '/sair', to: 'login#deslogar'
 
-  get "/orcamento/relatorio", to: "orcamento#relatorio"
+  get "/orcamento/relatorio", to: "orcamento#relatorio"  
 end
