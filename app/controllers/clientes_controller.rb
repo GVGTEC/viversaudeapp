@@ -4,28 +4,14 @@ class ClientesController < ApplicationController
 
   def index
     @clientes = empresa.clientes
-    #@clientes = @clientes.where("lower(nome) ilike '%#{params[:nome]}%'") if params[:nome].present?
-    #@clientes = @clientes.where("lower(cnpj) ilike '%#{params[:cnpj]}%'") if params[:cnpj].present?
-
-    # @clientes = @clientes.where("lower(nome) ilike or lower(cnpj) ilike '%#{params[:nome]}%' , '%#{params[:cnpj]}%'") if params[:nome].present?
-
-    #@clientes = @clientes.where('nome like ?', params[:nome]) if params[:nome]
-
-    #@debugger 
-
-    if params[:nome].present?
-      @clientes_nome = @clientes.where("nome like '%#{params[:nome]}%'") if params[:nome]
-
-      if @clientes_nome.present?
-        @clientes = @clientes_nome      
-      else
-        @clientes_cnpj = @clientes.where("cnpj like '%#{params[:nome]}%'") if params[:nome]
-        @clientes = @clientes_cnpj
-      end
+    
+    if params[:busca].present?
+      @clientes = @clientes.where("
+        (lower(nome) ilike '%#{params[:busca].downcase}%') OR
+        (cpf ilike '%#{params[:busca].downcase}%') OR
+        (cnpj ilike '%#{params[:busca].downcase}%')
+      ")
     end
-
-    #@clientes = @clientes.where("cnpj like '%#{params[:nome]}%'") if params[:nome] // ESTE FUNCIONA
-    #debugger 
 
     options = { page: params[:page] || 1, per_page: 25 }
     @clientes = @clientes.paginate(options)

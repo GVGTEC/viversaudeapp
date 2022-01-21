@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_26_044006) do
+ActiveRecord::Schema.define(version: 2021_12_21_210319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -373,7 +373,6 @@ ActiveRecord::Schema.define(version: 2021_12_26_044006) do
     t.bigint "produto_id"
     t.text "descricao"
     t.string "cfop"
-    t.string "st"
     t.string "ncm"
     t.string "cst"
     t.string "unidade"
@@ -596,7 +595,6 @@ ActiveRecord::Schema.define(version: 2021_12_26_044006) do
   add_foreign_key "movimento_estoques", "produtos"
   add_foreign_key "nota_fiscais", "cfop"
   add_foreign_key "nota_fiscais", "clientes"
-  add_foreign_key "nota_fiscais", "contas_rec"
   add_foreign_key "nota_fiscais", "empresas"
   add_foreign_key "nota_fiscais", "fornecedores"
   add_foreign_key "nota_fiscais", "transportadoras"
