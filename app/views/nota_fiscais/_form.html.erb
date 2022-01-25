@@ -49,22 +49,24 @@
     </div>
     
     <div class="row form-group input-cliente" style="display:none;">
-        <div class="col-md-10">
-          <%= f.label :cliente, 'Cliente' %>
-          <%= f.select :cliente_id,
-          Cliente.all.reorder("nome asc").collect {|cliente| [cliente.nome, cliente.id]},
-          {:selected => @nota_fiscal.cliente_id, :include_blank => true},
-          {:class=> 'form-control'} %>
-        </div>
+      <div class="col-md-10">
+        <%= f.label :cliente, 'Cliente' %>
+        <%= f.text_field :cliente, class: 'form-control', data: { js: 'clientes'}, onkeyup: 'buscaUsuarios()', value: "#{@nota_fiscal.cliente.nome rescue ''}"  %>
+        <%= f.text_field :cliente_id, style: "display: none;" %>
+      </div>
 
-        <div class="col-md-1">
-            <%= submit_tag 'Pesquisar' %>
-        </div>
-
-        <button>Click Aqui</button>
-
-        <input type="button" value="Clique Aqui" onclick="msg()">
+      <div class="col-md-2">
+        <label for="cliente_cnpj">CPNJ</label>
+        <input class="form-control" type="text" disabled id="cliente_cnpj">
+      </div>
     </div>
+
+    <div data-js="clientes-encontrados" style="background-color: #e1dada;
+    padding: 10px;
+    margin-top: 15px;
+    height: 172px;
+    overflow: auto;
+    display: none;"></div>
 
     <div class="row form-group input-fornecedor" style="display:none;">
         <div class="col-md-12">
@@ -198,4 +200,35 @@ const buscaCfop = () => {
   
 }
 
+const buscaUsuarios = () => {
+  const inputClientes = document.querySelector("[data-js=clientes]")
+  const divClientes = document.querySelector("[data-js=clientes-encontrados]")
+  const valor = inputClientes.value
+
+  $('[data-js=clientes-encontrados]').hide()
+  $('[data-js=clientes-encontrados]').html("")
+
+  if(valor){
+    $.get('/clientes.json', { busca: valor}, function(clientes) {
+      clientes.forEach(cliente => {
+        divClientes.innerHTML += `<div data-js='cliente' id='cliente-${cliente.id}'>${cliente.cnpj || cliente.cpf} - ${cliente.nome}</div>`
+      });
+    })
+
+    $('[data-js=clientes-encontrados]').show()
+  }
+}
+
+$(document).on('click', '[data-js=cliente]', function(event) {
+  const value = event.target.textContent
+  const id = parseInt(event.target.id.match(/\d+/)[0])
+  $('[data-js=clientes]').val(value)
+  $('[data-js=clientes-encontrados]').hide()
+  $('#nota_fiscal_cliente_id').val(id)
+
+  $.get(`/clientes/${id}.json`, function(cliente) {
+    $('#cliente_cnpj').val(cliente.cnpj)
+  })
+
+});
 </script>
