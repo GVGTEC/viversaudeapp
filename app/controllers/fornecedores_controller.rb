@@ -26,7 +26,7 @@ class FornecedoresController < ApplicationController
       return
     end
 
-    flash[:sucesso] = 'Fornecedores importados com sucesso'
+    flash[:sucesso] = 'Fornecedores importados com Sucesso'
     redirect_to '/fornecedores'
   rescue StandardError => e
     flash[:error] = e

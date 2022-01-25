@@ -14,7 +14,7 @@ class Estoques::BaixasController < ApplicationController
       if @estoque.save
         @estoque.atualizar_produto_baixas(params)
         salve_movimento_estoque(estoque_atual_lote)
-        format.html { redirect_to estoques_path, notice: 'Estoque baixado com sucesso' }
+        format.html { redirect_to estoques_path, notice: 'Estoque baixado com Sucesso' }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

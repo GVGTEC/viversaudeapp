@@ -34,7 +34,7 @@ class ProdutosController < ApplicationController
       return
     end
 
-    flash[:sucesso] = 'Produtos importados com sucesso'
+    flash[:sucesso] = 'Produtos importados com Sucesso'
     redirect_to '/produtos'
   rescue StandardError => e
     flash[:error] = e

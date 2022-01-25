@@ -46,7 +46,7 @@ class ClientesController < ApplicationController
       return
     end
 
-    flash[:sucesso] = 'Clientes importados com sucesso'
+    flash[:sucesso] = 'Clientes importados com Sucesso'
     redirect_to '/clientes'
   rescue => e
     flash[:error] = e

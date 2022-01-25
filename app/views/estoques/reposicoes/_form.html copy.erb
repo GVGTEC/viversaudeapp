@@ -20,9 +20,7 @@
           {:selected => @estoque.fornecedor_id, :include_blank => true},
           {:class =>'form-control'}%>
     </div>
-  </div>
 
-  <div class="form-group">  
     <div class="col-sm-6">
       <%= f.label :documento, 'Documento', class: "control-label" %>
       <%= f.text_field :documento, value: "#{@estoque.documento}", class: "form-control" %>
@@ -32,46 +30,43 @@
       <%= f.label :data_reposicao, 'Data Reposição', class: "control-label" %>
       <%= f.date_field :data_reposicao, value: "#{@estoque.data_reposicao}", class: "form-control" %>
     </div>
-  </div>
 
-  <div class="form-group" style="margin-top: 5%">    
-      <div class="col-sm-12">
+    <div style="margin-top: 12%">
+      <div class="col-sm-8">
         <%= f.label :produto, 'Produto', class: "control-label" %>
         <%= f.select :produto_id,
               Produto.reorder("descricao asc").collect{|produto| [produto.descricao, produto.id]} , 
               {:selected => @estoque.produto_id, :include_blank => true},
               {:class =>'form-control', :onclick => "dadosProduto()"}%>
       </div>
-  </div>
 
-  <div class="form-group">  
-      <div class="col-sm-2">
+      <div class="col-sm-4">
         <%= label_tag :estoque_atual, 'Estoque Atual', class: "control-label" %>
         <%= text_field_tag :estoque_atual, "", class: "form-control", disabled: "disable"%>
       </div>
-     
+
       <div class="col-sm-3">
         <%= f.label :lote, 'Lote Nº', class: "control-label" %>
         <%= f.text_field :lote, class: "form-control" %>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <%= f.label :data_validade, 'Data Validade', class: "control-label" %>
         <%= f.date_field :data_validade, class: "form-control" %>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <%= f.label :estoque_atual_lote, 'Quantidade', class: "control-label" %>
         <%= f.text_field :estoque_atual_lote, class: "form-control", data: {behavior: "qtd-estoque"} %>
       </div>
 
-      <div class="col-sm-2">
+      <div class="col-sm-3">
         <%= label_tag :estoque_final, "Estoque Final", class: "control-label" %>
         <%= text_field_tag :estoque_final, "", class: "form-control", disabled: "disable"%>
       </div>
-  </div>
+    </div>
 
-  <div class="form-group">  
+    <div style="margin-top: 24%">
       <div class="col-sm-2">
         <%= label_tag :preco_venda_atual, "Preco de Venda Atual", class: "control-label" %>
         <%= text_field_tag :preco_venda_atual, "", class: "form-control", disabled: "disable"%>
@@ -97,6 +92,9 @@
         <%= text_field_tag :preco_venda, "", data: { behavior: "preco-venda" }, class: "form-control"%>
       </div>
     </div>
+  </div>
+
+  <br>
 
   <div class="form-group">
     <div class="col-sm-2 col-sm-10">

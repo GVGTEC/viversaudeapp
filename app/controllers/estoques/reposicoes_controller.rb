@@ -19,7 +19,7 @@ class Estoques::ReposicoesController < ApplicationController
         salve_movimento_estoque
 
         path_with_params = "/estoques/reposicoes/new?fornecedor_id=#{@estoque.fornecedor_id}&documento=#{@estoque.documento}&data_reposicao=#{@estoque.data_reposicao}"
-        format.html { redirect_to path_with_params, notice: "Reposição do Produto #{@estoque.produto.descricao} feita com sucesso." }
+        format.html { redirect_to path_with_params, notice: "Reposição do Produto #{@estoque.produto.descricao} Efetuada com Sucesso." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

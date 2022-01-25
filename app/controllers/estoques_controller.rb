@@ -30,7 +30,7 @@ class EstoquesController < ApplicationController
       return
     end
 
-    flash[:sucesso] = 'Estoques importados com sucesso'
+    flash[:sucesso] = 'Estoques importados com Sucesso'
     redirect_to estoques_path
   rescue StandardError => e
     flash[:error] = e
