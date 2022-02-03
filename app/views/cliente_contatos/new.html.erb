@@ -1,0 +1,13 @@
+<h1>Contato do Cliente</h1>
+
+<h4><%= @cliente.id %> - <%= @cliente.nome%></h4>
+  
+<div class="page-header">
+  <%= link_to cliente_cliente_contatos_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <h2>Inclusão</h2>
+</div>
+
+<%= render 'form' %>

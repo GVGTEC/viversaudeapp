@@ -1,0 +1,30 @@
+<h1>Contatos do Cliente</h1>
+
+<h4><%= @cliente.id %> - <%= @cliente.nome%></h4>
+
+<div class="page-header">
+  <%= link_to cliente_cliente_contatos_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to edit_cliente_contato_path(@cliente_contato), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Editar
+  <% end %>
+  <h2>Mostrar</h2>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Cliente:</dt>
+  <dd><%= @cliente_contato.cliente %></dd>
+  <dt>Nome:</dt>
+  <dd><%= @cliente_contato.nome %></dd>
+  <dt>Telefone:</dt>
+  <dd><%= @cliente_contato.telefone %></dd>
+  <dt>Email:</dt>
+  <dd><%= @cliente_contato.email %></dd>
+  <dt>Cargo:</dt>
+  <dd><%= @cliente_contato.cargo %></dd>
+  <dt>Departamento:</dt>
+  <dd><%= @cliente_contato.departamento %></dd>
+</dl>

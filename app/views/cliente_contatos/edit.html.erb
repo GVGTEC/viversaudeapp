@@ -1,0 +1,15 @@
+<h1>Contato do Cliente</h1>
+
+<div class="page-header">
+  <%= link_to cliente_cliente_contatos_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <%= link_to @cliente_contato, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-info-sign"></span>
+    Mostrar
+  <% end %>
+  <h2>Alteração</h2>
+</div>
+
+<%= render 'form' %>

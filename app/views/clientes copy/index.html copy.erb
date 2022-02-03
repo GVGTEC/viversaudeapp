@@ -11,9 +11,13 @@
 
 <div style="text-align: right; margin-top:10px; margin-bottom:10px">
   <form action="/clientes" method="get">
-    <div style="display: flex; justify-content:inherit">
-      <input type="text" style="width: 30%; margin-right: 10px;" name="busca" value="<%=params[:busca] %>" class="form-control" placeholder="Busca..">
-      <input type="submit" class="btn btn-primary" value="Buscar">
+    <div class="row" style="width:300px;display: inline-block;">
+      <div style="float: left">
+        <input type="text" name="nome" value="<%=params[:nome] %>" class="form-control" placeholder="Busca..">
+      </div>
+      <div style="float: left;margin-left:5px">
+        <input type="submit" class="btn btn-primary" value="Buscar">
+      </div>
     </div>
   </form>
 </div>
@@ -38,7 +42,6 @@
         <td><%= cliente.endereco %></td>
         <td><%= cliente.bairro %></td>
         <td><%= cliente.cidade %></td>
-        <td><%= link_to 'PDF', cliente_path(cliente, format: :pdf) %></td>
         <td><%= link_to 'Mostrar', cliente %></td>
         <td><%= link_to 'Editar', edit_cliente_path(cliente) %></td>
         <td><%= link_to 'Apagar', cliente, method: :delete, data: { confirm: 'Confirma ?' } %></td>

@@ -12,13 +12,13 @@ class OrcamentosController < ApplicationController
 #    return
 #  end
 
-  def relatorio
-    render pdf: "file",
-    template: "orcamento/relatorio.pdf.erb",
-    #layout: "pdf.html.erb"
-    #layout: "relatorio.pdf.erb"
-    layout: "application.pdf.ebr"
-  end
+#  def relatorio
+#    render pdf: "file",
+#    template: "orcamento/relatorio.pdf.erb",
+#    #layout: "pdf.html.erb"
+#    #layout: "relatorio.pdf.erb"
+#    layout: "application.pdf.ebr"
+#  end
 
   def index
     #@nota_fiscais = empresa.nota_fiscais (HABILITAR QUANDO CRIAR O CAMPO EMPRESA NO ORCAMENTO)
@@ -32,7 +32,15 @@ class OrcamentosController < ApplicationController
     @orcamentos = @orcamentos.paginate(options)
   end
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        #render pdf: "file name", template: "produtos/show.html.erb"
+        render pdf: "Orcamento id: #{@orcamento.id}", template: "orcamentos/relatorio.pdf.html.erb"
+      end
+    end
+  end
 
   def new
     @orcamento = Orcamento.new

@@ -236,7 +236,7 @@ class GerarNotaFiscaisController < ApplicationController
 
     @nota_fiscal.nota_fiscal_faturamento_parcelas.each_with_index do |faturamento_parcela, _i|
       nDup = faturamento_parcela.duplicata.to_s
-      cVenc = faturamento_parcela.data_vencimento.strftime('%Y-%m-%d')
+      cVenc = faturamento_parcela.data_vencimento.strftime('%Y-%m-%d') rescue ""
       vDup = float_two(faturamento_parcela.valor_parcela.to_s)
       out_file.puts("Y07|#{nDup}|#{cVenc}|#{vDup}|")
     end

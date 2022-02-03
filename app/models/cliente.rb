@@ -7,4 +7,6 @@ class Cliente < ApplicationRecord
   rescue StandardError
     []
   end
+
+  has_many :cliente_contatos, dependent: :delete_all
 end

@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   resources :clientes do
     post 'importar', on: :collection
+
+    resources :cliente_contatos
   end
 
   resources :fornecedores do
@@ -68,5 +70,9 @@ Rails.application.routes.draw do
   post '/login', to: 'login#logar'
   get '/sair', to: 'login#deslogar'
 
-  get "/orcamento/relatorio", to: "orcamento#relatorio"  
+  #get "/orcamentos/relatorio", to: "orcamentos#relatorio"  
+  #get "/orcamentos/relatorio", to: "orcamento#relatorio" 
+  #get "relatorio", to: "orcamento#relatorio"
+  #
+  #resources :orcamentos
 end

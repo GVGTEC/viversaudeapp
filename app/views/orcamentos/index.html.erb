@@ -30,7 +30,7 @@
         <td><%= orcamento.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
         <td style="text-align: end;"><%= number_to_currency(orcamento.valor_total) %></td>
         <td><%= link_to 'Itens', orcamento_orcamento_itens_path(orcamento) %></td>
-        <td><%= link_to 'Gerar PDF', orcamento_relatorio_path(format: 'pdf'), class: "btn btn-success" %></td>
+        <td><%= link_to 'PDF', orcamento_path(orcamento, format: :pdf), class:"btn btn-success" %></td>
         <td><%= link_to 'Mostrar', orcamento, class: "btn btn-primary" %></td>
         <td><a href="javascript:window.location.assign('/orcamentos/<%=orcamento.id%>/edit')" class="btn btn-warning">Editar</a></td>
         <td><%= link_to 'Apagar', orcamento, method: :delete, data: { confirm: 'Confirma ?' }, class: "btn btn-danger" %></td>

@@ -54,8 +54,9 @@
         <td style="text-align: center"><%= produto.codprd_sac %></td>
         <td style="text-align: end;"> <%= number_to_currency(produto.preco_venda) %></td>       
         <td style="text-align: end;"> <%= formatar_qtd(produto.estoque_atual) %></td>
+        <td><%= link_to 'PDF', produto_path(produto, format: :pdf) %></td>
         <td><%= link_to 'Movimento', "/movimento_estoques?produto_id=#{produto.id}" %></td>
-        <td><%= link_to 'Lotes', "/estoques?produto_id=#{produto.id}" %></td>
+        <td><%= link_to 'Lotes', "/estoques?produto_id=#{produto.id}" %></td>       
         <td><%= link_to 'Mostrar', produto %></td>
         <td><%= link_to 'Editar', edit_produto_path(produto) %></td>
         <td><%= link_to 'Apagar', produto, method: :delete, data: { confirm: 'Confirma ?' } %></td>

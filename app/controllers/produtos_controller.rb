@@ -15,9 +15,23 @@ class ProdutosController < ApplicationController
       return
     end
 
+    #respond_to do |format|
+    #  format.html
+    #  format.json
+    #  format.pdf
+    #    {render template: 'produtos/relatorio', pdf: 'relatorio'}
+    #end
+
     options = { page: params[:page] || 1, per_page: 15 }
     @produtos = @produtos.paginate(options)
   end
+
+  #if params[:gerar_pdf].present?
+  #  render pdf: "Relatorio"
+  #    template: "produtos/index.pdf.erb"
+  #    layout: "pdf.html"
+  #  return
+  #end
 
   def importar
     if params[:arquivo].blank?
@@ -112,7 +126,15 @@ class ProdutosController < ApplicationController
     produto.save
   end
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        #render pdf: "file name", template: "produtos/show.html.erb"
+        render pdf: "Produto id: #{@produto.id}", template: "produtos/relatorio.pdf.html.erb"
+      end
+    end
+  end
 
   def new
     @produto = Produto.new

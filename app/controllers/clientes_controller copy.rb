@@ -100,16 +100,8 @@ class ClientesController < ApplicationController
     cliente.save
   end
 
-  def show
-    respond_to do |format|
-      format.html
-      format.pdf do
-        #render pdf: "file name", template: "clientes/show.html.erb"
-        render pdf: "Cliente id: #{@cliente.id}", template: "clientes/relatorio.pdf.html.erb"
-      end
-    end
-  end
-  
+  def show; end
+
   def new
     @cliente = Cliente.new
   end
@@ -171,9 +163,8 @@ class ClientesController < ApplicationController
         nome: contato_cliente[:nome],
         email: contato_cliente[:email],
         telefone: contato_cliente[:telefone],
-        #cargo e departamento estão dando erro quando tenta salvar porque não exite na view
-        #cargo: contato_cliente[:cargo],
-        #departamento: contato_cliente[:departamento],
+        cargo: contato_cliente[:cargo],
+        departamento: contato_cliente[:departamento],
         natureza: params[:controller],
         natureza_id: @cliente.id
       )

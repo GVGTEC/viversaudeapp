@@ -129,19 +129,178 @@
   </div>
 
   <br>
-
+  
   <div>
-    <%= link_to "Contatos", cliente_cliente_contatos_path(@cliente), class:"btn btn-success" %>
+    <%= link_to "Contatos", "/cliente_contatos", class:"btn btn-success" %>
   </div>
 
   <br><br>
-   
+
+  <h4>Contatos</h4>
+  <hr>
+  <div>
+  </div>
+
+  <div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Nome/Razão Social</th>
+        <th>Endereço</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @clientes) do |cliente| %>
+        <td><%= cliente.nome %></td>
+        <td><%= cliente.endereco %></td>
+        <td><%= cliente.bairro %></td>
+        <td><%= cliente.cidade %></td>
+        <td><%= link_to 'Mostrar', cliente %></td>
+        <td><%= link_to 'Editar', edit_cliente_path(cliente) %></td>
+        <td><%= link_to 'Apagar', cliente, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+
+  <br><br>
+
+  <h4>Contatos</h4>
+  <hr>
+  <div id="conteudoContainer">
+    <% if @cliente.present? %>
+      <% @cliente.contatos.each do |contato| %>
+        <div class="item" style="margin-bottom: 40px">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Nome</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" value="<%= contato.nome %>" name="cliente[contato][][nome]">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" value="<%= contato.email %>" name="cliente[contato][][email]">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Telefone</label>
+            <div class="col-sm-10">
+              <input class="form-control" type="text" value="<%= contato.telefone %>" name="cliente[contato][][telefone]">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Cargo</label>
+            <div class="col-sm-4">
+              <input class="form-control" type="text" value="<%= contato.cargo %>" name="cliente[contato][][cargo]">
+            </div>
+
+            <label class="col-sm-2 control-label">Departamento</label>
+            <div class="col-sm-4">
+              <input class="form-control" type="text" value="<%= contato.departamento %>" name="cliente[contato][][departamento]">
+            </div>
+          </div>
+
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="item" style="margin-bottom: 40px">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Nome</label>
+        <div class="col-sm-10">
+          <input class="form-control", type="text" name="cliente[contato][][nome]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="cliente[contato][][email]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Telefone</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" name="cliente[contato][][telefone]">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Cargo</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="cliente[contato][][cargo]">
+        </div>
+
+        <label class="col-sm-2 control-label">Departamento</label>
+        <div class="col-sm-4">
+          <input class="form-control" type="text" name="cliente[contato][][departamento]">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="form-group" style="text-align: right;">
+    <a href="javascript:;" onclick="app.contas_pag.mais();" class="btn btn-primary">Mais</a>
+  </div>
+
+  <hr>
+
   <div class="form-group">
     <div class="col-sm-1">
       <%= f.submit "Salvar", class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>
+
+<div id="conteudoContainerTemplate" style="display: none">
+  <div class="item" style="margin-bottom: 40px">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Nome</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="cliente[contato][][nome]">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="cliente[contato][][email]">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Telefone</label>
+      <div class="col-sm-10">
+        <input class="form-control" type="text" name="cliente[contato][][telefone]">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Cargo</label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="cliente[contato][][cargo]">
+      </div>
+
+      <label class="col-sm-2 control-label">Departamento</label>
+      <div class="col-sm-4">
+        <input class="form-control" type="text" name="cliente[contato][][departamento]">
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <script>
 //Bloqueia a tecla Enter no campo de Input

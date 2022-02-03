@@ -24,7 +24,7 @@ class ContasRecController < ApplicationController
     respond_to do |format|
       if @contas_rec.save
         save_contas_rec_parcelas
-        format.html { redirect_to @contas_rec, notice: 'Contas rec Cadastrado' }
+        format.html { redirect_to @contas_rec, notice: 'Contas a Receber Cadastrado' }
         format.json { render :show, status: :created, location: @contas_rec }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,7 +37,7 @@ class ContasRecController < ApplicationController
     respond_to do |format|
       if @contas_rec.update(contas_rec_params)
         save_contas_rec_parcelas
-        format.html { redirect_to @contas_rec, notice: 'Contas rec Alterado' }
+        format.html { redirect_to @contas_rec, notice: 'Contas a Receber Alterado' }
         format.json { render :show, status: :ok, location: @contas_rec }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,7 +49,7 @@ class ContasRecController < ApplicationController
   def destroy
     @contas_rec.destroy
     respond_to do |format|
-      format.html { redirect_to contas_rec_index_url, notice: 'Contas rec Excluído' }
+      format.html { redirect_to contas_rec_index_url, notice: 'Contas a Receber Excluído' }
       format.json { head :no_content }
     end
   end
