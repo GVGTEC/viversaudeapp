@@ -5,14 +5,14 @@ default: &default
 
 development:
   <<: *default
-  database: viversaude_development
+  database: oam_development
 
 test:
   <<: *default
-  database: viversaude_test
+  database: oam_test
 
 production:
   <<: *default
-  database: viversaude_production
-  username: viversaude
-  password: <%= ENV['viversaude_DATABASE_PASSWORD'] %>
+  database: oam_production
+  username: oam
+  password: <%= ENV['oam_DATABASE_PASSWORD'] %>

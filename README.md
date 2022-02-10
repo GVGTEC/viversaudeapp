@@ -23,9 +23,9 @@ Things you may want to cover:
 
 * ...
 
-pg_dump -Fc --no-acl --no-owne viversaude_development > /home/malaquias/Downloads/mydb.dump
+pg_dump -Fc --no-acl --no-owne oam_development > /home/malaquias/Downloads/mydb.dump
 
-heroku pg:backups:restore https://liveevents-adm.s3.sa-east-1.amazonaws.com/1639527672-mydb.dump --confirm viversaudeapp
+heroku pg:backups:restore https://liveevents-adm.s3.sa-east-1.amazonaws.com/1639527672-mydb.dump --confirm oam
 
 ActiveRecord::Base.connection.exec_query(
   "SELECT setval(pg_get_serial_sequence('produtos', 'id'), max(id)) FROM produtos"

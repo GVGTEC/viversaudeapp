@@ -11,7 +11,7 @@
     <span class="glyphicon glyphicon-list-alt"></span>
     Voltar
   <% end %>
-  <h1>Itens</h1>
+  <h2>Itens</h2>
 </div>
 
 <div class="table-responsive">
@@ -20,11 +20,11 @@
       <tr>
         <th>Nota Fiscal</th>
         <th>Código</th>
-        <th>Descricao</th>
+        <th>Descrição</th>
         <th>CFOP</th>
         <th>NCM</th>
         <th>Un</th>
-        <th>Qtd</th>
+        <th>Qtde</th>
         <th>Preço Unitário</th>
         <th>Preço Total</th>
       </tr>
@@ -39,8 +39,8 @@
         <td><%= nota_fiscal_item.ncm %></td>
         <td><%= nota_fiscal_item.unidade %></td>
         <td><%= formatar_qtd(nota_fiscal_item.quantidade) %></td>
-        <td><%= number_to_currency(nota_fiscal_item.preco_unitario) %></td>
-        <td><%= number_to_currency(nota_fiscal_item.preco_total) %></td>
+        <td style="text-align: end;"><%= number_to_currency(nota_fiscal_item.preco_unitario) %></td>
+        <td style="text-align: end;"><%= number_to_currency(nota_fiscal_item.preco_total) %></td>
       <% end %>
     </tbody>
   </table>

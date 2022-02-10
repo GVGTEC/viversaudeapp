@@ -63,7 +63,7 @@ class NotaFiscaisController < ApplicationController
   private
 
   def set_nota_fiscal
-    debugger
+    #debugger
     @nota_fiscal = NotaFiscal.find(params[:id] || params[:nota_fiscal_id])
   end
 

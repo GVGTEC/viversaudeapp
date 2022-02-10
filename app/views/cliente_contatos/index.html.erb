@@ -1,4 +1,4 @@
-<h1>Contatos do Cliente</h1>
+<h3>Contatos do Cliente</h3>
 
 <h4><%= @cliente.id %> - <%= @cliente.nome%></h4>
 
@@ -32,9 +32,9 @@
             <td><%= cliente_contato.email %></td>
             <td><%= cliente_contato.cargo %></td>
             <td><%= cliente_contato.departamento %></td>
-            <td><%= link_to 'Mostrar', cliente_cliente_contato %></td>
-        <td><%= link_to 'Editar', edit_cliente_contato_path(cliente_contato) %></td>
-        <td><%= link_to 'Apagar', cliente_contato, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+            <td><%= link_to 'Mostrar', cliente_cliente_contatos_path %></td>
+            <td><%= link_to 'Editar', edit_cliente_cliente_contato_path(@cliente, cliente_contato) %></td>
+            <td><%= link_to 'Apagar', cliente_cliente_contatos_path, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
     </tbody>
   </table>

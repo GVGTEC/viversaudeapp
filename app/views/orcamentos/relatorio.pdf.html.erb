@@ -1,18 +1,104 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Viver Saúde PDF</title>
+    <title>OAM Metalúrgica PDF</title>
     <meta charset="utf-8">
+
+    <style="font-family: arial; font-size: 20px">
+
+    <style type="text/css">
+    table {
+      border-collapse: colapse;
+      margin-botton: 1cm
+      width: 100%
+    }
+
+    table if {
+      page-break-inside: avoid;
+    }
+
+    table thead tr th {
+      background-color: #1a215c;
+      color: #fff;
+      border: 1px solid #000000;
+      min-width: 0.6px;
+      padding: 5cm;
+      text-align: center;
+      vertical-align: top;
+      font-weight: bold;
+    }
+
+    table tbodytr th {
+      border: 1px solid #000000;
+      min-width: 0.6px;
+      padding: 5cm;
+      text-align: center;
+      vertical-align: top;
+      font-size: 15;
+    }            
+  </style>
+
   </head> 
   <body>
     <p>
-      <h1>ORÇAMENTO Nº <%= @orcamento.id %>  </h1>
+      <h2 style="text-align: center;">ORÇAMENTO Nº <%= @orcamento.id %> </h2>
     </p>
 
+    <hr>
+
+    Cliente: <%= @cliente.nome rescue "" %>
+     <br>
+    Endereço:
+
+    <hr>
+
+    <!--
     <p>
       <strong>ORÇAMENTO Nº </strong>
       <%= @orcamento.id %>
     </p>
+    -->
+   
+    <div class="table-responsive">
+      <table class="table">
+      <!--
+        <thead>
+          <tr>
+            <th>Seq</th>
+            <th>CodPrd</th>
+            <th>Descrição</th>
+            <th>Qtde/th>
+            <th>Preço Unitário</th>
+            <th>Preço Total</th>
+          </tr>
+        </thead>
+      -->
+
+      <!--
+        <tbody>
+            <%= content_tag_for(:tr, @orcamento_itens) do |orc| %>
+            <td><%= orc.produto.id %></td>
+            <td><%= orc.produto.descricao %></td>
+            <td><%= orc.quantidade %></td>
+            <td><%= orc.preco_unitario %></td>
+            <td><%= orc.preco_total %></td>
+          <% end %>
+        </tbody>
+      -->
+
+        <tbody id="tableBody_orcamento_id_<%= @orcamento.id %>">
+          <% @orcamento.orcamento_itens.each_with_index do |orc_item, index| %>
+            <tr>
+              <td><%= orc_item.produto.id %></td>
+              <td><%= orc_item.produto.descricao %></td>
+              <td><%= orc_item.quantidade %></td>
+              <td><%= orc_item.preco_unitario %></td>
+              <td><%= orc_item.preco_total %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
 

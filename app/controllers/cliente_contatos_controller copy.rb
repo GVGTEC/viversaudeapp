@@ -1,11 +1,11 @@
 class ClienteContatosController < ApplicationController
-  before_action :set_cliente_contato, only: %i[ show edit update destroy ]
   before_action :set_cliente
-
+  before_action :set_cliente_contato, only: %i[show edit update destroy]
+  
   # GET /cliente_contatos or /cliente_contatos.json
   def index
     #@cliente_contatos = ClienteContato.all
-    @cliente_contatos = ClienteContato.where(cliente_id: @cliente.id)
+    @cliente_contatos = ClienteContato.where(cliente_id: @cliente.id)   
   end
 
   # GET /cliente_contatos/1 or /cliente_contatos/1.json
@@ -34,7 +34,8 @@ class ClienteContatosController < ApplicationController
 
       if @cliente_contato.save
         #format.html { redirect_to cliente_cliente_contato_url(@cliente_contato), notice: "Cliente contato was successfully created." }
-        format.html { redirect_to cliente_cliente_contatos_path, notice: "" }
+        #format.html { redirect_to cliente_cliente_contatos_path, notice: "" } // Go Show
+        format.html { redirect_to cliente_cliente_contatos_path, notice: "" } // Go Index
         format.json { render :show, status: :created, location: @cliente_contato }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,11 +44,11 @@ class ClienteContatosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /cliente_contatos/1 or /cliente_contatos/1.json
   def update
     respond_to do |format|
       if @cliente_contato.update(cliente_contato_params)
-        format.html { redirect_to cliente_contato_url(@cliente_contato), notice: "Cliente contato was successfully updated." }
+        # (ORIGINAL) format.html { redirect_to cliente_cliente_contato_url(@cliente_contato), notice: "" }
+        format.html { redirect_to cliente_cliente_contatos_path, notice: "" }
         format.json { render :show, status: :ok, location: @cliente_contato }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -56,12 +57,11 @@ class ClienteContatosController < ApplicationController
     end
   end
 
-  # DELETE /cliente_contatos/1 or /cliente_contatos/1.json
   def destroy
     @cliente_contato.destroy
 
     respond_to do |format|
-      format.html { redirect_to cliente_contatos_url, notice: "Cliente contato was successfully destroyed." }
+      format.html { redirect_to cliente_contatos_url, notice: "" }
       format.json { head :no_content }
     end
   end
@@ -70,6 +70,7 @@ class ClienteContatosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_cliente_contato
       @cliente_contato = ClienteContato.find(params[:id])
+      #@cliente_contato = Cliente_ClienteContato.find(params[:id])
     end
 
     def set_cliente

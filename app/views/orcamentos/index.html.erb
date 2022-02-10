@@ -1,4 +1,4 @@
-<h1>Orçamentos</h1>
+<h2>Orçamentos</h2>
 
 <div class="page-header">
   <%= link_to "javascript:window.location.assign('/orcamentos/new')", class: 'btn btn-primary' do %>
@@ -25,9 +25,9 @@
 
     <tbody>
       <%= content_tag_for(:tr, @orcamentos) do |orcamento| %>
-        <td><%= orcamento.id %></td>
+        <td style="text-align: end;"><%= orcamento.id %></td>
         <td><%= orcamento.cliente.nome rescue "" %><%= orcamento.cliente.nome rescue "" %></td>
-        <td><%= orcamento.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
+        <td style="text-align: center;"><%= orcamento.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
         <td style="text-align: end;"><%= number_to_currency(orcamento.valor_total) %></td>
         <td><%= link_to 'Itens', orcamento_orcamento_itens_path(orcamento) %></td>
         <td><%= link_to 'PDF', orcamento_path(orcamento, format: :pdf), class:"btn btn-success" %></td>

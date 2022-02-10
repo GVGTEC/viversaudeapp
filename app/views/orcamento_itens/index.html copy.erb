@@ -1,0 +1,37 @@
+<div class="page-header">
+  <%= link_to new_orcamento_orcamento_item_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    Novo
+  <% end %>
+  <h2>Lista</h2>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Orçamento</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Preço Unitário</th>
+            <th>Preço Total</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @orcamento_itens) do |orcamento_item| %>
+            <td><%= orcamento_item.orcamento %></td>
+            <td><%= orcamento_item.produto %></td>
+            <td><%= orcamento_item.quantidade %></td>
+            <td><%= orcamento_item.preco_unitario %></td>
+            <td><%= orcamento_item.preco_total %></td>
+            <td><%= link_to 'Mostrar', orcamento_orcamento_item %></td>
+            <td><%= link_to 'Editar', edit_orcamento_item_path(orcamento_item) %></td>
+            <td><%= link_to 'Apagar', orcamento_item, method: :delete, data: { confirm: 'Confirma ?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
