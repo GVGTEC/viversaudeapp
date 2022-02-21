@@ -5,7 +5,7 @@ class ProdutosController < ApplicationController
   def index
     @produtos = empresa.produtos
     @produtos = @produtos.order('descricao asc')
-    @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
+    @produtos = @produtos.where("lower(descricao_complementar) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
     @produtos = @produtos.where(id: params[:codigo]) if params[:codigo].present?
 
     # paginação na view index (lista)
@@ -65,12 +65,12 @@ class ProdutosController < ApplicationController
   end
 
   def importar_linha(linha)
-    codprd_sac = 0
+    codigo_produto = 0
     situacao = 1 # se branco ele esta ativo
     codigo_fabricante = 2
     codigo_barras = 3
     descricao = 4
-    descricao_nfe = 5
+    descricao_complementar = 5
     fornecedor_id = 6
     situacao_tributaria = 10
     ncm = 12
@@ -90,15 +90,15 @@ class ProdutosController < ApplicationController
     bloquear_preco = 32
     localizacao_estoque_id = 33
 
-    produto = Produto.find_by(codprd_sac: linha[codprd_sac])
+    produto = Produto.find_by(codigo_produto: linha[codigo_produto])
     produto ||= Produto.new
 
-    produto.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac]
+    produto.codigo_produto = linha[codigo_produto].strip rescue linha[codigo_produto]
     produto.situacao = linha[situacao].presence || 'ATIVO'
     produto.codigo_fabricante = linha[codigo_fabricante].strip rescue linha[codigo_fabricante]
     produto.codigo_barras = linha[codigo_barras].strip rescue linha[codigo_barras]
     produto.descricao = linha[descricao].strip rescue linha[descricao]
-    produto.descricao_nfe = linha[descricao_nfe].strip rescue linha[descricao_nfe]
+    produto.descricao_complementar = linha[descricao_complementar].strip rescue linha[descricao_complementar]
     produto.situacao_tributaria = linha[situacao_tributaria].strip rescue linha[situacao_tributaria]
     produto.ncm = linha[ncm].strip rescue linha[ncm]
     produto.unidade = linha[unidade].strip rescue linha[unidade]
@@ -187,7 +187,7 @@ class ProdutosController < ApplicationController
   end
                                              
   def produto_params
-    params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codprd_sac, :situacao, :data_inativo, :descricao, :descricao_nfe, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, 
+    params.require(:produto).permit(:localizacao_estoque_id, :fornecedor_id, :codigo_produto, :situacao, :data_inativo, :descricao, :descricao_complementar, :codigo_fabricante, :codigo_barras, :ncm, :situacao_tributaria, :unidade, 
                                     :embalagem, :controlar_estoque, :por_lote, :bloquear_preco, :data_ultima_reposicao, :data_ultimo_reajuste, :preco_custo, :preco_custo_medio, :margem_lucro, :preco_venda, 
                                     :preco_oferta, :margem_lucro_oferta, :data_inicial_oferta, :data_final_oferta, :comissao_pc, :estoque_atual, :estoque_minimo, :origem)
   end

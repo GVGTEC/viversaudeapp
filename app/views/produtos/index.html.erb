@@ -51,7 +51,7 @@
         <td style="text-align: end;"><%= produto.id %></td>
         <td><%= produto.descricao %></td>
         <td style="text-align: center;"><%= produto.ncm %></td>
-        <td style="text-align: center"><%= produto.codprd_sac %></td>
+        <td style="text-align: center"><%= produto.codigo_produto %></td>
         <td style="text-align: end;"> <%= number_to_currency(produto.preco_venda) %></td>       
         <td style="text-align: end;"> <%= formatar_qtd(produto.estoque_atual) %></td>
         <td><%= link_to 'PDF', produto_path(produto, format: :pdf) %></td>

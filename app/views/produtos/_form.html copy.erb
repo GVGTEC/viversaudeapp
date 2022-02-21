@@ -24,45 +24,31 @@
           <%= f.date_field :data_inativo, class: "form-control" %>
         </div>
 
-        <div class="col-md-2">
-          <%= f.label :codigo_produto, 'Código Produto' %>
+        <div class="col-md-8">
+          <%= f.label :descricao, 'Descrição' %>
           <%= f.text_field :descricao, class: "form-control" %>
-        </div>
-
-        <div class="col-md-2">
-          <%= f.label :codigo_producao, 'Código Produção' %>
-          <%= f.text_field :codigo_producao, class: "form-control" %>
         </div>
     </div>        
 
     <div class="row form-group">
         <div class="col-md-12">
-          <%= f.label :descricao, 'Descrição' %>
-          <%= f.text_field :descricao, class: "form-control" %>
-        </div>
-    </div>
-
-    <div class="row form-group">
-        <div class="col-md-12">
-          <%= f.label :descricao_complementar, 'Descrição Complementar' %>
+          <%= f.label :descricao_complementar, 'Descrição NF-e' %>
           <%= f.text_field :descricao_complementar, class: "form-control" %>
         </div>
     </div>
 
     <div class="row form-group">
-        <div class="col-md-2">
-          <%= f.label :unidade, 'Unidade' %>
-          <%= f.text_field :unidade, class: "form-control" %>
+        <div class="col-md-3">
+          <%= f.label :codigo_barras, 'Código Barras' %>
+          <%= f.text_field :codigo_barras, class: "form-control" %>
         </div>
 
-        <div class="col-md-2">
-          <%= f.label :ncm, 'Código NCM' %>
-          <%= f.text_field :ncm, class: "form-control" %>
-        </div>
-      
-        <div class="col-md-3">
-          <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
-          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']], :selected => @produto.situacao_tributaria), {:include_blank => true}, {class: "form-control"}) %>
+        <div class="col-md-4">
+          <%= f.label :localizacao_estoque, 'Local Estoque'%>
+          <%= f.select :localizacao_estoque_id,
+          LocalizacaoEstoque.all.reorder("local asc").collect { |localizacao_estoque| [localizacao_estoque.local, localizacao_estoque.id] },
+          {:selected => @produto.localizacao_estoque_id},
+          {:class=> 'form-control'} %>          
         </div>
 
         <div class="col-md-5">
@@ -78,6 +64,28 @@
             ['7-Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural', '7']
             ], :selected => @produto.origem), {:include_blank => true}, {class: "form-control"}) %>
         </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+          <%= f.label :unidade, 'Unidade' %>
+          <%= f.text_field :unidade, class: "form-control" %>
+        </div>
+
+        <div class="col-md-3">
+          <%= f.label :embalagem, 'Quantidade na Embalagem' %>
+          <%= f.text_field :embalagem, class: "form-control" %>
+        </div>             
+
+        <div class="col-md-3">
+          <%= f.label :ncm, 'Código NCM' %>
+          <%= f.text_field :ncm, class: "form-control" %>
+        </div>
+      
+        <div class="col-md-3">
+          <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
+          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']], :selected => @produto.situacao_tributaria), {:include_blank => true}, {class: "form-control"}) %>
+        </div>
         
     </div>        
   
@@ -91,7 +99,17 @@
           <%= f.label :estoque_atual, 'Estoque Atual' %>
           <%= f.text_field :estoque_atual, class: "form-control" %>
         </div>
-       
+
+        <div class="col-md-2">
+          <%= f.label :estoque_minimo, 'Estoque Mínimo' %>
+          <%= f.text_field :estoque_minimo, class: "form-control" %>
+        </div>
+        
+        <div class="col-md-2">
+          <%= f.label :por_lote, 'Controlar Lote ?' %>
+          <%= f.select(:por_lote, options_for_select([['SIM', true], ['NÃO', false]], :selected => @produto.por_lote), {:include_blank => true}, {class: "form-control"}) %>
+        </div>
+        
         <div class="col-md-2">
           <%= f.label :data_ultima_reposicao, 'Data Última Reposição' %>
           <%= f.date_field :data_ultima_reposicao, class: "form-control" %>

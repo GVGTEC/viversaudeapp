@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_013331) do
+ActiveRecord::Schema.define(version: 2022_02_21_004607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -470,22 +470,21 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
     t.bigint "empresa_id"
     t.bigint "localizacao_estoque_id"
     t.bigint "fornecedor_id"
-    t.string "codigo_produto"
-    t.string "codigo_producao"
-    t.string "situacao"
+    t.string "codprd_sac"
+    t.string "situacao", default: "A"
     t.datetime "data_inativo"
     t.string "descricao"
     t.string "descricao_complementar"
     t.string "codigo_fabricante"
     t.string "codigo_barras"
     t.string "ncm"
-    t.integer "origem"
-    t.string "situacao_tributaria"
-    t.string "unidade"
+    t.integer "origem", default: 0
+    t.string "situacao_tributaria", default: "T"
+    t.string "unidade", default: "PÇ"
     t.float "embalagem", default: 0.0
-    t.boolean "controlar_estoque"
+    t.boolean "controlar_estoque", default: true
     t.boolean "por_lote"
-    t.boolean "bloquear_preco"
+    t.boolean "bloquear_preco", default: true
     t.datetime "data_ultima_reposicao"
     t.datetime "data_ultimo_reajuste"
     t.float "preco_custo", default: 0.0

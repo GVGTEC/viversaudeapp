@@ -24,23 +24,11 @@
           <%= f.date_field :data_inativo, class: "form-control" %>
         </div>
 
-        <div class="col-md-2">
-          <%= f.label :codigo_produto, 'Código Produto' %>
-          <%= f.text_field :descricao, class: "form-control" %>
-        </div>
-
-        <div class="col-md-2">
-          <%= f.label :codigo_producao, 'Código Produção' %>
-          <%= f.text_field :codigo_producao, class: "form-control" %>
-        </div>
-    </div>        
-
-    <div class="row form-group">
-        <div class="col-md-12">
+        <div class="col-md-8">
           <%= f.label :descricao, 'Descrição' %>
           <%= f.text_field :descricao, class: "form-control" %>
         </div>
-    </div>
+    </div>        
 
     <div class="row form-group">
         <div class="col-md-12">
@@ -50,21 +38,6 @@
     </div>
 
     <div class="row form-group">
-        <div class="col-md-2">
-          <%= f.label :unidade, 'Unidade' %>
-          <%= f.text_field :unidade, class: "form-control" %>
-        </div>
-
-        <div class="col-md-2">
-          <%= f.label :ncm, 'Código NCM' %>
-          <%= f.text_field :ncm, class: "form-control" %>
-        </div>
-      
-        <div class="col-md-3">
-          <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
-          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']], :selected => @produto.situacao_tributaria), {:include_blank => true}, {class: "form-control"}) %>
-        </div>
-
         <div class="col-md-5">
           <%= f.label :origem, 'Origem Mercadoria' %>
           <%= f.select(:origem, options_for_select([
@@ -77,6 +50,23 @@
             ['6-Estrangeira - Importação direta, sem similar nacional, constante em lista de Resolução Camex e gás natural', '6'],
             ['7-Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista de Resolução Camex e gás natural', '7']
             ], :selected => @produto.origem), {:include_blank => true}, {class: "form-control"}) %>
+        </div>
+    </div>
+
+    <div class="row form-group">
+        <div class="col-md-3">
+          <%= f.label :unidade, 'Unidade' %>
+          <%= f.text_field :unidade, class: "form-control" %>
+        </div>
+
+        <div class="col-md-3">
+          <%= f.label :ncm, 'Código NCM' %>
+          <%= f.text_field :ncm, class: "form-control" %>
+        </div>
+      
+        <div class="col-md-3">
+          <%= f.label :situacao_tributaria, 'Situação Tritutária' %>
+          <%= f.select(:situacao_tributaria, options_for_select([['Tributado', 'T'], ['Substituição Tributária', 'S'], ['Isento', 'I'], ['Não Tributado', 'N']], :selected => @produto.situacao_tributaria), {:include_blank => true}, {class: "form-control"}) %>
         </div>
         
     </div>        

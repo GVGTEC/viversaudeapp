@@ -1,0 +1,109 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo_produto: MyString
+  codigo_producao: MyString
+  : 
+  data_inativo: 2022-02-20 22:33:31
+  descricao: MyString
+  descricao_complementar: MyString
+  codigo_fabricante: MyString
+  codigo_barras: MyString
+  ncm: MyString
+  origem: MyString
+  situacao_tributaria: MyString
+  unidade: MyString
+  embalagem: 
+  default: MyString
+  0: MyString
+  controlar_estoque: false
+  por_lote: false
+  bloquear_preco: false
+  data_ultima_reposicao: 2022-02-20 22:33:31
+  datetime: 
+  preco_custo: 
+  default: MyString
+  0: MyString
+  preco_custo_medio: 
+  default: MyString
+  0: MyString
+  margem_lucro: 
+  default: MyString
+  0: MyString
+  preco_venda: 
+  default: MyString
+  0: MyString
+  preco_oferta: 
+  default: MyString
+  0: MyString
+  margem_lucro_oferta: 
+  default: MyString
+  0: MyString
+  data_inicial_oferta: 2022-02-20 22:33:31
+  data_final_oferta: 2022-02-20 22:33:31
+  comissao_pc: 
+  default: MyString
+  0: MyString
+  estoque_atual: 
+  default: MyString
+  0: MyString
+  estoque_minimo: 
+  default: MyString
+  0: MyString
+  empresa: one
+  localizacao_estoque: 
+  fornecedor: one
+
+two:
+  codigo_produto: MyString
+  codigo_producao: MyString
+  : 
+  data_inativo: 2022-02-20 22:33:31
+  descricao: MyString
+  descricao_complementar: MyString
+  codigo_fabricante: MyString
+  codigo_barras: MyString
+  ncm: MyString
+  origem: MyString
+  situacao_tributaria: MyString
+  unidade: MyString
+  embalagem: 
+  default: MyString
+  0: MyString
+  controlar_estoque: false
+  por_lote: false
+  bloquear_preco: false
+  data_ultima_reposicao: 2022-02-20 22:33:31
+  datetime: 
+  preco_custo: 
+  default: MyString
+  0: MyString
+  preco_custo_medio: 
+  default: MyString
+  0: MyString
+  margem_lucro: 
+  default: MyString
+  0: MyString
+  preco_venda: 
+  default: MyString
+  0: MyString
+  preco_oferta: 
+  default: MyString
+  0: MyString
+  margem_lucro_oferta: 
+  default: MyString
+  0: MyString
+  data_inicial_oferta: 2022-02-20 22:33:31
+  data_final_oferta: 2022-02-20 22:33:31
+  comissao_pc: 
+  default: MyString
+  0: MyString
+  estoque_atual: 
+  default: MyString
+  0: MyString
+  estoque_minimo: 
+  default: MyString
+  0: MyString
+  empresa: two
+  localizacao_estoque: 
+  fornecedor: two

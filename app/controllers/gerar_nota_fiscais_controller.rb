@@ -114,9 +114,9 @@ class GerarNotaFiscaisController < ApplicationController
       # Bloco Prod
       out_file.puts("H|#{i + 1}|#{item.informacoes_lote}|")
 
-      cProd = item.produto.codprd_sac.to_s
+      cProd = item.produto.codigo_produto.to_s
       cEAN = ''
-      xProd = item.produto.descricao_nfe.strip.to_s
+      xProd = item.produto.descricao_complementar.strip.to_s
       nCM = item.produto.ncm.strip.to_s
       nVE = ''
       cEST = ''

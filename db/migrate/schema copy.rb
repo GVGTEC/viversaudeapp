@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_013331) do
+ActiveRecord::Schema.define(version: 2022_02_01_000113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,7 +192,7 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
     t.bigint "empresa_id"
     t.bigint "produto_id"
     t.bigint "fornecedor_id"
-    t.string "codprd_sac"
+    t.string "codigo_produto"
     t.string "lote"
     t.string "documento"
     t.string "ultima_alteracao"
@@ -471,7 +471,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
     t.bigint "localizacao_estoque_id"
     t.bigint "fornecedor_id"
     t.string "codigo_produto"
-    t.string "codigo_producao"
     t.string "situacao"
     t.datetime "data_inativo"
     t.string "descricao"
@@ -479,7 +478,6 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
     t.string "codigo_fabricante"
     t.string "codigo_barras"
     t.string "ncm"
-    t.integer "origem"
     t.string "situacao_tributaria"
     t.string "unidade"
     t.float "embalagem", default: 0.0
@@ -501,6 +499,7 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
     t.float "estoque_minimo", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "origem"
     t.index ["empresa_id"], name: "index_produtos_on_empresa_id"
     t.index ["fornecedor_id"], name: "index_produtos_on_fornecedor_id"
     t.index ["localizacao_estoque_id"], name: "index_produtos_on_localizacao_estoque_id"
@@ -587,11 +586,13 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
   add_foreign_key "contas_rec_parcelas", "contas_rec"
   add_foreign_key "estoques", "empresas"
   add_foreign_key "estoques", "fornecedores"
+  add_foreign_key "estoques", "produtos"
   add_foreign_key "fornecedor_contatos", "fornecedores"
   add_foreign_key "fornecedores", "empresas"
   add_foreign_key "localizacao_estoques", "empresas"
   add_foreign_key "movimento_estoques", "empresas"
   add_foreign_key "movimento_estoques", "estoques"
+  add_foreign_key "movimento_estoques", "produtos"
   add_foreign_key "nota_fiscais", "cfop"
   add_foreign_key "nota_fiscais", "clientes"
   add_foreign_key "nota_fiscais", "empresas"
@@ -604,9 +605,11 @@ ActiveRecord::Schema.define(version: 2022_02_21_013331) do
   add_foreign_key "nota_fiscal_item_lotes", "estoques"
   add_foreign_key "nota_fiscal_item_lotes", "nota_fiscal_itens"
   add_foreign_key "nota_fiscal_itens", "nota_fiscais"
+  add_foreign_key "nota_fiscal_itens", "produtos"
   add_foreign_key "nota_fiscal_transportas", "nota_fiscais"
   add_foreign_key "nota_fiscal_transportas", "transportadoras"
   add_foreign_key "orcamento_itens", "orcamentos"
+  add_foreign_key "orcamento_itens", "produtos"
   add_foreign_key "orcamentos", "clientes"
   add_foreign_key "orcamentos", "vendedores"
   add_foreign_key "plano_contas", "empresas"

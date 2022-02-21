@@ -29,40 +29,35 @@
       </select>
     </div>
 
-    <%= f.label :consumidor_final, 'Consumidor Final', class: "col-sm-2 control-label"  %>
-    <div class="col-sm-2">
-      <%= f.select(:consumidor_final, options_for_select([['NÃO', 'N'], ['SIM', 'S']], :selected => @cliente.consumidor_final), {:include_blank => true}, {class: "form-control"}) %>
+    <div class="form-group pessoa-fisica" <% if @cliente.pessoa == 'F' %> style="display: block;" <% else %> style="display: none" <% end %>>
+        <%= f.label :cpf, 'CPF', class: "col-sm-1 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :cpf, class: "form-control" %>
+        </div>
+      
+        <%= f.label :rg, 'RG', class: "col-sm-1 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :rg, class: "form-control" %>
+        </div>
     </div>
 
-    <%= f.label :empresa_governo, 'Empresa do Governo', class: "col-sm-2 control-label"  %>
-    <div class="col-sm-2">
-      <%= f.select(:empresa_governo, options_for_select([['NÃO', false], ['SIM', true]], :selected => @cliente.empresa_governo), {:include_blank => true}, {class: "form-control"}) %>
-    </div>
-  </div>
-
-  <div class="form-group pessoa-fisica" <% if @cliente.pessoa == 'F' %> style="display: block;" <% else %> style="display: none" <% end %>>
-    <%= f.label :cpf, 'CPF', class: "col-sm-1 control-label" %>
-    <div class="col-sm-3">
-      <%= f.text_field :cpf, class: "form-control" %>
-    </div>
-  
-    <%= f.label :rg, 'RG', class: "col-sm-1 control-label" %>
-    <div class="col-sm-3">
-      <%= f.text_field :rg, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group pessoa-juridica" <% if @cliente.pessoa == 'J' %> style="display: block;" <% else %> style="display: none" <% end %>>
+    <div class="form-group pessoa-juridica" <% if @cliente.pessoa == 'J' %> style="display: block;" <% else %> style="display: none" <% end %>>
     <%= f.label :cnpj, 'CNPJ', class: "col-sm-1 control-label" %>
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <%= f.text_field :cnpj, class: "form-control" %>
     </div>
   
-    <%= f.label :ie, 'Inscrição Estadual', class: "col-sm-1 control-label" %>
-    <div class="col-sm-3">
+    <%= f.label :ie, 'IE', class: "col-sm-1 control-label" %>
+    <div class="col-sm-2">
       <%= f.text_field :ie, class: "form-control" %>
     </div>
   </div>
+
+    
+  </div>
+
+
+
 
   <div class="form-group">
     <%= f.label :cep, 'CEP', class: "col-sm-1 control-label" %>

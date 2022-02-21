@@ -47,7 +47,7 @@ class EstoquesController < ApplicationController
   end
 
   def importar_linha(linha)
-    codprd_sac = 0
+    codigo_produto = 0
     lote = 1 # se branco ele esta ativo
     fornecedor_id = 2
     estoque_atual_lote = 4 # duas casas decimais
@@ -55,7 +55,7 @@ class EstoquesController < ApplicationController
     data_reposicao = 8
     data_validade = 9
 
-    produto = Produto.find_by(codprd_sac: linha[codprd_sac])
+    produto = Produto.find_by(codigo_produto: linha[codigo_produto])
     produto ||= Produto.find_or_create_by(descricao: "Produto Não Encontrado", empresa_id: empresa.id)
     
     lote = linha[lote].strip rescue linha[lote] 
@@ -63,7 +63,7 @@ class EstoquesController < ApplicationController
     estoque ||= Estoque.new
 
     estoque.produto_id = produto.id if produto.present?
-    estoque.codprd_sac = linha[codprd_sac].strip rescue linha[codprd_sac] 
+    estoque.codigo_produto = linha[codigo_produto].strip rescue linha[codigo_produto] 
     estoque.lote = lote 
     estoque.estoque_atual_lote = linha[estoque_atual_lote].to_i / 100 rescue linha[estoque_atual_lote] 
     estoque.preco_custo_reposicao = separar_virgula(linha[preco_custo_reposicao].to_i) rescue linha[preco_custo_reposicao] 
