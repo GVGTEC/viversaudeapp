@@ -32,7 +32,9 @@ class OrcamentosController < ApplicationController
     @orcamentos = @orcamentos.paginate(options)
   end
 
-  def show
+  def show   
+    @cliente = Cliente.find(@orcamento.cliente.id) #Carregar dados do cliente para exibir no PDF
+    
     respond_to do |format|
       format.html
       format.pdf do

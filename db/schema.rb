@@ -398,6 +398,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_000113) do
   create_table "orcamento_itens", force: :cascade do |t|
     t.bigint "orcamento_id"
     t.bigint "produto_id"
+    #t.string "unidade"
     t.float "quantidade"
     t.float "preco_unitario"
     t.float "preco_total"

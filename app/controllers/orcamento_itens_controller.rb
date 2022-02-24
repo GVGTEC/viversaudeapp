@@ -49,7 +49,7 @@ class OrcamentoItensController < ApplicationController
       @orcamento.valor_total = @orcamento.valor_sub_total.to_f - @orcamento.valor_desconto.to_f
       @orcamento.save
 
-      debugger
+      #debugger
 
       #salvar_estoque
     end

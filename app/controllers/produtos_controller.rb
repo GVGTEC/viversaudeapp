@@ -22,7 +22,7 @@ class ProdutosController < ApplicationController
     #    {render template: 'produtos/relatorio', pdf: 'relatorio'}
     #end
 
-    options = { page: params[:page] || 1, per_page: 15 }
+    options = { page: params[:page] || 1, per_page: 100 }
     @produtos = @produtos.paginate(options)
   end
 
@@ -50,7 +50,7 @@ class ProdutosController < ApplicationController
 
     flash[:sucesso] = 'Produtos importados com Sucesso'
     redirect_to '/produtos'
-  rescue StandardError => e
+    rescue StandardError => e
     flash[:error] = e
     redirect_to '/produtos'
     nil
@@ -102,13 +102,24 @@ class ProdutosController < ApplicationController
     produto.situacao_tributaria = linha[situacao_tributaria].strip rescue linha[situacao_tributaria]
     produto.ncm = linha[ncm].strip rescue linha[ncm]
     produto.unidade = linha[unidade].strip rescue linha[unidade]
-    produto.preco_custo_medio = separate_comma(linha[preco_custo_medio].to_i)
-    produto.preco_custo = separate_comma(linha[preco_custo].to_i)
-    produto.margem_lucro = separate_margem(linha[margem_lucro].to_i)
-    produto.preco_venda = separate_comma(linha[preco_venda].to_i)
-    produto.margem_lucro_oferta = separate_margem(linha[margem_lucro_oferta].to_i)
-    produto.preco_oferta = separate_comma(linha[preco_oferta].to_i)
-    produto.data_inicial_oferta = formatar_data(linha[data_inicial_oferta])
+
+    #produto.preco_custo_medio = separate_comma(linha[preco_custo_medio].to_i)   
+    #produto.preco_custo = separate_comma(linha[preco_custo].to_i)
+    #produto.margem_lucro = separate_margem(linha[margem_lucro].to_i)
+    #produto.preco_venda = separate_comma(linha[preco_venda].to_i)
+    #produto.margem_lucro_oferta = separate_margem(linha[margem_lucro_oferta].to_i)
+    #produto.preco_oferta = separate_comma(linha[preco_oferta].to_i)
+ 
+    produto.preco_custo_medio = linha[preco_custo_medio].to_f / 100
+    produto.preco_custo = linha[preco_custo].to_f / 100
+    produto.margem_lucro = linha[margem_lucro].to_f / 10000
+    produto.preco_venda = linha[preco_venda].to_f / 100
+    produto.margem_lucro_oferta = linha[margem_lucro_oferta].to_f / 10000
+    produto.preco_oferta = linha[preco_oferta].to_f / 100
+    
+    #debugger
+    
+    produto.data_inicial_oferta = Estoque.formatar_data(linha[data_inicial_oferta])
     produto.controlar_estoque = linha[controlar_estoque] == "S"
     produto.estoque_atual = (linha[estoque_atual].to_i / 100) rescue linha[estoque_atual].to_i
     produto.estoque_minimo = (linha[estoque_minimo].to_i / 100) rescue linha[estoque_minimo].to_i
@@ -116,13 +127,13 @@ class ProdutosController < ApplicationController
     produto.comissao_pc = linha[comissao_pc].to_i
     produto.bloquear_preco = linha[bloquear_preco].present?
     produto.empresa_id = empresa.id
-
+    
     fornecedor = linha[fornecedor_id].to_i
     produto.fornecedor_id = Fornecedor.find_or_create_by(id: fornecedor, empresa_id: empresa.id).id unless fornecedor.zero?
 
     localizacao_estoque = linha[localizacao_estoque_id].to_i
     produto.localizacao_estoque_id = LocalizacaoEstoque.find_or_create_by(id: localizacao_estoque, empresa_id: empresa.id).id unless localizacao_estoque.zero?
-    
+  
     produto.save
   end
 
@@ -193,6 +204,7 @@ class ProdutosController < ApplicationController
   end
 
   def separate_comma(number)
+    #debugger
     reverse_digits = number.to_s.chars.reverse
     reverse_digits.each_slice(2).map(&:join).join(',').reverse.to_f
   end
