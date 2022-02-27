@@ -52,15 +52,15 @@
       var nextId = body.find('tr').length + 1;
       table.append(
         $(
-        "<tr id='"+nextId+"' class='operacao' >"+ 
+        "<tr id='"+nextId+"' class='operacao'>"+ 
           "<td>"+nextId+"</td>"+
-          "<td><input  class='form-control' id='"+nextId+"-cod_produto'    type='text' name='nota_fiscal[nota_fiscal_item][][cod_produto]'    style='width: 55px;'                                         data-behavior='cod_produto'                              ></td>" +
-          "<td><select class='form-control form-produtos-itens' id='"+nextId+"-descricao'                  name='nota_fiscal_item[descricao]'        onclick='atualizaProduto()'  id='nota_fiscal_item_descricao'></select></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-ncm'            type='text' name='nota_fiscal[nota_fiscal_item][][ncm]'                                    readonly                                                                                              ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-un'             type='text' name='nota_fiscal[nota_fiscal_item][][un]'             style='width: 70px;'    readonly                                                                                            ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-qtd'            type='number' name='nota_fiscal[nota_fiscal_item][][qtd]'            style='width: 70px;'                                         data-behavior='qtd'   min='0'                                   ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;'   readonly                              data-behavior='preco_unitario'                              ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-preco_total'    type='text' name='nota_fiscal[nota_fiscal_item][][preco_total]'    style='width: 110px;'  readonly                              data-behavior='preco_total'                              ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-cod_produto' type='text' name='nota_fiscal[nota_fiscal_item][][cod_produto]' style='width: 55px;' data-behavior='cod_produto'></td>" +
+          "<td><select class='form-control form-produtos-itens' id='"+nextId+"-descricao' name='nota_fiscal_item[descricao]' onclick='atualizaProduto()' id='nota_fiscal_item_descricao'></select></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-ncm' type='text' name='nota_fiscal[nota_fiscal_item][][ncm]' readonly ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-un' type='text' name='nota_fiscal[nota_fiscal_item][][un]' style='width: 55px;' readonly ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-qtd' type='number' name='nota_fiscal[nota_fiscal_item][][qtd]' style='width: 70px;' data-behavior='qtd' min='0'></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;' readonly data-behavior='preco_unitario'></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-preco_total' type='text' name='nota_fiscal[nota_fiscal_item][][preco_total]' style='width: 110px;' readonly data-behavior='preco_total'></td>" +
           "<td><button type='button' id='"+nextId+"-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td>" +
         "</tr>"
         )
@@ -144,8 +144,6 @@
     
     setMovimentoEstoque(movimentoEstoques)
   }
-
-
 
   // =============== Atualizar Estoque ===============
   var span = document.getElementsByClassName("close")[0];
@@ -247,9 +245,7 @@
       $(`#${movimento.estoque_id}-estoque`).html(estoque_inicial)
       $(`#${movimento.estoque_id}-qtd_venda`).val(movimento.qtd)
       $(`#${movimento.estoque_id}-total`).html(total)
-    });
-
-    
+    }); 
 
     return produtoEmEstoque
   }
@@ -314,7 +310,6 @@
 
     return qtdSelecinado == qtdAdd
   }
-
   
   // =============== Busca de Dados ===============
   const getProduto = (produto_id) =>{

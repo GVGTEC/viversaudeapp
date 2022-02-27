@@ -24,13 +24,13 @@
 
     <table>
       <tr>
-        <td>Cliente  </td>
+        <td>Cliente:  </td>
         <td><%= @cliente.nome %></td>
       </tr>
 
       <tr>
-        <td>Endereço  </td>
-        <td><%= @cliente.endereco %></td>
+        <td>Endereço:  </td>
+        <td style="width: 900px;"><%= @cliente.endereco %></td>
       </tr>
     </table>
 
@@ -38,30 +38,25 @@
   
     <div class="table-responsive">
       <table class="table">
-      <!--
         <thead>
           <tr>
-            <th>Seq</th>
-            <th>CodPrd</th>
-            <th>Descrição</th>
-            <th>Qtde/th>
-            <th>Preço Unitário</th>
-            <th>Preço Total</th>
+            <th>Código</th>
+            <th style="width: 500px;">Descrição</th>
+            <th>Qtde</th>
+            <th>Preço</th>
+            <th>Total</th>
           </tr>
         </thead>
-      -->
 
-      <!--
-        <tbody>
+        <tbody style="font-size:10px;">
             <%= content_tag_for(:tr, @orcamento_itens) do |orc| %>
             <td><%= orc.produto.id %></td>
-            <td><%= orc.produto.descricao %></td>
+            <td style="width: 500px; font-size:10px;"><%= orc.produto.descricao %></td>
             <td><%= orc.quantidade %></td>
-            <td><%= orc.preco_unitario %></td>
-            <td><%= orc.preco_total %></td>
+            <td ><%= orc.preco_unitario %></td>
+            <td ><%= '%.2f' % orc.preco_total %></td>
           <% end %>
         </tbody>
-      -->
 
         <tbody id="tableBody_orcamento_id_<%= @orcamento.id %>">
           <% @orcamento.orcamento_itens.each_with_index do |orc_item, index| %>
@@ -74,13 +69,23 @@
             </tr>
           <% end %>
         </tbody>
+
+        <table>
+          <hr>
+
+          <tr>
+            <p style="text-align: end;"><b>Valor Total:<b> <% @orcamento.total%></p>
+            <p class="valor-total" style="font-size: 60px"></p>
+          </tr>   
+        </table>        
+
       </table>
     </div>
   </body>
 </html>
 
 <style type="text/css">
-    table {
+table {
       border-collapse: colapse;
       margin-botton: 1cm
       width: 100%
@@ -90,23 +95,13 @@
       page-break-inside: avoid;
     }
 
-    table thead tr th {
-      background-color: #1a215c;
-      color: #fff;
-      border: 1px solid #000000;
-      min-width: 0.6px;
-      padding: 5cm;
-      text-align: center;
-      vertical-align: top;
-      font-weight: bold;
-    }
-
     table tbodytr th {
       border: 1px solid #000000;
       min-width: 0.6px;
       padding: 5cm;
       text-align: center;
       vertical-align: top;
-      font-size: 15;
+      font-size: 10;
     }            
+
 </style>
