@@ -1,5 +1,4 @@
 <h2>Clientes</h2>
-
 <div class="page-header">
   <%= link_to clientes_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
@@ -11,20 +10,22 @@
   <% end %>
   <h2>Mostrar</h2>
 </div>
-
 <dl class="dl-horizontal">
   <dt>Nome/Razão Social:</dt>
   <dd><%= @cliente.nome %></dd>
   <dt>Pessoa:</dt>
   <dd><%= @cliente.pessoa %></dd>
-  <dt>CPF:</dt>
-  <dd><%= @cliente.cpf %></dd>
-  <dt>RG:</dt>
-  <dd><%= @cliente.rg %></dd>
-  <dt>CNPJ:</dt>
-  <dd><%= @cliente.cnpj %></dd>
-  <dt>IE:</dt>
-  <dd><%= @cliente.ie %></dd>
+  <% if @cliente.pessoa == 'F' %>
+    <dt>CPF:</dt>
+    <dd><%= @cliente.cpf %></dd>
+    <dt>RG:</dt>
+    <dd><%= @cliente.rg %></dd>
+  <% else %>
+    <dt>CNPJ:</dt>
+    <dd><%= @cliente.cnpj %></dd>
+    <dt>IE:</dt>
+    <dd><%= @cliente.ie %></dd>
+  <% end %>
   <dt>Endereço:</dt>
   <dd><%= @cliente.endereco %></dd>
   <dt>Bairro:</dt>
@@ -39,4 +40,6 @@
   <dd><%= @cliente.email %></dd>
   <dt>Codcidade ibge:</dt>
   <dd><%= @cliente.codcidade_ibge %></dd>
+  <dt>Observações:</dt>
+  <dd><%= @cliente.observacoes %></dd>
 </dl>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_01_000113) do
+ActiveRecord::Schema.define(version: 2022_03_01_204319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_000113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "consumidor_final"
+    t.text "observacoes"
     t.index ["empresa_id"], name: "index_clientes_on_empresa_id"
     t.index ["terceiro_id"], name: "index_clientes_on_terceiro_id"
     t.index ["vendedor_id"], name: "index_clientes_on_vendedor_id"
@@ -241,6 +242,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_000113) do
     t.string "codcidade_ibge"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "observacoes"
     t.index ["empresa_id"], name: "index_fornecedores_on_empresa_id"
   end
 

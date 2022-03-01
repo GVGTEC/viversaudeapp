@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
   resources :clientes do
     post 'importar', on: :collection
+    get 'observacoes', on: :member
 
     resources :cliente_contatos
   end

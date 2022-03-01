@@ -1,0 +1,32 @@
+<h2>Clientes</h2>
+<div class="page-header">
+  <%= link_to edit_cliente_path(@cliente), class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Voltar
+  <% end %>
+  <h2>Observações</h2>
+</div>
+<%= form_for(@cliente, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @cliente.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@cliente.errors.count, "error") %> prohibited this cliente from being saved:</h4>
+      <ul>
+        <% @cliente.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <%= f.text_area :observacoes, size: '50x10', class: "form-control" %>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <div class="col-sm-1">
+      <%= f.submit "Salvar", class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

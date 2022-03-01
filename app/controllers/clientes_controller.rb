@@ -1,5 +1,5 @@
 class ClientesController < ApplicationController
-  before_action :set_cliente, only: %i[show edit update destroy]
+  before_action :set_cliente, only: %i[show edit update destroy, observacoes]
   skip_before_action :verify_authenticity_token, only: [:importar]
 
   def index
@@ -100,6 +100,9 @@ class ClientesController < ApplicationController
     cliente.save
   end
 
+  def observacoes
+  end
+
   def show
     respond_to do |format|
       format.html
@@ -123,7 +126,7 @@ class ClientesController < ApplicationController
     respond_to do |format|
       if @cliente.save
         format.html { redirect_to cliente_cliente_contatos_path(@cliente)} if params[:contatos].present?
-        format.html { redirect_to @cliente, notice: 'Cliente Cadastrado' } 
+        format.html { redirect_to observacoes_cliente_path(@cliente), notice: 'Cliente Cadastrado' } 
         format.json { render :show, status: :created, location: @cliente }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -159,7 +162,6 @@ class ClientesController < ApplicationController
   end
 
   def cliente_params
-    params.require(:cliente).permit(:vendedor_id, :terceiro_id, :nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco,
-                                    :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge, :consumidor_final)
+    params.require(:cliente).permit(:vendedor_id, :terceiro_id, :nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :observacoes, :bairro, :cidade, :cep, :uf, :telefone, :email, :codcidade_ibge, :consumidor_final)
   end
 end
