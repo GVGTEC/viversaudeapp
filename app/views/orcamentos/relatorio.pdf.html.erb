@@ -74,8 +74,8 @@
           <hr>
 
           <tr>
-            <p style="text-align: end;"><b>Valor Total:<b> <% @orcamento.total%></p>
-            <p class="valor-total" style="font-size: 60px"></p>
+            <p style="text-align: end;"><b>Valor Total:<b> <% '%.2f' % @orcamento.valor_total %></p>           
+            <td><%= '%.2f' % @orcamento.valor_total %></td>
           </tr>   
         </table>        
 

@@ -1,3 +1,10 @@
+//<style>
+//.table-orcamento {display: none;}
+//.form-control {text-align: center;}
+//.form-produtos-itens{margin: 0px; height: 36px; width: 400px; text-align: inherit;}
+//.table-overflow-auto{ max-height: 300px; overflow: auto;}
+//</style>
+
 <%= form_for([@orcamento, @orcamento_item], html: { class: "form-horizontal", role: "form" }) do |f| %>
   <div class="form-group">
     <div class="col-sm-12">
@@ -34,10 +41,10 @@
                 {:class=> 'form-control', name: 'orcamento[orcamento_item][][descricao]', onclick: "atualizaProduto()", id: "#{index+1}-descricao"} 
               %> 
             </td>
-            <td><input class='form-control' id='<%= index+1 %>-qtd'            type='number' value='<%= formatar_qtd(orcamento_item.quantidade) %>'           name='orcamento[orcamento_item][][qtd]'            style='width: 70px;' min="0" data-behavior='qtd'        ></td>
-          
-            <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='<%= number_to_currency(orcamento_item.preco_unitario) %>' name='orcamento[orcamento_item][][preco_unitario]' readonly style='width: 95px;' data-behavior='preco_unitario'></td>
-            <td><input class='form-control' id='<%= index+1 %>-preco_total'    type='text' value='<%= number_to_currency(orcamento_item.preco_total) %>'    name='orcamento[orcamento_item][][preco_total]'   readonly style="width: 110px;" data-behavior='preco_total'></td>
+
+            <td><input class='form-control' id='<%= index+1 %>-qtd' type='number' value='<%= formatar_qtd(orcamento_item.quantidade) %>' name='orcamento[orcamento_item][][qtd]' style='width: 70px;' min="0" data-behavior='qtd'></td>          
+            <td><input class='form-control' id='<%= index+1 %>-preco_unitario' type='text' value='<%= number_to_currency(orcamento_item.preco_unitario) %>' name='orcamento[orcamento_item][][preco_unitario]' style='width: 95px;' data-behavior='preco_unitario'></td>
+            <td><input class='form-control' id='<%= index+1 %>-preco_total' type='text' value='<%= number_to_currency(orcamento_item.preco_total) %>' name='orcamento[orcamento_item][][preco_total]' readonly style="width: 110px;" data-behavior='preco_total'></td>
             
             <td><button type='button' id='<%= index+1 %>-delete' data-behavior='delete' class='btn btn-danger delete'>x</button></td></td>
           </tr>

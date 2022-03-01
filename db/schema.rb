@@ -286,6 +286,44 @@ ActiveRecord::Schema.define(version: 2022_02_01_000113) do
 # Could not dump table "nota_fiscais" because of following StandardError
 #   Unknown type 'contas_rec' for column 'references'
 
+create_table "nota_fiscais", force: :cascade do |t|
+    t.bigint "empresa_id"
+    t.integer "codnot_sac"
+    t.integer "numero_nota"
+    t.integer "numero_pedido"
+    t.bigint "cfop_id"
+    t.string "entsai"
+    t.bigint "cliente_id"
+    t.bigint "fornecedor_id"
+    t.bigint "vendedor_id"
+    t.bigint "transportadora_id"
+    t.datetime "data_emissao"
+    t.datetime "data_saida"
+    t.string "hora_saida"
+    t.float "valor_desconto"
+    t.float "valor_produtos"
+    t.float "valor_total_nota"
+    t.float "valor_frete"
+    t.float "valor_outras_despesas"
+    t.string "numero_pedido_compra"
+    t.string "tipo_pagamento"
+    t.string "meio_pagamento"
+    t.integer "numero_parcelas_pagamento"
+    t.text "observacao"
+    t.string "chave_acesso_nfe"
+    t.string "nota_cancelada_sn"
+    t.string "distancia_parcelas"
+    t.string "pagar_frete"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cfop_id"], name: "index_nota_fiscais_on_cfop_id"
+    t.index ["cliente_id"], name: "index_nota_fiscais_on_cliente_id"
+    t.index ["empresa_id"], name: "index_nota_fiscais_on_empresa_id"
+    t.index ["fornecedor_id"], name: "index_nota_fiscais_on_fornecedor_id"
+    t.index ["transportadora_id"], name: "index_nota_fiscais_on_transportadora_id"
+    t.index ["vendedor_id"], name: "index_nota_fiscais_on_vendedor_id"
+  end
+
   create_table "nota_fiscal_chave_acessos", force: :cascade do |t|
     t.bigint "nota_fiscal_id"
     t.string "chave_acesso"

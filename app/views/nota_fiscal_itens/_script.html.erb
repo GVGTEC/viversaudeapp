@@ -74,7 +74,7 @@
       $("#"+nextId+"-cod_produto").parent().find(".tabledit-edit-button").trigger("click");
 
       $("#myModal").hide()
-      calculoValorTotal()
+        calculoValorTotal()
     }, 100);
   }
 
@@ -90,7 +90,7 @@
     $(`#${number_tr}-ncm`).val(produto.ncm);
     $(`#${number_tr}-un`).val(produto.unidade);
     $(`#${number_tr}-qtd`).val("");
-    $(`#${number_tr}-preco_unitario`).val("R$ " + formatarValorRetornado(produto.preco_custo));
+    $(`#${number_tr}-preco_unitario`).val("R$ " + formatarValorRetornado(produto.preco_venda));
     $(`#${number_tr}-preco_total`).val("");
 
     calculoValorTotal()

@@ -19,14 +19,14 @@
     atualizaProduto()
   });
 
-  $(document).on('click keyup', '[data-behavior~=preco_unitario]', function(event) {
+  $(document).on('click keyup', '[data-behavior~=qtd]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const preco_unitario = parseFloat($(`#${number_tr}-preco_unitario`).val().match(/\d+/)[0])
     const qtd = parseFloat($(`#${number_tr}-qtd`).val())
     const total = qtd * preco_unitario
 
     if(!total) return  
-    $(`#${number_tr}-preco_total`).val(`${formatarValorRetornado(total)}`)
+    $(`#${number_tr}-preco_total`).val(`R$ ${formatarValorRetornado(total)}`)
     
     calculoValorTotal()
   });
@@ -81,13 +81,14 @@
 
     if(!produto_id) return
 
-    const produto = getProduto(produto_id) 
+    const produto = getProduto(produto_id)
+    $(`#${number_tr}-preco_unitario`).val(`${produto_id}`)
+    
 
     if(!produto) return
 
-      produto.descricao
-
     $(`#${number_tr}-qtd`).val("");
+    //$(`#${number_tr}-preco_unitario`).val("R$ " + formatarValorRetornado(produto.preco_venda));
     $(`#${number_tr}-preco_unitario`).val(formatarValorRetornado(produto.preco_venda));
     $(`#${number_tr}-preco_total`).val("");
 
@@ -104,6 +105,7 @@
       }catch(error){}
     });
       
+    //$(`.valor-total`).html(`R$ ${formatarValorRetornado(valorTotal)}`);
     $(`.valor-total`).html(`${formatarValorRetornado(valorTotal)}`);
     $("#loader").hide()
     $(".table-nota").show()
@@ -135,5 +137,4 @@
 
     return produto
   }
-
 </script>
