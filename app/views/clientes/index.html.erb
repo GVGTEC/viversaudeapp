@@ -34,7 +34,7 @@
         <td><%= cliente.endereco %></td>
         <td><%= cliente.bairro %></td>
         <td><%= cliente.cidade %></td>
-        <td><%= link_to 'PDF', cliente_path(cliente, format: :pdf) %></td>
+        <td><%= link_to 'PDF', cliente_path(cliente, format: :pdf), target: "blank"  %></td>
         <td><%= link_to 'Mostrar', cliente %></td>
         <td><%= link_to 'Editar', edit_cliente_path(cliente) %></td>
         <td><%= link_to 'Apagar', cliente, method: :delete, data: { confirm: 'Confirma ?' } %></td>

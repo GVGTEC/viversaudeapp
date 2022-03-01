@@ -1,5 +1,5 @@
 class ClientesController < ApplicationController
-  before_action :set_cliente, only: %i[show edit update destroy, observacoes]
+  before_action :set_cliente, only: %i[show edit update destroy observacoes]
   skip_before_action :verify_authenticity_token, only: [:importar]
 
   def index
@@ -104,12 +104,8 @@ class ClientesController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.pdf do
-        #render pdf: "file name", template: "clientes/show.html.erb"
-        render pdf: "Cliente id: #{@cliente.id}", template: "clientes/relatorio.pdf.html.erb"
-      end
+    if params[:format].present?
+      render pdf: "Cliente id: #{@cliente.id}", template: "clientes/relatorio.pdf.html.erb"
     end
   end
   

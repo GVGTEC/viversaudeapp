@@ -1,5 +1,4 @@
 <h2>Contas a Receber</h2>
-
 <div class="page-header">
   <%= link_to new_contas_rec_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
@@ -7,7 +6,6 @@
   <% end %>
   <h2>Lista</h2>
 </div>
-
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
@@ -22,22 +20,20 @@
         <th></th>
       </tr>
     </thead>
-
     <tbody>
       <%= content_tag_for(:tr, @contas_rec) do |contas_rec| %>
-            <td><%= contas_rec.cliente.nome %></td>
-            <td><%= contas_rec.documento %></td>
-            <td><%= contas_rec.historico %></td>
-            <td><%= contas_rec.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
-            <td style="text-align: end;"><%= number_to_currency(contas_rec.valor_total) %></td>
-            <td><%= link_to 'Mostrar', contas_rec, class: "btn btn-primary" %></td>
-            <td><a href="javascript:window.location.assign('/contas_rec/<%=contas_rec.id%>/edit')" class="btn btn-warning">Editar</a></td>
-            <td><%= link_to 'Apagar', contas_rec, method: :delete, data: { confirm: 'Confirma Exclusão ?' }, class: "btn btn-danger" %></td>
+        <td><%= contas_rec.cliente.nome %></td>
+        <td><%= contas_rec.documento %></td>
+        <td><%= contas_rec.historico %></td>
+        <td><%= contas_rec.data_emissao.strftime("%d/%m/%Y") rescue "" %></td>
+        <td style="text-align: end;"><%= number_to_currency(contas_rec.valor_total) %></td>
+        <td><%= link_to 'Mostrar', contas_rec, class: "btn btn-primary" %></td>
+        <td><a href="javascript:window.location.assign('/contas_rec/<%=contas_rec.id%>/edit')" class="btn btn-warning">Editar</a></td>
+        <td><%= link_to 'Apagar', contas_rec, method: :delete, data: { confirm: 'Confirma Exclusão ?' }, class: "btn btn-danger" %></td>
       <% end %>
     </tbody>
   </table>
-
   <div class="apple_pagination">
     <%= will_paginate @contas_rec, :container => false %>
-  </div>    
+  </div>
 </div>
