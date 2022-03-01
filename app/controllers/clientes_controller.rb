@@ -122,8 +122,8 @@ class ClientesController < ApplicationController
 
     respond_to do |format|
       if @cliente.save
-        salvar_contatos
-        format.html { redirect_to @cliente, notice: 'Cliente Cadastrado' }
+        format.html { redirect_to cliente_cliente_contatos_path(@cliente)} if params[:contatos].present?
+        format.html { redirect_to @cliente, notice: 'Cliente Cadastrado' } 
         format.json { render :show, status: :created, location: @cliente }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -135,7 +135,6 @@ class ClientesController < ApplicationController
   def update
     respond_to do |format|
       if @cliente.update(cliente_params)
-        salvar_contatos
         format.html { redirect_to @cliente, notice: 'Cliente Alterado' }
         format.json { render :show, status: :ok, location: @cliente }
       else
@@ -147,7 +146,6 @@ class ClientesController < ApplicationController
 
   def destroy
     @cliente.destroy
-    salvar_contatos
     respond_to do |format|
       format.html { redirect_to clientes_url, notice: 'Cliente Excluído' }
       format.json { head :no_content }
@@ -158,28 +156,6 @@ class ClientesController < ApplicationController
 
   def set_cliente
     @cliente = Cliente.find(params[:id])
-  end
-
-  def salvar_contatos
-    return unless params[:cliente].present? && params[:cliente][:contato].present?
-
-    @cliente.contatos.destroy_all if @cliente.contatos != []
-    params[:cliente][:contato].each do |contato_cliente|
-      next unless contato_cliente[:nome].present? || contato_cliente[:telefone].present?
-
-      contato = Contato.new(
-        nome: contato_cliente[:nome],
-        email: contato_cliente[:email],
-        telefone: contato_cliente[:telefone],
-        #cargo e departamento estão dando erro quando tenta salvar porque não exite na view
-        #cargo: contato_cliente[:cargo],
-        #departamento: contato_cliente[:departamento],
-        natureza: params[:controller],
-        natureza_id: @cliente.id
-      )
-      
-      contato.save!
-    end
   end
 
   def cliente_params

@@ -283,10 +283,7 @@ ActiveRecord::Schema.define(version: 2022_02_01_000113) do
     t.index ["produto_id"], name: "index_movimento_estoques_on_produto_id"
   end
 
-# Could not dump table "nota_fiscais" because of following StandardError
-#   Unknown type 'contas_rec' for column 'references'
-
-create_table "nota_fiscais", force: :cascade do |t|
+  create_table "nota_fiscais", force: :cascade do |t|
     t.bigint "empresa_id"
     t.integer "codnot_sac"
     t.integer "numero_nota"
@@ -376,7 +373,6 @@ create_table "nota_fiscais", force: :cascade do |t|
     t.bigint "produto_id"
     t.text "descricao"
     t.string "cfop"
-    t.string "st"
     t.string "ncm"
     t.string "cst"
     t.string "unidade"
@@ -436,7 +432,6 @@ create_table "nota_fiscais", force: :cascade do |t|
   create_table "orcamento_itens", force: :cascade do |t|
     t.bigint "orcamento_id"
     t.bigint "produto_id"
-    #t.string "unidade"
     t.float "quantidade"
     t.float "preco_unitario"
     t.float "preco_total"
@@ -600,7 +595,6 @@ create_table "nota_fiscais", force: :cascade do |t|
   add_foreign_key "movimento_estoques", "produtos"
   add_foreign_key "nota_fiscais", "cfop"
   add_foreign_key "nota_fiscais", "clientes"
-  add_foreign_key "nota_fiscais", "contas_rec"
   add_foreign_key "nota_fiscais", "empresas"
   add_foreign_key "nota_fiscais", "fornecedores"
   add_foreign_key "nota_fiscais", "transportadoras"

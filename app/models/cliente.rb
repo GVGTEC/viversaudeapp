@@ -1,12 +1,6 @@
 class Cliente < ApplicationRecord
   belongs_to :empresa
+  has_many :contatos, class_name: "ClienteContato", dependent: :delete_all
+
   default_scope { order('nome asc') }
-
-  def contatos
-    Contato.where(natureza: 'clientes', natureza_id: id)
-  rescue StandardError
-    []
-  end
-
-  has_many :cliente_contatos, dependent: :delete_all
 end
