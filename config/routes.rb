@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   resources :icms
   resources :cfop
@@ -10,6 +12,8 @@ Rails.application.routes.draw do
   resources :transportadoras
   resources :localizacao_estoques
   resources :movimento_estoques, only: [:index]
+
+  mount Sidekiq::Web => '/sidekiq'
 
   resources :estoques, only: %i[index show] do
     collection do

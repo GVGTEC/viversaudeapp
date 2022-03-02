@@ -21,6 +21,6 @@ class ApplicationController < ActionController::Base
   end
 
   def empresa
-    @adm.empresa
+    administrador.empresa
   end
 end

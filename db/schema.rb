@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_01_204319) do
+ActiveRecord::Schema.define(version: 2022_03_02_034747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 2022_03_01_204319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["empresa_id"], name: "index_administradores_on_empresa_id"
+  end
+
+  create_table "arquivo_importados", force: :cascade do |t|
+    t.bigint "empresa_id"
+    t.string "name", null: false
+    t.binary "data", null: false
+    t.string "filename"
+    t.string "mime_type"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["empresa_id"], name: "index_arquivo_importados_on_empresa_id"
   end
 
   create_table "cfop", force: :cascade do |t|
@@ -573,6 +585,7 @@ ActiveRecord::Schema.define(version: 2022_03_01_204319) do
   end
 
   add_foreign_key "administradores", "empresas"
+  add_foreign_key "arquivo_importados", "empresas"
   add_foreign_key "cfop", "empresas"
   add_foreign_key "cliente_contatos", "clientes"
   add_foreign_key "clientes", "empresas"

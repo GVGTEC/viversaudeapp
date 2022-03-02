@@ -1,12 +1,35 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+Empresa.create(
+  nome: "Viver Saúde",
+  nome_fantasia: "Viver Saúde",
+  cnpj: "15652029000125",
+  inscricao_estadual: "145341536113",
+  inscricao_municipal: "",
+  endereco: "Av Tomaz Rabelo e Silva",
+  numero: "310",
+  complemento: nil,
+  bairro: "Jardim Monte Alegre",
+  cidade: "São Paulo",
+  cep: "02811000",
+  uf: "SP",
+  telefone: "1125748367",
+  email: "",
+  codigo_uf_emitente: "35",
+  codcid_ibge: "3550308",
+  aliquota_pis: "3",
+  aliquota_cofins: "0.65",
+  serie_nfe: "001",
+  cnae: "",
+  ambiente: "1",
+  versao_layout: "2.1.1",
+  regime_tributario: "3",
+  emissor_nfe: "P",
+  permite_credito_icms: "N",
+  credito_icms_pc: "",
+  empresa_uninfe: nil,
+  pasta_envio: "",
+  pasta_retorno: "",
+  senha: "")
 
-Empresa.create(nome: 'Viver Saúde')
 Administrador.create(nome: 'Thiago', email: 'malaquiastech@gmail.com', senha: '123456', empresa_id: Empresa.first.id)
 Administrador.create(nome: 'Gilberto', email: 'gvgtec@terra.com.br', senha: '123456', empresa_id: Empresa.first.id)
 

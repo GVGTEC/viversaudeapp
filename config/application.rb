@@ -19,6 +19,8 @@ module Viversaude
     config.i18n.default_locale = :'pt-BR'
     config.time_zone = 'Brasilia'
 
+    config.active_job.queue_adapter = :sidekiq
+
     config.assets.initialize_on_precompile = false
   end
 end

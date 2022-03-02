@@ -1,5 +1,4 @@
 <h2>Transportadoras</h2>
-
 <div class="page-header">
   <%= link_to new_transportadora_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
@@ -7,35 +6,32 @@
   <% end %>
   <h2>Lista</h2>
 </div>
-
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-            <th>Nome</th>
-            <th>Endereço</th>
-            <th>Bairro</th>
-            <th>Cidade</th>
-            <th></th>
+        <th>Nome</th>
+        <th>Endereço</th>
+        <th>Bairro</th>
+        <th>Cidade</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
     </thead>
-
     <tbody>
       <%= content_tag_for(:tr, @transportadoras) do |transportadora| %>
-            <td><%= transportadora.nome %></td>
-            <td><%= transportadora.endereco %></td>
-            <td><%= transportadora.bairro %></td>
-            <td><%= transportadora.cidade %></td>
-            <td><%= link_to 'Mostrar', transportadora %></td>
+        <td><%= transportadora.nome %></td>
+        <td><%= transportadora.endereco %></td>
+        <td><%= transportadora.bairro %></td>
+        <td><%= transportadora.cidade %></td>
+        <td><%= link_to 'Mostrar', transportadora %></td>
         <td><%= link_to 'Editar', edit_transportadora_path(transportadora) %></td>
         <td><%= link_to 'Apagar', transportadora, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
     </tbody>
   </table>
-
   <div class="apple_pagination">
     <%= will_paginate @transportadoras, :container => false %>
-  </div>    
+  </div>
 </div>
