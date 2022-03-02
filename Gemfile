@@ -28,7 +28,7 @@ gem 'wkhtmltopdf-binary'
 # gem 'capistrano-rails', group: :development
 
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -39,6 +39,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara'
+  gem 'pry-rails'
+  gem 'awesome_print'
 end
 
 group :development do
