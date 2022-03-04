@@ -4,13 +4,21 @@ class ProdutosController < ApplicationController
 
   def index
     @produtos = empresa.produtos
-    @produtos = @produtos.order('descricao asc')
-    @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
+    @produtos = @produtos.order(:descricao)
     @produtos = @produtos.where(id: params[:codigo]) if params[:codigo].present?
 
+    if params[:busca].present?
+      @produtos = @produtos.where("
+        (lower(descricao_nfe) ilike '%#{params[:busca].downcase.strip}%') OR
+        (id = #{params[:busca].downcase.strip})
+      ")
+    end
+
     if params[:format] == 'json'
-      @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
-      @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
+      debugger
+      @produtos = @produtos.joins(:estoques)
+                           .having("sum(estoques.estoque_atual_lote) > '0'")
+                           .group(:id, :descricao)
       return
     end
 

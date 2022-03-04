@@ -15,9 +15,9 @@
   $(document).on('click keyup', '[data-behavior~=cod_produto]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const val = parseInt($(`#${number_tr}-cod_produto`).val())
-    $(`#${number_tr}-descricao`).val(`${val}`)
+    $(`#${number_tr}-descricao`).select2("val", `${val}`)
 
-    atualizaProduto(event)
+    atualizaProduto(event, false)
   });
 
   $(document).on('click keyup', '[data-behavior~=qtd]', function(event) {
@@ -65,7 +65,7 @@
           "<td><input  class='form-control' id='"+nextId+"-cod_produto' type='text' name='nota_fiscal[nota_fiscal_item][][cod_produto]' style='width: 55px;' data-behavior='cod_produto'></td>" +
           "<td><select class='form-control form-produtos-itens js-example-matcher' id='"+nextId+"-descricao' name='nota_fiscal_item[descricao]'  data-behavior='descricao' id='nota_fiscal_item_descricao'></select></td>" +
           "<td><input  class='form-control' id='"+nextId+"-ncm' type='text' name='nota_fiscal[nota_fiscal_item][][ncm]' readonly ></td>" +
-          "<td><input  class='form-control' id='"+nextId+"-un' type='text' name='nota_fiscal[nota_fiscal_item][][un]' style='width: 55px;' readonly ></td>" +
+          "<td><input  class='form-control' id='"+nextId+"-un' type='text' name='nota_fiscal[nota_fiscal_item][][un]' style='width: 70px;' readonly ></td>" +
           "<td><input  class='form-control' id='"+nextId+"-qtd' type='number' name='nota_fiscal[nota_fiscal_item][][qtd]' style='width: 70px;' data-behavior='qtd' min='0'></td>" +
           "<td><input  class='form-control' id='"+nextId+"-preco_unitario' type='text' name='nota_fiscal[nota_fiscal_item][][preco_unitario]' style='width: 95px;' readonly data-behavior='preco_unitario'></td>" +
           "<td><input  class='form-control' id='"+nextId+"-preco_total' type='text' name='nota_fiscal[nota_fiscal_item][][preco_total]' style='width: 110px;' readonly data-behavior='preco_total'></td>" +
@@ -87,12 +87,12 @@
     }, 100);
   }
 
-  const atualizaProduto = (event) => {
+  const atualizaProduto = (event, setCode = null) => {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const produto_id = $(`#${number_tr}-descricao`).val()
     if(!produto_id) return
 
-    $(`#${number_tr}-cod_produto`).val(`${produto_id}`)
+    if(setCode === null) $(`#${number_tr}-cod_produto`).val(`${produto_id}`)
     const produto = getProduto(produto_id)
     if(!produto) return
 
@@ -248,9 +248,9 @@
 
     movimentoEstoque.forEach((movimento) => {
       if(!(movimento.produto_id == parseInt(produto_id))) return
-
       let total = parseInt($(`#${movimento.estoque_id}-estoque`).html())
-      let estoque_inicial = total + movimento.qtd
+      let estoque_inicial = total + parseInt(movimento.qtd)
+
       $(`#${movimento.estoque_id}-estoque`).html(estoque_inicial)
       $(`#${movimento.estoque_id}-qtd_venda`).val(movimento.qtd)
       $(`#${movimento.estoque_id}-total`).html(total)
