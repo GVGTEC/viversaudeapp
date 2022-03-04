@@ -123,12 +123,9 @@ class ProdutosController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.pdf do
-        #render pdf: "file name", template: "produtos/show.html.erb"
-        render pdf: "Produto id: #{@produto.id}", template: "produtos/relatorio.pdf.html.erb"
-      end
+    if params[:format] == "pdf"
+      render pdf: "Produto id: #{@produto.id}", 
+             template: "produtos/relatorio.pdf.html.erb"
     end
   end
 

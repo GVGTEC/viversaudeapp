@@ -22,13 +22,13 @@
 
   $(document).on('click keyup', '[data-behavior~=qtd]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
-    const preco_unitario = parseFloat($(`#${number_tr}-preco_unitario`).val().match(/\d+/)[0])
+    const preco_unitario = parseFloat($(`#${number_tr}-preco_unitario`).val().replace('R$', '').replace(',', '.'))
     const qtd = parseFloat($(`#${number_tr}-qtd`).val())
     const total = qtd * preco_unitario
 
-    if(!total) return  
+    if(!total) return
     $(`#${number_tr}-preco_total`).val(`R$ ${formatarValorRetornado(total)}`)
-    
+
     calculoValorTotal()
   });
 
@@ -52,7 +52,7 @@
       var nextId = body.find('tr').length + 1;
       table.append(
         $(
-        "<tr id='"+nextId+"' class='operacao'>"+ 
+        "<tr id='"+nextId+"' class='operacao'>"+
           "<td>"+nextId+"</td>"+
           "<td><input  class='form-control' id='"+nextId+"-cod_produto' type='text' name='nota_fiscal[nota_fiscal_item][][cod_produto]' style='width: 55px;' data-behavior='cod_produto'></td>" +
           "<td><select class='form-control form-produtos-itens' id='"+nextId+"-descricao' name='nota_fiscal_item[descricao]' onclick='atualizaProduto()' id='nota_fiscal_item_descricao'></select></td>" +
@@ -105,7 +105,7 @@
         if(valor) valorTotal += parseFloat(valor)
       }catch(error){}
     });
-      
+
     $(`.valor-total`).html(`R$ ${formatarValorRetornado(valorTotal)}`);
     $("#loader").hide()
     $(".table-nota").show()
@@ -117,7 +117,7 @@
   }
 
   $('body').on('click', '.delete', function() {
-    const $tr = $(this).closest('tr');  
+    const $tr = $(this).closest('tr');
     $tr.remove();
 
     removerItemEstoqueLocal()
@@ -141,7 +141,7 @@
     indices_removidos.reverse().map(function(index) {
       movimentoEstoques.splice(index, 1)
     });
-    
+
     setMovimentoEstoque(movimentoEstoques)
   }
 
@@ -185,7 +185,7 @@
 
     $(".descricaoProd").html(`${produto.descricao.trim()}`)
     $(".qtdProd").html(`${qtdProd}`)
-  
+
     const produtoEmEstoque = prepararEstoqueParaMovimento(estoques)
 
     if (produtoEmEstoque) {
@@ -212,8 +212,8 @@
     const estoquesMovimentados = []
     movimentoEstoque.forEach((movimento) => {
       if((movimento.produto_id == parseInt(produto_id))){
-        estoquesMovimentados.push(movimento.estoque_id) 
-      } 
+        estoquesMovimentados.push(movimento.estoque_id)
+      }
     })
 
     estoques.forEach(estoque => {
@@ -221,12 +221,12 @@
 
       var date = new Date(estoque.created_at);
       produtoEmEstoque = true
-      
+
       let input = "<input  class='form-control' id='"+ estoque.id +"-qtd_venda' type='text' style='width: 115px;' data-behavior='qtd_venda'>"
-      
+
       table.append(
         $(
-        "<tr id='"+ estoque.id +"' class='operacao-estoque' >"+ 
+        "<tr id='"+ estoque.id +"' class='operacao-estoque' >"+
           "<td>"+ estoque.lote +"</td>" +
           "<td>"+ `${date.getMonth() + 1}/${date.getFullYear()}` +"</td>" +
           "<td id='"+ estoque.id + "-estoque'>"+ estoque.estoque_atual_lote +"</td>" +
@@ -245,7 +245,7 @@
       $(`#${movimento.estoque_id}-estoque`).html(estoque_inicial)
       $(`#${movimento.estoque_id}-qtd_venda`).val(movimento.qtd)
       $(`#${movimento.estoque_id}-total`).html(total)
-    }); 
+    });
 
     return produtoEmEstoque
   }
@@ -305,12 +305,12 @@
 
     $('#tableBody_estoque tr').each(function() {
       var qtd = $(`#${this.id}-qtd_venda`).val()
-      if(qtd) qtdAdd += parseFloat(qtd) 
+      if(qtd) qtdAdd += parseFloat(qtd)
     })
 
     return qtdSelecinado == qtdAdd
   }
-  
+
   // =============== Busca de Dados ===============
   const getProduto = (produto_id) =>{
     let produto = null
@@ -339,7 +339,7 @@
         estoques = estoquesRetornado
       }
     })
-    
+
     return estoques
   }
 

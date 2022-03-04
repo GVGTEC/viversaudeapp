@@ -52,7 +52,7 @@ class ClientesController < ApplicationController
   def observacoes; end
 
   def show
-    if params[:format].present?
+    if params[:format] == "pdf"
       render pdf: "Cliente id: #{@cliente.id}", 
              template: "clientes/relatorio.pdf.html.erb"
     end
