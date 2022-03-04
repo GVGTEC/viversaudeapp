@@ -13,7 +13,7 @@ class ClientesController < ApplicationController
       ")
     end
 
-    options = { page: params[:page] || 1, per_page: 25 }
+    options = { page: params[:page] || 1, per_page: 10 }
     @clientes = @clientes.paginate(options)
   end
 
@@ -25,14 +25,16 @@ class ClientesController < ApplicationController
     end
 
     if File.basename(params[:arquivo].tempfile).include?('.CSV')
-      arquivo_importado = empresa.arquivo_importados.create do |t|
-        t.name      = params[:arquivo].tempfile
-        t.data      = params[:arquivo].read
-        t.filename  = params[:arquivo].original_filename
-        t.mime_type = params[:arquivo].content_type
+      dir = Rails.root.join('public', 'uploads')
+      Dir.mkdir(dir) unless Dir.exist?(dir)
+      @incoming_file = params[:arquivo]
+      file_name = "#{rand(34999999)}_file"
+
+      File.open(dir.join(file_name), 'wb') do |file|
+        file.write(@incoming_file.read)
       end
 
-      FileImportJob.perform_later(arquivo_importado.id)
+      FileImportJob.perform_later(dir.join(file_name).to_s, empresa.id)
     else
       flash[:error] = 'Formato de arquivo não suportado. Selecione um arquivo com a extensão .CSV'
       redirect_to '/clientes'
@@ -47,8 +49,7 @@ class ClientesController < ApplicationController
     nil
   end
   
-  def observacoes
-  end
+  def observacoes; end
 
   def show
     if params[:format].present?

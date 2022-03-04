@@ -1,5 +1,5 @@
 class FornecedoresController < ApplicationController
-  before_action :set_fornecedor, only: %i[show edit update destroy]
+  before_action :set_fornecedor, only: %i[show edit update destroy observacoes]
   skip_before_action :verify_authenticity_token, only: [:importar]
 
   def index
@@ -85,6 +85,8 @@ class FornecedoresController < ApplicationController
     fornecedor.save
   end
 
+  def observacoes; end
+
   def show; end
 
   def new
@@ -159,6 +161,6 @@ class FornecedoresController < ApplicationController
 
   def fornecedor_params
     params.require(:fornecedor).permit(:nome, :pessoa, :cpf, :rg, :cnpj, :ie, :endereco, :bairro, :cidade, :cep, :uf,
-                                       :telefone, :email, :codcidade_ibge)
+                                       :telefone, :email, :codcidade_ibge, :observacoes)
   end
 end

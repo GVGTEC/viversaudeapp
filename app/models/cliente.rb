@@ -5,7 +5,7 @@ class Cliente < ApplicationRecord
 
   default_scope { order('nome asc') }
 
-  def importar_linha(linha)
+  def self.importar_linha(empresa_id, linha)
     id = 0
     pessoa = 1
     nome = 2
@@ -26,7 +26,8 @@ class Cliente < ApplicationRecord
     id_vendedor = 17
     id_terceiro = 18
     empresa_governo = 19
-    
+
+    empresa = Empresa.find(empresa_id)
     cliente = empresa.clientes.new
     cliente.id = linha[id].to_i
     cliente.nome = linha[nome].strip rescue linha[nome]
@@ -46,14 +47,15 @@ class Cliente < ApplicationRecord
     cliente.email = linha[email].strip rescue linha[email]
     cliente.codcidade_ibge = linha[codcidade_ibge].strip rescue linha[codcidade_ibge]
     cliente.empresa_governo = true if linha[empresa_governo].include?('S')
-    debugger
 
     vendedor = linha[id_vendedor].to_i
-    cliente.vendedor_id = Vendedor.find_or_create_by(id: vendedor, empresa_id: empresa_id).id unless vendedor.zero?
+    cliente.vendedor_id = Vendedor.find_or_create_by(id: vendedor, empresa_id: empresa.id).id unless vendedor.zero?
     
     terceiro = linha[id_terceiro].to_i
-    cliente.terceiro_id = Terceiro.find_or_create_by(id: terceiro, empresa_id: empresa_id).id unless terceiro.zero?
+    cliente.terceiro_id = Terceiro.find_or_create_by(id: terceiro, empresa_id: empresa.id).id unless terceiro.zero?
 
     cliente.save
+  rescue => e
+    puts e.to_s
   end
 end

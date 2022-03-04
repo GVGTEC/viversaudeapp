@@ -8,30 +8,15 @@ class ProdutosController < ApplicationController
     @produtos = @produtos.where("lower(descricao_nfe) ilike '%#{params[:descricao]}%'") if params[:descricao].present?
     @produtos = @produtos.where(id: params[:codigo]) if params[:codigo].present?
 
-    # paginação na view index (lista)
     if params[:format] == 'json'
       @produtos = @produtos.joins('inner join estoques on estoques.produto_id = produtos.id')
       @produtos = @produtos.having("sum(estoques.estoque_atual_lote) > '0'").group(:id, :descricao)
       return
     end
 
-    #respond_to do |format|
-    #  format.html
-    #  format.json
-    #  format.pdf
-    #    {render template: 'produtos/relatorio', pdf: 'relatorio'}
-    #end
-
-    options = { page: params[:page] || 1, per_page: 100 }
+    options = { page: params[:page] || 1, per_page: 10 }
     @produtos = @produtos.paginate(options)
   end
-
-  #if params[:gerar_pdf].present?
-  #  render pdf: "Relatorio"
-  #    template: "produtos/index.pdf.erb"
-  #    layout: "pdf.html"
-  #  return
-  #end
 
   def importar
     if params[:arquivo].blank?

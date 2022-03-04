@@ -58,6 +58,7 @@ Rails.application.routes.draw do
 
   resources :fornecedores do
     post 'importar', on: :collection
+    get 'observacoes', on: :member
   end
 
   resources :importacoes do

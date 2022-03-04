@@ -1,21 +1,22 @@
+<style>
+  th{
+    text-align: center;
+  }
+</style>
 <h2>Produtos</h2>
-
 <div class="page-header">
   <%= link_to new_produto_path, class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-plus"></span>
     Novo
   <% end %>
-
   <%if params[:codigo].present? %>
     <%= link_to "javascript:history.back()", class: 'btn btn-default' do %>
       <span class="glyphicon glyphicon-list-alt"></span>
       Voltar
     <% end %>
   <% end %>
-  
   <h2>Lista</h2>
 </div>
-
 <div style="text-align: right; margin-top:10px; margin-bottom: 15px;">
   <form action="/produtos" method="get">
     <div class="row" style="width:300px;display: inline-block;">
@@ -28,43 +29,42 @@
     </div>
   </form>
 </div>
-
 <div class="table-responsive">
-  <table class="table table-striped table-hover">
+  <table class="table table-striped table-hover" style="text-align: center;">
     <thead>
       <tr>
         <th>Codigo</th>
         <th>Descrição</th>
         <th>NCM</th>
         <th>CodprdSAC</th>
-        <th style="text-align:end;">Preço Venda</th>
-        <th style="text-align:end;">Estoque Atual</th>
+        <th>Preço Venda</th>
+        <th>Estoque Atual</th>
+        <th></th>
+        <th></th>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
       </tr>
     </thead>
-
     <tbody>
       <%= content_tag_for(:tr, @produtos) do |produto| %>
-        <td style="text-align: end;"><%= produto.id %></td>
+        <td><%= produto.id %></td>
         <td><%= produto.descricao %></td>
-        <td style="text-align: center;"><%= produto.ncm %></td>
-        <td style="text-align: center"><%= produto.codprd_sac %></td>
-        <td style="text-align: end;"> <%= number_to_currency(produto.preco_venda) %></td>       
-        <td style="text-align: end;"> <%= formatar_qtd(produto.estoque_atual) %></td>
+        <td><%= produto.ncm %></td>
+        <td><%= produto.codprd_sac %></td>
+        <td><%= number_to_currency(produto.preco_venda) %></td>
+        <td><%= formatar_qtd(produto.estoque_atual) %></td>
         <td><%= link_to 'PDF', produto_path(produto, format: :pdf) %></td>
         <td><%= link_to 'Movimento', "/movimento_estoques?produto_id=#{produto.id}" %></td>
-        <td><%= link_to 'Lotes', "/estoques?produto_id=#{produto.id}" %></td>       
+        <td><%= link_to 'Lotes', "/estoques?produto_id=#{produto.id}" %></td>
         <td><%= link_to 'Mostrar', produto %></td>
         <td><%= link_to 'Editar', edit_produto_path(produto) %></td>
         <td><%= link_to 'Apagar', produto, method: :delete, data: { confirm: 'Confirma ?' } %></td>
       <% end %>
     </tbody>
   </table>
-
   <div class="apple_pagination">
     <%= will_paginate @produtos, :container => false %>
-  </div>  
+  </div>
 </div>

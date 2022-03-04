@@ -1,5 +1,4 @@
 <h2>Fornecedores</h2>
-
 <div class="page-header">
   <%= link_to fornecedores_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
@@ -11,7 +10,6 @@
   <% end %>
   <h2>Mostrar</h2>
 </div>
-
 <dl class="dl-horizontal">
   <dt>Nome/Razão Social:</dt>
   <dd><%= @fornecedor.nome %></dd>
@@ -37,4 +35,6 @@
   <dd><%= @fornecedor.uf %></dd>
   <dt>Email:</dt>
   <dd><%= @fornecedor.email %></dd>
+  <dt>Observações:</dt>
+  <dd><%= @fornecedor.observacoes %></dd>
 </dl>
