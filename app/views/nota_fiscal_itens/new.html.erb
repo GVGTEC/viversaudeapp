@@ -1,9 +1,15 @@
 <div class="page-header">
-  <a class="btn btn-default" href="/nota_fiscais">
-    <span class="glyphicon glyphicon-list-alt"></span>
-    Voltar
-  </a>
+  <%if params[:location].present?%>
+    <%= link_to edit_nota_fiscal_path(@nota_fiscal), class: 'btn btn-default' do %>
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Voltar
+    <% end %>
+  <%else%>
+    <a class="btn btn-default" href="/nota_fiscais">
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Voltar
+    </a>
+  <%end%>
   <h2>Nota Fiscal (Itens)</h2>
 </div>
-
 <%= render 'form' %>

@@ -101,9 +101,7 @@ class ProdutosController < ApplicationController
     produto.preco_venda = linha[preco_venda].to_f / 100
     produto.margem_lucro_oferta = linha[margem_lucro_oferta].to_f / 10000
     produto.preco_oferta = linha[preco_oferta].to_f / 100
-    
-    #debugger
-    
+        
     produto.data_inicial_oferta = Estoque.formatar_data(linha[data_inicial_oferta])
     produto.controlar_estoque = linha[controlar_estoque] == "S"
     produto.estoque_atual = (linha[estoque_atual].to_i / 100) rescue linha[estoque_atual].to_i
@@ -151,11 +149,8 @@ class ProdutosController < ApplicationController
   end
 
   def update   
-    #debugger
     respond_to do |format|
       if @produto.update(produto_params)
-        #@produto.preco_custo = produto_params[:preco_custo].tr(",",".")
-        #@produto.save
         format.html { redirect_to produtos_path, notice: 'Produto Alterado' }
         format.json { render :show, status: :ok, location: @produto }
       else
@@ -186,7 +181,6 @@ class ProdutosController < ApplicationController
   end
 
   def separate_comma(number)
-    #debugger
     reverse_digits = number.to_s.chars.reverse
     reverse_digits.each_slice(2).map(&:join).join(',').reverse.to_f
   end

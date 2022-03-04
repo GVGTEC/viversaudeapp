@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>Viver Saúde</title>
-  
-  <link rel="shortcut icon" href="https://liveflix.s3.us-east-2.amazonaws.com/imagens/logo.png"/>
-
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-  <%= render 'layouts/menu' %>
- 
-  <div class="container">
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, class: "alert alert-#{ name == "error" ? "danger" : "success" } alert-dismissable", role: "alert" do %>
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <%= msg %>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Viver Saúde</title>
+    <link rel="shortcut icon" href="https://liveflix.s3.us-east-2.amazonaws.com/imagens/logo.png"/>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  </head>
+  <body>
+    <%= render 'layouts/menu' %>
+    <div class="container">
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, class: "alert alert-#{ name == "error" ? "danger" : "success" } alert-dismissable", role: "alert" do %>
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <%= msg %>
+        <% end %>
       <% end %>
-    <% end %>
-
-    <%= yield %>
-  </div>
-</body>
+      <%= yield %>
+    </div>
+  </body>
 </html>
-
 <script type="text/javascript" src="/js/main.js"></script>
 <script type="text/javascript" src="/js/jquery-tabledit.js"></script>

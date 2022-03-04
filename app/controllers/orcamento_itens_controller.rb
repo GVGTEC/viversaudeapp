@@ -48,18 +48,9 @@ class OrcamentoItensController < ApplicationController
       #@orcamento.valor_total = @orcamento.calculo_valor_total_nota
       @orcamento.valor_total = @orcamento.valor_sub_total.to_f - @orcamento.valor_desconto.to_f
       @orcamento.save
-
-      #debugger
-
-      #salvar_estoque
     end
 
-    respond_to do |format|
-      format.html do
-        #redirect_to new_orcamento_orcamento_duplicata_path(@orcamento), notice: 'Orçamento Item Cadastrado'
-        redirect_to '/orcamentos'
-      end
-    end
+    redirect_to orcamentos_path
   end
 
   # PATCH/PUT /orcamento_itens/1 or /orcamento_itens/1.json

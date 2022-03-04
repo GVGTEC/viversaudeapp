@@ -1,6 +1,6 @@
 class NotaFiscalItensController < ApplicationController
-  before_action :set_nota_fiscal_item, only: %i[show edit update destroy]
   before_action :set_nota_fiscal
+  before_action :set_nota_fiscal_item, only: %i[show edit update destroy]
 
   def index
     @nota_fiscal_itens = NotaFiscalItem.where(nota_fiscal_id: @nota_fiscal.id)
@@ -103,7 +103,7 @@ class NotaFiscalItensController < ApplicationController
   end
 
   def formatar_preco(valor)
-    valor.tr('.', '').tr('R$', '').to_f
+    valor.tr('R$', '').tr('.', '').tr(',', '.').to_f
   end
 
   def nota_fiscal_item_params

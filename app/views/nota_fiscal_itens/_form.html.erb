@@ -1,10 +1,13 @@
 <style>
-.table-nota {display: none;}
-.form-control {text-align: center;}
-.form-produtos-itens{margin: 0px; height: 36px; width: 400px; text-align: inherit;}
-.table-overflow-auto{ max-height: 300px; overflow: auto;}
+  .table-nota {display: none;}
+  .form-control {text-align: center;}
+  .form-produtos-itens{margin: 0px; height: 36px; width: 400px; text-align: inherit;}
+  .table-overflow-auto{ max-height: 300px; overflow: auto;}
+  .select2-selection{    color: #555555;
+    height: 34px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;}
 </style>
-
 <%= form_for([@nota_fiscal, @nota_fiscal_item], html: { class: "form-horizontal", role: "form" }) do |f| %>
   <div class="form-group">
     <div class="col-sm-12">
@@ -14,11 +17,8 @@
       </label>
     </div>
   </div>
-
   <br>
-
   <div id="loader"></div>
-
   <div class="table-nota">
     <div class="table-responsive animate-bottom">
       <table class="table table-hover table-striped user-select-none dinamicTable jsDinamicTable_nota_fiscal_id_<%= @nota_fiscal.id %>">
@@ -35,7 +35,6 @@
             <th></th>
           </tr>
         </thead>
-
         <tbody id="tableBody_nota_fiscal_id_<%= @nota_fiscal.id %>">
           <% @nota_fiscal.nota_fiscal_itens.each_with_index do |nota_fiscal_item, index| %>
             <tr id="<%= index+1 %>" class="operacao">
@@ -45,8 +44,8 @@
                 <%= f.select :descricao,
                   Produto.all.reorder("descricao asc").collect { |produto| [produto.descricao, produto.id] },
                   {:selected => nota_fiscal_item.produto.id },
-                  {:class=> 'form-control form-produtos-itens', name: 'nota_fiscal[nota_fiscal_item][][descricao]', onclick: "atualizaProduto()", id: "#{index+1}-descricao"} 
-                %> 
+                  {:class=> 'form-control form-produtos-itens js-example-matcher', name: 'nota_fiscal[nota_fiscal_item][][descricao]', data: { behavior: 'descricao' }, id: "#{index+1}-descricao"} 
+                %>
               </td>
               <td><input class='form-control' id='<%= index+1 %>-ncm'            type='text' value='<%= nota_fiscal_item.ncm %>'                                name='nota_fiscal[nota_fiscal_item][][ncm]'    readonly                                                        ></td>
               <td><input class='form-control' id='<%= index+1 %>-un'             type='text' value='<%= nota_fiscal_item.unidade %>'                            name='nota_fiscal[nota_fiscal_item][][un]'    readonly         style='width: 70px;'                            ></td>
@@ -59,59 +58,51 @@
         </tbody>
       </table>
     </div>
-
     <br>
-
     <div class="form-group">
       <div class="col-sm-6"></div>
       <div class="col-sm-6" style="text-align:end">
-      <p><b>Valor Total:<b></p>
-      <p class="valor-total" style="font-size: 30px"></p>
+        <p><b>Valor Total:<b></p>
+            <p class="valor-total" style="font-size: 30px"></p>
+          </div>
+        </div>
+        <div class="row form-group" style="display: none;">
+          <div class="col-md-12">
+            <%= text_field_tag :movimentos, " "%>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10">
+            <%= link_to "Salvar", 'javascript:;', class: "btn btn-primary", onclick: "buscarMovimentoEstoque()" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div>
+          <h3>Produto: <span class="descricaoProd"></span></h3>
+          <h4>Quantidade: <span class="qtdProd"></span></h4>
+          <hr>
+          <div class="table-overflow-auto">
+            <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_estoque">
+              <thead>
+                <tr>
+                  <th>Lote</th>
+                  <th>Validade</th>
+                  <th>Estoque</th>
+                  <th>Baixar</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody_estoque">
+              </tbody>
+            </table>
+          </div>
+          <br>
+          <a href="javascript:;" class="btn btn-primary" onclick="salvarMovimentoEstoque()">Salvar</a>
+        </div>
       </div>
     </div>
-
-    <div class="row form-group" style="display: none;">
-      <div class="col-md-12">
-        <%= text_field_tag :movimentos, " "%>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <div class="col-sm-10">
-        <%= link_to "Salvar", 'javascript:;', class: "btn btn-primary", onclick: "buscarMovimentoEstoque()" %>
-      </div>
-    </div>
-  </div>
-<% end %>
-
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div>
-      <h3>Produto: <span class="descricaoProd"></span></h3>
-      <h4>Quantidade: <span class="qtdProd"></span></h4>
-      <hr>
-      <div class="table-overflow-auto">
-        <table class="table table-hover table-striped table-bordered user-select-none dinamicTable jsDinamicTable_estoque">
-          <thead>
-            <tr>
-              <th>Lote</th>
-              <th>Validade</th>
-              <th>Estoque</th>
-              <th>Baixar</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-
-          <tbody id="tableBody_estoque">
-          </tbody>
-        </table>
-      </div>
-      <br>
-
-      <a href="javascript:;" class="btn btn-primary" onclick="salvarMovimentoEstoque()">Salvar</a>
-    </div>
-  </div>
-</div>
-
-<%= render 'script' %>
+    <%= render 'script' %>

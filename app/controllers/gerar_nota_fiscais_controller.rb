@@ -11,8 +11,6 @@ class GerarNotaFiscaisController < ApplicationController
 
     empresa = Empresa.first
 
-    #debugger
-
     # Inicio
     out_file.puts('NOTA FISCAL|1|')
 

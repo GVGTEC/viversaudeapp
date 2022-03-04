@@ -1,101 +1,91 @@
+<style>
+  .clientes-encontrados{
+    background-color: #e1dada;
+    padding: 10px;
+    margin-top: 15px;
+    height: 172px;
+    overflow: auto;
+    display: none;
+  }
+</style>
 <%= form_for(@nota_fiscal, html: { class: "form-horizontal", role: "form" }) do |f| %>
   <% if @nota_fiscal.errors.any? %>
     <div class="alert alert-danger alert-dismissable" role="alert">
       <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
       <h4>Confira os campos abaixo:</h4>
-
       <ul>
-      <% @nota_fiscal.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @nota_fiscal.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
-
   <div class="ibox-content">
     <div class="row form-group">
-        <div class="col-md-2">
+      <div class="col-md-2">
         <%= f.label :numero_nota, 'Nº Nota Fiscal' %>
-
-          <% if @nota_fiscal.new_record? %>
-            <%= f.text_field :numero_nota, value: "#{(NotaFiscal.last.numero_nota.to_i + 1) rescue 0}",class: "form-control" %>
-          <% else %>
-            <%= f.text_field :numero_nota, class: "form-control" %>
-          <% end %>
-
-        </div>
-
-        <div class="col-md-2">
-          <%= f.label :numero_pedido, 'Nº Pedido Venda' %>
-          <%= f.text_field :numero_pedido, class: "form-control" %>
-        </div>
+        <% if @nota_fiscal.new_record? %>
+          <%= f.text_field :numero_nota, value: "#{(NotaFiscal.last.numero_nota.to_i + 1) rescue 0}",class: "form-control" %>
+        <% else %>
+          <%= f.text_field :numero_nota, class: "form-control" %>
+        <% end %>
+      </div>
+      <div class="col-md-2">
+        <%= f.label :numero_pedido, 'Nº Pedido Venda' %>
+        <%= f.text_field :numero_pedido, class: "form-control" %>
+      </div>
     </div>
-
     <div class="row form-group">
-        <div class="col-md-12">
-          <%= f.label :cfop, 'CFOP' %>
-          <%= f.select :cfop_id, 
+      <div class="col-md-12">
+        <%= f.label :cfop, 'CFOP' %>
+        <%= f.select :cfop_id, 
               Cfop.all.collect{|cfop| [cfop.codigo, cfop.id]},
               {:selected => @nota_fiscal.cfop_id, :include_blank => true},
               {class: "form-control", onclick: "buscaCfop()"} %>
-        </div>
+      </div>
     </div>
-
     <div class="row form-group">
       <div class="col-md-12">
         <label>Natureza de Operação</label>
         <input class="form-control" type="text" id="natureza_operacao" disabled>
       </div>
     </div>
-    
     <div class="row form-group input-cliente" style="display:none;">
       <div class="col-md-10">
         <%= f.label :cliente, 'Cliente' %>
         <%= f.text_field :cliente, class: 'form-control', data: { js: 'clientes'}, onkeyup: 'buscaUsuarios()', value: "#{@nota_fiscal.cliente.nome rescue ''}"  %>
         <%= f.text_field :cliente_id, style: "display: none;" %>
       </div>
-
       <div class="col-md-2">
         <label for="cliente_cnpj">CPNJ</label>
         <input class="form-control" type="text" disabled id="cliente_cnpj">
       </div>
     </div>
-
-    <div data-js="clientes-encontrados" style="background-color: #e1dada;
-    padding: 10px;
-    margin-top: 15px;
-    height: 172px;
-    overflow: auto;
-    display: none;"></div>
-
+    <div class="clientes-encontrados" data-js="clientesEncontrados"></div>
     <div class="row form-group input-fornecedor" style="display:none;">
-        <div class="col-md-12">
-          <%= f.label :fornecedor, 'Fornecedor' %>
-          <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
-        </div>
-    </div>   
-
+      <div class="col-md-12">
+        <%= f.label :fornecedor, 'Fornecedor' %>
+        <%= f.select :fornecedor_id, Fornecedor.all.reorder("nome asc").collect { |fornecedor| [fornecedor.nome, fornecedor.id] }, {:selected => @nota_fiscal.fornecedor_id, :include_blank => true}, {:class=> 'form-control'} %>
+      </div>
+    </div>
     <div class="row form-group">
-        <div class="col-md-12">
-          <%= f.label :transportadora, 'Transportadora' %>
-          <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.transportadora_id, :include_blank => true}, {:class=> 'form-control'} %>
-        </div>
-    </div>   
-    
+      <div class="col-md-12">
+        <%= f.label :transportadora, 'Transportadora' %>
+        <%= f.select :transportadora_id, Transportadora.all.reorder("nome asc").collect { |transportadora| [transportadora.nome, transportadora.id] }, {:selected => @nota_fiscal.transportadora_id, :include_blank => true}, {:class=> 'form-control'} %>
+      </div>
+    </div>
     <div class="row form-group">
-        <div class="col-md-3">
-          <%= f.label :data_emissao, 'Data Emissão' %>
-          <%= f.datetime_field :data_emissao, class: "form-control" %>
-        </div>
-
-        <div class="col-md-3">
-          <%= f.label :data_saída, 'Data Saída' %>
-          <%= f.datetime_field :data_saida, class: "form-control" %>
-        </div>
-
-        <div class="col-md-6">
-          <%= f.label :pagar_frete, 'Pagar Frete' %>
-          <%= f.select(:pagar_frete, options_for_select([
+      <div class="col-md-3">
+        <%= f.label :data_emissao, 'Data Emissão' %>
+        <%= f.datetime_field :data_emissao, class: "form-control" %>
+      </div>
+      <div class="col-md-3">
+        <%= f.label :data_saída, 'Data Saída' %>
+        <%= f.datetime_field :data_saida, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :pagar_frete, 'Pagar Frete' %>
+        <%= f.select(:pagar_frete, options_for_select([
             ['0 – Contratação do Frete por conta do Remetente (CIF)', '0'], 
             ['1 – Contratação do Frete por conta do Destinatário (FOB)', '1'], 
             ['2 – Contratação do Frete por conta de Terceiros', '2'], 
@@ -103,132 +93,64 @@
             ['4 – Transporte Próprio por conta do Destinatário', '4'], 
             ['9 – Sem Ocorrência de Transporte', '9']
             ], :selected => @nota_fiscal.pagar_frete), {:include_blank => true}, {class: "form-control"}) %>
-        </div>
-    </div>   
-
+      </div>
+    </div>
     <div class="row form-group">
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :quantidade, "Quantidade") %>
         <%= text_field_tag :quantidade, "#{@nota_fiscal.nota_fiscal_transporta.quantidade if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
-
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :marca, "Marca") %>
         <%= text_field_tag :marca, "#{@nota_fiscal.nota_fiscal_transporta.marca if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
-
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :especie, "Espécie") %>
         <%= text_field_tag :especie, "#{@nota_fiscal.nota_fiscal_transporta.especie if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
-
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :peso_liquido, "Peso Liquido") %>
         <%= text_field_tag :peso_liquido, "#{@nota_fiscal.nota_fiscal_transporta.peso_liquido if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
-
       <div class="col-md-2">
         <%= label(:nota_fiscal_transportas, :peso_bruto, "Peso Bruto") %>
         <%= text_field_tag :peso_bruto, "#{@nota_fiscal.nota_fiscal_transporta.peso_bruto if @nota_fiscal.nota_fiscal_transporta}", class: "form-control" %>
       </div>
-    </div>    
-
+    </div>
     <div class="row form-group">
-        <div class="col-md-2">
-          <%= f.label :valor_desconto, 'Valor Desconto' %>
-          <%= f.text_field :valor_desconto, class: "form-control" %>
-        </div>
-
-        <div class="col-sm-2">
-          <%= f.label :valor_frete, 'Valor Frete' %>
-          <%= f.text_field :valor_frete, class: "form-control" %>
-        </div>
-
-        <div class="col-sm-2">
-          <%= f.label :valor_outras_despesas, 'Valor Outras Despesas' %>
-          <%= f.text_field :valor_outras_despesas, class: "form-control" %>
-        </div>
-
-        <div class="col-sm-2">        
-          <%= f.label :numero_pedido_compra, 'Nº Pedido Compra' %>
-          <%= f.text_field :numero_pedido_compra, class: "form-control" %>
-        </div>
-      </div>           
-  </div>
-  
-  <div class="form-group">
-    <div class="col-sm-10">
-      <%= f.submit "Salvar", class: "btn btn-primary" %>
+      <div class="col-md-2">
+        <%= f.label :valor_desconto, 'Valor Desconto' %>
+        <%= f.text_field :valor_desconto, class: "form-control" %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :valor_frete, 'Valor Frete' %>
+        <%= f.text_field :valor_frete, class: "form-control" %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :valor_outras_despesas, 'Valor Outras Despesas' %>
+        <%= f.text_field :valor_outras_despesas, class: "form-control" %>
+      </div>
+      <div class="col-sm-2">
+        <%= f.label :numero_pedido_compra, 'Nº Pedido Compra' %>
+        <%= f.text_field :numero_pedido_compra, class: "form-control" %>
+      </div>
     </div>
   </div>
+  <% unless @nota_fiscal.new_record?%>
+    <div class="form-group">
+      <div class="col-sm-1">
+        <%= f.submit "Salvar", class: "btn btn-primary" %>
+      </div>
+      <div style="float: right;">
+        <%= link_to "Itens", "javascript:window.location.assign('/nota_fiscais/#{@nota_fiscal.id}/nota_fiscal_itens/new?location=edit')", class:"btn btn-success" %>
+      </div>
+    </div>
+  <% else %>
+    <div class="form-group">
+      <div class="col-sm-1">
+        <%= f.submit "Itens", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
-
-<script>
-//Bloqueia a tecla Enter no campo de Input
-$(document).ready(function() {
-  $(window).keydown(function(event){
-    if(event.keyCode == 13) {
-      event.preventDefault();
-      return false;
-    }
-  });
-
-  buscaCfop()
-});
-
-const buscaCfop = () => {
-  let cfop_id = $("#nota_fiscal_cfop_id").val() 
-
-  if(cfop_id){
-    $.ajax({
-      type: "GET",
-      url: `/cfop/${cfop_id}.json`,
-      success: function(cfop){
-        if(cfop){       
-          $('#natureza_operacao').val(cfop.natureza_operacao);
-          if(cfop.cliente_fornecedor_cf == "C"){
-            $(".input-cliente").show()
-            $(".input-fornecedor").hide()
-          }else{
-            $(".input-cliente").hide()
-            $(".input-fornecedor").show()
-          }
-        }
-      }
-    })
-  }
-  
-}
-
-const buscaUsuarios = () => {
-  const inputClientes = document.querySelector("[data-js=clientes]")
-  const divClientes = document.querySelector("[data-js=clientes-encontrados]")
-  const valor = inputClientes.value
-
-  $('[data-js=clientes-encontrados]').hide()
-  $('[data-js=clientes-encontrados]').html("")
-
-  if(valor){
-    $.get('/clientes.json', { busca: valor}, function(clientes) {
-      clientes.forEach(cliente => {
-        divClientes.innerHTML += `<div data-js='cliente' id='cliente-${cliente.id}'>${cliente.cnpj || cliente.cpf} - ${cliente.nome}</div>`
-      });
-    })
-
-    $('[data-js=clientes-encontrados]').show()
-  }
-}
-
-$(document).on('click', '[data-js=cliente]', function(event) {
-  const value = event.target.textContent
-  const id = parseInt(event.target.id.match(/\d+/)[0])
-  $('[data-js=clientes]').val(value)
-  $('[data-js=clientes-encontrados]').hide()
-  $('#nota_fiscal_cliente_id').val(id)
-
-  $.get(`/clientes/${id}.json`, function(cliente) {
-    $('#cliente_cnpj').val(cliente.cnpj)
-  })
-
-});
-</script>
+<%= render 'script' %>

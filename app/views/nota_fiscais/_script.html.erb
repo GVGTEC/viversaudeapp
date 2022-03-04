@@ -1,0 +1,69 @@
+<script>
+  //Bloqueia a tecla Enter no campo de Input
+  $(document).ready(function() {
+    $(window).keydown(function(event){
+      if(event.keyCode == 13) {
+        event.preventDefault();
+        return false;
+      }
+    });
+
+    buscaCfop()
+  });
+
+  const buscaCfop = () => {
+    let cfop_id = $("#nota_fiscal_cfop_id").val()
+
+    if(cfop_id){
+      $.ajax({
+        type: "GET",
+        url: `/cfop/${cfop_id}.json`,
+        success: function(cfop){
+          if(cfop){
+            $('#natureza_operacao').val(cfop.natureza_operacao);
+            if(cfop.cliente_fornecedor_cf == "C"){
+              $(".input-cliente").show()
+              $(".input-fornecedor").hide()
+            }else{
+              $(".input-cliente").hide()
+              $(".input-fornecedor").show()
+            }
+          }
+        }
+      })
+    }
+
+  }
+
+  const buscaUsuarios = () => {
+    const inputClientes = document.querySelector("[data-js=clientes]")
+    const divClientes = document.querySelector("[data-js=clientesEncontrados]")
+    const valor = inputClientes.value
+
+    $('[data-js=clientesEncontrados]').hide()
+    $('[data-js=clientesEncontrados]').html("")
+
+    if(valor){
+      $.get('/clientes.json', { busca: valor}, function(clientes) {
+        clientes.forEach(cliente => {
+          divClientes.innerHTML += `<div data-js='cliente' id='cliente-${cliente.id}'>${cliente.cnpj || cliente.cpf} - ${cliente.nome}</div>`
+        });
+      })
+
+      $('[data-js=clientesEncontrados]').show()
+    }
+  }
+
+  $(document).on('click', '[data-js=cliente]', function(event) {
+    const value = event.target.textContent
+    const id = parseInt(event.target.id.match(/\d+/)[0])
+    $('[data-js=clientes]').val(value)
+    $('[data-js=clientesEncontrados]').hide()
+    $('#nota_fiscal_cliente_id').val(id)
+
+    $.get(`/clientes/${id}.json`, function(cliente) {
+      $('#cliente_cnpj').val(cliente.cnpj)
+    })
+
+  });
+</script>
