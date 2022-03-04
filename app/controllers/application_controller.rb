@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :administrador
+  Struct = Micro::Struct.new(optional: [:id, :nome, :email])
 
   def authenticate_user!
     if cookies[:admin_viver_saude].blank?
@@ -8,19 +9,19 @@ class ApplicationController < ActionController::Base
     end
 
     ApplicationRecord.administrador_record = (administrador)
-    administrador
   end
 
   def administrador
-    if cookies[:admin_viver_saude].present?
-      return @adm if @adm.present?
-
-      @adm = Administrador.find(JSON.parse(cookies[:admin_viver_saude])['id'])
-      @adm
-    end
+    @adm ||= Administrador.find(admin_viver_saude.id) if cookies[:admin_viver_saude].present?
   end
 
   def empresa
     administrador.empresa
+  end
+
+  def admin_viver_saude
+    admin = Struct.new
+    JSON.parse(cookies[:admin_viver_saude]).each {|key, value| admin[key] = value }
+    admin
   end
 end
