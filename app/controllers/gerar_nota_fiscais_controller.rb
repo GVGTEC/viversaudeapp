@@ -180,8 +180,8 @@ class GerarNotaFiscaisController < ApplicationController
     # Bloco W
     out_file.puts('W|')
 
-    vBC = float_two(@nota_fiscal.nota_fiscal_imposto.valor_bc_icms)
-    vICMS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_icms)
+    vBC = float_two(@nota_fiscal.imposto.valor_bc_icms)
+    vICMS = float_two(@nota_fiscal.imposto.valor_icms)
     vICMSDeson = '0.00'
     vFCPUFDest = '0.00'
     vICMSUFDest = '0.00'
@@ -194,8 +194,8 @@ class GerarNotaFiscaisController < ApplicationController
     vDesc = float_two(@nota_fiscal.valor_desconto.to_s)
     vII = '0.00'
     vIPI = '0.00'
-    vPIS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_pis)
-    vCOFINS = float_two(@nota_fiscal.nota_fiscal_imposto.valor_cofins)
+    vPIS = float_two(@nota_fiscal.imposto.valor_pis)
+    vCOFINS = float_two(@nota_fiscal.imposto.valor_cofins)
     vOutro = float_two(@nota_fiscal.valor_outras_despesas.to_s)
     vNF = float_two(@nota_fiscal.valor_total_nota.to_s)
     vTotTrib = ''

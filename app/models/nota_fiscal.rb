@@ -6,37 +6,31 @@ class NotaFiscal < ApplicationRecord
   belongs_to :transportadora
   belongs_to :empresa
 
-  before_validation :salvar_empresa
-  #before_destroy :apagar_dados
-
   has_one :nota_fiscal_transporta, dependent: :destroy
-  has_one :nota_fiscal_imposto, dependent: :destroy
-  # LINHA DO MERGE
-  has_many :nota_fiscal_impostos, dependent: :delete_all
+  has_one :imposto, class_name: :NotaFiscalImposto, dependent: :destroy
   has_many :nota_fiscal_itens, dependent: :delete_all
   has_many :nota_fiscal_faturamento_parcelas, dependent: :delete_all
   has_many :movimento_estoques, dependent: :delete_all
 
   def calculo_valor_total_nota
-    # preco_total - @nota_fiscal.valor_desconto + @nota_fiscal.valor_frete + @nota_fiscal.valor_outras_despesas
-    valor_produtos
+    valor_produtos + valor_frete + valor_outras_despesas - valor_desconto 
   end
 
   def calculo_imposto_nota
-    nota_fiscal_imposto = self.nota_fiscal_imposto
-    nota_fiscal_imposto ||= NotaFiscalImposto.new
+    imposto = self.imposto
+    imposto ||= NotaFiscalImposto.new
 
-    nota_fiscal_imposto.nota_fiscal_id = id
-    nota_fiscal_imposto.valor_bc_icms = nota_fiscal_itens.sum(:valor_bc_icms)
-    nota_fiscal_imposto.valor_icms = nota_fiscal_itens.sum(:valor_icms)
-    nota_fiscal_imposto.valor_bc_icms_st = nota_fiscal_itens.sum(:valor_bc_icms_st)
-    nota_fiscal_imposto.valor_icms_st = nota_fiscal_itens.sum(:valor_icms_st)
-    nota_fiscal_imposto.valor_pis = nota_fiscal_itens.sum(:valor_pis)
-    nota_fiscal_imposto.valor_cofins = nota_fiscal_itens.sum(:valor_cofins)
-    nota_fiscal_imposto.valor_ipi = nota_fiscal_itens.sum(:valor_ipi)
-    nota_fiscal_imposto.valor_difal = nota_fiscal_itens.sum(:valor_difal)
-    nota_fiscal_imposto.valor_fcp = nota_fiscal_itens.sum(:valor_fcp)
-    nota_fiscal_imposto.save
+    imposto.nota_fiscal_id = id
+    imposto.valor_bc_icms = nota_fiscal_itens.sum(:valor_bc_icms)
+    imposto.valor_icms = nota_fiscal_itens.sum(:valor_icms)
+    imposto.valor_bc_icms_st = nota_fiscal_itens.sum(:valor_bc_icms_st)
+    imposto.valor_icms_st = nota_fiscal_itens.sum(:valor_icms_st)
+    imposto.valor_pis = nota_fiscal_itens.sum(:valor_pis)
+    imposto.valor_cofins = nota_fiscal_itens.sum(:valor_cofins)
+    imposto.valor_ipi = nota_fiscal_itens.sum(:valor_ipi)
+    imposto.valor_difal = nota_fiscal_itens.sum(:valor_difal)
+    imposto.valor_fcp = nota_fiscal_itens.sum(:valor_fcp)
+    imposto.save
   end
 
   def salvar_movimento_estoque(movimentos)
@@ -95,7 +89,7 @@ class NotaFiscal < ApplicationRecord
 
   def apagar_dados
     nota_fiscal_transporta.destroy
-    nota_fiscal_imposto.destroy
+    imposto.destroy
     nota_fiscal_itens.map{|nfi| nfi.nota_fiscal_item_lotes.delete_all}
 
     movimento_estoques.each do |movimento|

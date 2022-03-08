@@ -1,4 +1,6 @@
 <script>
+  let valoresParcelas = []
+
   $(document).ready(function() {
     $(window).keydown(function(event){
       if(event.keyCode == 13) {
@@ -26,12 +28,11 @@
   });
 
   const atualizarValorParcelas = () => {
-    const qtdParcelas = $(".valor-parcela").length
-    const valorTotalNota = <%= @nota_fiscal.valor_total_nota %>
-    const valorPercela = calculoValorParcela(valorTotalNota, qtdParcelas)
+    $(".valor-parcela").each(function(index, obj){
+      const qtdParcelas = $(`.valor-parcela`).length
+      const valor = valorParcela(qtdParcelas, index)
 
-    $(".valor-parcela").each(function(){
-      $(this).val(valorPercela);
+      $(this).val(valor);
     })
   }
 
@@ -39,6 +40,7 @@
     const qtd_parcelas = parseInt($(`#nota_fiscal_numero_parcelas_pagamento`).val())
     const valor_total_nota = <%= @nota_fiscal.valor_total_nota %>
 
+    valoresParcelas = []
     $("#nota_fiscal_numero_prazo_pagamento").html("");
     $("#tableBody_nota_fiscal_faturamento_parcelas").html("");
 
@@ -50,8 +52,9 @@
 
       if(qtd_tempo) prazo_pagamento = qtd_tempo
       if(!qtd_tempo) prazo_pagamento = index
-        
+
       const dataVencimento = calculoData(prazo_pagamento)
+      const valor = valorParcela(qtd_parcelas, index)
 
       $("#nota_fiscal_numero_prazo_pagamento").append("<input class='form-control' type='text' value='' id='" + index + "_prazo' data-js='prazo' style='width: 5%; margin-right: 10px;'><span style='margin-right: 10px; font-size: 3rem;'>/</span>");
       $("#tableBody_nota_fiscal_faturamento_parcelas").append(
@@ -59,8 +62,8 @@
           "<tr class='operacao'>"+
             "<td><input class='form-control' type='integer' style='width: 20%;' value='"+ (index + 1) +"'><input class='form-control' type='integer' style='display:none;' value='"+ prazo_pagamento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][prazo_pagamento]' id='" + index + "_prazo_pagamento'></td>"+
             "<td><input class='form-control' type='date' style='width: 50%;' value='"+ dataVencimento +"' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][data_vencimento]' id='" + index + "_data_vencimento'></td>"+
-            "<td><div style='position: relative'><input class='form-control valor-parcela' type='text' value='"+ calculoValorParcela(valor_total_nota, qtd_parcelas)  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'><div class='simbolo-real'>R$</div></div></td>"+
-          "</tr>" 
+            "<td><div style='position: relative'><input class='form-control valor-parcela' type='text' value='"+ valor  +"' style='width: 30%;' name='nota_fiscal[nota_fiscal_faturamento_parcelas][][valor_parcela]'><div class='simbolo-real'>R$</div></div></td>"+
+          "</tr>"
         )
       );
     }
@@ -70,7 +73,7 @@
     var data = new Date();
     let dataVencimento = ""
     data.setDate(data.getDate() + prazo_pagamento);
-  
+
     if((data.getMonth() + 1) > 9 &&  data.getDate() > 9){
       dataVencimento = ((data.getFullYear() )) + "-" + ((data.getMonth() + 1)) + "-" + data.getDate()
     }else if((data.getMonth() + 1) <= 9 &&  data.getDate() > 9){
@@ -86,6 +89,32 @@
 
   const calculoValorParcela = (valor_total_nota, qtd_parcelas) => {
     let valor = (valor_total_nota / qtd_parcelas).toFixed(2)
+    return formatarValorString(valor)
+  }
+
+  const valorParcela = (qtdParcelas, index) => {
+    const valorTotalNota = <%= @nota_fiscal.valor_total_nota %>
+    const valorParcela = calculoValorParcela(valorTotalNota, qtdParcelas)
+
+    if((qtdParcelas - 1) === index){
+      const initialValue = 0;
+      const sumWithInitial = valoresParcelas.reduce((previousValue, currentValue) => {
+        return previousValue + formatarValorFloat(currentValue)
+      }, initialValue);
+
+      const valorUltimaParcela = (valorTotalNota - sumWithInitial).toFixed(2)
+      return formatarValorString(valorUltimaParcela)
+    }
+
+    valoresParcelas.push(valorParcela)
+    return valorParcela
+  }
+
+  const formatarValorString = (valor) => {
     return valor.toString().replace(".", ",")
+  }
+
+  const formatarValorFloat = (valor) => {
+    return parseFloat(valor.replace(',', '.'))
   }
 </script>

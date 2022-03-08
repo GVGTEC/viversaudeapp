@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_034747) do
+ActiveRecord::Schema.define(version: 2022_03_08_025316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -311,11 +311,11 @@ ActiveRecord::Schema.define(version: 2022_03_02_034747) do
     t.datetime "data_emissao"
     t.datetime "data_saida"
     t.string "hora_saida"
-    t.float "valor_desconto"
+    t.float "valor_desconto", default: 0.0
     t.float "valor_produtos"
     t.float "valor_total_nota"
-    t.float "valor_frete"
-    t.float "valor_outras_despesas"
+    t.float "valor_frete", default: 0.0
+    t.float "valor_outras_despesas", default: 0.0
     t.string "numero_pedido_compra"
     t.string "tipo_pagamento"
     t.string "meio_pagamento"

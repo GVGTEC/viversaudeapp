@@ -1,4 +1,6 @@
 <script>
+  const produtoIds = <%= @produtos.map(&:id) %>
+
   // =============== Adicionar e Calcular Produtos ===============
   $(document).ready(function() {
     $(window).keydown(function(event){
@@ -15,9 +17,11 @@
   $(document).on('click keyup', '[data-behavior~=cod_produto]', function(event) {
     const number_tr = parseInt(event.target.id.match(/\d+/)[0])
     const val = parseInt($(`#${number_tr}-cod_produto`).val())
-    $(`#${number_tr}-descricao`).select2("val", `${val}`)
 
-    atualizaProduto(event, false)
+    if(val){
+      $(`#${number_tr}-descricao`).select2().select2('val',[`${val}`]);
+      atualizaProduto(event, false)
+    }
   });
 
   $(document).on('click keyup', '[data-behavior~=qtd]', function(event) {
@@ -44,13 +48,37 @@
     }
   });
 
+  $('body').on('click', '.delete', function() {
+    const $tr = $(this).closest('tr');
+    $tr.remove();
+
+    removerItemEstoqueLocal()
+    calculoValorTotal()
+  });
+
   $(document).on('change', '[data-behavior~=descricao]', function(event) {
     atualizaProduto(event)
   });
 
-  $(".js-example-matcher").select2({
-    matcher: matchCustom
-  });
+  const atualizaProduto = (event, setCode = null) => {
+    const number_tr = parseInt(event.target.id.match(/\d+/)[0])
+    const cod_produto = $(`#${number_tr}-cod_produto`).val()
+    const produto_id = $(`#${number_tr}-descricao`).val()
+
+    if(!produto_id) return
+    if(setCode === null) $(`#${number_tr}-cod_produto`).val(`${produto_id}`)
+
+    const produto = getProduto(produto_id)
+    if(!produto) return
+
+    $(`#${number_tr}-ncm`).val(produto.ncm);
+    $(`#${number_tr}-un`).val(produto.unidade);
+    $(`#${number_tr}-qtd`).val("");
+    $(`#${number_tr}-preco_unitario`).val("R$ " + formatarValorRetornado(produto.preco_venda));
+    $(`#${number_tr}-preco_total`).val("");
+
+    calculoValorTotal()
+  }
 
   const addProduto = () => {
     var clica = setInterval(function(){
@@ -87,24 +115,6 @@
     }, 100);
   }
 
-  const atualizaProduto = (event, setCode = null) => {
-    const number_tr = parseInt(event.target.id.match(/\d+/)[0])
-    const produto_id = $(`#${number_tr}-descricao`).val()
-    if(!produto_id) return
-
-    if(setCode === null) $(`#${number_tr}-cod_produto`).val(`${produto_id}`)
-    const produto = getProduto(produto_id)
-    if(!produto) return
-
-    $(`#${number_tr}-ncm`).val(produto.ncm);
-    $(`#${number_tr}-un`).val(produto.unidade);
-    $(`#${number_tr}-qtd`).val("");
-    $(`#${number_tr}-preco_unitario`).val("R$ " + formatarValorRetornado(produto.preco_venda));
-    $(`#${number_tr}-preco_total`).val("");
-
-    calculoValorTotal()
-  }
-
   const calculoValorTotal = () => {
     let valorTotal = 0
     $("input[data-behavior~=preco_total]").each(function(){
@@ -124,14 +134,6 @@
     valor = valor.toFixed(2);
     return valor.toString().replace(".", ",")
   }
-
-  $('body').on('click', '.delete', function() {
-    const $tr = $(this).closest('tr');
-    $tr.remove();
-
-    removerItemEstoqueLocal()
-    calculoValorTotal()
-  });
 
   const removerItemEstoqueLocal = () => {
     const number_tr = this.id.match(/\d+/)[0]
@@ -404,6 +406,10 @@
     $(`#new_nota_fiscal_item`).submit()
   }
 
+
+  $(".js-example-matcher").select2({
+    matcher: matchCustom
+  });
 
   function matchCustom(params, data) {
     if ($.trim(params.term) === '') return data

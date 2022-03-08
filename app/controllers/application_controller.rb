@@ -3,12 +3,7 @@ class ApplicationController < ActionController::Base
   Struct = Micro::Struct.new(optional: [:id, :nome, :email])
 
   def authenticate_user!
-    if cookies[:admin_viver_saude].blank?
-      redirect_to '/login'
-      return
-    end
-
-    ApplicationRecord.administrador_record = (administrador)
+    redirect_to '/login' if cookies[:admin_viver_saude].blank?
   end
 
   def administrador

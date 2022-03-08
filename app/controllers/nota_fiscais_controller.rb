@@ -17,7 +17,8 @@ class NotaFiscaisController < ApplicationController
   end
 
   def observacoes
-    @nota_fiscal.observacao = @nota_fiscal.cfop.observacao
+    cfop_observacao = @nota_fiscal.cfop.observacao
+    @nota_fiscal.observacao.concat("; #{cfop_observacao}")
   end
 
   def edit; end
@@ -28,7 +29,6 @@ class NotaFiscaisController < ApplicationController
 
     respond_to do |format|
       if @nota_fiscal.save
-
         salvar_nota_fiscal_transportadora
         format.html { redirect_to new_nota_fiscal_nota_fiscal_item_path(@nota_fiscal) }
         format.json { render :show, status: :created, location: @nota_fiscal }
@@ -87,8 +87,10 @@ class NotaFiscaisController < ApplicationController
   end
 
   def nota_fiscal_params
-    params.require(:nota_fiscal).permit(:numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, 
-                                        :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete,
-                                        :contas_rec_id)
+    params.require(:nota_fiscal).permit(
+      :numero_nota, :numero_pedido, :cfop_id, :entsai, :cliente_id, :fornecedor_id, :vendedor_id, :transportadora_id, :data_emissao, :data_saida, :hora_saida, :valor_desconto, :valor_produtos, 
+      :valor_total_nota, :valor_frete, :valor_outras_despesas, :numero_pedido_compra, :tipo_pagamento, :meio_pagamento, :numero_parcelas_pagamento, :observacao, :chave_acesso_nfe, :nota_cancelada_sn, :pagar_frete,
+      :contas_rec_id
+    )
   end
 end
